@@ -19,6 +19,7 @@ fontsconf           = os.path.join(homeDir, '.fonts.conf')
 dircolors           = os.path.join(homeDir, '.dircolors')
 pythonrc            = os.path.join(homeDir, '.pythonrc')
 texpathd            = os.path.join(homeDir, 'texpath')
+hgrc                = os.path.join(homeDir, '.hgrc')
 
 #These will be the actual version controlled files (the sources)
 bashrcSource        = os.path.join(scriptDir, 'linux-stuff', '.bashrc')
@@ -29,6 +30,7 @@ fontsconfSource     = os.path.join(scriptDir, 'linux-stuff', '.fonts.conf')
 dircolorsSource     = os.path.join(scriptDir, 'linux-stuff', '.dircolors')
 pythonrcSource      = os.path.join(scriptDir, 'linux-stuff', '.pythonrc')
 texpathdSource      = os.path.join(scriptDir, 'texpath')
+hgrcSource          = os.path.join(scriptDir, 'mercurial-stuff', '.hgrc')
 
 #make a list of tupple pairs
 sourceToDestination = { bashrcSource : bashrc,
@@ -38,7 +40,8 @@ sourceToDestination = { bashrcSource : bashrc,
                         fontsconfSource : fontsconf,
                         dircolorsSource : dircolors,
                         pythonrcSource : pythonrc,
-                        texpathdSource : texpathd }
+                        texpathdSource : texpathd,
+                        hgrcSource : hgrc }
 
 def createLink(src, dest):
     os.symlink(src, dest)
