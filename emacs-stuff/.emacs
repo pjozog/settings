@@ -52,10 +52,9 @@
 (defun open-filelist (fileList)
   (while fileList
     (let ((currentFile (car fileList)))
-      (find-file currentFile))
+      (find-file (file-truename currentFile)))
     (setq fileList (cdr fileList))))
       
-
 (defun file-basename (file)
   (car (reverse (split-string file "/"))))
 

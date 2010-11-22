@@ -71,13 +71,10 @@ def main():
 
     for src, dest in sourceToDestination.items():
 
-        if not os.path.islink(dest):
-            printInfo(dest + " link does NOT exist.  Creating link...")
-            removeFile(dest)
-            createLink(src, dest)
-        else:
-            print dest + " exists"
-            
+        printInfo("Creating link... " + dest)
+        removeFile(dest)
+        createLink(src, dest)
+        
     return 0
     
 if __name__ == '__main__':

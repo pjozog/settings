@@ -164,10 +164,17 @@ function sl() {
     svn log -v "$1" | less
 }
 alias ss='svn status'
-alias hs='hg status .'
 alias hd='hg extdiff -p meld'
 function hl() {
     hg log -v "$1" | less
+}
+
+function hs() {
+    if [ $# -eq 1 ]; then
+	hg status "$1"
+    else
+	hg status .
+    fi
 }
 
 alias ns='ssh -X -p 2219 pjozog@nslab.ccs.neu.edu'
