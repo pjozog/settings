@@ -1,0 +1,4 @@
+#!/bin/sh
+
+xset +fp ~/.fonts/artwiz
+xset fp rehash

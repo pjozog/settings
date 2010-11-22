@@ -1,0 +1,6 @@
+#!/bin/bash
+
+#This is for my openbox python shortcut:
+export PYTHONSTARTUP=/home/paul/.pythonrc
+
+gnome-terminal --hide-menubar -e python

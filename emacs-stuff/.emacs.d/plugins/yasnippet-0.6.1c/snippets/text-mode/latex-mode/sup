@@ -1,0 +1,4 @@
+#contributor : Paul Ozog
+#name : \sup{}
+# --
+{$1}\textsuperscript{$2}

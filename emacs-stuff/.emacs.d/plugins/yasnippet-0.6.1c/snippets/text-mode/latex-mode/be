@@ -1,0 +1,6 @@
+#contributor : Rodrigo Setti <rodrigosetti@gmail.com>
+#name : \begin{environment} ... \end{environment}
+# --
+\begin{equation}
+$0
+\end{equation}

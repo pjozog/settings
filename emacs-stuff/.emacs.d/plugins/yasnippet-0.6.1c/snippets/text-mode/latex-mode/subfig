@@ -1,0 +1,15 @@
+#contributor : Paul Ozog
+#name : insert figure
+# --
+\begin{figure}[h]
+  \begin{center}
+    \subfigure[${1:SUBCAPTION1}] {
+      \includegraphics[scale=0.5]{${2:PIC1}}
+      \label{${3:LABEL1}}}
+    \subfigure[${4:SUBCAPTION2}] {
+      \includegraphics[scale=0.5]{${5:PIC2}}
+      \label{${6:LABEL2}}}
+    \caption{${7:FIGCAPTION}}
+    \label{${8:FIGLABEL}}
+  \end{center}
+\end{figure}

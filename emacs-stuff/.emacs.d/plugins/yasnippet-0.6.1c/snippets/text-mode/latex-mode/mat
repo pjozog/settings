@@ -1,0 +1,6 @@
+#contributor : Rodrigo Setti <rodrigosetti@gmail.com>
+#name : \begin{eqnarray} ... \end{eqnarray}
+# --
+\begin{bmatrix}
+  $1  \\\\
+\end{bmatrix}

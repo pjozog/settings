@@ -1,0 +1,7 @@
+#contributor : Rodrigo Setti <rodrigosetti@gmail.com>
+#name : \begin{eqnarray} ... \end{eqnarray}
+# --
+\begin{eqnarray*}
+  $1 & = & $2 \\\\
+  & = & $3
+\end{eqnarray*}

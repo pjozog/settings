@@ -1,0 +1,4 @@
+#contributor : Paul Ozog
+#name : \sub{}
+# --
+{$1}\textsubscript{$2}

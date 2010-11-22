@@ -1,0 +1,71 @@
+#contributor : Rodrigo Setti <rodrigosetti@gmail.com>
+#name : \begin{environment} ... \end{environment}
+# --
+\documentclass[11pt]{article}
+%% \topmargin -1.5cm        % read Lamport p.163
+%% \oddsidemargin -0.04cm   % read Lamport p.163
+%% \evensidemargin -0.04cm  % same as oddsidemargin but for left-hand pages
+%% \textwidth 16.59cm
+%% \textheight 21.94cm 
+%$ %\pagestyle{empty}       % Uncomment if don't want page numbers
+\parskip 7.2pt           % sets spacing between paragraphs
+%% %\renewcommand{\baselinestretch}{1.5} % Uncomment for 1.5 spacing between lines
+\parindent 0pt		 % sets leading space for paragraphs
+
+\usepackage{fullpage}
+\usepackage{listings} % For source code
+\usepackage[usenames,dvipsnames]{color} % For colors and names
+\usepackage[pdftex]{graphicx}
+\usepackage{subfigure}
+\usepackage{fixltx2e}
+\newcommand{\superscript}[1]{\ensuremath{^{\textrm{#1}}}}
+\newcommand{\subscript}[1]{\ensuremath{_{\textrm{#1}}}}
+
+\usepackage{amssymb,amsmath}
+
+\definecolor{mygrey}{gray}{.96} % Light Grey
+\lstset{ 
+        language=[ISO]C++,              
+        tabsize=3,                                                     
+        basicstyle=\tiny,               
+        numbers=left,                   
+        numberstyle=\tiny,              
+        stepnumber=2,                   
+        numbersep=5pt,                  
+        backgroundcolor=\color{white}, 
+        %showspaces=false,              
+        %showstringspaces=false,        
+        %showtabs=false,                
+        frame=single,                    
+        tabsize=3,                          
+        captionpos=b,                   
+        breaklines=true,                
+        breakatwhitespace=false,        
+        %escapeinside={\%*}{*)},        
+        commentstyle=\color{BrickRed}   
+}
+
+\title{University of Michigan \\\\
+  Electrical Engineering and Computer Science \\\\
+  - \\\\
+  ${1:LINE1} \\\\
+  ${2:LINE2}}
+\date{\today}
+\author{
+  Paul Ozog
+}
+
+\begin{document}
+
+\begin{titlepage}
+  \maketitle
+  \thispagestyle{empty}
+\end{titlepage}
+
+\tableofcontents
+
+\pagebreak
+
+$0
+
+\end{document}
