@@ -7,8 +7,7 @@ import shutil
 
 scriptDir           = sys.path[0]
 homeDir             = os.getenv('HOME')
-requiredDirs        = [os.path.join(homeDir, '.config'),
-                       os.path.join(homeDir, 'texpath')]
+requiredDirs        = [os.path.join(homeDir, '.config')]
 
 #These home dir files will be links to version controlled files
 bashrc              = os.path.join(homeDir, '.bashrc')
