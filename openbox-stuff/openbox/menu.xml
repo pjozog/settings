@@ -7,7 +7,7 @@
 
 <menu id="root-menu" label="Openbox">
   <item label="Terminal">
-    <action name="Execute"><execute>xfce4-terminal --hide-menubar</execute></action>
+    <action name="Execute"><execute>myterm</execute></action>
   </item>
   <item label="Web Browser">
     <action name="Execute"><execute>firefox</execute></action>
@@ -23,7 +23,7 @@
       <action name="Execute"><execute>google-chrome</execute></action>
     </item>
     <item label="Emacs">
-      <action name="Execute"><execute>/home/paul/bin/myemacs</execute></action>
+      <action name="Execute"><execute>myemacs</execute></action>
     </item>
     <item label="Rhythmbox">
       <action name="Execute"><execute>rhythmbox</execute></action>
