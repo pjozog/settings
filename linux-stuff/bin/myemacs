@@ -1,4 +1,4 @@
 #!/bin/sh
 
-emacs -bg black -fg white -cr red -g 80x35 --no-site-file "$@"
+emacs -bg black -fg white -cr red -g 125x40 --no-site-file "$@"
 

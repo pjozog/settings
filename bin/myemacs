@@ -1,4 +1,0 @@
-#!/bin/sh
-
-emacs -bg black -fg white -cr red -g 80x45 --no-site-file "$@"
-
