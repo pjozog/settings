@@ -21,8 +21,9 @@ pythonrc            = os.path.join(homeDir, '.pythonrc')
 texpathd            = os.path.join(homeDir, 'texpath')
 hgrc                = os.path.join(homeDir, '.hgrc')
 myterm              = os.path.join(homeDir, 'bin', 'myterm')
-myemacs              = os.path.join(homeDir, 'bin', 'myterm')
-mypython              = os.path.join(homeDir, 'bin', 'mypython')
+myemacs             = os.path.join(homeDir, 'bin', 'myterm')
+mypython            = os.path.join(homeDir, 'bin', 'mypython')
+gtkrc               = os.path.join(homeDir, '.gtkrc-mine')
 
 #These will be the actual version controlled files (the sources)
 bashrcSource        = os.path.join(scriptDir, 'linux-stuff', '.bashrc')
@@ -37,6 +38,7 @@ hgrcSource          = os.path.join(scriptDir, 'mercurial-stuff', '.hgrc')
 mytermSource        = os.path.join(scriptDir, 'bin', 'myterm')
 myemacsSource       = os.path.join(scriptDir, 'bin', 'myemacs')
 mypythonSource      = os.path.join(scriptDir, 'bin', 'mypython')
+gtkrcSource         = os.path.join(scriptDir, 'linux-stuff', '.gtkrc-mine')
 
 #make a list of tupple pairs
 sourceToDestination = { bashrcSource : bashrc,
@@ -50,7 +52,8 @@ sourceToDestination = { bashrcSource : bashrc,
                         hgrcSource : hgrc,
                         mytermSource : myterm,
                         myemacsSource : myemacs,
-                        mypythonSource : mypython }
+                        mypythonSource : mypython,
+                        gtkrcSource : gtkrc }
 
 def createLink(src, dest):
     os.symlink(src, dest)
