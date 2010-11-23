@@ -7,7 +7,8 @@ import shutil
 
 scriptDir           = sys.path[0]
 homeDir             = os.getenv('HOME')
-requiredDirs        = [os.path.join(homeDir, '.config')]
+requiredDirs        = [os.path.join(homeDir, '.config'),
+                       os.path.join(homeDir, 'bin')]
 
 #These home dir files will be links to version controlled files
 bashrc              = os.path.join(homeDir, '.bashrc')
@@ -19,6 +20,9 @@ dircolors           = os.path.join(homeDir, '.dircolors')
 pythonrc            = os.path.join(homeDir, '.pythonrc')
 texpathd            = os.path.join(homeDir, 'texpath')
 hgrc                = os.path.join(homeDir, '.hgrc')
+myterm              = os.path.join(homeDir, 'bin', 'myterm')
+myemacs              = os.path.join(homeDir, 'bin', 'myterm')
+mypython              = os.path.join(homeDir, 'bin', 'mypython')
 
 #These will be the actual version controlled files (the sources)
 bashrcSource        = os.path.join(scriptDir, 'linux-stuff', '.bashrc')
@@ -30,6 +34,9 @@ dircolorsSource     = os.path.join(scriptDir, 'linux-stuff', '.dircolors')
 pythonrcSource      = os.path.join(scriptDir, 'linux-stuff', '.pythonrc')
 texpathdSource      = os.path.join(scriptDir, 'texpath')
 hgrcSource          = os.path.join(scriptDir, 'mercurial-stuff', '.hgrc')
+mytermSource        = os.path.join(scriptDir, 'bin', 'myterm')
+myemacsSource       = os.path.join(scriptDir, 'bin', 'myemacs')
+mypythonSource      = os.path.join(scriptDir, 'bin', 'mypython')
 
 #make a list of tupple pairs
 sourceToDestination = { bashrcSource : bashrc,
@@ -40,7 +47,10 @@ sourceToDestination = { bashrcSource : bashrc,
                         dircolorsSource : dircolors,
                         pythonrcSource : pythonrc,
                         texpathdSource : texpathd,
-                        hgrcSource : hgrc }
+                        hgrcSource : hgrc,
+                        mytermSource : myterm,
+                        myemacsSource : myemacs,
+                        mypythonSource : mypython }
 
 def createLink(src, dest):
     os.symlink(src, dest)
@@ -59,7 +69,7 @@ def removeFile(path):
 def makeDir(directory):
     try:
         os.mkdir(directory)
-    except OSError, err:
+    except OSError, err: #do nothing if directory exists
         if err.errno == errno.EEXIST:
             pass
 
