@@ -6,6 +6,7 @@ import errno
 import shutil
 
 scriptDir           = sys.path[0]
+binDir              = os.path.join(scriptDir, 'linux-stuff', 'bin')
 homeDir             = os.getenv('HOME')
 requiredDirs        = [os.path.join(homeDir, '.config'),
                        os.path.join(homeDir, 'bin')]
@@ -20,9 +21,6 @@ dircolors           = os.path.join(homeDir, '.dircolors')
 pythonrc            = os.path.join(homeDir, '.pythonrc')
 texpathd            = os.path.join(homeDir, 'texpath')
 hgrc                = os.path.join(homeDir, '.hgrc')
-myterm              = os.path.join(homeDir, 'bin', 'myterm')
-myemacs             = os.path.join(homeDir, 'bin', 'myterm')
-mypython            = os.path.join(homeDir, 'bin', 'mypython')
 gtkrc               = os.path.join(homeDir, '.gtkrc-mine')
 
 #These will be the actual version controlled files (the sources)
@@ -35,9 +33,6 @@ dircolorsSource     = os.path.join(scriptDir, 'linux-stuff', '.dircolors')
 pythonrcSource      = os.path.join(scriptDir, 'linux-stuff', '.pythonrc')
 texpathdSource      = os.path.join(scriptDir, 'texpath')
 hgrcSource          = os.path.join(scriptDir, 'mercurial-stuff', '.hgrc')
-mytermSource        = os.path.join(scriptDir, 'bin', 'myterm')
-myemacsSource       = os.path.join(scriptDir, 'bin', 'myemacs')
-mypythonSource      = os.path.join(scriptDir, 'bin', 'mypython')
 gtkrcSource         = os.path.join(scriptDir, 'linux-stuff', '.gtkrc-mine')
 
 #make a list of tupple pairs
@@ -50,10 +45,13 @@ sourceToDestination = { bashrcSource : bashrc,
                         pythonrcSource : pythonrc,
                         texpathdSource : texpathd,
                         hgrcSource : hgrc,
-                        mytermSource : myterm,
-                        myemacsSource : myemacs,
-                        mypythonSource : mypython,
                         gtkrcSource : gtkrc }
+
+#add all the stuff in the 'bin' directory to sourceToDestination
+for basename in os.listdir(binDir):
+    source = os.path.abspath(os.path.join(binDir, basename))
+    dest = os.path.join(homeDir, 'bin', basename)
+    sourceToDestination[source] = dest;
 
 def createLink(src, dest):
     os.symlink(src, dest)
@@ -86,7 +84,7 @@ def main():
 
     for src, dest in sourceToDestination.items():
 
-        printInfo("Creating link... " + dest)
+        printInfo("Creating link: " + dest)
         removeFile(dest)
         createLink(src, dest)
         
