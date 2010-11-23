@@ -12,37 +12,26 @@
 %% %\renewcommand{\baselinestretch}{1.5} % Uncomment for 1.5 spacing between lines
 \parindent 0pt		 % sets leading space for paragraphs
 
+
+\usepackage{comment}
+\usepackage[numbered]{mcode}
 \usepackage{fullpage}
 \usepackage{listings} % For source code
-\usepackage[usenames,dvipsnames]{color} % For colors and names
-\usepackage[pdftex]{graphicx}
 \usepackage{subfigure}
 \usepackage{fixltx2e}
 \newcommand{\superscript}[1]{\ensuremath{^{\textrm{#1}}}}
 \newcommand{\subscript}[1]{\ensuremath{_{\textrm{#1}}}}
-
 \usepackage{amssymb,amsmath}
 
 \definecolor{mygrey}{gray}{.96} % Light Grey
 \lstset{ 
-        language=[ISO]C++,              
-        tabsize=3,                                                     
-        basicstyle=\tiny,               
-        numbers=left,                   
-        numberstyle=\tiny,              
-        stepnumber=2,                   
-        numbersep=5pt,                  
-        backgroundcolor=\color{white}, 
-        %showspaces=false,              
-        %showstringspaces=false,        
-        %showtabs=false,                
-        frame=single,                    
-        tabsize=3,                          
-        captionpos=b,                   
-        breaklines=true,                
-        breakatwhitespace=false,        
-        %escapeinside={\%*}{*)},        
-        commentstyle=\color{BrickRed}   
+  basicstyle=\tiny,               
+  stepnumber=2,                   
+  frame=single,                    
+  tabsize=3,                          
+  captionpos=b,                   
+  breaklines=true,                
+  breakatwhitespace=false,        
 }
 
 \title{University of Michigan \\\\

@@ -144,7 +144,6 @@ alias po='popd'
 alias d='dirs -v'
 alias fm='thunar "$(pwd)"'
 alias less='less -i'
-alias emacs='myemacs'
 alias snes9x='snes9x -conf ${HOME}/.snes96_snapshots/snes9x.conf'
 alias ec='emacsclient -c'
 alias u='df -h .'
@@ -212,7 +211,6 @@ if [ $? -eq 0 ]; then
     export LESS=' -R'
 fi
 
-export SVN_EDITOR=myemacs
 export PYTHONSTARTUP=~/.pythonrc
 
 [ -d ${HOME}/texpath ] && export TEXINPUTS=.:~/texpath:~/texpath/images:$TEXINPUTS
