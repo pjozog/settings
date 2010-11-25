@@ -110,6 +110,7 @@
 (add-to-list 'load-path
 	     "~/.emacs.d/lisp")
 
+(require 'htmlize)
 (require 'matlab)
 
 ;;associate .m files with matlab-mode

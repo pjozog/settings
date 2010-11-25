@@ -1,5 +1,5 @@
 #!/bin/sh
 
-xfce4-terminal --hide-menubar --geometry 125x40 "$@"
+gnome-terminal --hide-menubar --geometry 125x40 "$@"
 
 #Eterm -F lime -sl 1000 --buttonbar 0 -c red -b black -f white -g 95x55
