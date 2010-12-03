@@ -118,19 +118,19 @@ else
     alias ls='ls --color=always -CF'
 fi
 
-function pu {
-    arg="$1"
-    fullname=$(readlink -f "$arg")
-    match=$(dirs -v | sed 's@~@'${HOME}'@' | egrep "[0-9] +$fullname"'$')
-    if [ $? -eq 0 ]; then
-	num=$(echo $match | awk '{print $1}')
-	echo $num
-	pushd +$num > /dev/null 2>&1
-    else
-	pushd $arg > /dev/null 2>&1
-    fi
-    unset arg match fullname num
-}
+# function pu {
+#     arg="$1"
+#     fullname=$(readlink -f "$arg")
+#     match=$(dirs -v | sed 's@~@'${HOME}'@' | egrep "[0-9] +$fullname"'$')
+#     if [ $? -eq 0 ]; then
+# 	num=$(echo $match | awk '{print $1}')
+# 	echo $num
+# 	pushd +$num > /dev/null 2>&1
+#     else
+# 	pushd $arg > /dev/null 2>&1
+#     fi
+#     unset arg match fullname num
+# }
 
 alias l='ls'
 alias ll='ls -lh'
@@ -139,7 +139,7 @@ alias ds='du --max-depth=1 -h'
 alias g='grep --color=auto'
 alias gg='grep --color=always'
 alias eg='egrep --color=auto'
-#alias pu='pushd' #see above function
+alias pu='pushd' #see above function
 alias po='popd'
 alias d='dirs -v'
 alias fm='thunar "$(pwd)"'
