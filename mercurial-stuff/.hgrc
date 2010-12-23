@@ -4,5 +4,6 @@ username = Paul Ozog
 [extensions]
 extdiff =
 convert =
+graphlog =
 
 [auth]

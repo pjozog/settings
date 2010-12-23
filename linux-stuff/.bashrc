@@ -166,7 +166,7 @@ function sl() {
 alias ss='svn status'
 alias hd='hg extdiff -p meld'
 function hl() {
-    hg log -v "$1" | less
+    hg glog -v "$1" | less
 }
 
 function hs() {
