@@ -35,8 +35,8 @@
       <item label="Neverball">
 	<action name="Execute"><execute>neverball</execute></action>
       </item>
-      <item label="Zsnes">
-	<action name="Execute"><execute>zsnes -ad sdl</execute></action>
+      <item label="SNES9x-Gtk">
+	<action name="Execute"><execute>snes9x-gtk</execute></action>
       </item>
       <item label="NES Emulator">
 	<action name="Execute"><execute>nesgui-gtk.py</execute></action>

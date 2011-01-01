@@ -184,11 +184,10 @@ alias hrmq='rm -r $(hs | grep ^? | awk "{print \$2}")'
 function k() {
     arg="$1"
     processToKill=$(ps aux | grep "$arg" | awk '{print $2}')
-    kill -9 $processToKill 2&>1 > /dev/null
+    kill -9 $processToKill > /dev/null 2>&1
     unset processToKill arg
 }
 
-    
 #usenet .nzb function
 HELLANZBDIR=${HOME}/external/.hellanzb
 function mz() {
