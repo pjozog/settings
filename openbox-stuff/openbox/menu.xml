@@ -19,8 +19,8 @@
     <item label="Firefox">
       <action name="Execute"><execute>firefox</execute></action>
     </item>
-    <item label="Google Chrome">
-      <action name="Execute"><execute>google-chrome</execute></action>
+    <item label="Chromium Browser">
+      <action name="Execute"><execute>chromium-browser</execute></action>
     </item>
     <item label="Emacs">
       <action name="Execute"><execute>myemacs</execute></action>

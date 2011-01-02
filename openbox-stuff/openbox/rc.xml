@@ -329,7 +329,7 @@
     </keybind>
     <keybind key="C-S-g">
       <action name="Execute">
-        <command>google-chrome</command>
+        <command>chromium-browser</command>
       </action>
     </keybind>
     <keybind key="C-S-e">
