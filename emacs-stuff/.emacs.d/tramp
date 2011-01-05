@@ -139,7 +139,7 @@
   ("uid-integer" 959871)
   ("ls" "/bin/ls"))
  (["sudo" "root" "localhost" nil]
-  ("uname" "Linux 2.6.35-24-generic")
+  ("uname" "Linux 2.6.32-27-generic")
   ("test" "test")
   ("/bin" t)
   ("/usr/bin" t)
@@ -154,6 +154,7 @@
   ("remote-path"
    ("/bin" "/usr/bin" "/usr/sbin" "/usr/local/bin"))
   ("remote-shell" "/bin/sh")
+  ("~root" "/root")
   ("ls" "/bin/ls")
   ("file-exists" "test -e")
   ("stat" "\\stat")
