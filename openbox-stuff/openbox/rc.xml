@@ -36,8 +36,8 @@
        the active window is -->
   </placement>
   <theme>
-    <name>Openbox-Human-Like</name>
-    <titleLayout>NLIMC</titleLayout>
+    <name>Radiance_ob_test</name>
+    <titleLayout>CMILN</titleLayout>
     <!--
       available characters are NDSLIMC, each can occur at most once.
       N: window icon
@@ -357,8 +357,13 @@
     <screenEdgeWarpTime>400</screenEdgeWarpTime>
     <!-- Time before changing desktops when the pointer touches the edge of the
        screen while moving a window, in milliseconds (1000 = 1 second).
-       Set this to 0 to disable warping -->
+	 Set this to 0 to disable warping -->
     <context name="Frame">
+      <mousebind button="C-A-Right" action="Click">
+	<action name="Execute">
+	  <execute>gnome-screenshot -w</execute>
+	</action>
+      </mousebind>
       <mousebind button="A-Left" action="Press">
         <action name="Focus"/>
         <action name="Raise"/>
@@ -703,17 +708,18 @@
     <!-- show the manage desktops section in the client-list-(combined-)menu -->
   </menu>
   <applications>
-       <application name="playerv"
-		    class="Playerv">
-	 <decor>yes</decor>
-	 <maximized>Horizontal</maximized>
-       </application>
-
-       <application class="Meld">
-	 <decor>yes</decor>
-	 <maximized>true</maximized>
-       </application>
-
+    <application name="playerv" class="Playerv">
+      <decor>yes</decor>
+      <maximized>Horizontal</maximized>
+    </application>
+    <application class="Meld">
+      <decor>yes</decor>
+      <maximized>true</maximized>
+    </application>
+    <application class="Evince">
+      <decor>yes</decor>
+      <maximized>true</maximized>
+    </application>
     <!--
   # this is an example with comments through out. use these to make your
   # own rules, but without the comments of course.

@@ -9,7 +9,8 @@ scriptDir           = sys.path[0]
 binDir              = os.path.join(scriptDir, 'linux-stuff', 'bin')
 homeDir             = os.getenv('HOME')
 requiredDirs        = [os.path.join(homeDir, '.config'),
-                       os.path.join(homeDir, 'bin')]
+                       os.path.join(homeDir, 'bin'),
+                       os.path.join(homeDir, '.themes')]
 
 #These home dir files will be links to version controlled files
 bashrc              = os.path.join(homeDir, '.bashrc')
@@ -22,6 +23,7 @@ pythonrc            = os.path.join(homeDir, '.pythonrc')
 texpathd            = os.path.join(homeDir, 'texpath')
 hgrc                = os.path.join(homeDir, '.hgrc')
 gtkrc               = os.path.join(homeDir, '.gtkrc-mine')
+radianceTheme       = os.path.join(homeDir, '.themes', 'Radiance_ob_test')
 
 #These will be the actual version controlled files (the sources)
 bashrcSource        = os.path.join(scriptDir, 'linux-stuff', '.bashrc')
@@ -34,6 +36,7 @@ pythonrcSource      = os.path.join(scriptDir, 'linux-stuff', '.pythonrc')
 texpathdSource      = os.path.join(scriptDir, 'texpath')
 hgrcSource          = os.path.join(scriptDir, 'mercurial-stuff', '.hgrc')
 gtkrcSource         = os.path.join(scriptDir, 'linux-stuff', '.gtkrc-mine')
+radianceThemeSource = os.path.join(scriptDir, 'openbox-stuff', 'Radiance_ob_test')
 
 #make a list of tupple pairs
 sourceToDestination = { bashrcSource : bashrc,
@@ -45,7 +48,8 @@ sourceToDestination = { bashrcSource : bashrc,
                         pythonrcSource : pythonrc,
                         texpathdSource : texpathd,
                         hgrcSource : hgrc,
-                        gtkrcSource : gtkrc }
+                        gtkrcSource : gtkrc,
+                        radianceThemeSource : radianceTheme}
 
 #add all the stuff in the 'bin' directory to sourceToDestination
 for basename in os.listdir(binDir):

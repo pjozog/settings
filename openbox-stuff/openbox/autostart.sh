@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export GTK2_RC_FILES=/usr/share/themes/Clearlooks/gtk-2.0/gtkrc:${HOME}/.gtkrc-mine
+export GTK2_RC_FILES=/usr/share/themes/Radiance/gtk-2.0/gtkrc:${HOME}/.gtkrc-mine
 export OOO_FORCE_DESKTOP='gnome'
 
 #Temporary fix for latex files being used in openbox
