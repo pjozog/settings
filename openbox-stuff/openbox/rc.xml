@@ -359,9 +359,14 @@
        screen while moving a window, in milliseconds (1000 = 1 second).
 	 Set this to 0 to disable warping -->
     <context name="Frame">
-      <mousebind button="C-A-Right" action="Click">
+      <mousebind button="Button13" action="Click">
 	<action name="Execute">
 	  <execute>gnome-screenshot -w</execute>
+	</action>
+      </mousebind>
+      <mousebind button="Button15" action="Click">
+	<action name="Execute">
+	  <execute>gnome-screenshot</execute>
 	</action>
       </mousebind>
       <mousebind button="A-Left" action="Press">
