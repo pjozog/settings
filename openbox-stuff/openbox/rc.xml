@@ -348,6 +348,11 @@
     <keybind key="C-S-i">
       <action name="Iconify"/>
     </keybind>
+    <keybind key="0xe1">
+      <action name="Execute">
+	<command>captureScreen -s</command>
+      </action>
+    </keybind>
   </keyboard>
   <mouse>
     <dragThreshold>8</dragThreshold>
@@ -359,15 +364,23 @@
        screen while moving a window, in milliseconds (1000 = 1 second).
 	 Set this to 0 to disable warping -->
     <context name="Frame">
-      <mousebind button="Button13" action="Click">
-	<action name="Execute">
-	  <execute>gnome-screenshot -w</execute>
-	</action>
+      <mousebind button="Button8" action="Click">
+      	<action name="Execute">
+      	  <execute>captureScreen</execute>
+      	</action>
       </mousebind>
-      <mousebind button="Button15" action="Click">
-	<action name="Execute">
-	  <execute>gnome-screenshot</execute>
-	</action>
+      <mousebind button="Button9" action="Click">
+      	<action name="Execute">
+      	  <execute>captureScreen -u</execute>
+      	</action>
+      </mousebind>
+      <mousebind button="Button15" action="Press">
+        <action name="ShowMenu">
+          <menu>client-list-combined-menu</menu>
+        </action>
+      </mousebind>
+      <mousebind button="Button13" action="Press">
+        <action name="ToggleShowDesktop"/>
       </mousebind>
       <mousebind button="A-Left" action="Press">
         <action name="Focus"/>
@@ -665,6 +678,14 @@
     </context>
     <context name="Root">
       <!-- Menus -->
+      <mousebind button="Button15" action="Press">
+        <action name="ShowMenu">
+          <menu>client-list-combined-menu</menu>
+        </action>
+      </mousebind>
+      <mousebind button="Button13" action="Press">
+        <action name="ToggleShowDesktop"/>
+      </mousebind>
       <mousebind button="Middle" action="Press">
         <action name="ShowMenu">
           <menu>client-list-combined-menu</menu>
