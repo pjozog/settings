@@ -142,7 +142,7 @@ alias eg='egrep --color=auto'
 alias pu='pushd' #see above function
 alias po='popd'
 alias d='dirs -v'
-alias fm='thunar "$(pwd)"'
+alias fm='nautilus --no-desktop "$(pwd)"'
 alias less='less -i'
 alias emacs='myemacs'
 alias snes9x='snes9x -conf ${HOME}/.snes96_snapshots/snes9x.conf'
