@@ -39,6 +39,11 @@
 \begin{titlepage}
   \maketitle
   \thispagestyle{empty}
+  \begin{figure}
+    \begin{center}
+      \includegraphics{wordmark}
+    \end{center}
+  \end{figure}
 \end{titlepage}
 
 \tableofcontents

@@ -113,9 +113,12 @@
 
 (require 'htmlize)
 (require 'matlab)
+(require 'cmake-mode)
 
 ;;associate .m files with matlab-mode
 (setq auto-mode-alist (cons '("\\.m$" . matlab-mode) auto-mode-alist))
+;;associate CMakeLists.txt files with matlab-mode
+(setq auto-mode-alist (cons '("CMakeLists\\.txt$" . cmake-mode) auto-mode-alist))
 ;;turn off that god-damned line wrapping
 (setq matlab-fill-code nil)
 
