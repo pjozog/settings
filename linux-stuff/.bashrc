@@ -217,3 +217,6 @@ export PYTHONSTARTUP=~/.pythonrc
 [ -d ${HOME}/texpath ] && export TEXINPUTS=.:~/texpath:~/texpath/images:$TEXINPUTS
 [ -d ${HOME}/texpath ] && export BSTINPUTS=.:~/texpath:$BSTINPUTS
 [ -d ${HOME}/texpath ] && export BIBINPUTS=.:~/texpath:$BIBINPUTS
+
+[ -d ${HOME}/lib64/python ] && export PYTHONPATH=$PYTHONPATH:~/lib64/python
+
