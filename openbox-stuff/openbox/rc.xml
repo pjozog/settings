@@ -200,12 +200,6 @@
         <wrap>no</wrap>
       </action>
     </keybind>
-    <keybind key="S-A-Up">
-      <action name="SendToDesktopUp">
-        <dialog>no</dialog>
-        <wrap>no</wrap>
-      </action>
-    </keybind>
     <keybind key="S-A-Down">
       <action name="SendToDesktopDown">
         <dialog>no</dialog>
@@ -307,7 +301,7 @@
         <command>myterm</command>
       </action>
     </keybind>
-    <keybind key="C-S-n">
+    <keybind key="C-A-n">
       <action name="Execute">
         <command>nautilus --no-desktop</command>
       </action>
@@ -342,15 +336,56 @@
         <command>mypython</command>
       </action>
     </keybind>
+    <keybind key="C-S-v">
+      <action name="Execute">
+        <command>nvidia-settings</command>
+      </action>
+    </keybind>
     <keybind key="C-S-m">
       <action name="ToggleMaximizeFull"/>
     </keybind>
-    <keybind key="C-S-i">
-      <action name="Iconify"/>
+    <keybind key="C-A-i">
+      <action name="MoveToEdgeNorth"/>
+    </keybind>
+    <keybind key="C-A-k">
+      <action name="MoveToEdgeSouth"/>
+    </keybind>
+    <keybind key="C-A-j">
+      <action name="MoveToEdgeWest"/>
+      <action name="ToggleMaximizeVert"/>
+    </keybind>
+    <keybind key="C-A-l">
+      <action name="MoveToEdgeEast"/>
+      <action name="ToggleMaximizeVert"/>
+    </keybind>
+    <keybind key="C-A-f">
+      <action name="ResizeRelative">
+	<left>-5</left>
+      </action>
+    </keybind>
+    <keybind key="C-A-b">
+      <action name="ResizeRelative">
+	<left>5</left>
+      </action>
+    </keybind>
+    <keybind key="C-A-e">
+      <action name="ResizeRelative">
+	<right>5</right>
+      </action>
+    </keybind>
+    <keybind key="C-A-w">
+      <action name="ResizeRelative">
+	<right>-5</right>
+      </action>
     </keybind>
     <keybind key="0xe1">
       <action name="Execute">
 	<command>captureScreen -s</command>
+      </action>
+    </keybind>
+    <keybind key="0x94">
+      <action name="Execute">
+	<command>gnome-calculator</command>
       </action>
     </keybind>
   </keyboard>

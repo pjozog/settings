@@ -14,10 +14,14 @@ gnome-keyring-daemon
 
 rr
 
-xrandr -q | grep -q 'VGA1 connected' && Esetroot ~/pics/netwall/lava_mario_dual.jpg || Esetroot -s ~/pics/netwall/lava_mario.jpg
+[ $HOSTNAME = paul-box ] && Esetroot currentWallpaper
+
+xrandr -q | grep -q 'VGA1 connected' && Esetroot currentWallpaper || Esetroot -s ~/pics/netwall/lava_mario.jpg
 
 gnome-power-manager &
 gnome-volume-control-applet &
 gnome-panel &
 checkgmail &
 nm-applet &
+
+xscreensaver -no-splash &
