@@ -24,7 +24,7 @@
 \newcommand{\subscript}[1]{\ensuremath{_{\textrm{#1}}}}
 \usepackage{amssymb,amsmath}
 
-\title{University of Michigan \\\\
+\title{
   Electrical Engineering and Computer Science \\\\
   - \\\\
   ${1:LINE1} \\\\
@@ -37,13 +37,13 @@
 \begin{document}
 
 \begin{titlepage}
-  \maketitle
-  \thispagestyle{empty}
   \begin{figure}
     \begin{center}
       \includegraphics{wordmark}
     \end{center}
   \end{figure}
+  \maketitle
+  \thispagestyle{empty}
 \end{titlepage}
 
 \tableofcontents
