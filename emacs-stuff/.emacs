@@ -1,3 +1,7 @@
+(defun confess-faith ()
+  (interactive)
+  (message "There is no system but GNU and Linux is one of its kernels"))
+
 (custom-set-variables
   ;; custom-set-variables was added by Custom.
   ;; If you edit it by hand, you could mess it up, so be careful.
@@ -13,7 +17,7 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "#000000" :foreground "#ffffff" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 80 :width normal :foundry "unknown" :family "DejaVu Sans Mono"))))
+ '(default ((t (:inherit nil :stipple nil :background "#000000" :foreground "#ffffff" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "unknown" :family "DejaVu Sans Mono"))))
  '(cursor ((t (:background "red"))))
  '(font-latex-string-face ((((class color) (background dark)) (:foreground "red"))))
  '(font-lock-string-face ((nil (:foreground "red")))))
@@ -114,6 +118,7 @@
 (require 'htmlize)
 (require 'matlab)
 (require 'cmake-mode)
+(require 'lua-mode)
 
 ;;associate .m files with matlab-mode
 (setq auto-mode-alist (cons '("\\.m$" . matlab-mode) auto-mode-alist))
@@ -188,4 +193,3 @@
   (replace-regexp "(" "\\\\left(")
   (exchange-point-and-mark)
   (replace-regexp ")" "\\\\right)"))
-

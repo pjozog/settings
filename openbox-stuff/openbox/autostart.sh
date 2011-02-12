@@ -10,13 +10,19 @@ eval "$(grep 'export ...INPUTS=' ~/.bashrc)"
 [ -f ${HOME}/swapcaps ] && xmodmap swapcaps
 [ -f ${HOME}/.xmodmap  ] && xmodmap .xmodmap
 
-gnome-keyring-daemon
+[ which wmname > /dev/null ] && wmname LG3D
 
 rr
 
-[ $HOSTNAME = paul-box ] && Esetroot currentWallpaper
+xmodmap -e "remove mod4 = grave"
+xmodmap -e "remove mod1 = Alt_R"
+xmodmap -e "add mod4 = Alt_R"
 
-xrandr -q | grep -q 'VGA1 connected' && Esetroot currentWallpaper || Esetroot -s ~/pics/netwall/lava_mario.jpg
+if [ -f ${HOME}/currentWallpaper ]; then
+    Esetroot ${HOME}/currentWallpaper    
+else
+    xrandr -q | grep -q 'VGA1 connected' && Esetroot currentWallpaper || Esetroot -s ~/pics/netwall/lava_mario.jpg
+fi
 
 gnome-power-manager &
 gnome-volume-control-applet &

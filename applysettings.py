@@ -17,6 +17,7 @@ bashrc              = os.path.join(homeDir, '.bashrc')
 emacs               = os.path.join(homeDir, '.emacs')
 emacsd              = os.path.join(homeDir, '.emacs.d')
 openboxd            = os.path.join(homeDir, '.config', 'openbox')
+awesomed            = os.path.join(homeDir, '.config', 'awesome')
 fontsconf           = os.path.join(homeDir, '.fonts.conf')
 dircolors           = os.path.join(homeDir, '.dircolors')
 pythonrc            = os.path.join(homeDir, '.pythonrc')
@@ -30,6 +31,7 @@ bashrcSource        = os.path.join(scriptDir, 'linux-stuff', '.bashrc')
 emacsSource         = os.path.join(scriptDir,  'emacs-stuff', '.emacs')
 emacsdSource        = os.path.join(scriptDir,  'emacs-stuff', '.emacs.d')
 openboxdSource      = os.path.join(scriptDir, 'openbox-stuff', 'openbox')
+awesomedSource      = os.path.join(scriptDir, 'awesome-stuff', 'awesome')
 fontsconfSource     = os.path.join(scriptDir, 'linux-stuff', '.fonts.conf')
 dircolorsSource     = os.path.join(scriptDir, 'linux-stuff', '.dircolors')
 pythonrcSource      = os.path.join(scriptDir, 'linux-stuff', '.pythonrc')
@@ -43,6 +45,7 @@ sourceToDestination = { bashrcSource : bashrc,
                         emacsSource : emacs,
                         emacsdSource : emacsd,
                         openboxdSource : openboxd,
+                        awesomedSource : awesomed,
                         fontsconfSource : fontsconf,
                         dircolorsSource : dircolors,
                         pythonrcSource : pythonrc,
