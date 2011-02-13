@@ -202,7 +202,7 @@ globalkeys = awful.util.table.join(
     -- My favorite programs
     awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),
     awful.key({ modkey, "Shift"   }, "f", function () awful.util.spawn("firefox") end),
-    awful.key({ modkey, "Shift"   }, "g", function () awful.util.spawn("chromium-browser") end),
+    awful.key({ modkey, "Shift"   }, "g", function () awful.util.spawn("google-chrome") end),
     awful.key({ modkey, "Shift"   }, "e", function () awful.util.spawn("myemacs") end),
     awful.key({ modkey, "Shift"   }, "n", function () awful.util.spawn("nautilus --no-desktop") end),
     awful.key({ modkey, "Shift"   }, "a", function () awful.util.spawn("matlab -nodesktop") end),

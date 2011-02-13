@@ -10,7 +10,8 @@ eval "$(grep 'export ...INPUTS=' ~/.bashrc)"
 [ -f ${HOME}/swapcaps ] && xmodmap swapcaps
 [ -f ${HOME}/.xmodmap  ] && xmodmap .xmodmap
 
-[ which wmname > /dev/null ] && wmname LG3D
+which wmname > /dev/null 2>&1
+[ $? -eq 0 ] &&  wmname LG3D
 
 rr
 
