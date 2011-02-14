@@ -162,7 +162,8 @@
 (yas/load-directory "~/.emacs.d/plugins/yasnippet-0.6.1c/snippets")
 
 (open-filelist '("~/.emacs" "~/.bashrc" "~/.config/openbox/menu.xml"
-		 "~/.config/openbox/rc.xml" "~/.config/openbox/autostart.sh"))
+		 "~/.config/openbox/rc.xml" "~/.config/openbox/autostart.sh"
+		 "~/.config/awesome/rc.lua"))
 (switch-to-buffer "*scratch*")
 
 

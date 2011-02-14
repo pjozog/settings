@@ -24,7 +24,6 @@ fi
 
 gnome-power-manager &
 gnome-volume-control-applet &
-gnome-panel &
 checkgmail &
 nm-applet &
 
