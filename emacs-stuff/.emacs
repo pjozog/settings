@@ -119,7 +119,10 @@
 (require 'matlab)
 (require 'cmake-mode)
 (require 'lua-mode)
-(require 'paredit)
+(require 'autopair)
+
+;;turn on autopair-mode
+(autopair-global-mode 1)
 
 ;;associate .m files with matlab-mode
 (setq auto-mode-alist (cons '("\\.m$" . matlab-mode) auto-mode-alist))
