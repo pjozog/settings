@@ -120,6 +120,7 @@
 (require 'cmake-mode)
 (require 'lua-mode)
 (require 'autopair)
+(require 'unbound)
 
 ;;turn on autopair-mode
 (autopair-global-mode 1)
