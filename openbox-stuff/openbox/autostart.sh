@@ -19,7 +19,7 @@ xmodmap -e "add mod4 = Alt_R"
 if [ -f ${HOME}/currentWallpaper ]; then
     Esetroot ${HOME}/currentWallpaper    
 else
-    xrandr -q | grep -q 'VGA1 connected' && Esetroot currentWallpaper || Esetroot -s ~/pics/netwall/lava_mario.jpg
+    Esetroot -s ~/pics/netwall/lava_mario.jpg
 fi
 
 gnome-power-manager &
