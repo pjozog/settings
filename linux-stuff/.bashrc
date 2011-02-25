@@ -219,3 +219,5 @@ export PYTHONSTARTUP=~/.pythonrc
 [ -d ${HOME}/texpath ] && export BIBINPUTS=.:~/texpath:$BIBINPUTS
 
 [ -d ${HOME}/lib64/python ] && export PYTHONPATH=$PYTHONPATH:~/lib64/python
+
+alias m='wmname LG3D; matlab'

@@ -166,7 +166,7 @@
   ("remote-decoding" "base64 -d")
   ("uid-integer" 959871))
  (["sudo" "root" "localhost" nil]
-  ("uname" "Linux 2.6.32-27-generic")
+  ("uname" "Linux 2.6.32-28-generic")
   ("test" "test")
   ("/bin" t)
   ("/usr/bin" t)
@@ -190,5 +190,4 @@
   ("local-encoding" base64-encode-region)
   ("local-decoding" base64-decode-region)
   ("remote-encoding" "base64")
-  ("remote-decoding" "base64 -d")
-  ("~root" "/root")))
+  ("remote-decoding" "base64 -d")))
