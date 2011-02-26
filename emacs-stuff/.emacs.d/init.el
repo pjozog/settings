@@ -9,6 +9,7 @@
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
  '(LaTeX-command "latex -shell-escape")
+ '(inhibit-default-init t)
  '(inhibit-startup-screen t)
  '(jabber-account-list (quote (("pjozog@gmail.com" (:network-server . "talk.google.com") (:connection-type . ssl)))))
  '(org-hide-leading-stars t)
