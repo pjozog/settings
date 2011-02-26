@@ -1,3 +1,4 @@
+;; Recite the holy words
 (defun confess-faith ()
   (interactive)
   (message "There is no system but GNU and Linux is one of its kernels"))
@@ -22,15 +23,22 @@
  '(font-latex-string-face ((((class color) (background dark)) (:foreground "red"))))
  '(font-lock-string-face ((nil (:foreground "red")))))
 
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
-(ido-mode 1)
-
-;; disable highlighting when selecting mark
-(transient-mark-mode)
-
 (setq my-emacs-version (nth 2 (split-string (emacs-version))))
+
+;; --------------------------------------------------
+;; Function definitions
+;; --------------------------------------------------
+(defun word-count nil "Count words in buffer" (interactive)
+  (shell-command-on-region (point-min) (point-max) "wc -w"))
+
+(defun char-count nil "Count words in buffer" (interactive)
+  (shell-command-on-region (point-min) (point-max) "wc -m"))
+
+(defun paren-latex ()
+  (interactive)
+  (replace-regexp "(" "\\\\left(")
+  (exchange-point-and-mark)
+  (replace-regexp ")" "\\\\right)"))
 
 (defun goto-tag ()
   (interactive)
@@ -82,16 +90,98 @@
       (setq list (cdr list)))
     returnList))
 
-;; Add color to a shell running in emacs 'M-x shell'
+(defun find-file-this ()
+  (interactive)
+   (find-file buffer-file-name))
+
+;; --------------------------------------------------
+;; Packages / Minor modes / Keybindings
+;; --------------------------------------------------
+;; append my stuff to load-path
+(add-to-list 'load-path
+	     "~/.emacs.d/lisp")
+(add-to-list 'load-path
+	     "~/.emacs.d/plugins/yasnippet-0.6.1c")
+(add-to-list 'load-path
+	     "~/.emacs.d/plugins")
+
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+
+(ido-mode 1)
+
+(transient-mark-mode -1)
+
+;; This makes color work in 'M-x shell'
 (autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
+
+(setq mouse-yank-at-point t)
+
+(show-paren-mode)
+
+
+(require 'htmlize)
+(require 'matlab)
+(require 'cmake-mode)
+(require 'lua-mode)
+(require 'autopair)
+(require 'unbound)
+(require 'yasnippet)
+(require 'color-theme)
+(require 'linum)
+
+;;turn on autopair-mode
+(autopair-global-mode 1)
+
+(global-set-key "\M-\r" 'shell-resync-dirs)
+(global-set-key "\C-cf" 'find-file-this)
+;(global-set-key "\M-." 'goto-tag)
+(global-set-key "\C-xv=" 'ediff-revision)
+(global-set-key "\C-c\C-g" 'compile)
+
+(global-linum-mode)
+
+(setq ediff-split-window-function 'split-window-horizontally)
+
+(put 'upcase-region 'disabled nil)
+
+;; Saumitro's color theme
+(load "twilight")
+(color-theme-twilight)
+
+(if (file-exists-p "~/TAGS")
+    (visit-tags-table "~/TAGS"))
+
+(yas/initialize)
+(yas/load-directory "~/.emacs.d/plugins/yasnippet-0.6.1c/snippets")
+
+(put 'downcase-region 'disabled nil)
+
+(load "auctex.el" nil t t)
+(setq TeX-auto-save t)
+(setq TeX-parse-self t)
+
+(load "preview-latex.el" nil t t)
+
+;; --------------------------------------------------
+;; Language-specific settings
+;; --------------------------------------------------
+(setq auto-mode-alist (cons '("\\.m$" . matlab-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("CMakeLists\\.txt$" . cmake-mode) auto-mode-alist))
+(setq matlab-fill-code nil)
+
+;; --------------------------------------------------
+;; My hooks
+;; --------------------------------------------------
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
-;;Make CamelCase the default
 (defun my-camel-case-hook ()
   (if (version< my-emacs-version "23.2.1")
       (c-subword-mode 1)
     (subword-mode 1)))
 
+;; apply CamelCase hooks
 (let (modeList)
   (setq modeList '(python-mode-hook 
 		   java-mode-hook
@@ -106,97 +196,23 @@
 			       (hs-minor-mode)
 			       (global-set-key [f1] 'hs-hide-all)
 			       (global-set-key [(control tab)] 'hs-toggle-hiding)))
-
     (setq modeList (cdr modeList))))
 
-;;(server-start)
-(setq mouse-yank-at-point t)
-(show-paren-mode)
-
-(add-to-list 'load-path
-	     "~/.emacs.d/lisp")
-
-(require 'htmlize)
-(require 'matlab)
-(require 'cmake-mode)
-(require 'lua-mode)
-(require 'autopair)
-(require 'unbound)
-
-;;turn on autopair-mode
-(autopair-global-mode 1)
-
-;;associate .m files with matlab-mode
-(setq auto-mode-alist (cons '("\\.m$" . matlab-mode) auto-mode-alist))
-;;associate CMakeLists.txt files with matlab-mode
-(setq auto-mode-alist (cons '("CMakeLists\\.txt$" . cmake-mode) auto-mode-alist))
-;;turn off that god-damned line wrapping
-(setq matlab-fill-code nil)
-
-(global-set-key "\M-\r" 'shell-resync-dirs)
-(global-set-key "\C-cf" 'find-file-this)
-;(global-set-key "\M-." 'goto-tag)
-(global-set-key "\C-xv=" 'ediff-revision)
-(global-set-key "\C-c\C-g" 'compile)
-
-(require 'linum)
-(global-linum-mode)
-
-(setq ediff-split-window-function 'split-window-horizontally)
-
-(put 'upcase-region 'disabled nil)
-
-;; Saumitro's color theme
-(require 'color-theme)
-(load "twilight")
-(color-theme-twilight)
-
-(if (file-exists-p "~/TAGS")
-    (visit-tags-table "~/TAGS"))
-
-(defun find-file-this ()
-  (interactive)
-   (find-file buffer-file-name))
-
-(add-to-list 'load-path
-	     "~/.emacs.d/plugins/yasnippet-0.6.1c")
-(add-to-list 'load-path
-	     "~/.emacs.d/plugins")
-
-(require 'yasnippet) ;; not yasnippet-bundle
-(yas/initialize)
-(yas/load-directory "~/.emacs.d/plugins/yasnippet-0.6.1c/snippets")
-
-(open-filelist '("~/.emacs" "~/.bashrc" "~/.config/openbox/menu.xml"
-		 "~/.config/openbox/rc.xml" "~/.config/openbox/autostart.sh"
-		 "~/.config/awesome/rc.lua"))
-(switch-to-buffer "*scratch*")
-
-
-(put 'downcase-region 'disabled nil)
-
-(load "auctex.el" nil t t)
-(setq TeX-auto-save t)
-(setq TeX-parse-self t)
+;; apply LaTeX hooks (spellcheck, etc.)
 (add-hook 'LaTeX-mode-hook (lambda ()
 			     (flyspell-mode)
 			     (outline-minor-mode)
 			     (auto-fill-mode)))
 
-(load "preview-latex.el" nil t t)
-
+;; this makes control-tab function like org-mode
 (add-hook 'outline-minor-mode-hook
-  (lambda ()
-    (define-key outline-minor-mode-map [(control tab)] 'org-cycle)))
+	  (lambda ()
+	    (define-key outline-minor-mode-map [(control tab)] 'org-cycle)))
 
-(defun word-count nil "Count words in buffer" (interactive)
-  (shell-command-on-region (point-min) (point-max) "wc -w"))
-
-(defun char-count nil "Count words in buffer" (interactive)
-  (shell-command-on-region (point-min) (point-max) "wc -m"))
-
-(defun paren-latex ()
-  (interactive)
-  (replace-regexp "(" "\\\\left(")
-  (exchange-point-and-mark)
-  (replace-regexp ")" "\\\\right)"))
+;;--------------------------------------------------
+;; Open my favorite files and start rocking!
+;;--------------------------------------------------
+(open-filelist '("~/.emacs.d/init.el" "~/.bashrc" "~/.config/openbox/menu.xml"
+		 "~/.config/openbox/rc.xml" "~/.config/openbox/autostart.sh"
+		 "~/.config/awesome/rc.lua"))
+(switch-to-buffer "*scratch*")
