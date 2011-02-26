@@ -14,7 +14,6 @@ requiredDirs        = [os.path.join(homeDir, '.config'),
 
 #These home dir files will be links to version controlled files
 bashrc              = os.path.join(homeDir, '.bashrc')
-emacs               = os.path.join(homeDir, '.emacs')
 emacsd              = os.path.join(homeDir, '.emacs.d')
 openboxd            = os.path.join(homeDir, '.config', 'openbox')
 awesomed            = os.path.join(homeDir, '.config', 'awesome')
@@ -28,7 +27,6 @@ radianceTheme       = os.path.join(homeDir, '.themes', 'Radiance_ob_test')
 
 #These will be the actual version controlled files (the sources)
 bashrcSource        = os.path.join(scriptDir, 'linux-stuff', '.bashrc')
-emacsSource         = os.path.join(scriptDir,  'emacs-stuff', '.emacs')
 emacsdSource        = os.path.join(scriptDir,  'emacs-stuff', '.emacs.d')
 openboxdSource      = os.path.join(scriptDir, 'openbox-stuff', 'openbox')
 awesomedSource      = os.path.join(scriptDir, 'awesome-stuff', 'awesome')
@@ -42,7 +40,6 @@ radianceThemeSource = os.path.join(scriptDir, 'openbox-stuff', 'Radiance_ob_test
 
 #make a list of tupple pairs
 sourceToDestination = { bashrcSource : bashrc,
-                        emacsSource : emacs,
                         emacsdSource : emacsd,
                         openboxdSource : openboxd,
                         awesomedSource : awesomed,
