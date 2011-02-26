@@ -212,7 +212,7 @@
 ;;--------------------------------------------------
 ;; Open my favorite files and start rocking!
 ;;--------------------------------------------------
-(open-filelist '("~/.emacs.d/init.el" "~/.bashrc" "~/.config/openbox/menu.xml"
-		 "~/.config/openbox/rc.xml" "~/.config/openbox/autostart.sh"
+(open-filelist '("~/.emacs.d/init.el" "~/.bashrc"
+		 "~/.config/openbox/autostart.sh"
 		 "~/.config/awesome/rc.lua"))
 (switch-to-buffer "*scratch*")

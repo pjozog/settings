@@ -268,32 +268,32 @@ end
 -- This should map on the top row of your keyboard, usually 1 to 9.
 for i = 1, keynumber do
    globalkeys = awful.util.table.join(globalkeys,
-				      awful.key({ modkey }, "#" .. i + 9,
-						function ()
-						   local screen = mouse.screen
-						   if tags[screen][i] then
-						      awful.tag.viewonly(tags[screen][i])
-						   end
-						end),
-				      awful.key({ modkey, "Control" }, "#" .. i + 9,
-						function ()
-						   local screen = mouse.screen
-						   if tags[screen][i] then
-						      awful.tag.viewtoggle(tags[screen][i])
-						   end
-						end),
-				      awful.key({ modkey, "Shift" }, "#" .. i + 9,
-						function ()
-						   if client.focus and tags[client.focus.screen][i] then
-						      awful.client.movetotag(tags[client.focus.screen][i])
-						   end
-						end),
-				      awful.key({ modkey, "Control", "Shift" }, "#" .. i + 9,
-						function ()
-						   if client.focus and tags[client.focus.screen][i] then
-						      awful.client.toggletag(tags[client.focus.screen][i])
-						   end
-						end))
+      awful.key({ modkey }, "#" .. i + 9,
+	 function ()
+	    local screen = mouse.screen
+	    if tags[screen][i] then
+	       awful.tag.viewonly(tags[screen][i])
+	    end
+	 end),
+      awful.key({ modkey, "Control" }, "#" .. i + 9,
+	 function ()
+	    local screen = mouse.screen
+	    if tags[screen][i] then
+	       awful.tag.viewtoggle(tags[screen][i])
+	    end
+	 end),
+      awful.key({ modkey, "Shift" }, "#" .. i + 9,
+         function ()
+	    if client.focus and tags[client.focus.screen][i] then
+	       awful.client.movetotag(tags[client.focus.screen][i])
+	    end
+	 end),
+      awful.key({ modkey, "Control", "Shift" }, "#" .. i + 9,
+	 function ()
+	    if client.focus and tags[client.focus.screen][i] then
+	       awful.client.toggletag(tags[client.focus.screen][i])
+	    end
+	 end))
 end
 
 clientbuttons = awful.util.table.join(
@@ -329,31 +329,31 @@ awful.rules.rules = {
 -- {{{ Signals
 -- Signal function to execute when a new client appears.
 client.add_signal("manage", 
-		  function (c, startup)
-		     -- Add a titlebar
-		     -- awful.titlebar.add(c, { modkey = modkey })
+   function (c, startup)
+      -- Add a titlebar
+      -- awful.titlebar.add(c, { modkey = modkey })
 
-		     -- Enable sloppy focus
-		     c:add_signal("mouse::enter", 
-				  function(c)
-				     if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
-				     and awful.client.focus.filter(c) then
-				     client.focus = c
-				  end
-			       end)
+      -- Enable sloppy focus
+      c:add_signal("mouse::enter", 
+		   function(c)
+		      if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
+		      and awful.client.focus.filter(c) then
+		      client.focus = c
+		   end
+		end)
 
-		     if not startup then
-			-- Set the windows at the slave,
-			-- i.e. put it at the end of others instead of setting it master.
-			awful.client.setslave(c)
+      if not startup then
+	 -- Set the windows at the slave,
+	 -- i.e. put it at the end of others instead of setting it master.
+	 awful.client.setslave(c)
 
-			-- Put windows in a smart way, only if they does not set an initial position.
-			if not c.size_hints.user_position and not c.size_hints.program_position then
-			   awful.placement.no_overlap(c)
-			   awful.placement.no_offscreen(c)
-			end
-		     end
-		  end)
+	 -- Put windows in a smart way, only if they does not set an initial position.
+	 if not c.size_hints.user_position and not c.size_hints.program_position then
+	    awful.placement.no_overlap(c)
+	    awful.placement.no_offscreen(c)
+	 end
+      end
+   end)
 
 client.add_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.add_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
