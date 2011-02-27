@@ -19,7 +19,7 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "#000000" :foreground "#ffffff" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 100 :width normal :foundry "unknown" :family "DejaVu Sans Mono"))))
+ '(default ((t (:inherit nil :stipple nil :background "#000000" :foreground "#ffffff" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 80 :width normal :foundry "unknown" :family "DejaVu Sans Mono"))))
  '(cursor ((t (:background "red"))))
  '(font-latex-string-face ((((class color) (background dark)) (:foreground "red"))))
  '(font-lock-string-face ((nil (:foreground "red")))))
@@ -191,9 +191,7 @@
 		   matlab-mode-hook))
   (while modeList
     (add-hook (car modeList) (lambda ()
-			       (if (version< my-emacs-version "23.2.1")
-				   (c-subword-mode 1)
-				 (subword-mode 1))
+			       (my-camel-case-hook)
 			       (hs-minor-mode)
 			       (global-set-key [f1] 'hs-hide-all)
 			       (global-set-key [(control tab)] 'hs-toggle-hiding)))
