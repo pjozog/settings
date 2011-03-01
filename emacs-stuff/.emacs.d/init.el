@@ -140,6 +140,7 @@
 ;(global-set-key "\M-." 'goto-tag)
 (global-set-key "\C-xv=" 'ediff-revision)
 (global-set-key "\C-c\C-g" 'compile)
+(global-set-key "\C-o" 'other-window)
 
 (global-linum-mode)
 
