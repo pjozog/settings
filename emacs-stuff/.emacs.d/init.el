@@ -140,6 +140,7 @@
 ;(global-set-key "\M-." 'goto-tag)
 (global-set-key "\C-xv=" 'ediff-revision)
 (global-set-key "\C-c\C-g" 'compile)
+(global-set-key "\C-o" 'other-window)
 
 (global-linum-mode)
 
@@ -191,9 +192,7 @@
 		   matlab-mode-hook))
   (while modeList
     (add-hook (car modeList) (lambda ()
-			       (if (version< my-emacs-version "23.2.1")
-				   (c-subword-mode 1)
-				 (subword-mode 1))
+			       (my-camel-case-hook)
 			       (hs-minor-mode)
 			       (global-set-key [f1] 'hs-hide-all)
 			       (global-set-key [(control tab)] 'hs-toggle-hiding)))
