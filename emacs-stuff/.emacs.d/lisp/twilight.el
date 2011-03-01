@@ -49,7 +49,7 @@
      (font-lock-regexp-grouping-backslash ((t (:foreground "#E9C062"))))
      (font-lock-regexp-grouping-construct ((t (:foreground "red"))))
      
-     (minibuffer-prompt ((t (:foreground "#5F5A60"))))
+     (minibuffer-prompt ((t (:foreground "#FF0000"))))
      (ido-subdir ((t (:foreground "#CF6A4C"))))
      (ido-first-match ((t (:foreground "#8F9D6A"))))
      (ido-only-match ((t (:foreground "#8F9D6A"))))
