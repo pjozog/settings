@@ -190,4 +190,5 @@
   ("local-encoding" base64-encode-region)
   ("local-decoding" base64-decode-region)
   ("remote-encoding" "base64")
-  ("remote-decoding" "base64 -d")))
+  ("remote-decoding" "base64 -d")
+  ("~root" "/root")))

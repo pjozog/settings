@@ -19,7 +19,7 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "#000000" :foreground "#ffffff" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 80 :width normal :foundry "unknown" :family "DejaVu Sans Mono"))))
+ '(default ((t (:inherit nil :stipple nil :background "#000000" :foreground "#ffffff" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 100 :width normal :foundry "unknown" :family "DejaVu Sans Mono"))))
  '(cursor ((t (:background "red"))))
  '(font-latex-string-face ((((class color) (background dark)) (:foreground "red"))))
  '(font-lock-string-face ((nil (:foreground "red")))))
@@ -135,12 +135,12 @@
 ;;turn on autopair-mode
 (autopair-global-mode 1)
 
-(global-set-key "\M-\r" 'shell-resync-dirs)
-(global-set-key "\C-cf" 'find-file-this)
-;(global-set-key "\M-." 'goto-tag)
-(global-set-key "\C-xv=" 'ediff-revision)
-(global-set-key "\C-c\C-g" 'compile)
-(global-set-key "\C-o" 'other-window)
+(global-set-key [(meta return)] 'shell-resync-dirs)
+(global-set-key [(control c) (f)] 'find-file-this)
+;(global-set-key [(meta .)] 'goto-tag)
+(global-set-key [(control x) (v) (=)] 'ediff-revision)
+(global-set-key [(control c) (control g)] 'compile)
+(global-set-key [(control o)] 'other-window)
 
 (global-linum-mode)
 
