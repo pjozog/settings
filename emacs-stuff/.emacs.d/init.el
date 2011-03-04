@@ -131,6 +131,7 @@
 (require 'yasnippet)
 (require 'color-theme)
 (require 'linum)
+(require 'flymake)
 
 ;;turn on autopair-mode
 (autopair-global-mode 1)
@@ -141,6 +142,10 @@
 (global-set-key [(control x) (v) (=)] 'ediff-revision)
 (global-set-key [(control c) (control g)] 'compile)
 (global-set-key [(control o)] 'other-window)
+(global-set-key [(control s)] 'isearch-forward-regexp)
+(global-set-key [(control r)] 'isearch-backward-regexp)
+(global-set-key [(control meta s)] 'isearch-forward)
+(global-set-key [(control meta r)] 'isearch-backward)
 
 (global-linum-mode)
 
@@ -173,6 +178,10 @@
 (setq auto-mode-alist (cons '("CMakeLists\\.txt$" . cmake-mode) auto-mode-alist))
 (setq matlab-fill-code nil)
 
+;; LaTeX: Enable flymake for texlive distribution of LaTeX
+(defun flymake-get-tex-args (file-name)
+  (list "pdflatex" (list "-shell-escape" "-draftmode" "-file-line-error" "-interaction=nonstopmode" file-name)))
+
 ;; --------------------------------------------------
 ;; My hooks
 ;; --------------------------------------------------
@@ -202,7 +211,8 @@
 (add-hook 'LaTeX-mode-hook (lambda ()
 			     (flyspell-mode)
 			     (outline-minor-mode)
-			     (auto-fill-mode)))
+			     (auto-fill-mode)
+			     (flymake-mode)))
 
 ;; this makes control-tab function like org-mode
 (add-hook 'outline-minor-mode-hook
