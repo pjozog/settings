@@ -132,6 +132,7 @@
 (require 'color-theme)
 (require 'linum)
 (require 'flymake)
+(require 'flymake-cursor)
 
 ;;turn on autopair-mode
 (autopair-global-mode 1)
