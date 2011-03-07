@@ -105,6 +105,8 @@
 	     "~/.emacs.d/plugins/yasnippet-0.6.1c")
 (add-to-list 'load-path
 	     "~/.emacs.d/plugins")
+(add-to-list 'load-path
+	     "~/.emacs.d/plugins/org")
 
 (menu-bar-mode -1)
 (tool-bar-mode -1)
@@ -133,6 +135,7 @@
 (require 'linum)
 (require 'flymake)
 (require 'flymake-cursor)
+(require 'org-install)
 
 ;;turn on autopair-mode
 (autopair-global-mode 1)
@@ -171,6 +174,15 @@
 (setq TeX-parse-self t)
 
 (load "preview-latex.el" nil t t)
+
+;; Set to the location of your Org files on your local system
+(setq org-directory "~/Dropbox/MainOrg")
+;; Set to the name of the file where new notes will be stored
+(setq org-mobile-inbox-for-pull "~/org/flagged.org")
+;; Set to <your Dropbox root directory>/MobileOrg.
+(setq org-mobile-directory "~/Dropbox/MobileOrg")
+(setq org-agenda-files '("~/Dropbox/MainOrg/test.org"))
+(setq org-mobile-inbox-for-pull "~/Dropbox/MainOrg/inbox.org")
 
 ;; --------------------------------------------------
 ;; Language-specific settings
