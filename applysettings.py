@@ -24,6 +24,8 @@ texpathd            = os.path.join(homeDir, 'texpath')
 hgrc                = os.path.join(homeDir, '.hgrc')
 gtkrc               = os.path.join(homeDir, '.gtkrc-mine')
 radianceTheme       = os.path.join(homeDir, '.themes', 'Radiance_ob_test')
+xmodmap             = os.path.join(homeDir, '.xmodmap')
+swapcaps            = os.path.join(homeDir, '.swapcaps')
 
 #These will be the actual version controlled files (the sources)
 bashrcSource        = os.path.join(scriptDir, 'linux-stuff', '.bashrc')
@@ -37,19 +39,23 @@ texpathdSource      = os.path.join(scriptDir, 'texpath')
 hgrcSource          = os.path.join(scriptDir, 'mercurial-stuff', '.hgrc')
 gtkrcSource         = os.path.join(scriptDir, 'linux-stuff', '.gtkrc-mine')
 radianceThemeSource = os.path.join(scriptDir, 'openbox-stuff', 'Radiance_ob_test')
+xmodmapSource       = os.path.join(scriptDir, 'linux-stuff', '.xmodmap')
+swapcapsSource      = os.path.join(scriptDir, 'linux-stuff', '.swapcaps')
 
 #make a list of tupple pairs
-sourceToDestination = { bashrcSource : bashrc,
-                        emacsdSource : emacsd,
-                        openboxdSource : openboxd,
-                        awesomedSource : awesomed,
-                        fontsconfSource : fontsconf,
-                        dircolorsSource : dircolors,
-                        pythonrcSource : pythonrc,
-                        texpathdSource : texpathd,
-                        hgrcSource : hgrc,
-                        gtkrcSource : gtkrc,
-                        radianceThemeSource : radianceTheme}
+sourceToDestination = { bashrcSource        : bashrc,
+                        emacsdSource        : emacsd,
+                        openboxdSource      : openboxd,
+                        awesomedSource      : awesomed,
+                        fontsconfSource     : fontsconf,
+                        dircolorsSource     : dircolors,
+                        pythonrcSource      : pythonrc,
+                        texpathdSource      : texpathd,
+                        hgrcSource          : hgrc,
+                        gtkrcSource         : gtkrc,
+                        radianceThemeSource : radianceTheme,
+                        xmodmapSource       : xmodmap,
+                        swapcapsSource      : swapcaps }
 
 #add all the stuff in the 'bin' directory to sourceToDestination
 for basename in os.listdir(binDir):
