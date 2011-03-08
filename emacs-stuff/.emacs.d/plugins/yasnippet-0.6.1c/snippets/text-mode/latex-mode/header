@@ -12,7 +12,7 @@
 %% %\renewcommand{\baselinestretch}{1.5} % Uncomment for 1.5 spacing between lines
 \parindent 0pt		 % sets leading space for paragraphs
 
-
+\usepackage{mathtools}
 \usepackage{comment}
 \usepackage{minted}
 \usepackage{fullpage}
