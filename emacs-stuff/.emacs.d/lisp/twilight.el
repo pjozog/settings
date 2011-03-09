@@ -39,7 +39,7 @@
      (font-lock-builtin-face ((t (:foreground "#00D2D5"))))
      (font-lock-comment-face ((t (:foreground "#BD4BC4"))))
      ;;(font-lock-comment-face ((t (:foreground "#5F5A60"))))
-     (font-lock-constant-face ((t (:foreground "#CF6A4C"))))
+     (font-lock-constant-face ((t (:foreground "#0FAA4C"))))
      (font-lock-doc-string-face ((t (:foreground "DarkOrange"))))
      (font-lock-function-name-face ((t (:foreground "#9B703F"))))
      (font-lock-keyword-face ((t (:foreground "#D56758"))))
