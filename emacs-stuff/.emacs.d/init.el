@@ -13,7 +13,8 @@
  '(inhibit-startup-screen t)
  '(jabber-account-list (quote (("pjozog@gmail.com" (:network-server . "talk.google.com") (:connection-type . ssl)))))
  '(org-hide-leading-stars t)
- '(vc-follow-symlinks nil))
+ '(vc-follow-symlinks nil)
+ '(visible-bell t))
 (custom-set-faces
   ;; custom-set-faces was added by Custom.
   ;; If you edit it by hand, you could mess it up, so be careful.
@@ -232,6 +233,13 @@
 	  (lambda ()
 	    (define-key outline-minor-mode-map [(control tab)] 'org-cycle)))
 
+;; diable warning when killing buffers opened with emacsclient
+(remove-hook 'kill-buffer-query-functions 'server-kill-buffer-query-function)
+
+;; elisp documentation in minibuffer
+(add-hook 'emacs-lisp-mode-hook (lambda ()
+				  (turn-on-eldoc-mode)))
+
 ;;--------------------------------------------------
 ;; Open my favorite files and start rocking!
 ;;--------------------------------------------------
@@ -239,3 +247,5 @@
 		 "~/.config/openbox/autostart.sh"
 		 "~/.config/awesome/rc.lua"))
 (switch-to-buffer "*scratch*")
+
+(server-start)
