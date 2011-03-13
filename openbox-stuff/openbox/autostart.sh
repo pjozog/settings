@@ -22,6 +22,11 @@ else
     Esetroot -s ~/pics/netwall/lava_mario.jpg
 fi
 
+which nvidia-settings > /dev/null 2>&1
+if [ $? -eq 0 ]; then
+    nvidia-settings --load-config-only &
+fi
+
 gnome-power-manager &
 gnome-volume-control-applet &
 checkgmail &

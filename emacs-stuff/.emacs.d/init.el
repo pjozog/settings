@@ -233,9 +233,6 @@
 	  (lambda ()
 	    (define-key outline-minor-mode-map [(control tab)] 'org-cycle)))
 
-;; diable warning when killing buffers opened with emacsclient
-(remove-hook 'kill-buffer-query-functions 'server-kill-buffer-query-function)
-
 ;; elisp documentation in minibuffer
 (add-hook 'emacs-lisp-mode-hook (lambda ()
 				  (turn-on-eldoc-mode)))
@@ -249,3 +246,6 @@
 (switch-to-buffer "*scratch*")
 
 (server-start)
+;; diable warning when killing buffers opened with emacsclient 
+;; (must be set after calling (server-start))
+(remove-hook 'kill-buffer-query-functions 'server-kill-buffer-query-function)
