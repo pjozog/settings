@@ -61,7 +61,7 @@
      (font-lock-warning-face ((t (:background "#EE799F" :foreground "red"))))
      (gui-element ((t (:background "#D4D0C8" :foreground "black"))))
      (region ((t (:background "#27292A"))))
-     (mode-line ((t (:background "grey75" :foreground "black"))))
+     (mode-line ((t (:background "green" :foreground "black"))))
      (highlight ((t (:background "#111111"))))
      (highline-face ((t (:background "SeaGreen"))))
      (left-margin ((t (nil))))
