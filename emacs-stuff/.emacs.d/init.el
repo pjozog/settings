@@ -13,6 +13,7 @@
  '(inhibit-startup-screen t)
  '(jabber-account-list (quote (("pjozog@gmail.com" (:network-server . "talk.google.com") (:connection-type . ssl)))))
  '(org-hide-leading-stars t)
+ '(uniquify-buffer-name-style (quote forward) nil (uniquify))
  '(vc-follow-symlinks nil)
  '(visible-bell t))
 (custom-set-faces
@@ -137,6 +138,7 @@
 (require 'flymake)
 (require 'flymake-cursor)
 (require 'org-install)
+(require 'uniquify)
 
 ;;turn on autopair-mode
 (autopair-global-mode 1)
@@ -147,10 +149,6 @@
 (global-set-key [(control x) (v) (=)] 'ediff-revision)
 (global-set-key [(control c) (control g)] 'compile)
 (global-set-key [(control o)] 'other-window)
-(global-set-key [(control s)] 'isearch-forward-regexp)
-(global-set-key [(control r)] 'isearch-backward-regexp)
-(global-set-key [(control meta s)] 'isearch-forward)
-(global-set-key [(control meta r)] 'isearch-backward)
 
 (global-linum-mode)
 
