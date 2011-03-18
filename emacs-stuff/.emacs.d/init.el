@@ -149,6 +149,7 @@
 (global-set-key [(control x) (v) (=)] 'ediff-revision)
 (global-set-key [(control c) (control g)] 'compile)
 (global-set-key [(control o)] 'other-window)
+(global-set-key [(control meta |)] 'fill-region)
 
 (global-linum-mode)
 
