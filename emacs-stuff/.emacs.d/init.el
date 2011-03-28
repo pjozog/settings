@@ -189,6 +189,7 @@
 ;; --------------------------------------------------
 (setq auto-mode-alist (cons '("\\.m$" . matlab-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("CMakeLists\\.txt$" . cmake-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.lcm$" . java-mode) auto-mode-alist))
 (setq matlab-fill-code nil)
 
 ;; LaTeX: Enable flymake for texlive distribution of LaTeX
@@ -216,7 +217,6 @@
     (add-hook (car modeList) (lambda ()
 			       (my-camel-case-hook)
 			       (hs-minor-mode)
-			       (global-set-key [f1] 'hs-hide-all)
 			       (global-set-key [(control tab)] 'hs-toggle-hiding)))
     (setq modeList (cdr modeList))))
 

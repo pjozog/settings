@@ -210,6 +210,7 @@ globalkeys = awful.util.table.join(
    awful.key({ modkey, "Shift"   }, "a", function () awful.util.spawn("matlab -desktop") end),
    awful.key({ }, "XF86Calculator", function () awful.util.spawn("gnome-calculator") end),
    awful.key({ modkey, "Shift"   }, "v", function () awful.util.spawn("nvidia-settings") end),
+   awful.key({ "Meta"   }, "Space", function () awful.util.spawn("gnome-do") end),
    awful.key({ modkey, "Control" }, "r", awesome.restart),
    awful.key({ modkey, "Shift"   }, "q", awesome.quit),
 
