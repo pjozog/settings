@@ -9,6 +9,7 @@
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
  '(LaTeX-command "latex -shell-escape")
+ '(ido-ignore-files (quote ("\\`CVS/" "\\`#" "\\`.#" "\\`\\.\\./" "\\`\\./" "_region_" "\\\\.prv/" "\\auto/" "__flymake")))
  '(inhibit-default-init t)
  '(inhibit-startup-screen t)
  '(jabber-account-list (quote (("pjozog@gmail.com" (:network-server . "talk.google.com") (:connection-type . ssl)))))
@@ -34,7 +35,7 @@
 (defun word-count nil "Count words in buffer" (interactive)
   (shell-command-on-region (point-min) (point-max) "wc -w"))
 
-(defun char-count nil "Count words in buffer" (interactive)
+(defun char-count nil "Count chars in buffer" (interactive)
   (shell-command-on-region (point-min) (point-max) "wc -m"))
 
 (defun paren-latex ()
@@ -123,7 +124,7 @@
 
 (setq mouse-yank-at-point t)
 
-(show-paren-mode)
+(show-paren-mode 1)
 
 
 (require 'htmlize)
@@ -151,7 +152,7 @@
 (global-set-key [(control o)] 'other-window)
 (global-set-key [(control meta |)] 'fill-region)
 
-(global-linum-mode)
+(global-linum-mode 1)
 
 (setq ediff-split-window-function 'split-window-horizontally)
 
@@ -217,7 +218,8 @@
     (add-hook (car modeList) (lambda ()
 			       (my-camel-case-hook)
 			       (hs-minor-mode)
-			       (global-set-key [(control tab)] 'hs-toggle-hiding)))
+			       (global-set-key [(control tab)] 'hs-toggle-hiding)
+			       (follow-mode)))
     (setq modeList (cdr modeList))))
 
 ;; apply LaTeX hooks (spellcheck, etc.)
