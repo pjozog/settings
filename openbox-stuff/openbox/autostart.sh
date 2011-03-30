@@ -27,6 +27,11 @@ if [ $? -eq 0 ]; then
     nvidia-settings --load-config-only &
 fi
 
+which dropbox > /dev/null 2>&1
+if [ $? -eq 0 ]; then
+    dropbox start -i &
+fi
+
 gnome-power-manager &
 gnome-volume-control-applet &
 checkgmail &
