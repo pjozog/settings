@@ -13,6 +13,7 @@
  '(inhibit-default-init t)
  '(inhibit-startup-screen t)
  '(jabber-account-list (quote (("pjozog@gmail.com" (:network-server . "talk.google.com") (:connection-type . ssl)))))
+ '(org-agenda-files (quote ("~/Dropbox/org/projects.org")))
  '(org-hide-leading-stars nil)
  '(uniquify-buffer-name-style (quote forward) nil (uniquify))
  '(vc-follow-symlinks nil)
@@ -25,7 +26,9 @@
  '(default ((t (:inherit nil :stipple nil :background "#000000" :foreground "#ffffff" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 100 :width normal :foundry "unknown" :family "DejaVu Sans Mono"))))
  '(cursor ((t (:background "red"))))
  '(font-latex-string-face ((((class color) (background dark)) (:foreground "red"))))
- '(font-lock-string-face ((nil (:foreground "red")))))
+ '(font-lock-string-face ((nil (:foreground "red"))))
+ '(font-lock-warning-face ((t (:background "#000000" :foreground "red"))))
+ '(org-column ((t (:background "#000000" :strike-through nil :underline nil :slant normal :weight normal :height 98 :family "DejaVu Sans Mono")))))
 
 (setq my-emacs-version (nth 2 (split-string (emacs-version))))
 
@@ -70,7 +73,8 @@
 (defun open-filelist (fileList)
   (while fileList
     (let ((currentFile (car fileList)))
-      (find-file (file-truename currentFile)))
+      (if (file-exists-p currentFile)
+	(find-file (file-truename currentFile))))
     (setq fileList (cdr fileList))))
       
 (defun file-basename (file)
@@ -182,14 +186,10 @@
 
 (load "preview-latex.el" nil t t)
 
-;; Set to the location of your Org files on your local system
-(setq org-directory "~/Dropbox/MainOrg")
-;; Set to the name of the file where new notes will be stored
-(setq org-mobile-inbox-for-pull "~/org/flagged.org")
-;; Set to <your Dropbox root directory>/MobileOrg.
-(setq org-mobile-directory "~/Dropbox/MobileOrg")
-(setq org-agenda-files '("~/Dropbox/MainOrg/test.org"))
-(setq org-mobile-inbox-for-pull "~/Dropbox/MainOrg/inbox.org")
+;; --------------------------------------------------
+;; org-mode settings
+;; --------------------------------------------------
+(load "myOrgSettings.el")
 
 ;; --------------------------------------------------
 ;; Language-specific settings
@@ -249,7 +249,9 @@
 ;;--------------------------------------------------
 (open-filelist '("~/.emacs.d/init.el" "~/.bashrc"
 		 "~/.config/openbox/autostart.sh"
-		 "~/.config/awesome/rc.lua"))
+		 "~/.config/awesome/rc.lua"
+		 "~/Dropbox/org/projects.org"))
+
 (switch-to-buffer "*scratch*")
 
 (server-start)
