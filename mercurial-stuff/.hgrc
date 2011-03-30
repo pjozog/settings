@@ -7,3 +7,7 @@ convert =
 graphlog =
 
 [auth]
+
+[extdiff]
+cmd.ediff = sh
+opts.ediff = -c 'if [ -d $0 ]; then emacs --eval "(ediff-directories \"$0\" \"$1\" \"\")"; else emacs --eval "(ediff-files \"$0\" \"$1\")"; fi'
