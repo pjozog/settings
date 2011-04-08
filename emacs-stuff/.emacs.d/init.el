@@ -150,6 +150,7 @@
 (require 'flymake-cursor)
 (require 'org-install)
 (require 'uniquify)
+(require 'rainbow-mode)
 
 ;;turn on autopair-mode
 (autopair-global-mode 1)
@@ -185,6 +186,12 @@
 (setq TeX-parse-self t)
 
 (load "preview-latex.el" nil t t)
+
+;; Activate occur easily inside isearch
+(define-key isearch-mode-map (kbd "C-o")
+  (lambda () (interactive)
+    (let ((case-fold-search isearch-case-fold-search))
+      (occur (if isearch-regexp isearch-string (regexp-quote isearch-string))))))
 
 ;; --------------------------------------------------
 ;; org-mode settings
@@ -224,8 +231,7 @@
     (add-hook (car modeList) (lambda ()
 			       (my-camel-case-hook)
 			       (hs-minor-mode)
-			       (global-set-key [(control tab)] 'hs-toggle-hiding)
-			       (follow-mode)))
+			       (global-set-key [(control tab)] 'hs-toggle-hiding)))
     (setq modeList (cdr modeList))))
 
 ;; apply LaTeX hooks (spellcheck, etc.)
@@ -242,7 +248,8 @@
 
 ;; elisp documentation in minibuffer
 (add-hook 'emacs-lisp-mode-hook (lambda ()
-				  (turn-on-eldoc-mode)))
+				  (turn-on-eldoc-mode)
+				  (rainbow-mode)))
 
 ;;--------------------------------------------------
 ;; Open my favorite files and start rocking!

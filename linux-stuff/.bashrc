@@ -144,7 +144,7 @@ alias po='popd'
 alias d='dirs -v'
 alias fm='nautilus --no-desktop "$(pwd)"'
 alias less='less -i'
-alias emacs='emacsclient -a myemacs'
+alias e='emacsclient -n'
 alias snes9x='snes9x -conf ${HOME}/.snes96_snapshots/snes9x.conf'
 alias u='df -h .'
 alias mountthumb='sudo mount /dev/sdc1 /mnt/thumb -o uid=1000,gid=1000'
@@ -212,7 +212,7 @@ if [ $? -eq 0 ]; then
     export LESS=' -R'
 fi
 
-export SVN_EDITOR=myemacs
+export EDITOR='emacsclient'
 export PYTHONSTARTUP=~/.pythonrc
 
 [ -d ${HOME}/texpath ] && export TEXINPUTS=.:~/texpath:~/texpath/images:$TEXINPUTS
@@ -222,3 +222,5 @@ export PYTHONSTARTUP=~/.pythonrc
 [ -d ${HOME}/lib64/python ] && export PYTHONPATH=$PYTHONPATH:~/lib64/python
 
 alias m='wmname LG3D; matlab'
+
+[ -f /opt/ros/diamondback/setup.bash ] && . /opt/ros/diamondback/setup.bash
