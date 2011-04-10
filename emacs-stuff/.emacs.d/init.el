@@ -151,6 +151,7 @@
 (require 'org-install)
 (require 'uniquify)
 (require 'rainbow-mode)
+(require 'smooth-scroll)
 
 ;;turn on autopair-mode
 (autopair-global-mode 1)
@@ -193,6 +194,10 @@
     (let ((case-fold-search isearch-case-fold-search))
       (occur (if isearch-regexp isearch-string (regexp-quote isearch-string))))))
 
+;;Enable smooth scrolling
+(setq scroll-step           1
+      scroll-conservatively 9999999)
+
 ;; --------------------------------------------------
 ;; org-mode settings
 ;; --------------------------------------------------
@@ -226,7 +231,8 @@
 		   java-mode-hook
 		   c-mode-hook
 		   c++-mode-hook
-		   matlab-mode-hook))
+		   matlab-mode-hook
+		   cmake-mode-hook))
   (while modeList
     (add-hook (car modeList) (lambda ()
 			       (my-camel-case-hook)

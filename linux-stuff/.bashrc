@@ -180,6 +180,8 @@ alias ns='ssh -X -p 2219 pjozog@nslab.ccs.neu.edu'
 
 alias rmq='rm -r $(svn status | grep ^? | awk "{print \$2}")'
 alias hrmq='rm -r $(hs | grep ^? | awk "{print \$2}")'
+alias get='sudo apt-get install'
+
 function k() {
     arg="$1"
     processToKill=$(ps aux | grep "$arg" | awk '{print $2}')
