@@ -32,6 +32,7 @@
       (cursor-color . "red")
       (foreground-color . "#ffffff")
       (mouse-color . "sienna1"))
+     (fringe ((t (:background "grey10"))))
      (default ((t (:background "#000000" :foreground "#FFFFFF"))))
      (blue ((t (:foreground "blue"))))
      (border-glyph ((t (nil))))

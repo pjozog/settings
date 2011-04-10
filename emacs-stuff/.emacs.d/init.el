@@ -197,6 +197,7 @@
 ;;Enable smooth scrolling
 (setq scroll-step           1
       scroll-conservatively 9999999)
+(smooth-scroll-mode 1 )
 
 ;; --------------------------------------------------
 ;; org-mode settings
