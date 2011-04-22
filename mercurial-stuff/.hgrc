@@ -5,9 +5,10 @@ username = Paul Ozog
 extdiff =
 convert =
 graphlog =
+hgext.fetch =
 
 [auth]
 
 [extdiff]
 cmd.ediff = sh
-opts.ediff = -c 'if [ -d $0 ]; then emacs --eval "(ediff-directories \"$0\" \"$1\" \"\")"; else emacs --eval "(ediff-files \"$0\" \"$1\")"; fi'
+opts.ediff = -c 'if [ -d $0 ]; then emacsclient --eval "(ediff-directories \"$0\" \"$1\" \"\")"; else emacsclient --eval "(ediff-files \"$0\" \"$1\")"; fi'
