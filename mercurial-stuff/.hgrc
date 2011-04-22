@@ -5,6 +5,7 @@ username = Paul Ozog
 extdiff =
 convert =
 graphlog =
+hgext.fetch =
 
 [auth]
 

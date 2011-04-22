@@ -152,6 +152,7 @@
 (require 'uniquify)
 (require 'rainbow-mode)
 (require 'smooth-scroll)
+(require 'reftex)
 
 ;;turn on autopair-mode
 (autopair-global-mode 1)
@@ -196,9 +197,9 @@
       (occur (if isearch-regexp isearch-string (regexp-quote isearch-string))))))
 
 ;;Enable smooth scrolling
-(setq scroll-step           1
-      scroll-conservatively 9999999)
-(smooth-scroll-mode 1 )
+;; (setq scroll-step           1
+;;       scroll-conservatively 9999999)
+;; (smooth-scroll-mode 1 )
 
 ;; --------------------------------------------------
 ;; org-mode settings
@@ -247,6 +248,7 @@
 			     (flyspell-mode)
 			     (outline-minor-mode)
 			     (auto-fill-mode)
+			     (turn-on-reftex)
 			     (flymake-mode)))
 
 ;; this makes control-tab function like org-mode
