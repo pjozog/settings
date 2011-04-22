@@ -152,6 +152,7 @@
 (require 'uniquify)
 (require 'rainbow-mode)
 (require 'smooth-scroll)
+(require 'reftex)
 
 ;;turn on autopair-mode
 (autopair-global-mode 1)
@@ -242,7 +243,8 @@
 			     (flyspell-mode)
 			     (outline-minor-mode)
 			     (auto-fill-mode)
-			     (flymake-mode)))
+			     (flymake-mode)
+			     (turn-on-reftex)))
 
 ;; this makes control-tab function like org-mode
 (add-hook 'outline-minor-mode-hook
