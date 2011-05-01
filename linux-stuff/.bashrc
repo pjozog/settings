@@ -226,3 +226,5 @@ export PYTHONSTARTUP=~/.pythonrc
 alias m='wmname LG3D; matlab'
 
 [ -f /opt/ros/diamondback/setup.bash ] && . /opt/ros/diamondback/setup.bash
+
+mycowsay
