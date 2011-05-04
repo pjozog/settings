@@ -1,12 +1,20 @@
-#!/bin/bash
-if [ !$COWPATH ]; then
-    COWPATH=/usr/share/cowsay/cows/
-fi
+#!/usr/bin/env python
 
-cow_file_length=$(ls -1 $COWPATH | wc -l)
+import os
+import sys
+import commands
+from random import randint
 
-RANDOM=$$ # initialized the random seed with the process id of this script
-let "random_line = $RANDOM % $cow_file_length + 1"
-cow=$(ls -1 $COWPATH | head -n $random_line | tail -n 1)
+COWPATH = os.getenv('COWPATH')
+if COWPATH is None:
+    COWPATH = '/usr/share/cowsay/cows/'
 
-fortune -a | cowsay -n -f $cow
+def main():
+    cows = os.listdir(COWPATH)
+    cow = cows[randint(0, len(cows)-1)]
+    text = commands.getoutput('/usr/games/fortune -a | /usr/games/cowsay -f ' + cow)
+    print text
+    return 0
+
+if __name__ == '__main__':
+    sys.exit(main())
