@@ -32,6 +32,9 @@
 
 (setq my-emacs-version (nth 2 (split-string (emacs-version))))
 
+(if (string-equal "paul-laptop" system-name)
+    (set-face-attribute 'default nil :height 80))
+
 ;; --------------------------------------------------
 ;; Function definitions
 ;; --------------------------------------------------
