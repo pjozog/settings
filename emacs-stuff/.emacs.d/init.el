@@ -3,37 +3,7 @@
   (interactive)
   (message "There is no system but GNU and Linux is one of its kernels"))
 
-(custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- '(LaTeX-command "latex -shell-escape")
- '(ido-ignore-files (quote ("\\`CVS/" "\\`#" "\\`.#" "\\`\\.\\./" "\\`\\./" "_region_" "\\\\.prv/" "\\auto/" "__flymake")))
- '(inhibit-default-init t)
- '(inhibit-startup-screen t)
- '(jabber-account-list (quote (("pjozog@gmail.com" (:network-server . "talk.google.com") (:connection-type . ssl)))))
- '(org-agenda-files (quote ("~/Dropbox/org/projects.org")))
- '(org-hide-leading-stars nil)
- '(uniquify-buffer-name-style (quote forward) nil (uniquify))
- '(vc-follow-symlinks nil)
- '(visible-bell t))
-(custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "#000000" :foreground "#FFFFFF" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 100 :width normal :foundry "unknown" :family "DejaVu Sans Mono"))))
- '(cursor ((t (:background "red"))))
- '(font-latex-string-face ((((class color) (background dark)) (:foreground "red"))))
- '(font-lock-string-face ((nil (:foreground "red"))))
- '(font-lock-warning-face ((t (:background "#000000" :foreground "red"))))
- '(org-column ((t (:background "#000000" :strike-through nil :underline nil :slant normal :weight normal :height 98 :family "DejaVu Sans Mono")))))
-
 (setq my-emacs-version (nth 2 (split-string (emacs-version))))
-
-(if (string-equal "paul-laptop" system-name)
-    (set-face-attribute 'default nil :height 80))
 
 ;; --------------------------------------------------
 ;; Function definitions
@@ -278,3 +248,31 @@
 ;; diable warning when killing buffers opened with emacsclient 
 ;; (must be set after calling (server-start))
 (remove-hook 'kill-buffer-query-functions 'server-kill-buffer-query-function)
+
+(custom-set-variables
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(LaTeX-command "latex -shell-escape")
+ '(ido-ignore-files (quote ("\\`CVS/" "\\`#" "\\`.#" "\\`\\.\\./" "\\`\\./" "_region_" "\\\\.prv/" "\\auto/" "__flymake")))
+ '(inhibit-default-init t)
+ '(inhibit-startup-screen t)
+ '(jabber-account-list (quote (("pjozog@gmail.com" (:network-server . "talk.google.com") (:connection-type . ssl)))))
+ '(org-agenda-files (quote ("~/Dropbox/org/projects.org")))
+ '(org-hide-leading-stars nil)
+ '(uniquify-buffer-name-style (quote forward) nil (uniquify))
+ '(vc-follow-symlinks nil)
+ '(visible-bell t))
+(custom-set-faces
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(default ((t (:inherit nil :stipple nil :background "#000000" :foreground "#FFFFFF" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 100 :width normal :foundry "unknown" :family "DejaVu Sans Mono"))))
+ '(cursor ((t (:background "red"))))
+ '(font-latex-string-face ((((class color) (background dark)) (:foreground "#A2AB64"))))
+ '(org-column ((t (:background "#000000" :strike-through nil :underline nil :slant normal :weight normal :height 98 :family "DejaVu Sans Mono")))))
+
+(if (string-equal "paul-laptop" system-name)
+    (set-face-attribute 'default nil :height 80))
