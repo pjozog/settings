@@ -140,6 +140,7 @@
 (global-set-key [(meta h)] 'ff-find-other-file)
 
 (global-linum-mode 1)
+(setq linum-format "%d ") ;Looks better in terminal mode
 
 (setq ediff-split-window-function 'split-window-horizontally)
 
