@@ -88,9 +88,11 @@
 (add-to-list 'load-path
 	     "~/.emacs.d/lisp")
 (add-to-list 'load-path
+	     "~/.emacs.d/plugins")
+(add-to-list 'load-path
 	     "~/.emacs.d/plugins/yasnippet-0.6.1c")
 (add-to-list 'load-path
-	     "~/.emacs.d/plugins")
+	     "~/.emacs.d/plugins/emacs-w3m")
 (add-to-list 'load-path
 	     "~/.emacs.d/plugins/org")
 
@@ -126,6 +128,7 @@
 (require 'rainbow-mode)
 (require 'smooth-scroll)
 (require 'reftex)
+(require 'w3m-load)
 
 ;;turn on autopair-mode
 (autopair-global-mode 1)
