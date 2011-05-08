@@ -88,9 +88,11 @@
 (add-to-list 'load-path
 	     "~/.emacs.d/lisp")
 (add-to-list 'load-path
+	     "~/.emacs.d/plugins")
+(add-to-list 'load-path
 	     "~/.emacs.d/plugins/yasnippet-0.6.1c")
 (add-to-list 'load-path
-	     "~/.emacs.d/plugins")
+	     "~/.emacs.d/plugins/emacs-w3m")
 (add-to-list 'load-path
 	     "~/.emacs.d/plugins/org")
 
@@ -126,6 +128,7 @@
 (require 'rainbow-mode)
 (require 'smooth-scroll)
 (require 'reftex)
+(require 'w3m-load)
 
 ;;turn on autopair-mode
 (autopair-global-mode 1)
@@ -140,6 +143,8 @@
 (global-set-key [(meta h)] 'ff-find-other-file)
 
 (global-linum-mode 1)
+(unless (window-system)
+  (setq linum-format "%d "))
 
 (setq ediff-split-window-function 'split-window-horizontally)
 
@@ -269,7 +274,7 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "#000000" :foreground "#FFFFFF" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 100 :width normal :foundry "unknown" :family "DejaVu Sans Mono"))))
+ '(default ((t (:inherit nil :stipple nil :background "#000000" :foreground "#FFFFFF" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 105 :width normal :foundry "unknown" :family "DejaVu Sans Mono"))))
  '(cursor ((t (:background "red"))))
  '(font-latex-string-face ((((class color) (background dark)) (:foreground "#A2AB64"))))
  '(org-column ((t (:background "#000000" :strike-through nil :underline nil :slant normal :weight normal :height 98 :family "DejaVu Sans Mono")))))
