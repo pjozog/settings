@@ -22,7 +22,7 @@ export HISTCONTROL=ignoreboth
 shopt -s histappend
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-export HISTSIZE=5000
+export HISTSIZE=50000
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -227,4 +227,7 @@ alias m='wmname LG3D; matlab'
 
 [ -f /opt/ros/diamondback/setup.bash ] && . /opt/ros/diamondback/setup.bash
 
-mycowsay
+which mycowsay > /dev/null 2>&1
+if [ $? -eq 0 ]; then
+    mycowsay
+fi
