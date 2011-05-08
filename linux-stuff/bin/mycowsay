@@ -12,11 +12,11 @@ FORTUNEBIN = '/usr/games/fortune'
 if COWPATH is None:
     COWPATH = '/usr/share/cowsay/cows/'
 
-if not (os.path.exists(COWBIN) and
-        os.path.exists(FORTUNEBIN)):
-    sys.exit(1)
 
 def main():
+    if not (os.path.exists(COWBIN) and
+            os.path.exists(FORTUNEBIN)):
+        sys.exit(1)
     cows = os.listdir(COWPATH)
     cow = cows[randint(0, len(cows)-1)]
     text = commands.getoutput(' '.join([FORTUNEBIN, '-a |', COWBIN, '-f', cow]))
