@@ -274,5 +274,6 @@
  '(font-latex-string-face ((((class color) (background dark)) (:foreground "#A2AB64"))))
  '(org-column ((t (:background "#000000" :strike-through nil :underline nil :slant normal :weight normal :height 98 :family "DejaVu Sans Mono")))))
 
-(if (string-equal "paul-laptop" system-name)
+(if (or (string-equal "paul-laptop" system-name)
+	(string-equal "perl-paulozog" system-name))
     (set-face-attribute 'default nil :height 80))
