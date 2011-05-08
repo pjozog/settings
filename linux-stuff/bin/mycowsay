@@ -5,15 +5,23 @@ import sys
 import commands
 from random import randint
 
-COWPATH = os.getenv('COWPATH')
+COWPATH    = os.getenv('COWPATH')
+COWBIN     = '/usr/games/cowsay'
+FORTUNEBIN = '/usr/games/fortune'
+
 if COWPATH is None:
     COWPATH = '/usr/share/cowsay/cows/'
+
+if not (os.path.exists(COWBIN) and
+        os.path.exists(FORTUNEBIN)):
+    sys.exit(1)
 
 def main():
     cows = os.listdir(COWPATH)
     cow = cows[randint(0, len(cows)-1)]
-    text = commands.getoutput('/usr/games/fortune -a | /usr/games/cowsay -f ' + cow)
+    text = commands.getoutput(' '.join([FORTUNEBIN, '-a |', COWBIN, '-f', cow]))
     print text
+    print
     return 0
 
 if __name__ == '__main__':
