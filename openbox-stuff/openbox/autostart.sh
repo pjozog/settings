@@ -23,14 +23,10 @@ else
 fi
 
 which nvidia-settings > /dev/null 2>&1
-if [ $? -eq 0 ]; then
-    nvidia-settings --load-config-only &
-fi
+[ $? -eq 0 ] && nvidia-settings --load-config-only &
 
 which dropbox > /dev/null 2>&1
-if [ $? -eq 0 ]; then
-    dropbox start -i &
-fi
+[ $? -eq 0 ] && dropbox start -i &
 
 gnome-power-manager &
 gnome-volume-control-applet &

@@ -228,6 +228,4 @@ alias m='wmname LG3D; matlab'
 [ -f /opt/ros/diamondback/setup.bash ] && . /opt/ros/diamondback/setup.bash
 
 which mycowsay > /dev/null 2>&1
-if [ $? -eq 0 ]; then
-    mycowsay
-fi
+[ $? -eq 0 ] && mycowsay
