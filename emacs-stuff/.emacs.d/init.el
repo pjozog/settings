@@ -96,22 +96,6 @@
 (add-to-list 'load-path
 	     "~/.emacs.d/plugins/org")
 
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
-
-(ido-mode 1)
-
-(transient-mark-mode -1)
-
-;; This makes color work in 'M-x shell'
-(autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
-
-(setq mouse-yank-at-point t)
-
-(show-paren-mode 1)
-
-
 (require 'htmlize)
 (require 'matlab)
 (require 'cmake-mode)
@@ -130,9 +114,23 @@
 (require 'reftex)
 (require 'w3m-load)
 
-;;turn on autopair-mode
-(autopair-global-mode 1)
+;; Turn off the bad shit
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+(transient-mark-mode -1)
 
+;; Turn on the good shit
+(ido-mode 1)
+(show-paren-mode 1)
+(setq mouse-yank-at-point 1)
+(autopair-global-mode 1)
+(global-linum-mode 1)
+
+;; This makes color work in 'M-x shell'
+(autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
+
+;; My key bindings
 (global-set-key [(meta return)] 'shell-resync-dirs)
 (global-set-key [(control c) (f)] 'find-file-this)
 ;(global-set-key [(meta .)] 'goto-tag)
@@ -142,7 +140,7 @@
 (global-set-key [(control meta |)] 'fill-region)
 (global-set-key [(meta h)] 'ff-find-other-file)
 
-(global-linum-mode 1)
+;; Fix linum margin when running in terminal mode
 (unless (window-system)
   (setq linum-format "%d "))
 
