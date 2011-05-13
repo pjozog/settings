@@ -1,7 +1,7 @@
 #!/bin/sh
 
-which xfce4-terminal > /dev/null
-[ $? -eq 0 ] && myTerm=xfce4-terminal || myTerm=gnome-terminal
+which gnome-terminal > /dev/null
+[ $? -eq 0 ] && myTerm=gnome-terminal || myTerm=xfce4-terminal
 
 $myTerm --hide-menubar --geometry 125x40 "$@"
 
