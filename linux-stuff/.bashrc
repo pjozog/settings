@@ -181,6 +181,7 @@ alias ns='ssh -X -p 2219 pjozog@nslab.ccs.neu.edu'
 alias rmq='rm -r $(svn status | grep ^? | awk "{print \$2}")'
 alias hrmq='rm -r $(hs | grep ^? | awk "{print \$2}")'
 alias get='sudo apt-get install'
+alias rs='rsync --stats --progress -avz'
 
 function k() {
     arg="$1"
