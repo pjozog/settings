@@ -113,6 +113,7 @@
 (require 'smooth-scroll)
 (require 'reftex)
 (require 'w3m-load)
+(require 'mediawiki)
 
 ;; Turn off the bad shit
 (menu-bar-mode -1)
@@ -186,6 +187,7 @@
 ;; Language-specific settings
 ;; --------------------------------------------------
 (setq auto-mode-alist (cons '("\\.m$" . matlab-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.txt$" . mediawiki-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("CMakeLists\\.txt$" . cmake-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.lcm$" . java-mode) auto-mode-alist))
 (setq matlab-fill-code nil)
