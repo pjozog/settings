@@ -26,6 +26,7 @@ gtkrc               = os.path.join(homeDir, '.gtkrc-mine')
 radianceTheme       = os.path.join(homeDir, '.themes', 'Radiance_ob_test')
 xmodmap             = os.path.join(homeDir, '.xmodmap')
 swapcaps            = os.path.join(homeDir, '.swapcaps')
+svnProject          = os.path.join(homeDir, '.svn_project')
 
 #These will be the actual version controlled files (the sources)
 bashrcSource        = os.path.join(scriptDir, 'linux-stuff', '.bashrc')
@@ -41,6 +42,7 @@ gtkrcSource         = os.path.join(scriptDir, 'linux-stuff', '.gtkrc-mine')
 radianceThemeSource = os.path.join(scriptDir, 'openbox-stuff', 'Radiance_ob_test')
 xmodmapSource       = os.path.join(scriptDir, 'linux-stuff', '.xmodmap')
 swapcapsSource      = os.path.join(scriptDir, 'linux-stuff', '.swapcaps')
+svnProjectSource    = os.path.join(scriptDir, 'linux-stuff', '.svn_project')
 
 #make a list of tupple pairs
 sourceToDestination = { bashrcSource        : bashrc,
@@ -55,7 +57,9 @@ sourceToDestination = { bashrcSource        : bashrc,
                         gtkrcSource         : gtkrc,
                         radianceThemeSource : radianceTheme,
                         xmodmapSource       : xmodmap,
-                        swapcapsSource      : swapcaps }
+                        swapcapsSource      : swapcaps,
+                        svnProjectSource    : svnProject, 
+                        }
 
 #add all the stuff in the 'bin' directory to sourceToDestination
 for basename in os.listdir(binDir):
