@@ -225,6 +225,7 @@ export PYTHONSTARTUP=~/.pythonrc
 [ -d ${HOME}/lib64/python ] && export PYTHONPATH=$PYTHONPATH:~/lib64/python
 
 alias m='wmname LG3D; matlab'
+alias psy='wmname LG3D; cdp; ./perls-spy'
 
 [ -f /opt/ros/diamondback/setup.bash ] && . /opt/ros/diamondback/setup.bash
 
