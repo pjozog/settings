@@ -191,6 +191,7 @@
 (setq auto-mode-alist (cons '("CMakeLists\\.txt$" . cmake-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.lcm$" . java-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("Doxyfile$" . conf-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.SRC$" . asm-mode) auto-mode-alist))
 (setq matlab-fill-code nil)
 
 ;; LaTeX: Enable flymake for texlive distribution of LaTeX
