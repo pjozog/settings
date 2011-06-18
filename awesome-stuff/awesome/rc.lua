@@ -161,6 +161,7 @@ end
 
 -- {{{ Mouse bindings
 root.buttons(awful.util.table.join(
+		awful.button({ }, 2, awful.tag.viewtoggle),
 		awful.button({ }, 3, function () mymainmenu:toggle() end),
 		awful.button({ }, 4, awful.tag.viewnext),
 		awful.button({ }, 5, awful.tag.viewprev)
@@ -206,7 +207,7 @@ globalkeys = awful.util.table.join(
    awful.key({ modkey, "Shift"   }, "f", function () awful.util.spawn("firefox") end),
    awful.key({ modkey, "Shift"   }, "g", function () awful.util.spawn("google-chrome") end),
    awful.key({ modkey, "Shift"   }, "e", function () awful.util.spawn("emacs") end),
-   awful.key({ modkey, "Shift"   }, "n", function () awful.util.spawn("nautilus --no-desktop") end),
+   awful.key({ modkey, "Shift"   }, "m", function () awful.util.spawn("nautilus --no-desktop") end),
    awful.key({ modkey, "Shift"   }, "a", function () awful.util.spawn("matlab -desktop") end),
    awful.key({ }, "XF86Calculator", function () awful.util.spawn("gnome-calculator") end),
    awful.key({ modkey, "Shift"   }, "v", function () awful.util.spawn("nvidia-settings") end),
@@ -240,8 +241,17 @@ globalkeys = awful.util.table.join(
 				 mypromptbox[mouse.screen].widget,
 				 awful.util.eval, nil,
 				 awful.util.getdir("cache") .. "/history_eval")
-	     end)
+	     end),
 
+   -- all minimized clients are restored 
+   awful.key({ modkey, "Shift"   }, "n", 
+	     function()
+		local tag = awful.tag.selected()
+                for i=1, #tag:clients() do
+		   tag:clients()[i].minimized=false
+		   tag:clients()[i]:redraw()
+		end
+	     end)
 )
 
 clientkeys = awful.util.table.join(
