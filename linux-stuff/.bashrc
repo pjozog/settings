@@ -158,7 +158,7 @@ alias ......='cd ../../../../..'
 alias .......='cd ../../../../../..'
 
 # subversion aliases
-alias sd='svn diff --diff-cmd meld'
+alias sd='svn diff --diff-cmd ~/bin/svn-diff-meld'
 alias sdd='svn diff'
 function sl() {
     svn log -v "$1" | less
