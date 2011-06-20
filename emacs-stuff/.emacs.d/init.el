@@ -81,6 +81,10 @@
     (ediff file1 file2)))
 (add-to-list 'command-switch-alist '("-diff" . command-line-diff))
 
+(defun f ()
+  (interactive)
+  (set-face-attribute 'default nil :height 120))
+
 ;; --------------------------------------------------
 ;; Packages / Minor modes / Keybindings
 ;; --------------------------------------------------
