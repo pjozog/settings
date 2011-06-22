@@ -3,6 +3,8 @@
 # KOG 2008-02
 # http://www.nabble.com/How-to-use-meld-with-'svn-diff'-td16765244.html
 
+export GTK2_RC_FILES="/usr/share/themes/Radiance/gtk-2.0/gtkrc"
+
 left="$6"
 right="$7"
 

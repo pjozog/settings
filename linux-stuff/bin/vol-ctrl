@@ -69,4 +69,4 @@ if [ ! -e "$PIPE" ]; then
 fi
 
 #Feed the pipe!
-(echo "Volume" ; echo "$VOL" | dbar ; sleep "$SECS") > "$PIPE"
+(echo "Volume" ; echo "$VOL" | dzen2-dbar ; sleep "$SECS") > "$PIPE"
