@@ -229,11 +229,11 @@ globalkeys = awful.util.table.join(
 
    -- Multimedia keys
    awful.key({ }, "XF86AudioRaiseVolume",    
-	     function () awful.util.spawn("amixer set Master 2+") end),
+	     function () awful.util.spawn("vol-ctrl -i 2") end),
    awful.key({ }, "XF86AudioLowerVolume",   
-	     function () awful.util.spawn("amixer set Master 2-") end),
-   awful.key({ }, "XXF86AudioMute",   
-	     function () awful.util.spawn("amixer sset Master toggle") end),
+	     function () awful.util.spawn("vol-ctrl -d 2") end),
+   awful.key({ }, "XF86AudioMute",   
+	     function () awful.util.spawn("vol-ctrl -t") end),
 
    awful.key({ modkey }, "x",
 	     function ()
