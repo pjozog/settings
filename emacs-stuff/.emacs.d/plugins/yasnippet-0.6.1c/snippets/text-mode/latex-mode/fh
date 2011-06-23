@@ -1,0 +1,5 @@
+#contributor : Rodrigo Setti <rodrigosetti@gmail.com>
+#name : \begin{environment} ... \end{environment}
+# --
+\foilhead[${1:-0.8in}]{${2:SLIDETITLE}}
+$0
