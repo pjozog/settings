@@ -50,6 +50,6 @@
 
 \pagebreak
 
-$0
+\input{${3:INPUTFILE}}
 
 \end{document}

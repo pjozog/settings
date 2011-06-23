@@ -1,0 +1,7 @@
+#contributor : Rodrigo Setti <rodrigosetti@gmail.com>
+#name : \begin{environment} ... \end{environment}
+# --
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "toplevel"
+%%% End: 
