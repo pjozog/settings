@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [ $# -ne 1 ]; then
+    echo Usage: $0 [time]
+    exit 1
+fi
+
+sleep $1
+
+xset dpms force off
+
