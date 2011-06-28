@@ -34,3 +34,4 @@ checkgmail &
 nm-applet &
 
 xscreensaver -no-splash &
+xset +dpms
