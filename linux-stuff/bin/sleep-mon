@@ -1,11 +1,12 @@
 #!/bin/bash
 
 if [ $# -ne 1 ]; then
-    echo Usage: $0 time
-    exit 1
+    delay=1
+else
+    delay=$1
 fi
 
-sleep $1
+sleep $delay
 
 xset dpms force off
 
