@@ -85,6 +85,10 @@
   (interactive)
   (set-face-attribute 'default nil :height 120))
 
+(defun insert-amps ()
+  (interactive)
+  (insert (format "& %s &" (read-from-minibuffer "Symbol? "))))
+
 ;; --------------------------------------------------
 ;; Packages / Minor modes / Keybindings
 ;; --------------------------------------------------
@@ -144,6 +148,8 @@
 (global-set-key [(control o)] 'other-window)
 (global-set-key [(control meta |)] 'fill-region)
 (global-set-key [(meta h)] 'ff-find-other-file)
+(global-unset-key (kbd "C-7"))
+(global-set-key (kbd "C-7") 'insert-amps)
 
 ;; Fix linum margin when running in terminal mode
 (unless (window-system)
@@ -251,8 +257,8 @@
 (open-filelist '("~/.emacs.d/init.el" "~/.bashrc"
 		 "~/.config/openbox/autostart.sh"
 		 "~/.config/awesome/rc.lua"
-		 "~/Dropbox/org/projects.org"))
-
+		 "~/Dropbox/org/projects.org"
+		 "~/perl/perl-svn/references/bibtex/references.bib"))
 (switch-to-buffer "*scratch*")
 
 (server-start)
