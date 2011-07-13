@@ -136,6 +136,10 @@
 (autopair-global-mode 1)
 (global-linum-mode 1)
 
+;; Make dired only search for filenames, not the entire buffer text
+(setq dired-isearch-filenames 't)
+(setq wdired-allow-to-change-permissions 't)
+
 ;; This makes color work in 'M-x shell'
 (autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
 
@@ -259,6 +263,9 @@
 		 "~/.config/awesome/rc.lua"
 		 "~/Dropbox/org/projects.org"
 		 "~/perl/perl-svn/references/bibtex/references.bib"))
+(dired (getenv "HOME"))
+(switch-to-buffer "~")
+(split-window-horizontally)
 (switch-to-buffer "*scratch*")
 
 (server-start)
@@ -295,3 +302,5 @@
 	(string-equal "perl-paulozog" system-name)
 	(string-equal "paul-box" system-name))
     (set-face-attribute 'default nil :height 80))
+
+(put 'dired-find-alternate-file 'disabled nil)
