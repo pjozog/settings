@@ -89,6 +89,16 @@
   (interactive)
   (insert (format "& %s &" (read-from-minibuffer "Symbol? "))))
 
+(defun dired-view-file-other-window ()
+  (interactive)
+  (let ((file (dired-get-file-for-visit)))
+      (view-file-other-window file)))
+
+(defun dired-find-file-other-window ()
+  (interactive)
+  (let ((file (dired-get-file-for-visit)))
+      (find-file-other-window file)))
+
 ;; --------------------------------------------------
 ;; Packages / Minor modes / Keybindings
 ;; --------------------------------------------------
@@ -255,6 +265,32 @@
 				  (turn-on-eldoc-mode)
 				  (rainbow-mode)))
 
+;; go into wdired by pushing e...
+(add-hook 'dired-mode-hook (lambda ()
+			     (define-key dired-mode-map "e" 'wdired-change-to-wdired-mode)
+			     (define-key dired-mode-map "/" 'dired-isearch-filenames)
+			     (define-key dired-mode-map "v" 'dired-view-file-other-window)
+			     (define-key dired-mode-map "f" 'dired-find-file-other-window)
+			     (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file)
+			     (define-key dired-mode-map (kbd "C-o") 'other-window)))
+
+(eval-after-load "dired"
+  ;; don't remove `other-window', the caller expects it to be there
+  '(defun dired-up-directory (&optional other-window)
+     "Run Dired on parent directory of current directory."
+     (interactive "P")
+     (let* ((dir (dired-current-directory))
+     	    (orig (current-buffer))
+     	    (up (file-name-directory (directory-file-name dir))))
+       (or (dired-goto-file (directory-file-name dir))
+     	   ;; Only try dired-goto-subdir if buffer has more than one dir.
+     	   (and (cdr dired-subdir-alist)
+     		(dired-goto-subdir up))
+     	   (progn
+     	     (kill-buffer orig)
+     	     (dired up)
+     	     (dired-goto-file dir))))))
+
 ;;--------------------------------------------------
 ;; Open my favorite files and start rocking!
 ;;--------------------------------------------------
@@ -266,7 +302,7 @@
 (dired (getenv "HOME"))
 (switch-to-buffer "~")
 (split-window-horizontally)
-(switch-to-buffer "*scratch*")
+(switch-to-buffer "init.el")
 
 (server-start)
 ;; diable warning when killing buffers opened with emacsclient 
