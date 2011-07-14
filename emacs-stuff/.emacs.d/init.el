@@ -109,13 +109,11 @@
 
 (defun dired-kill-and-next-subdir ()
   (interactive)
-  ;; Had to look at the source code: dired-prev-subdir's first arg is
-  ;; undocumented.  Just use 0 for this defun
-  (dired-prev-subdir 0)
+  (dired-next-subdir 0)
   (let* ((subdir-name (dired-get-subdir))
 	 (search-term (concat " " (file-basename subdir-name))))
     (dired-kill-subdir)
-    (dired-prev-subdir 0)
+    (dired-next-subdir 0)
     (search-forward search-term)))
 
 (defun run-bash ()
@@ -312,6 +310,7 @@
 			     (define-key dired-mode-map "F" 'find-name-dired)
 			     (define-key dired-mode-map "c" 'run-bash)
 			     (define-key dired-mode-map "k" 'dired-kill-and-next-subdir)
+			     (define-key dired-mode-map "K" 'dired-kill-subdir)
 			     (define-key dired-mode-map (kbd "?") 'dired-get-size)
 			     (define-key dired-mode-map (kbd "RET") 'dired-find-file-mod)
 			     (define-key dired-mode-map (kbd "C-o") 'other-window)
