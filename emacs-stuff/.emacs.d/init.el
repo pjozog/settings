@@ -51,7 +51,8 @@
     (setq fileList (cdr fileList))))
       
 (defun file-basename (file)
-  (car (reverse (split-string file "/"))))
+  (let ((file-no-dash (replace-regexp-in-string "/$" "" file)))
+    (car (reverse (split-string file-no-dash "/")))))
 
 (defun filter-from-filelist (list expr)
   (let ((returnList ()))
@@ -108,14 +109,28 @@
 
 (defun dired-kill-and-next-subdir ()
   (interactive)
-  (dired-kill-subdir)
   ;; Had to look at the source code: dired-prev-subdir's first arg is
   ;; undocumented.  Just use 0 for this defun
-  (dired-prev-subdir 0))
+  (dired-prev-subdir 0)
+  (let* ((subdir-name (dired-get-subdir))
+	 (search-term (concat " " (file-basename subdir-name))))
+    (dired-kill-subdir)
+    (dired-prev-subdir 0)
+    (search-forward search-term)))
 
 (defun run-bash ()
   (interactive)
   (term "/bin/bash"))
+
+(defun dired-get-size ()
+  (interactive)
+  (let ((files (dired-get-marked-files)))
+    (with-temp-buffer
+      (apply 'call-process "/usr/bin/du" nil t nil "-sch" files)
+      (message "Size of all marked files: %s"
+               (progn 
+                 (re-search-backward "\\(^[0-9.,]+[A-Za-z]+\\).*total$")
+		 (match-string 1))))))
 
 ;; --------------------------------------------------
 ;; Packages / Minor modes / Keybindings
@@ -168,6 +183,7 @@
 ;; Make dired only search for filenames, not the entire buffer text
 (setq dired-isearch-filenames 't)
 (setq wdired-allow-to-change-permissions 't)
+(setq dired-listing-switches "-alh")
 
 ;; This makes color work in 'M-x shell'
 (autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
@@ -296,6 +312,7 @@
 			     (define-key dired-mode-map "F" 'find-name-dired)
 			     (define-key dired-mode-map "c" 'run-bash)
 			     (define-key dired-mode-map "k" 'dired-kill-and-next-subdir)
+			     (define-key dired-mode-map (kbd "?") 'dired-get-size)
 			     (define-key dired-mode-map (kbd "RET") 'dired-find-file-mod)
 			     (define-key dired-mode-map (kbd "C-o") 'other-window)
 			     (define-key dired-mode-map (kbd "M-p") 'dired-up-directory)))
