@@ -99,6 +99,13 @@
   (let ((file (dired-get-file-for-visit)))
       (find-file-other-window file)))
 
+(defun dired-find-alternate-file-mod ()
+  (interactive)
+  (let ((file (dired-get-file-for-visit)))
+    (if (car (file-attributes file))
+	(dired-find-alternate-file)
+      (dired-find-file-other-window))))
+
 ;; --------------------------------------------------
 ;; Packages / Minor modes / Keybindings
 ;; --------------------------------------------------
@@ -132,6 +139,7 @@
 (require 'reftex)
 (require 'w3m-load)
 (require 'mediawiki)
+(require 'highline)
 
 ;; Turn off the bad shit
 (menu-bar-mode -1)
@@ -201,6 +209,8 @@
 ;; (setq scroll-step           1
 ;;       scroll-conservatively 9999999)
 ;; (smooth-scroll-mode 1 )
+
+(global-highline-mode 1)
 
 ;; --------------------------------------------------
 ;; org-mode settings
@@ -272,8 +282,10 @@
 			     (define-key dired-mode-map "v" 'dired-view-file-other-window)
 			     (define-key dired-mode-map "f" 'dired-find-file-other-window)
 			     (define-key dired-mode-map "F" 'find-name-dired)
-			     (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file)
-			     (define-key dired-mode-map (kbd "C-o") 'other-window)))
+			     (define-key dired-mode-map "c" 'shell)
+			     (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file-mod)
+			     (define-key dired-mode-map (kbd "C-o") 'other-window)
+			     (define-key dired-mode-map (kbd "M-p") 'dired-up-directory)))
 
 (eval-after-load "dired"
   ;; don't remove `other-window', the caller expects it to be there

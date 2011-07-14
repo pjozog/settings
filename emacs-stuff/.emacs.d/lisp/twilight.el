@@ -64,7 +64,7 @@
      (region ((t (:background "#27292A"))))
      (mode-line ((t (:background "green" :foreground "black"))))
      (highlight ((t (:background "#111111"))))
-     (highline-face ((t (:background "SeaGreen"))))
+     (highline-face ((t (:background "#1e1e1e"))))
      (left-margin ((t (nil))))
      (text-cursor ((t (:background "yellow" :foreground "black"))))
      (toolbar ((t (nil))))
