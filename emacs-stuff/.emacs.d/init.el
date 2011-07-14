@@ -99,11 +99,11 @@
   (let ((file (dired-get-file-for-visit)))
       (find-file-other-window file)))
 
-(defun dired-find-alternate-file-mod ()
+(defun dired-find-file-mod ()
   (interactive)
   (let ((file (dired-get-file-for-visit)))
     (if (car (file-attributes file))
-	(dired-find-alternate-file)
+	(dired-find-file)
       (dired-find-file-other-window))))
 
 (defun run-bash ()
@@ -287,26 +287,16 @@
 			     (define-key dired-mode-map "f" 'dired-find-file-other-window)
 			     (define-key dired-mode-map "F" 'find-name-dired)
 			     (define-key dired-mode-map "c" 'run-bash)
-			     (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file-mod)
+			     (define-key dired-mode-map "k" 'dired-kill-and-next-subdir)
+			     (define-key dired-mode-map (kbd "RET") 'dired-find-file-mod)
 			     (define-key dired-mode-map (kbd "C-o") 'other-window)
 			     (define-key dired-mode-map (kbd "M-p") 'dired-up-directory)))
 
-(eval-after-load "dired"
-  ;; don't remove `other-window', the caller expects it to be there
-  '(defun dired-up-directory (&optional other-window)
-     "Run Dired on parent directory of current directory."
-     (interactive "P")
-     (let* ((dir (dired-current-directory))
-     	    (orig (current-buffer))
-     	    (up (file-name-directory (directory-file-name dir))))
-       (or (dired-goto-file (directory-file-name dir))
-     	   ;; Only try dired-goto-subdir if buffer has more than one dir.
-     	   (and (cdr dired-subdir-alist)
-     		(dired-goto-subdir up))
-     	   (progn
-     	     (kill-buffer orig)
-     	     (dired up)
-     	     (dired-goto-file dir))))))
+;;--------------------------------------------------
+;; Open my favorite files and start rocking!
+;;--------------------------------------------------
+(fset 'dired-kill-and-next-subdir
+   [?\M-x ?d ?i ?r ?e ?d ?- ?k ?i ?l ?l ?- ?s ?u ?b ?d ?i ?r return ?\C-\M-p])
 
 ;;--------------------------------------------------
 ;; Open my favorite files and start rocking!
@@ -357,5 +347,3 @@
 	(string-equal "perl-paulozog" system-name)
 	(string-equal "paul-box" system-name))
     (set-face-attribute 'default nil :height 80))
-
-(put 'dired-find-alternate-file 'disabled nil)
