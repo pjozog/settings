@@ -106,6 +106,10 @@
 	(dired-find-alternate-file)
       (dired-find-file-other-window))))
 
+(defun run-bash ()
+  (interactive)
+  (term "/bin/bash"))
+
 ;; --------------------------------------------------
 ;; Packages / Minor modes / Keybindings
 ;; --------------------------------------------------
@@ -282,7 +286,7 @@
 			     (define-key dired-mode-map "v" 'dired-view-file-other-window)
 			     (define-key dired-mode-map "f" 'dired-find-file-other-window)
 			     (define-key dired-mode-map "F" 'find-name-dired)
-			     (define-key dired-mode-map "c" 'shell)
+			     (define-key dired-mode-map "c" 'run-bash)
 			     (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file-mod)
 			     (define-key dired-mode-map (kbd "C-o") 'other-window)
 			     (define-key dired-mode-map (kbd "M-p") 'dired-up-directory)))
