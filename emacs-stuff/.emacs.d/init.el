@@ -106,6 +106,13 @@
 	(dired-find-file)
       (dired-find-file-other-window))))
 
+(defun dired-kill-and-next-subdir ()
+  (interactive)
+  (dired-kill-subdir)
+  ;; Had to look at the source code: dired-prev-subdir's first arg is
+  ;; undocumented.  Just use 0 for this defun
+  (dired-prev-subdir 0))
+
 (defun run-bash ()
   (interactive)
   (term "/bin/bash"))
@@ -176,6 +183,7 @@
 (global-set-key [(meta h)] 'ff-find-other-file)
 (global-unset-key (kbd "C-7"))
 (global-set-key (kbd "C-7") 'insert-amps)
+(global-set-key (kbd "C-c k") 'ido-kill-buffer)
 
 ;; Fix linum margin when running in terminal mode
 (unless (window-system)
@@ -291,12 +299,6 @@
 			     (define-key dired-mode-map (kbd "RET") 'dired-find-file-mod)
 			     (define-key dired-mode-map (kbd "C-o") 'other-window)
 			     (define-key dired-mode-map (kbd "M-p") 'dired-up-directory)))
-
-;;--------------------------------------------------
-;; Open my favorite files and start rocking!
-;;--------------------------------------------------
-(fset 'dired-kill-and-next-subdir
-   [?\M-x ?d ?i ?r ?e ?d ?- ?k ?i ?l ?l ?- ?s ?u ?b ?d ?i ?r return ?\C-\M-p])
 
 ;;--------------------------------------------------
 ;; Open my favorite files and start rocking!
