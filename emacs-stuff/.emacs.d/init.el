@@ -309,6 +309,7 @@
 			     (define-key dired-mode-map "f" 'dired-find-file-other-window)
 			     (define-key dired-mode-map "F" 'find-name-dired)
 			     (define-key dired-mode-map "c" 'run-bash)
+			     (define-key dired-mode-map "o" 'dired-do-async-shell-command)
 			     (define-key dired-mode-map "k" 'dired-kill-and-next-subdir)
 			     (define-key dired-mode-map "K" 'dired-kill-subdir)
 			     (define-key dired-mode-map (kbd "?") 'dired-get-size)
