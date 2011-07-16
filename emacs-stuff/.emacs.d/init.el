@@ -90,45 +90,9 @@
   (interactive)
   (insert (format "& %s &" (read-from-minibuffer "Symbol? "))))
 
-(defun dired-view-file-other-window ()
-  (interactive)
-  (let ((file (dired-get-file-for-visit)))
-      (view-file-other-window file)))
-
-(defun dired-find-file-other-window ()
-  (interactive)
-  (let ((file (dired-get-file-for-visit)))
-      (find-file-other-window file)))
-
-(defun dired-find-file-mod ()
-  (interactive)
-  (let ((file (dired-get-file-for-visit)))
-    (if (car (file-attributes file))
-	(dired-find-file)
-      (dired-find-file-other-window))))
-
-(defun dired-kill-and-next-subdir ()
-  (interactive)
-  (dired-next-subdir 0)
-  (let* ((subdir-name (dired-get-subdir))
-	 (search-term (concat " " (file-basename subdir-name))))
-    (dired-kill-subdir)
-    (dired-next-subdir 0)
-    (search-forward search-term)))
-
 (defun run-bash ()
   (interactive)
   (term "/bin/bash"))
-
-(defun dired-get-size ()
-  (interactive)
-  (let ((files (dired-get-marked-files)))
-    (with-temp-buffer
-      (apply 'call-process "/usr/bin/du" nil t nil "-sch" files)
-      (message "Size of all marked files: %s"
-               (progn 
-                 (re-search-backward "\\(^[0-9.,]+[A-Za-z]+\\).*total$")
-		 (match-string 1))))))
 
 ;; --------------------------------------------------
 ;; Packages / Minor modes / Keybindings
@@ -177,11 +141,6 @@
 (setq mouse-yank-at-point 1)
 (autopair-global-mode 1)
 (global-linum-mode 1)
-
-;; Make dired only search for filenames, not the entire buffer text
-(setq dired-isearch-filenames 't)
-(setq wdired-allow-to-change-permissions 't)
-(setq dired-listing-switches "-alh")
 
 ;; This makes color work in 'M-x shell'
 (autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
@@ -235,6 +194,8 @@
 ;; (smooth-scroll-mode 1 )
 
 (global-highline-mode 1)
+
+(load "dired-mod")
 
 ;; --------------------------------------------------
 ;; org-mode settings
@@ -299,22 +260,6 @@
 (add-hook 'emacs-lisp-mode-hook (lambda ()
 				  (turn-on-eldoc-mode)
 				  (rainbow-mode)))
-
-;; go into wdired by pushing e...
-(add-hook 'dired-mode-hook (lambda ()
-			     (define-key dired-mode-map "e" 'wdired-change-to-wdired-mode)
-			     (define-key dired-mode-map "/" 'dired-isearch-filenames)
-			     (define-key dired-mode-map "v" 'dired-view-file-other-window)
-			     (define-key dired-mode-map "f" 'dired-find-file-other-window)
-			     (define-key dired-mode-map "F" 'find-name-dired)
-			     (define-key dired-mode-map "c" 'run-bash)
-			     (define-key dired-mode-map "o" 'dired-do-async-shell-command)
-			     (define-key dired-mode-map "k" 'dired-kill-and-next-subdir)
-			     (define-key dired-mode-map "K" 'dired-kill-subdir)
-			     (define-key dired-mode-map (kbd "?") 'dired-get-size)
-			     (define-key dired-mode-map (kbd "RET") 'dired-find-file-mod)
-			     (define-key dired-mode-map (kbd "C-o") 'other-window)
-			     (define-key dired-mode-map (kbd "M-p") 'dired-up-directory)))
 
 ;;--------------------------------------------------
 ;; Open my favorite files and start rocking!
