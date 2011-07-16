@@ -261,19 +261,6 @@
 				  (turn-on-eldoc-mode)
 				  (rainbow-mode)))
 
-;;--------------------------------------------------
-;; Open my favorite files and start rocking!
-;;--------------------------------------------------
-(open-filelist '("~/.emacs.d/init.el" "~/.bashrc"
-		 "~/.config/openbox/autostart.sh"
-		 "~/.config/awesome/rc.lua"
-		 "~/Dropbox/org/projects.org"
-		 "~/perl/perl-svn/references/bibtex/references.bib"))
-(dired (getenv "HOME"))
-(switch-to-buffer "~")
-(split-window-horizontally)
-(switch-to-buffer "init.el")
-
 (server-start)
 ;; diable warning when killing buffers opened with emacsclient 
 ;; (must be set after calling (server-start))
@@ -310,3 +297,16 @@
 	(string-equal "perl-paulozog" system-name)
 	(string-equal "paul-box" system-name))
     (set-face-attribute 'default nil :height 80))
+
+;;--------------------------------------------------
+;; Open my favorite files and start rocking!
+;;--------------------------------------------------
+(open-filelist '("~/.emacs.d/init.el" "~/.bashrc"
+		 "~/.config/openbox/autostart.sh"
+		 "~/.config/awesome/rc.lua"
+		 "~/Dropbox/org/projects.org"
+		 "~/perl/perl-svn/references/bibtex/references.bib"))
+(dired (getenv "HOME"))
+(switch-to-buffer (user-login-name))
+(split-window-horizontally)
+(switch-to-buffer "init.el")

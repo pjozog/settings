@@ -1,7 +1,8 @@
 ;; Make dired only search for filenames, not the entire buffer text
-(setq dired-isearch-filenames 't)
-(setq wdired-allow-to-change-permissions 't)
+(setq dired-isearch-filenames t)
+(setq wdired-allow-to-change-permissions t)
 (setq dired-listing-switches "-alh")
+(setq dired-recursive-deletes 'always)
 
 (eval-after-load "dired"
   ;; ok to execute on '.' or '..'
