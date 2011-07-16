@@ -195,8 +195,6 @@
 (global-set-key [(control o)] 'other-window)
 (global-set-key [(control meta |)] 'fill-region)
 (global-set-key [(meta h)] 'ff-find-other-file)
-(global-unset-key (kbd "C-7"))
-(global-set-key (kbd "C-7") 'insert-amps)
 (global-set-key (kbd "C-c k") 'ido-kill-buffer)
 
 ;; Fix linum margin when running in terminal mode
@@ -289,7 +287,8 @@
 			     (outline-minor-mode)
 			     (auto-fill-mode)
 			     (flymake-mode)
-			     (turn-on-reftex)))
+			     (turn-on-reftex)
+			     (define-key LaTeX-mode-map (kbd "C-7") 'insert-amps)))
 
 ;; this makes control-tab function like org-mode
 (add-hook 'outline-minor-mode-hook
