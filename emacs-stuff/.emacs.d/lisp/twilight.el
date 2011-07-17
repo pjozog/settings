@@ -46,10 +46,15 @@
      (font-lock-keyword-face ((t (:foreground "#D56758"))))
      (font-lock-preprocessor-face ((t (:foreground "Aquamarine"))))
      (font-lock-reference-face ((t (:foreground "SlateBlue"))))
+
+     (diff-removed ((((background dark)) (:foreground "#FF2200")) (t (:foreground "DarkGreen"))))
+     (diff-added ((((background dark)) (:foreground "#0FAA4C")) (t (:foreground "DarkMagenta"))))
+     (diff-changed ((((background dark)) (:foreground "Yellow")) (t (:foreground "MediumBlue"))))
+     (diff-refine-change ((t (:background "Yellow" :foreground "Black"))))
      
      (font-lock-regexp-grouping-backslash ((t (:foreground "#E9C062"))))
      (font-lock-regexp-grouping-construct ((t (:foreground "red"))))
-     
+
      (minibuffer-prompt ((t (:foreground "yellow"))))
      (ido-subdir ((t (:foreground "#CF6A4C"))))
      (ido-first-match ((t (:foreground "#8F9D6A"))))

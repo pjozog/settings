@@ -128,6 +128,7 @@
 (require 'w3m-load)
 (require 'mediawiki)
 (require 'highline)
+(require 'diff-mode-)
 
 ;; Turn off the bad shit
 (menu-bar-mode -1)
