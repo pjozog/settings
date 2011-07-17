@@ -149,7 +149,6 @@
 (global-set-key [(meta return)] 'shell-resync-dirs)
 (global-set-key [(control c) (f)] 'find-file-this)
 ;(global-set-key [(meta .)] 'goto-tag)
-(global-set-key [(control x) (v) (=)] 'ediff-revision)
 (global-set-key [(control c) (control g)] 'compile)
 (global-set-key [(control o)] 'other-window)
 (global-set-key [(control meta |)] 'fill-region)
@@ -221,6 +220,9 @@
 ;; My hooks
 ;; --------------------------------------------------
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+
+(eval-after-load "vc-hooks"
+         '(define-key vc-prefix-map "=" 'ediff-revision))
 
 (defun my-camel-case-hook ()
   (if (version< my-emacs-version "23.2.1")

@@ -76,18 +76,24 @@ Otherwise, an error occurs in these cases."
 (defun dired-ediff-marked-files ()
   "Run ediff on marked ediff files."
   (interactive)
-  (set 'marked-files (dired-get-marked-files))
-  
-  (when (= (safe-length marked-files) 1)
-    (ediff-revision (nth 0 marked-files)))
+  (let ((marked-files (dired-get-marked-files)))
+    (when (= (safe-length marked-files) 1)
+      (ediff-revision (nth 0 marked-files)))
 
-  (when (= (safe-length marked-files) 2)
-    (ediff-files (nth 0 marked-files) (nth 1 marked-files)))
-  
-  (when (= (safe-length marked-files) 3)
-    (ediff3 (buffer-file-name (nth 0 marked-files))
-            (buffer-file-name (nth 1 marked-files)) 
-            (buffer-file-name (nth 2 marked-files)))))
+    (when (= (safe-length marked-files) 2)
+      (ediff-files (nth 0 marked-files) (nth 1 marked-files)))
+    
+    (when (= (safe-length marked-files) 3)
+      (ediff3 (buffer-file-name (nth 0 marked-files))
+	      (buffer-file-name (nth 1 marked-files)) 
+	      (buffer-file-name (nth 2 marked-files))))))
+
+(defun dired-vc-status-dir ()
+  "Run vc status on marked ediff dir."
+  (interactive)
+  (let* ((marked-files (dired-get-marked-files))
+	 (dir (nth 0 marked-files)))
+    (vc-dir dir)))
 
 (defun dired-get-size ()
   (interactive)
@@ -136,6 +142,7 @@ Otherwise, an error occurs in these cases."
 			     (define-key dired-mode-map "k" 'dired-kill-and-next-subdir)
 			     (define-key dired-mode-map "K" 'dired-kill-subdir)
 			     (define-key dired-mode-map "=" 'dired-ediff-marked-files)
+			     (define-key dired-mode-map ";" 'dired-vc-status-dir)
 			     (define-key dired-mode-map (kbd "?") 'dired-get-size)
 			     (define-key dired-mode-map (kbd "RET") 'dired-find-file-mod)
 			     (define-key dired-mode-map (kbd "C-o") 'other-window)
