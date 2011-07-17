@@ -3,6 +3,7 @@
 (setq wdired-allow-to-change-permissions t)
 (setq dired-listing-switches "-alh")
 (setq dired-recursive-deletes 'always)
+(setq find-ls-option '("-exec ls -ldh {} \\;" . "-ldh"))
 
 (eval-after-load "dired"
   ;; ok to execute on '.' or '..'
