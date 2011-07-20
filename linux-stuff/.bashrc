@@ -165,6 +165,7 @@ function sl() {
 }
 alias ss='svn status'
 alias hd='GTK2_RC_FILES="/usr/share/themes/Radiance/gtk-2.0/gtkrc" hg extdiff -p meld'
+alias meld='GTK2_RC_FILES="/usr/share/themes/Radiance/gtk-2.0/gtkrc" meld'
 function hl() {
     hg glog -v "$1" | less
 }
