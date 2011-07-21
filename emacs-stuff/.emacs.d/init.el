@@ -303,6 +303,7 @@
  '(cursor ((t (:background "red"))))
  '(dired-directory ((t (:inherit font-lock-builtin-face))))
  '(dired-symlink ((t (:inherit font-lock-comment-face))))
+ '(diredp-dir-heading ((((background dark)) (:inherit font-lock-comment-face))))
  '(diredp-dir-priv ((((background dark)) (:foreground "#7474FFFFFFFF"))))
  '(font-latex-string-face ((((class color) (background dark)) (:foreground "#A2AB64"))))
  '(org-column ((t (:background "#000000" :strike-through nil :underline nil :slant normal :weight normal :height 98 :family "DejaVu Sans Mono")))))
@@ -315,7 +316,7 @@
 ;; Fix linum margin when running in terminal mode
 (unless (window-system)
   (setq linum-format "%d ")
-  (set-face-attribute 'default nil :background "Black"))
+  (set-face-attribute 'default nil :background "black"))
 
 ;;--------------------------------------------------
 ;; Open my favorite files and start rocking!
