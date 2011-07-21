@@ -1,4 +1,4 @@
-;; Recite the holy words
+1;2305;0c;; Recite the holy words
 (defun confess-faith ()
   (interactive)
   (message "There is no system but GNU and Linux is one of its kernels"))
@@ -169,10 +169,6 @@
 (global-set-key [(meta h)] 'ff-find-other-file)
 (global-set-key (kbd "C-c k") 'ido-kill-buffer)
 
-;; Fix linum margin when running in terminal mode
-(unless (window-system)
-  (setq linum-format "%d "))
-
 (setq ediff-split-window-function 'split-window-horizontally)
 
 (put 'upcase-region 'disabled nil)
@@ -317,6 +313,11 @@
 	(string-equal "perl-paulozog" system-name)
 	(string-equal "paul-box" system-name))
     (set-face-attribute 'default nil :height 80))
+
+;; Fix linum margin when running in terminal mode
+(unless (window-system)
+  (setq linum-format "%d ")
+  (set-face-attribute 'default nil :background "Black"))
 
 ;;--------------------------------------------------
 ;; Open my favorite files and start rocking!
