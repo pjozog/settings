@@ -155,13 +155,14 @@
 (setq mouse-yank-at-point 1)
 (autopair-global-mode 1)
 (global-linum-mode 1)
+(global-auto-revert-mode t)
 
 ;; This makes color work in 'M-x shell'
 (autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
 
 ;; My key bindings
 (global-set-key [(meta return)] 'shell-resync-dirs)
-(global-set-key [(control c) (f)] 'find-file-this)
+(global-set-key (kbd "C-c C-f") 'find-file-this)
 ;(global-set-key [(meta .)] 'goto-tag)
 (global-set-key [(control c) (control g)] 'compile)
 (global-set-key [(control o)] 'other-window)
@@ -230,9 +231,6 @@
 ;; My hooks
 ;; --------------------------------------------------
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
-
-(eval-after-load "vc-hooks"
-         '(define-key vc-prefix-map "=" 'ediff-revision))
 
 (defun my-camel-case-hook ()
   (if (version< my-emacs-version "23.2.1")
