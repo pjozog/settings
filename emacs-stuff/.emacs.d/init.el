@@ -1,4 +1,4 @@
-1;2305;0c;; Recite the holy words
+;; Recite the holy words
 (defun confess-faith ()
   (interactive)
   (message "There is no system but GNU and Linux is one of its kernels"))
