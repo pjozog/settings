@@ -293,6 +293,7 @@
  '(org-hide-leading-stars nil)
  '(uniquify-buffer-name-style (quote forward) nil (uniquify))
  '(vc-follow-symlinks nil)
+ '(vc-hg-log-switches (quote ("-v")))
  '(visible-bell t))
 (custom-set-faces
   ;; custom-set-faces was added by Custom.
