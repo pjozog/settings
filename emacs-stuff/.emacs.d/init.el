@@ -317,7 +317,8 @@
 ;; Fix linum margin when running in terminal mode
 (unless (window-system)
   (setq linum-format "%d ")
-  (set-face-attribute 'default nil :background "black"))
+  (set-face-attribute 'default nil :background "unspecified-bg")
+  (set-face-attribute 'default nil :foreground "unspecified-fg"))
 
 ;;--------------------------------------------------
 ;; Open my favorite files and start rocking!
