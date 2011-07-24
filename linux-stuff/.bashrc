@@ -9,6 +9,10 @@ if [ -d $HOME/bin ]; then
     export PATH=$HOME/bin:$PATH
 fi
 
+if [ $TERM = "xterm"]; then
+    export TERM=xterm-256color
+fi
+
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
