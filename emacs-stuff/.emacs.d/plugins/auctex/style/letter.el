@@ -1,6 +1,27 @@
 ;;; letter.el - Special code for letter style.
 
-;; $Id: letter.el,v 1.3 1994/01/05 19:09:22 amanda Exp $
+;; Copyright (C) 1993 Free Software Foundation, Inc.
+
+;; Author: Per Abrahamsen <abraham@dina.kvl.dk>
+;; Maintainer: auctex-devel@gnu.org
+;; Keywords: tex
+
+;; This file is part of AUCTeX.
+
+;; AUCTeX is free software; you can redistribute it and/or modify it
+;; under the terms of the GNU General Public License as published by
+;; the Free Software Foundation; either version 3, or (at your option)
+;; any later version.
+
+;; AUCTeX is distributed in the hope that it will be useful, but
+;; WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+;; General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with AUCTeX; see the file COPYING.  If not, write to the Free
+;; Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+;; 02110-1301, USA.
 
 ;;; Code:
 
@@ -23,15 +44,15 @@
 
 (defun LaTeX-env-recipient (environment)
   "Insert ENVIRONMENT and prompt for recipient and address."
-  (let ((sender (read-input "Sender: " (user-full-name)))
-	(sender-address (read-input "Sender address: "
+  (let ((sender (read-string "Sender: " (user-full-name)))
+	(sender-address (read-string "Sender address: "
 				    LaTeX-letter-sender-address))
-	(recipient (read-input "Recipient: "))
-	(address (read-input "Recipient address: "))
-	(signature (read-input "Signature: "))
-	(opening (read-input "Opening: "))
-	(closing (read-input "Closing: "))
-	(date (read-input "Date: " (LaTeX-today))))
+	(recipient (read-string "Recipient: "))
+	(address (read-string "Recipient address: "))
+	(signature (read-string "Signature: "))
+	(opening (read-string "Opening: "))
+	(closing (read-string "Closing: "))
+	(date (read-string "Date: " (LaTeX-today))))
 
     (insert TeX-esc "name" TeX-grop sender TeX-grcl)
     (newline-and-indent)
@@ -46,7 +67,8 @@
 	  (newline-and-indent)))
     (if (not (zerop (length date)))
 	(progn
-	  (insert TeX-esc "def" TeX-esc "today" TeX-grop date TeX-grcl)
+	  (insert TeX-esc "renewcommand" TeX-grop TeX-esc "today" TeX-grcl
+		  TeX-grop date TeX-grcl)
 	  (newline-and-indent)))
     (newline-and-indent)
 

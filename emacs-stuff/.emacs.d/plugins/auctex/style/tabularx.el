@@ -1,10 +1,10 @@
-;;; polish.el --- AUCTeX style for the `polish' babel option.
+;;; tabularx.el --- AUCTeX style for the tabularx package.
 
-;; Copyright (C) 2007 Free Software Foundation, Inc.
+;; Copyright (C) 2009 Free Software Foundation, Inc.
 
 ;; Author: Ralf Angeli <angeli@caeruleus.net>
 ;; Maintainer: auctex-devel@gnu.org
-;; Created: 2007-01-08
+;; Created: 2009-02-22
 ;; Keywords: tex
 
 ;; This file is part of AUCTeX.
@@ -26,27 +26,27 @@
 
 ;;; Commentary:
 
-;; Set up AUCTeX for editing Polish text in connection with the
-;; `polish' babel option.
+;; This file adds support for the tabularx package.
 
 ;;; Code:
 
-(defvar LaTeX-polish-mode-syntax-table
-  (copy-syntax-table LaTeX-mode-syntax-table)
-  "Syntax table used in LaTeX mode when using `polish.sty'.")
-
-(modify-syntax-entry ?\" "w" LaTeX-polish-mode-syntax-table)
+(defvar LaTeX-tabularx-package-options
+  '("infoshow" "debugshow")
+  "Package options for the tabularx package.")
 
 (TeX-add-style-hook
- "polish"
+ "tabularx"
  (lambda ()
-   (set-syntax-table LaTeX-polish-mode-syntax-table)
-   (unless (eq (car TeX-quote-language) 'override)
-     (setq TeX-quote-language '("polish" "\"`" "\"'" t)))
-   ;; Fontification of quotation marks.
-   (when (fboundp 'font-latex-add-quotes)
-     (font-latex-add-quotes '("\"`" "\"'"))
-     (font-latex-add-quotes '("\"<" "\">" french)))
-   (run-hooks 'TeX-language-pl-hook)))
+   ;; New symbols
+   (TeX-add-symbols
+    "tracingtabularx"
+    '("tabularxcolumn" 0))
+   ;; New environments
+   (LaTeX-add-environments
+    ;; XXX: The tabularx environment takes the same arguments as the
+    ;; tabular* environment.  However, the supported tokens in the
+    ;; format can differ, so at some point in time we might want to
+    ;; separate tabular* and tabularx.
+    '("tabularx" LaTeX-env-tabular*))))
 
-;;; polish.el ends here
+;;; tabularx.el ends here

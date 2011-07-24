@@ -1,10 +1,10 @@
-;;; polish.el --- AUCTeX style for the `polish' babel option.
+;;; CJKutf8.el --- AUCTeX style for the CJKutf8 package.
 
-;; Copyright (C) 2007 Free Software Foundation, Inc.
+;; Copyright (C) 2009 Free Software Foundation, Inc.
 
 ;; Author: Ralf Angeli <angeli@caeruleus.net>
 ;; Maintainer: auctex-devel@gnu.org
-;; Created: 2007-01-08
+;; Created: 2009-01-04
 ;; Keywords: tex
 
 ;; This file is part of AUCTeX.
@@ -26,27 +26,13 @@
 
 ;;; Commentary:
 
-;; Set up AUCTeX for editing Polish text in connection with the
-;; `polish' babel option.
+;; This file adds support for the CJKutf8 package.
 
 ;;; Code:
 
-(defvar LaTeX-polish-mode-syntax-table
-  (copy-syntax-table LaTeX-mode-syntax-table)
-  "Syntax table used in LaTeX mode when using `polish.sty'.")
-
-(modify-syntax-entry ?\" "w" LaTeX-polish-mode-syntax-table)
-
 (TeX-add-style-hook
- "polish"
+ "CJKutf8"
  (lambda ()
-   (set-syntax-table LaTeX-polish-mode-syntax-table)
-   (unless (eq (car TeX-quote-language) 'override)
-     (setq TeX-quote-language '("polish" "\"`" "\"'" t)))
-   ;; Fontification of quotation marks.
-   (when (fboundp 'font-latex-add-quotes)
-     (font-latex-add-quotes '("\"`" "\"'"))
-     (font-latex-add-quotes '("\"<" "\">" french)))
-   (run-hooks 'TeX-language-pl-hook)))
+   (TeX-run-style-hooks "CJK")))
 
-;;; polish.el ends here
+;;; CJKutf8.el ends here

@@ -1,6 +1,7 @@
 ;;; context.el --- Support for ConTeXt documents.
 
-;; Copyright (C) 2003, 2004, 2005, 2006 Free Software Foundation, Inc.
+;; Copyright (C) 2003, 2004, 2005, 2006, 2008, 2010 Free Software
+;;   Foundation, Inc.
 
 ;; Maintainer: Berend de Boer <berend@pobox.com>
 ;; Keywords: tex
@@ -51,8 +52,8 @@
 
 (require 'tex-buf)
 (require 'tex)
-;; need functions like TeX-look-at and LaTeX-split-long-menu
-(require 'latex)
+(require 'latex) ; for functions like `TeX-look-at' and `LaTeX-split-long-menu'
+(require 'plain-tex) ; for `plain-TeX-common-initialization'
 
 (defgroup ConTeXt-macro nil
   "Special support for ConTeXt macros in AUCTeX."
@@ -76,7 +77,7 @@
 
 ;; others
 
-(setq ConTeXt-known-interfaces '("cz" "de" "en" "it" "nl" "ro" "uk"))
+(defvar ConTeXt-known-interfaces '("cz" "de" "en" "it" "nl" "ro" "uk"))
 
 (defcustom ConTeXt-default-interface "en"
   "Default interface to be used when running ConTeXt."
@@ -140,6 +141,23 @@
 (defun ConTeXt-insert-setup (setup)
   "Insert the ConTeXt setup macro SETUP."
   (insert TeX-esc (ConTeXt-setup-command setup))
+  (newline)
+  (indent-according-to-mode)
+  (ConTeXt-arg-setup nil))
+
+
+;; Referencing ConTeXt macro's
+
+(defvar ConTeXt-referencing-list ()
+  "Calls ConTeXt-XX-other-macro-list where XX is the current interface.")
+
+(defun ConTeXt-referencing-command (what)
+  "The ConTeXt macro to call WHAT is itself, no interface specific calls."
+  what)
+
+(defun ConTeXt-insert-referencing (what)
+  "Insert the ConTeXt referencing SETUP."
+  (insert TeX-esc (ConTeXt-referencing-command what))
   (newline)
   (indent-according-to-mode)
   (ConTeXt-arg-setup nil))
@@ -398,6 +416,7 @@ To get a full featured `ConTeXt-section' command, insert
 				 ConTeXt-section-ref))
 
 in your .emacs file."
+  :group 'ConTeXt-macro
   :type 'hook
   :options
   '(ConTeXt-section-heading
@@ -509,7 +528,7 @@ inserted after the sectioning command."
   (setq ConTeXt-menu-changed t))
 
 ;; (defvar ConTeXt-environment-list ()
-;; 	"ConTeXt-environment-list-XX where XX is the current interface.")
+;;	"ConTeXt-environment-list-XX where XX is the current interface.")
 
 (defvar ConTeXt-environment-history nil)
 
@@ -522,7 +541,7 @@ inserted after the sectioning command."
 	 "start")
 	(t
 	 ;; this should not happen
-	 (error "Unknown interface: " ConTeXt-current-interface))))
+	 (error "Unknown interface: %s" ConTeXt-current-interface))))
 
 (defun ConTeXt-environment-stop-name ()
   "Return the \\stop translated to the language in current interface."
@@ -533,7 +552,7 @@ inserted after the sectioning command."
 	 "stop")
 	(t
 	 ;; this should not happen
-	 (error "Unknown interface: " ConTeXt-current-interface))))
+	 (error "Unknown interface: %s" ConTeXt-current-interface))))
 
 
 (defun ConTeXt-environment (arg)
@@ -733,7 +752,7 @@ An entry looks like: (\"environment\" . function)")
 (defun ConTeXt-last-unended-start ()
   "Leave point at the beginning of the last `\\start...' that is unstopped looking from the current cursor."
   (while (and (re-search-backward "\\\\start[a-zA-Z]*\\|\\\\stop[a-zA-Z]*")
-              (looking-at "\\\\stop[a-zA-Z]*"))
+	      (looking-at "\\\\stop[a-zA-Z]*"))
     (ConTeXt-last-unended-start)))
 
 (defun ConTeXt-mark-environment (&optional inner)
@@ -885,10 +904,6 @@ If OPTIONAL, only insert it if not empty, and then use square brackets."
 
 (defvar ConTeXt-item-list ()
   "List of macro's considered items.")
-
-(defvar ConTeXt-extra-paragraph-commands
-  '("crlf" "par")
-  "List of ConTeXt macros that should have their own line besides the section(-block) commands.")
 
 (defun ConTeXt-paragraph-commands-regexp ()
   "Return a regexp matching macros that should have their own line."
@@ -1047,7 +1062,7 @@ An optional fourth (or sixth) element means always replace if t."
 (defvar ConTeXt-indent-arg 2)
 (defvar ConTeXt-indent-basic 2)
 (defvar ConTeXt-indent-item ConTeXt-indent-basic)
-(defvar ConTeXt-indent-item-re "\\\\\item\\>")
+(defvar ConTeXt-indent-item-re "\\\\\\(item\\|sym\\)\\>")
 
 (defvar ConTeXt-indent-syntax-table (make-syntax-table TeX-mode-syntax-table)
   "Syntax table used while computing indentation.")
@@ -1246,6 +1261,17 @@ else.  There might be text before point."
   "Insert SETUP from menu."
   (ConTeXt-insert-setup setup))
 
+;; ConTeXt referencing macros
+(defvar ConTeXt-referencing-menu-name "Referencing")
+
+(defun ConTeXt-referencing-menu-entry (entry)
+  "Create an entry for the referencing menu."
+  (vector entry (list 'ConTeXt-referencing-menu entry)))
+
+(defun ConTeXt-referencing-menu (referencing)
+  "Insert REFERENCING from menu."
+  (ConTeXt-insert-referencing referencing))
+
 ;; ConTeXt other macros
 (defvar ConTeXt-other-macro-menu-name "Other macro")
 
@@ -1399,7 +1425,7 @@ else.  There might be text before point."
 	(TeX-update-style)
 	(setq ConTeXt-menu-changed nil)
 	(message "Updating section menu...")
-	(mapcar 'ConTeXt-section-enable ConTeXt-section-list)
+	(mapc 'ConTeXt-section-enable ConTeXt-section-list)
 	(message "Updating environment menu...")
 	(easy-menu-change '("ConTeXt") ConTeXt-environment-menu-name
 			  (LaTeX-split-long-menu
@@ -1420,6 +1446,11 @@ else.  There might be text before point."
 			  (LaTeX-split-long-menu
 			   (mapcar 'ConTeXt-setup-menu-entry
 				   ConTeXt-setup-list)))
+	(message "Updating referencing menu...")
+	(easy-menu-change '("ConTeXt") ConTeXt-referencing-menu-name
+			  (LaTeX-split-long-menu
+			   (mapcar 'ConTeXt-referencing-menu-entry
+				   ConTeXt-referencing-list)))
 	(message "Updating other macro's menu...")
 	(easy-menu-change '("ConTeXt") ConTeXt-other-macro-menu-name
 			  (LaTeX-split-long-menu
@@ -1452,16 +1483,16 @@ else.  There might be text before point."
 (defun ConTeXt-expand-options ()
   "Expand options for texexec command."
   (concat
-   (and TeX-PDF-mode "--pdf ")
-   (if TeX-Omega-mode
-       (and ConTeXt-Omega-engine
-	    (format "--tex=%s " ConTeXt-Omega-engine))
-     (and ConTeXt-engine
-	  (format "--tex=%s " ConTeXt-engine)))
+   (let ((engine (eval (nth 4 (assq TeX-engine (TeX-engine-alist))))))
+     (when engine
+       (format "--engine=%s " engine)))
    (unless (eq ConTeXt-current-interface "en")
      (format "--interface=%s " ConTeXt-current-interface))
-   (when TeX-source-specials-mode
-     (format "--passon=\"%s\" " TeX-source-specials-tex-flags))
+   (when TeX-source-correlate-mode
+     (format "--passon=\"%s\" "
+	     (if (eq TeX-source-correlate-method-active 'synctex)
+		 TeX-synctex-tex-flags
+	       TeX-source-specials-tex-flags)))
    (unless TeX-interactive-mode
      ConTeXt-texexec-option-nonstop)))
 
@@ -1471,10 +1502,16 @@ else.  There might be text before point."
 ;; They are mapped to interface specific variables
 
 (defvar ConTeXt-language-variable-list
-  '(ConTeXt-define-list ConTeXt-setup-list ConTeXt-other-macro-list
-           ConTeXt-project-structure-list
-           ConTeXt-section-block-list ConTeXt-section-list
-		       ConTeXt-text ConTeXt-item-list))
+  '(ConTeXt-define-list
+    ConTeXt-setup-list
+    ConTeXt-referencing-list
+    ConTeXt-other-macro-list
+    ConTeXt-project-structure-list
+    ConTeXt-section-block-list
+    ConTeXt-section-list
+    ConTeXt-text
+    ConTeXt-item-list
+    ConTeXt-extra-paragraph-commands))
 
 (defcustom ConTeXt-clean-intermediate-suffixes
   ;; See *suffixes in texutil.pl.
@@ -1496,6 +1533,8 @@ i.e. you do _not_ have to cater for this yourself by adding \\\\' or $."
   :type '(repeat regexp)
   :group 'TeX-command)
 
+(TeX-abbrev-mode-setup context-mode)
+
 (defun ConTeXt-mode-common-initialization ()
   "Initialization code that is common for all ConTeXt interfaces."
   ;; `plain-TeX-common-initialization' kills all local variables, but
@@ -1507,6 +1546,8 @@ i.e. you do _not_ have to cater for this yourself by adding \\\\' or $."
     (setq ConTeXt-current-interface save-ConTeXt-current-interface))
   (setq major-mode 'context-mode)
 
+  (setq local-abbrev-table context-mode-abbrev-table)
+
   ;; Make language specific variables buffer local
   (dolist (symbol ConTeXt-language-variable-list)
     (make-variable-buffer-local symbol))
@@ -1516,6 +1557,8 @@ i.e. you do _not_ have to cater for this yourself by adding \\\\' or $."
     (set symbol (symbol-value (intern (concat (symbol-name symbol) "-"
 					      ConTeXt-current-interface)))))
 
+  ;; Create certain regular expressions based on language
+  (setq ConTeXt-indent-item-re (concat "\\\\\\(" (mapconcat 'identity ConTeXt-item-list "\\|") "\\)\\>"))
 
   ;; What's the deepest level at we can collapse a document?
   ;; set only if user has not set it. Need to be set before menu is created.

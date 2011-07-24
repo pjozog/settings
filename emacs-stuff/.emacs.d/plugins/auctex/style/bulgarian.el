@@ -1,10 +1,10 @@
-;;; polish.el --- AUCTeX style for the `polish' babel option.
+;;; bulgarian.el --- AUCTeX style for the `bulgarian' babel option.
 
-;; Copyright (C) 2007 Free Software Foundation, Inc.
+;; Copyright (C) 2008 Free Software Foundation, Inc.
 
 ;; Author: Ralf Angeli <angeli@caeruleus.net>
 ;; Maintainer: auctex-devel@gnu.org
-;; Created: 2007-01-08
+;; Created: 2008-06-28
 ;; Keywords: tex
 
 ;; This file is part of AUCTeX.
@@ -26,27 +26,29 @@
 
 ;;; Commentary:
 
-;; Set up AUCTeX for editing Polish text in connection with the
-;; `polish' babel option.
+;; Set up AUCTeX for editing Bulgarian text in connection with the
+;; `bulgarian' babel option.
 
 ;;; Code:
 
-(defvar LaTeX-polish-mode-syntax-table
+(defvar LaTeX-bulgarian-mode-syntax-table
   (copy-syntax-table LaTeX-mode-syntax-table)
-  "Syntax table used in LaTeX mode when using `polish.sty'.")
+  "Syntax table used in LaTeX mode when using `bulgarian.sty'.")
 
-(modify-syntax-entry ?\" "w" LaTeX-polish-mode-syntax-table)
+(modify-syntax-entry ?\" "w" LaTeX-bulgarian-mode-syntax-table)
 
 (TeX-add-style-hook
- "polish"
+ "bulgarian"
  (lambda ()
-   (set-syntax-table LaTeX-polish-mode-syntax-table)
+   (set-syntax-table LaTeX-bulgarian-mode-syntax-table)
    (unless (eq (car TeX-quote-language) 'override)
-     (setq TeX-quote-language '("polish" "\"`" "\"'" t)))
+     (setq TeX-quote-language
+	   `("bulgarian" "\"`" "\"'" ,TeX-quote-after-quote)))
+   (setq LaTeX-babel-hyphen-language "bulgarian")
    ;; Fontification of quotation marks.
    (when (fboundp 'font-latex-add-quotes)
      (font-latex-add-quotes '("\"`" "\"'"))
      (font-latex-add-quotes '("\"<" "\">" french)))
-   (run-hooks 'TeX-language-pl-hook)))
+   (run-hooks 'TeX-language-bg-hook)))
 
-;;; polish.el ends here
+;;; bulgarian.el ends here
