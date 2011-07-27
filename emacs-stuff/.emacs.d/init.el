@@ -94,14 +94,15 @@
   (interactive)
   (term "/bin/bash"))
 
-(defun kill-all-dired-buffers()
+(defun kill-all-dired-buffers ()
   "Kill all dired buffers."
   (interactive)
   (save-excursion
     (let((count 0))
       (dolist(buffer (buffer-list))
 	(set-buffer buffer)
-	(when (equal major-mode 'dired-mode)
+	(when (and (equal major-mode 'dired-mode)
+		   (not (string-equal (buffer-name) (user-login-name))))
 	  (setq count (1+ count))
 	  (kill-buffer buffer)))
       (message "Killed %i dired buffer(s)." count ))))
@@ -168,6 +169,7 @@
 (global-set-key [(control meta |)] 'fill-region)
 (global-set-key [(meta h)] 'ff-find-other-file)
 (global-set-key (kbd "C-c k") 'ido-kill-buffer)
+(global-set-key (kbd "C-S-k") 'kill-all-dired-buffers)
 
 (setq ediff-split-window-function 'split-window-horizontally)
 
