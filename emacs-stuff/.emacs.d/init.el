@@ -170,6 +170,7 @@
 (global-set-key [(meta h)] 'ff-find-other-file)
 (global-set-key (kbd "C-c k") 'ido-kill-buffer)
 (global-set-key (kbd "C-S-k") 'kill-all-dired-buffers)
+(global-set-key (kbd "C-S-a") 'align-regexp)
 
 (setq ediff-split-window-function 'split-window-horizontally)
 
@@ -250,7 +251,7 @@
     (add-hook (car modeList) (lambda ()
 			       (my-camel-case-hook)
 			       (hs-minor-mode)
-			       (global-set-key [(control tab)] 'hs-toggle-hiding)))
+			       (define-key hs-minor-mode-map [(control tab)] 'hs-toggle-hiding)))
     (setq modeList (cdr modeList))))
 
 ;; apply LaTeX hooks (spellcheck, etc.)
