@@ -132,6 +132,11 @@ Otherwise, an error occurs in these cases."
     (dired-next-subdir 0)
     (search-forward search-term)))
 
+(defun dired-cd ()
+  (interactive)
+  (let ((dir (dired-get-file-for-visit)))
+    (cd dir)))
+
 (add-hook 'dired-mode-hook (lambda ()
 			     (define-key dired-mode-map "e" 'wdired-change-to-wdired-mode)
 			     (define-key dired-mode-map "/" 'dired-isearch-filenames)
@@ -139,6 +144,7 @@ Otherwise, an error occurs in these cases."
 			     (define-key dired-mode-map "f" 'dired-find-file-other-window)
 			     (define-key dired-mode-map "F" 'find-name-dired)
 			     (define-key dired-mode-map "c" 'run-bash)
+			     (define-key dired-mode-map "w" 'dired-cd)
 			     (define-key dired-mode-map "o" 'dired-do-async-shell-command)
 			     (define-key dired-mode-map "k" 'dired-kill-and-next-subdir)
 			     (define-key dired-mode-map "K" 'dired-kill-subdir)

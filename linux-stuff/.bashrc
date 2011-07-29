@@ -223,6 +223,7 @@ fi
 
 export EDITOR='emacsclient'
 export PYTHONSTARTUP=~/.pythonrc
+export PYTHONPATH=${PYTHONPATH}:~/perls/python/lcmtypes
 
 [ -d ${HOME}/texpath ] && export TEXINPUTS=.:~/texpath:~/texpath/images:$TEXINPUTS
 [ -d ${HOME}/texpath ] && export BSTINPUTS=.:~/texpath:$BSTINPUTS
