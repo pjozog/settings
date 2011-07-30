@@ -1,7 +1,12 @@
 ;; Make dired only search for filenames, not the entire buffer text
 (setq dired-isearch-filenames t)
 (setq wdired-allow-to-change-permissions t)
-(setq dired-listing-switches "-CF --group-directories-first -alh")
+
+(if (or (string-match "paul" (system-name))
+	(string-match "robots" (system-name))
+	(string-match "yoshi" (system-name)))
+    (setq dired-listing-switches "-CF --group-directories-first -alh"))
+
 (setq dired-recursive-deletes 'always)
 (setq find-ls-option '("-exec ls -ldh {} \\;" . "-ldh"))
 
