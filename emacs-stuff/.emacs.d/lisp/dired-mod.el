@@ -135,7 +135,13 @@ Otherwise, an error occurs in these cases."
 (defun dired-cd ()
   (interactive)
   (let ((dir (dired-get-file-for-visit)))
-    (cd dir)))
+    ;; check if directory
+    (if (car (file-attributes dir))
+	(cd dir))))
+
+(defun dired-cd-home ()
+  (interactive)
+  (cd (getenv "HOME")))
 
 (add-hook 'dired-mode-hook (lambda ()
 			     (define-key dired-mode-map "e" 'wdired-change-to-wdired-mode)
@@ -145,6 +151,7 @@ Otherwise, an error occurs in these cases."
 			     (define-key dired-mode-map "F" 'find-name-dired)
 			     (define-key dired-mode-map "c" 'run-bash)
 			     (define-key dired-mode-map "w" 'dired-cd)
+			     (define-key dired-mode-map "W" 'dired-cd-home)
 			     (define-key dired-mode-map "o" 'dired-do-async-shell-command)
 			     (define-key dired-mode-map "k" 'dired-kill-and-next-subdir)
 			     (define-key dired-mode-map "K" 'dired-kill-subdir)
