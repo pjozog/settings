@@ -143,6 +143,7 @@
 (require 'highline)
 (require 'diff-mode-)
 (require 'dired+)
+(require 'smarttabs)
 
 ;; Turn off the bad shit
 (menu-bar-mode -1)
