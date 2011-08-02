@@ -148,13 +148,17 @@ Otherwise, an error occurs in these cases."
   (interactive)
   (cd (getenv "HOME")))
 
+(defun dired-run-shell ()
+  (interactive)
+  (term "/bin/bash"))
+
 (add-hook 'dired-mode-hook (lambda ()
 			     (define-key dired-mode-map "e" 'wdired-change-to-wdired-mode)
 			     (define-key dired-mode-map "/" 'dired-isearch-filenames)
 			     (define-key dired-mode-map "v" 'dired-view-file-other-window)
 			     (define-key dired-mode-map "f" 'dired-find-file-other-window)
 			     (define-key dired-mode-map "F" 'find-name-dired)
-			     (define-key dired-mode-map "c" 'run-bash)
+			     (define-key dired-mode-map "c" 'dired-run-shell)
 			     (define-key dired-mode-map "w" 'dired-cd)
 			     (define-key dired-mode-map "W" 'dired-cd-home)
 			     (define-key dired-mode-map "o" 'dired-do-async-shell-command)

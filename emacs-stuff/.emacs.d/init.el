@@ -90,10 +90,6 @@
   (interactive)
   (insert (format "& %s &" (read-from-minibuffer "Symbol? "))))
 
-(defun run-bash ()
-  (interactive)
-  (term "/bin/bash"))
-
 (defun kill-all-dired-buffers ()
   "Kill all dired buffers."
   (interactive)
@@ -326,7 +322,7 @@
 ;;--------------------------------------------------
 ;; Open my favorite files and start rocking!
 ;;--------------------------------------------------
-(open-filelist '("~/.emacs.d/init.el" "~/.bashrc"
+(open-filelist '("~/.emacs.d/init.el" "~/.zshrc"
 		 "~/.config/openbox/autostart.sh"
 		 "~/.config/awesome/rc.lua"
 		 "~/Dropbox/org/projects.org"

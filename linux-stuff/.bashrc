@@ -1,17 +1,6 @@
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
-if [ $TERM = "Eterm" ]; then
-    export LANG=C
-fi
-
-if [ -d $HOME/bin ]; then
-    export PATH=$HOME/bin:$PATH
-fi
-
-if [ $TERM = "xterm" ]; then
-    export TERM=xterm-256color
-fi
 
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
@@ -110,102 +99,10 @@ if [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
 fi
 
-if [ -f $HOME/.svn_project ]; then
-    . $HOME/.svn_project
+if [ -f $HOME/.shell_settings ]; then
+    . $HOME/.shell_settings
 fi
 
-#only list directories first if ls supports it
-ls --group-directories-first > /dev/null 2>&1
-if [ $? -eq 0 ]; then
-    alias ls='ls --color=always -CF --group-directories-first'
-else 
-    alias ls='ls --color=always -CF'
-fi
-
-# function pu {
-#     arg="$1"
-#     fullname=$(readlink -f "$arg")
-#     match=$(dirs -v | sed 's@~@'${HOME}'@' | egrep "[0-9] +$fullname"'$')
-#     if [ $? -eq 0 ]; then
-# 	num=$(echo $match | awk '{print $1}')
-# 	echo $num
-# 	pushd +$num > /dev/null 2>&1
-#     else
-# 	pushd $arg > /dev/null 2>&1
-#     fi
-#     unset arg match fullname num
-# }
-
-alias l='ls'
-alias ll='ls -lh'
-alias lt='ll -tr'
-alias ds='du --max-depth=1 -h'
-alias g='grep --color=auto'
-alias gg='grep --color=always'
-alias eg='egrep --color=auto'
-alias pu='pushd' #see above function
-alias po='popd'
-alias d='dirs -v'
-alias fm='nautilus --no-desktop "$(pwd)"'
-alias less='less -i'
-alias e='emacsclient -n'
-alias snes9x='snes9x -conf ${HOME}/.snes96_snapshots/snes9x.conf'
-alias u='df -h .'
-alias mountthumb='sudo mount /dev/sdc1 /mnt/thumb -o uid=1000,gid=1000'
-alias mountsvn='sudo mount -t ext3 /dev/sdc1 /mnt/svn'
-alias c='google-chrome'
-alias ..='cd ..'
-alias ...='cd ../..'
-alias ....='cd ../../..'
-alias .....='cd ../../../..'
-alias ......='cd ../../../../..'
-alias .......='cd ../../../../../..'
-
-# subversion aliases
-alias sd='svn diff --diff-cmd ~/bin/svn-diff-meld'
-alias sdd='svn diff'
-function sl() {
-    svn log -v "$1" | less
-}
-alias ss='svn status'
-alias hd='GTK2_RC_FILES="/usr/share/themes/Radiance/gtk-2.0/gtkrc" hg extdiff -p meld'
-alias meld='GTK2_RC_FILES="/usr/share/themes/Radiance/gtk-2.0/gtkrc" meld'
-function hl() {
-    hg glog -v "$1" | less
-}
-
-function hs() {
-    if [ $# -eq 1 ]; then
-	hg status "$1"
-    else
-	hg status .
-    fi
-}
-
-alias ns='ssh -X -p 2219 pjozog@nslab.ccs.neu.edu'
-
-alias rmq='rm -r $(svn status | grep ^? | awk "{print \$2}")'
-alias hrmq='rm -r $(hs | grep ^? | awk "{print \$2}")'
-alias get='sudo apt-get install'
-alias rs='rsync --stats --progress -avk'
-
-function k() {
-    arg="$1"
-    processToKill=$(ps aux | grep "$arg" | awk '{print $2}')
-    kill -9 $processToKill > /dev/null 2>&1
-    unset processToKill arg
-}
-
-#usenet .nzb function
-HELLANZBDIR=${HOME}/external/.hellanzb
-function mz() {
-    if [ ! -d ${HELLANZBDIR}/nzb/daemon.queue ]; then
-	mkdir -p ${HELLANZBDIR}/nzb/daemon.queue
-    fi
-    mv "$1" ${HELLANZBDIR}/nzb/daemon.queue
-}
-
-[ -f $HOME/.dircolors ] && eval $(dircolors -b $HOME/.dircolors)
 
 #green prompt, turquosie path
 #export PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;36m\]\w\[\033[00m\]\$ '
@@ -214,36 +111,3 @@ function mz() {
 export PS1='\[\033[01;33m\]\u@\h\[\033[00m\]:\[\033[01;36m\]\w\[\033[00m\]\$ '
 
 [ ${HOSTNAME} = "perl-paulozog" ] && export PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;33m\]\w\[\033[00m\]\$ '
-
-which source-highlight > /dev/null 2>&1
-if [ $? -eq 0 ]; then
-    export LESSOPEN="| /usr/share/source-highlight/src-hilite-lesspipe.sh %s"
-    export LESS=' -R'
-fi
-
-export EDITOR='emacsclient'
-export PYTHONSTARTUP=~/.pythonrc
-export PYTHONPATH=${PYTHONPATH}:~/perls/python/lcmtypes
-
-[ -d ${HOME}/texpath ] && export TEXINPUTS=.:~/texpath:~/texpath/images:$TEXINPUTS
-[ -d ${HOME}/texpath ] && export BSTINPUTS=.:~/texpath:$BSTINPUTS
-[ -d ${HOME}/texpath ] && export BIBINPUTS=.:~/texpath:$BIBINPUTS
-
-[ -d ${HOME}/lib64/python ] && export PYTHONPATH=$PYTHONPATH:~/lib64/python
-
-alias m='wmname LG3D; matlab'
-alias psy='wmname LG3D; cdp; ./perls-spy'
-
-[ -f /opt/ros/diamondback/setup.bash ] && . /opt/ros/diamondback/setup.bash
-
-which mycowsay > /dev/null 2>&1
-[ $? -eq 0 ] && mycowsay
-
-#Man pages
-export LESS_TERMCAP_mb=$'\E[01;31m'      # begin blinking
-export LESS_TERMCAP_md=$'\E[01;38;5;74m' # begin bold
-export LESS_TERMCAP_me=$'\E[0m'          # end mode
-export LESS_TERMCAP_se=$'\E[0m'          # end standout-mode                 
-export LESS_TERMCAP_so=$'\E[01;44;33m'   # begin standout-mode - info box                              
-export LESS_TERMCAP_ue=$'\E[0m'          # end underline
-export LESS_TERMCAP_us=$'\E[01;32m'      # begin underline

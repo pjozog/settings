@@ -14,6 +14,8 @@ requiredDirs        = [os.path.join(homeDir, '.config'),
 
 #These home dir files will be links to version controlled files
 linkList = [os.path.join(homeDir, '.bashrc'),
+            os.path.join(homeDir, '.zshrc'),
+            os.path.join(homeDir, '.shell_settings'),
             os.path.join(homeDir, '.emacs.d'),
             os.path.join(homeDir, '.config', 'openbox'),
             os.path.join(homeDir, '.config', 'awesome'),
@@ -30,6 +32,8 @@ linkList = [os.path.join(homeDir, '.bashrc'),
 
 #These will be the actual version controlled files (the sources)
 sourceList = [os.path.join(scriptDir, 'linux-stuff', '.bashrc'),
+              os.path.join(scriptDir,  'linux-stuff', '.zshrc'),
+              os.path.join(scriptDir,  'linux-stuff', '.shell_settings'),
               os.path.join(scriptDir,  'emacs-stuff', '.emacs.d'),
               os.path.join(scriptDir, 'openbox-stuff', 'openbox'),
               os.path.join(scriptDir, 'awesome-stuff', 'awesome'),
