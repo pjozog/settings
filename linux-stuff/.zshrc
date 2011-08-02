@@ -8,6 +8,9 @@ if [ -f ${HOME}/.shell_settings ]; then
     . ${HOME}/.shell_settings
 fi
 
+WORDCHARS='*?_.[]~=&;!#$%^(){}<>'
+WORDCHARS=''
+
 function precmd {
 
     local TERMWIDTH
