@@ -126,8 +126,6 @@ export PYTHONPATH=${PYTHONPATH}:~/perls/python/lcmtypes
 alias m='wmname LG3D; matlab'
 alias psy='wmname LG3D; cdp; ./perls-spy'
 
-[ -f /opt/ros/diamondback/setup.bash ] && . /opt/ros/diamondback/setup.bash
-
 which mycowsay > /dev/null 2>&1
 [ $? -eq 0 ] && mycowsay
 

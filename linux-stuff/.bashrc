@@ -103,6 +103,7 @@ if [ -f $HOME/.shell_settings ]; then
     . $HOME/.shell_settings
 fi
 
+[ -f /opt/ros/diamondback/setup.bash ] && . /opt/ros/diamondback/setup.bash
 
 #green prompt, turquosie path
 #export PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;36m\]\w\[\033[00m\]\$ '
@@ -111,3 +112,4 @@ fi
 export PS1='\[\033[01;33m\]\u@\h\[\033[00m\]:\[\033[01;36m\]\w\[\033[00m\]\$ '
 
 [ ${HOSTNAME} = "perl-paulozog" ] && export PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;33m\]\w\[\033[00m\]\$ '
+
