@@ -9,9 +9,6 @@ require("beautiful")
 -- Notification library
 require("naughty")
 
--- Load Debian menu entries
-require("debian.menu")
-
 -- {{{ Variable definitions
 -- Themes define colours, icons, and wallpapers
 
