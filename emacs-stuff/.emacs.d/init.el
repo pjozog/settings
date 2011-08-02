@@ -219,6 +219,7 @@
 (setq auto-mode-alist (cons '("CMakeLists\\.txt$" . cmake-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.lcm$" . java-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("Doxyfile$" . conf-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.shell_settings$" . sh-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.SRC$" . asm-mode) auto-mode-alist))
 (setq matlab-fill-code nil)
 
@@ -322,7 +323,7 @@
 ;;--------------------------------------------------
 ;; Open my favorite files and start rocking!
 ;;--------------------------------------------------
-(open-filelist '("~/.emacs.d/init.el" "~/.zshrc"
+(open-filelist '("~/.emacs.d/init.el" "~/.shell_settings"
 		 "~/.config/openbox/autostart.sh"
 		 "~/.config/awesome/rc.lua"
 		 "~/Dropbox/org/projects.org"
