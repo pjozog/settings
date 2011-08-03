@@ -11,6 +11,8 @@ fi
 WORDCHARS='*?_.[]~=&;!#$%^(){}<>'
 WORDCHARS=''
 
+alias history='history 1'
+
 function precmd {
 
     local TERMWIDTH
@@ -23,7 +25,7 @@ function precmd {
     PR_FILLBAR=""
     PR_PWDLEN=""
     
-    local promptsize=${#${(%):---(%n@%m:%l)---()--}}
+    local promptsize=${#${(%):---(%n@%m:%1~)---()--}}
     local pwdsize=${#${(%):-%~}}
     
     if [[ "$promptsize + $pwdsize" -gt $TERMWIDTH ]]; then
@@ -54,6 +56,7 @@ preexec () {
 
 
 setprompt () {
+
     ###
     # Need this so the prompt will work.
 
@@ -126,26 +129,33 @@ setprompt () {
 	PR_APM=''
     fi
     
+    ##
+    # My main color - Paul Ozog
+    if [ $HOST = "perl-paulozog" ]; then
+	PR_MAIN_COLOR=$PR_GREEN
+    else
+	PR_MAIN_COLOR=$PR_YELLOW
+    fi
     
     ###
     # Finally, the prompt.
 
     PROMPT='$PR_SET_CHARSET$PR_STITLE${(e)PR_TITLEBAR}\
 $PR_CYAN$PR_SHIFT_IN$PR_ULCORNER$PR_BLUE$PR_HBAR$PR_SHIFT_OUT(\
-$PR_GREEN%(!.%SROOT%s.%n)$PR_GREEN@%m:%l\
+$PR_MAIN_COLOR%(!.%SROOT%s.%n)@$PR_RED%m$PR_CYAN:%1~\
 $PR_BLUE)$PR_SHIFT_IN$PR_HBAR$PR_CYAN$PR_HBAR${(e)PR_FILLBAR}$PR_BLUE$PR_HBAR$PR_SHIFT_OUT(\
 $PR_MAGENTA%$PR_PWDLEN<...<%~%<<\
 $PR_BLUE)$PR_SHIFT_IN$PR_HBAR$PR_CYAN$PR_URCORNER$PR_SHIFT_OUT\
 
 $PR_CYAN$PR_SHIFT_IN$PR_LLCORNER$PR_BLUE$PR_HBAR$PR_SHIFT_OUT(\
 %(?..$PR_LIGHT_RED%?$PR_BLUE:)\
-${(e)PR_APM}$PR_YELLOW%D{%H:%M}\
+${(e)PR_APM}$PR_MAIN_COLOR%D{%l:%M %P}\
 $PR_LIGHT_BLUE:%(!.$PR_RED.$PR_WHITE)%#$PR_BLUE)$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT\
 $PR_CYAN$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT\
-$PR_NO_COLOUR '
+$PR_NO_COLOUR $ '
 
     RPROMPT=' $PR_CYAN$PR_SHIFT_IN$PR_HBAR$PR_BLUE$PR_HBAR$PR_SHIFT_OUT\
-($PR_YELLOW%D{%a,%b%d}$PR_BLUE)$PR_SHIFT_IN$PR_HBAR$PR_CYAN$PR_LRCORNER$PR_SHIFT_OUT$PR_NO_COLOUR'
+($PR_MAIN_COLOR%D{%a,%b%d}$PR_BLUE)$PR_SHIFT_IN$PR_HBAR$PR_CYAN$PR_LRCORNER$PR_SHIFT_OUT$PR_NO_COLOUR'
 
     PS2='$PR_CYAN$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT\
 $PR_BLUE$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT(\
