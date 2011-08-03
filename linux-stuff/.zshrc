@@ -13,6 +13,8 @@ WORDCHARS=''
 
 alias history='history 1'
 
+setopt NO_HUP
+
 function precmd {
 
     local TERMWIDTH
