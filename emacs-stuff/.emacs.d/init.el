@@ -90,7 +90,7 @@
   (interactive)
   (insert (format "& %s &" (read-from-minibuffer "Symbol? "))))
 
-(defun kill-all-dired-buffers ()
+(defun kill-all-dired-buffers (exclude)
   "Kill all dired buffers."
   (interactive)
   (save-excursion
@@ -98,7 +98,7 @@
       (dolist(buffer (buffer-list))
 	(set-buffer buffer)
 	(when (and (equal major-mode 'dired-mode)
-		   (not (string-equal (buffer-name) (user-login-name))))
+		   (not (string-equal (buffer-name) exclude)))
 	  (setq count (1+ count))
 	  (kill-buffer buffer)))
       (message "Killed %i dired buffer(s)." count ))))
@@ -169,7 +169,8 @@
 (global-set-key [(control meta |)] 'fill-region)
 (global-set-key [(meta h)] 'ff-find-other-file)
 (global-set-key (kbd "C-c k") 'ido-kill-buffer)
-(global-set-key (kbd "C-S-k") 'kill-all-dired-buffers)
+(global-set-key (kbd "C-S-k") (lambda () (interactive)
+				(kill-all-dired-buffers (user-login-name))))
 (global-set-key (kbd "C-S-a") 'align-regexp)
 
 (setq ediff-split-window-function 'split-window-horizontally)
