@@ -155,6 +155,9 @@
 (global-linum-mode 1)
 (global-auto-revert-mode t)
 
+;; That 'yes' or 'no' shit is anoying:
+(defalias 'yes-or-no-p 'y-or-n-p)
+
 ;; This makes color work in 'M-x shell'
 (autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
 
