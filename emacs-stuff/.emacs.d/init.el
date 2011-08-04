@@ -158,6 +158,10 @@
 ;; That 'yes' or 'no' shit is anoying:
 (defalias 'yes-or-no-p 'y-or-n-p)
 
+;; Woman is pretty cool
+(defalias 'man 'woman)
+(setq woman-use-own-frame nil)
+
 ;; This makes color work in 'M-x shell'
 (autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
 

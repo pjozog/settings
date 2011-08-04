@@ -47,6 +47,8 @@
      (font-lock-preprocessor-face ((t (:foreground "Aquamarine"))))
      (font-lock-reference-face ((t (:foreground "SlateBlue"))))
 
+     (woman-italic ((t (:foreground "cyan"))))
+
      (diff-removed ((((background dark)) (:foreground "#FF2200")) (t (:foreground "DarkGreen"))))
      (diff-added ((((background dark)) (:foreground "#0FAA4C")) (t (:foreground "DarkMagenta"))))
      (diff-changed ((((background dark)) (:foreground "Yellow")) (t (:foreground "MediumBlue"))))
