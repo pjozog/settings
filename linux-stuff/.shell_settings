@@ -96,6 +96,11 @@ function k() {
     unset processToKill arg
 }
 
+function pps_man() {
+    emacsclient -e "(woman \"$1\")"
+}
+alias man=pps_man
+
 #usenet .nzb function
 HELLANZBDIR=${HOME}/external/.hellanzb
 function mz() {
