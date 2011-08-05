@@ -48,6 +48,11 @@
      (font-lock-reference-face ((t (:foreground "SlateBlue"))))
 
      (woman-italic ((t (:foreground "cyan"))))
+     (woman-bold ((t (:foreground "#0FAA4C"))))
+
+     (diredp-file-name ((t (:foreground "white"))))
+     (diredp-symlink ((t (:foreground "yellow"))))
+     (diredp-file-suffix ((t (:foreground "#BD4BC4"))))
 
      (diff-removed ((((background dark)) (:foreground "#FF2200")) (t (:foreground "DarkGreen"))))
      (diff-added ((((background dark)) (:foreground "#0FAA4C")) (t (:foreground "DarkMagenta"))))

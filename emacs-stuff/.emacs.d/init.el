@@ -106,6 +106,15 @@
 ;; --------------------------------------------------
 ;; Packages / Minor modes / Keybindings
 ;; --------------------------------------------------
+
+
+(defalias 'yes-or-no-p 'y-or-n-p) ;; That 'yes' or 'no' shit is anoying:
+(defalias 'man 'woman) ;; Doesn't work at startup?
+(defalias 'cf 'customize-face)
+
+;; --------------------------------------------------
+;; Packages / Minor modes / Keybindings
+;; --------------------------------------------------
 ;; append my stuff to load-path
 (add-to-list 'load-path
 	     "~/.emacs.d/lisp")
@@ -155,11 +164,7 @@
 (global-linum-mode 1)
 (global-auto-revert-mode t)
 
-;; That 'yes' or 'no' shit is anoying:
-(defalias 'yes-or-no-p 'y-or-n-p)
-
 ;; Woman is pretty cool
-(defalias 'man 'woman)
 (setq woman-use-own-frame nil)
 
 ;; This makes color work in 'M-x shell'
