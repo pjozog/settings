@@ -104,10 +104,8 @@
       (message "Killed %i dired buffer(s)." count ))))
 
 ;; --------------------------------------------------
-;; Packages / Minor modes / Keybindings
+;; Aliases
 ;; --------------------------------------------------
-
-
 (defalias 'yes-or-no-p 'y-or-n-p) ;; That 'yes' or 'no' shit is anoying:
 (defalias 'man 'woman) ;; Doesn't work at startup?
 (defalias 'cf 'customize-face)
