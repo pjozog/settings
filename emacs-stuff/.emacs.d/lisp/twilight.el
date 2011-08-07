@@ -62,6 +62,10 @@
      (font-lock-regexp-grouping-backslash ((t (:foreground "#E9C062"))))
      (font-lock-regexp-grouping-construct ((t (:foreground "red"))))
 
+     (mode-line ((t (:foreground "green" :background "#222222" :box (:line-width 1 :color nil :style released-button)))))
+     (mode-line-inactive ((t (:foreground "#bbbbbc" :background "#555753"))))
+     (mode-line-buffer-id ((t (:bold t :foreground "yellow" :background nil))))
+
      (minibuffer-prompt ((t (:foreground "yellow"))))
      (ido-subdir ((t (:foreground "#CF6A4C"))))
      (ido-first-match ((t (:foreground "#8F9D6A"))))
@@ -74,7 +78,6 @@
      (font-lock-warning-face ((t (:background "black" :foreground "red"))))
      (gui-element ((t (:background "#D4D0C8" :foreground "black"))))
      (region ((t (:background "#27292A"))))
-     (mode-line ((t (:background "green" :foreground "black"))))
      (highlight ((t (:background "#111111"))))
      (highline-face ((t (:background "#470000"))))
      (left-margin ((t (nil))))
