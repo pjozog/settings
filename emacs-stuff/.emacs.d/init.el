@@ -147,6 +147,7 @@
 (require 'diff-mode-)
 (require 'dired+)
 (require 'smarttabs)
+(require 'dired-mod) ;foobar
 
 ;; Turn off the bad shit
 (menu-bar-mode -1)
