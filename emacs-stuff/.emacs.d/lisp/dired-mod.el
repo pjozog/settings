@@ -171,3 +171,4 @@ Otherwise, an error occurs in these cases."
 			     (define-key dired-mode-map (kbd "C-o") 'other-window)
 			     (define-key dired-mode-map (kbd "M-p") 'dired-up-directory)))
 
+(provide 'dired-mod)

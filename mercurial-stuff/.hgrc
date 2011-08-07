@@ -1,13 +1,18 @@
 [ui]
 username = Paul Ozog
+merge = meld
 
 [extensions]
 extdiff =
 convert =
 graphlog =
 hgext.fetch =
+color =
 
 [auth]
+
+[ui]
+merge = meld
 
 [extdiff]
 cmd.ediff = sh

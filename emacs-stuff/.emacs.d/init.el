@@ -147,6 +147,10 @@
 (require 'diff-mode-)
 (require 'dired+)
 (require 'smarttabs)
+(require 'color-theme-twilight)
+(require 'dired-mod)            ;; mine
+(require 'myOrgSettings)        ;; mine
+
 
 ;; Turn off the bad shit
 (menu-bar-mode -1)
@@ -161,6 +165,8 @@
 (autopair-global-mode 1)
 (global-linum-mode 1)
 (global-auto-revert-mode t)
+
+(color-theme-twilight)
 
 ;; Woman is pretty cool
 (setq woman-use-own-frame nil)
@@ -183,10 +189,6 @@
 (setq ediff-split-window-function 'split-window-horizontally)
 
 (put 'upcase-region 'disabled nil)
-
-;; Saumitro's color theme
-(load "twilight")
-(color-theme-twilight)
 
 (if (file-exists-p "~/TAGS")
     (visit-tags-table "~/TAGS"))
@@ -214,13 +216,6 @@
 ;; (smooth-scroll-mode 1 )
 
 (global-highline-mode 1)
-
-(load "dired-mod")
-
-;; --------------------------------------------------
-;; org-mode settings
-;; --------------------------------------------------
-(load "myOrgSettings.el")
 
 ;; --------------------------------------------------
 ;; Language-specific settings

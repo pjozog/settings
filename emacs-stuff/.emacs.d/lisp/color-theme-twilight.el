@@ -85,3 +85,5 @@
      (toolbar ((t (nil))))
      (underline ((nil (:underline nil))))
      (zmacs-region ((t (:background "snow" :foreground "blue")))))))
+
+(provide 'color-theme-twilight)
