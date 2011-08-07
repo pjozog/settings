@@ -9,3 +9,5 @@
 (global-set-key "\C-cb" 'org-iswitchb)
 (setq org-log-done 'time)
 (setq org-columns-default-format '"%38ITEM(Details) %TAGS(Context) %7TODO(To Do) %5Effort(Time){:} %6CLOCKSUM(Clock)")
+
+(provide 'myOrgSettings)
