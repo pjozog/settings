@@ -9,3 +9,6 @@ else:
 from math import *
 import sys
 import os
+
+from scipy import *
+from pylab import *
