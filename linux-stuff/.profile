@@ -17,14 +17,14 @@ if [ $TERM = "xterm" ]; then
 fi
 
 export EDITOR='emacsclient'
-export PYTHONSTARTUP=~/.pythonrc
-export PYTHONPATH=${PYTHONPATH}:~/perls/python/lcmtypes
+export PYTHONSTARTUP=${HOME}/.pythonrc
+export PYTHONPATH=${PYTHONPATH}:{$HOME}/perls/python/lcmtypes
 
-[ -d ${HOME}/texpath ] && export TEXINPUTS=.:~/texpath:~/texpath/images:$TEXINPUTS
-[ -d ${HOME}/texpath ] && export BSTINPUTS=.:~/texpath:$BSTINPUTS
-[ -d ${HOME}/texpath ] && export BIBINPUTS=.:~/texpath:$BIBINPUTS
+[ -d ${HOME}/texpath ] && export TEXINPUTS=.:${HOME}/texpath:${HOME}/texpath/images:$TEXINPUTS
+[ -d ${HOME}/texpath ] && export BSTINPUTS=.:${HOME}/texpath:$BSTINPUTS
+[ -d ${HOME}/texpath ] && export BIBINPUTS=.:${HOME}/texpath:$BIBINPUTS
 
-[ -d ${HOME}/lib64/python ] && export PYTHONPATH=$PYTHONPATH:~/lib64/python
+[ -d ${HOME}/lib64/python ] && export PYTHONPATH=$PYTHONPATH:${HOME}/lib64/python
 
 
 which source-highlight > /dev/null 2>&1
