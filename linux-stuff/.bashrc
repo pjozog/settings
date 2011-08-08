@@ -2,6 +2,10 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
+if [ ! -n "$PROFILE_SOURCED" ]; then
+    . ${HOME}/.profile
+fi
+
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 

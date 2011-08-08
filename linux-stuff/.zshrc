@@ -4,6 +4,10 @@ HISTSIZE=50000
 SAVEHIST=50000
 # End of lines configured by zsh-newuser-install
 
+if [ ! -n "$PROFILE_SOURCED" ]; then
+    . ${HOME}/.profile
+fi
+
 if [ -f ${HOME}/.shell_aliases ]; then
     . ${HOME}/.shell_aliases
 fi
