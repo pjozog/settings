@@ -99,8 +99,8 @@ if [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
 fi
 
-if [ -f $HOME/.shell_settings ]; then
-    . $HOME/.shell_settings
+if [ -f ${HOME}/.shell_aliases ]; then
+    . ${HOME}/.shell_aliases
 fi
 
 [ -f /opt/ros/diamondback/setup.bash ] && . /opt/ros/diamondback/setup.bash

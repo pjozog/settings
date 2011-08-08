@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 export GTK2_RC_FILES=/usr/share/themes/Radiance/gtk-2.0/gtkrc:${HOME}/.gtkrc-mine
 export OOO_FORCE_DESKTOP='gnome'

@@ -1,27 +1,3 @@
-if [ $TERM = "Eterm" ]; then
-    export LANG=C
-fi
-
-if [ -d $HOME/bin ]; then
-    export PATH=$HOME/bin:$PATH
-fi
-
-if [ $TERM = "xterm" ]; then
-    export TERM=xterm-256color
-fi
-
-if [ -f $HOME/.svn_project ]; then
-    . $HOME/.svn_project
-fi
-
-#only list directories first if ls supports it
-ls --group-directories-first > /dev/null 2>&1
-if [ $? -eq 0 ]; then
-    alias ls='ls --color=always -CF --group-directories-first'
-else 
-    alias ls='ls --color=always -CF'
-fi
-
 # function pu {
 #     arg="$1"
 #     fullname=$(readlink -f "$arg")
@@ -35,6 +11,19 @@ fi
 #     fi
 #     unset arg match fullname num
 # }
+
+
+if [ -f $HOME/.svn_project ]; then
+    . $HOME/.svn_project
+fi
+
+#only list directories first if ls supports it
+ls --group-directories-first > /dev/null 2>&1
+if [ $? -eq 0 ]; then
+    alias ls='ls --color=always -CF --group-directories-first'
+else 
+    alias ls='ls --color=always -CF'
+fi
 
 alias l='ls'
 alias ll='ls -lh'
@@ -112,33 +101,8 @@ function mz() {
 
 [ -f $HOME/.dircolors ] && eval $(dircolors -b $HOME/.dircolors)
 
-which source-highlight > /dev/null 2>&1
-if [ $? -eq 0 ]; then
-    export LESSOPEN="| /usr/share/source-highlight/src-hilite-lesspipe.sh %s"
-    export LESS=' -R'
-fi
-
-export EDITOR='emacsclient'
-export PYTHONSTARTUP=~/.pythonrc
-export PYTHONPATH=${PYTHONPATH}:~/perls/python/lcmtypes
-
-[ -d ${HOME}/texpath ] && export TEXINPUTS=.:~/texpath:~/texpath/images:$TEXINPUTS
-[ -d ${HOME}/texpath ] && export BSTINPUTS=.:~/texpath:$BSTINPUTS
-[ -d ${HOME}/texpath ] && export BIBINPUTS=.:~/texpath:$BIBINPUTS
-
-[ -d ${HOME}/lib64/python ] && export PYTHONPATH=$PYTHONPATH:~/lib64/python
-
 alias m='wmname LG3D; matlab'
 alias psy='wmname LG3D; cdp; ./perls-spy'
 
 which mycowsay > /dev/null 2>&1
 [ $? -eq 0 ] && mycowsay
-
-#Man pages
-export LESS_TERMCAP_mb=$'\E[01;31m'      # begin blinking
-export LESS_TERMCAP_md=$'\E[01;38;5;74m' # begin bold
-export LESS_TERMCAP_me=$'\E[0m'          # end mode
-export LESS_TERMCAP_se=$'\E[0m'          # end standout-mode                 
-export LESS_TERMCAP_so=$'\E[01;44;33m'   # begin standout-mode - info box                              
-export LESS_TERMCAP_ue=$'\E[0m'          # end underline
-export LESS_TERMCAP_us=$'\E[01;32m'      # begin underline
