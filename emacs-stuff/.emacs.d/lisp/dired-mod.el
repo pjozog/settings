@@ -2,6 +2,8 @@
 (setq dired-isearch-filenames t)
 (setq wdired-allow-to-change-permissions t)
 
+(setq dired-listing-switches "-alh")
+
 (if (or (string-match "paul" (system-name))
 	(string-match "robots" (system-name))
 	(string-match "yoshi" (system-name)))
