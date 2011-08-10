@@ -316,8 +316,10 @@
  '(org-column ((t (:background "#000000" :strike-through nil :underline nil :slant normal :weight normal :height 98 :family "DejaVu Sans Mono")))))
 
 (if (or (string-equal "paul-laptop" system-name)
-	(string-equal "perl-paulozog" system-name)
 	(string-equal "paul-box" system-name))
+    (set-face-attribute 'default nil :height 100))
+
+(if (or (string-equal "perl-paulozog" system-name))
     (set-face-attribute 'default nil :height 80))
 
 ;; Fix linum margin when running in terminal mode
