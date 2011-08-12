@@ -1,6 +1,7 @@
 ;; Make dired only search for filenames, not the entire buffer text
 (setq dired-isearch-filenames t)
 (setq wdired-allow-to-change-permissions t)
+(setq find-name-arg "-iname")
 
 (setq dired-listing-switches "-alh")
 
