@@ -132,11 +132,12 @@ Otherwise, an error occurs in these cases."
 
 (defun dired-kill-and-next-subdir ()
   (interactive)
-  (dired-next-subdir 0)
-  (let* ((subdir-name (dired-get-subdir))
+  (message (dired-current-directory))
+  (let* ((subdir-name (dired-current-directory))
+	 (parent-dir  (file-name-directory (directory-file-name subdir-name)))
 	 (search-term (concat " " (file-basename subdir-name))))
     (dired-kill-subdir)
-    (dired-next-subdir 0)
+    (dired-goto-subdir parent-dir)
     (search-forward search-term)))
 
 (defun dired-cd ()
