@@ -132,7 +132,6 @@ Otherwise, an error occurs in these cases."
 
 (defun dired-kill-and-next-subdir ()
   (interactive)
-  (message (dired-current-directory))
   (let* ((subdir-name (dired-current-directory))
 	 (parent-dir  (file-name-directory (directory-file-name subdir-name)))
 	 (search-term (concat " " (file-basename subdir-name))))
