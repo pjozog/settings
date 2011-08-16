@@ -312,11 +312,6 @@
         <command>nautilus --no-desktop</command>
       </action>
     </keybind>
-    <keybind key="C-S-a">
-      <action name="Execute">
-        <command>~/bin/matlab -desktop</command>
-      </action>
-    </keybind>
     <keybind key="W-e">
       <action name="Execute">
         <command>thunar</command>
