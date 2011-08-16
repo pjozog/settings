@@ -12,10 +12,6 @@ if [ -d $HOME/bin ]; then
     export PATH=$HOME/bin:$PATH
 fi
 
-if [ $TERM = "xterm" ]; then
-    export TERM=xterm-256color
-fi
-
 export EDITOR='emacsclient'
 export PYTHONSTARTUP=${HOME}/.pythonrc
 export PYTHONPATH=${PYTHONPATH}:{$HOME}/perls/python/lcmtypes
