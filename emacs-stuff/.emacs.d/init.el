@@ -165,6 +165,7 @@
 (autopair-global-mode 1)
 (global-linum-mode 1)
 (global-auto-revert-mode t)
+(column-number-mode)
 
 (color-theme-twilight)
 
