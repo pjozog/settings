@@ -147,8 +147,8 @@
 (require 'diff-mode-)
 (require 'dired+)
 (require 'smarttabs)
-(require 'color-theme-twilight)
 (require 'browse-kill-ring)
+(require 'naquadah-theme)
 (require 'dired-mod)            ;; mine
 (require 'myOrgSettings)        ;; mine
 
@@ -167,8 +167,6 @@
 (global-linum-mode 1)
 (global-auto-revert-mode t)
 (column-number-mode 1)
-
-(color-theme-twilight)
 
 ;; Woman is pretty cool
 (setq woman-use-own-frame nil)
@@ -308,7 +306,6 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "#FFFFFF" :foreground "#000000" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 105 :width normal :foundry "unknown" :family "DejaVu Sans Mono"))))
  '(cursor ((t (:background "red"))))
  '(dired-directory ((t (:inherit font-lock-builtin-face))))
  '(dired-symlink ((t (:inherit font-lock-comment-face))))
