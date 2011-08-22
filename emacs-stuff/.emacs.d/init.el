@@ -143,7 +143,7 @@
 (require 'reftex)
 (require 'w3m-load)
 (require 'mediawiki)
-(require 'highline)
+(require 'highlight-current-line)
 (require 'diff-mode-)
 (require 'dired+)
 (require 'smarttabs)
@@ -156,7 +156,7 @@
 ;; Turn off the bad shit
 (menu-bar-mode -1)
 (tool-bar-mode -1)
-(scroll-bar-mode -1)
+;(scroll-bar-mode -1)
 (transient-mark-mode -1)
 
 ;; Turn on the good shit
@@ -217,7 +217,7 @@
 ;;       scroll-conservatively 9999999)
 ;; (smooth-scroll-mode 1 )
 
-(global-highline-mode 1)
+(highlight-current-line-on t)
 
 ;; --------------------------------------------------
 ;; Language-specific settings
