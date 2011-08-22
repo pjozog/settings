@@ -156,7 +156,7 @@
 ;; Turn off the bad shit
 (menu-bar-mode -1)
 (tool-bar-mode -1)
-;(scroll-bar-mode -1)
+(scroll-bar-mode -1)
 (transient-mark-mode -1)
 
 ;; Turn on the good shit
