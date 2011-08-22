@@ -143,7 +143,7 @@
 (require 'reftex)
 (require 'w3m-load)
 (require 'mediawiki)
-(require 'highlight-current-line)
+(require 'highline)
 (require 'diff-mode-)
 (require 'dired+)
 (require 'smarttabs)
@@ -217,7 +217,7 @@
 ;;       scroll-conservatively 9999999)
 ;; (smooth-scroll-mode 1 )
 
-(highlight-current-line-on t)
+(global-highline-mode 1)
 
 ;; --------------------------------------------------
 ;; Language-specific settings
