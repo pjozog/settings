@@ -143,11 +143,12 @@
 (require 'reftex)
 (require 'w3m-load)
 (require 'mediawiki)
-(require 'highline)
+(require 'highlight-current-line)
 (require 'diff-mode-)
 (require 'dired+)
 (require 'smarttabs)
 (require 'color-theme-twilight)
+(require 'browse-kill-ring)
 (require 'dired-mod)            ;; mine
 (require 'myOrgSettings)        ;; mine
 
@@ -155,7 +156,7 @@
 ;; Turn off the bad shit
 (menu-bar-mode -1)
 (tool-bar-mode -1)
-(scroll-bar-mode -1)
+;(scroll-bar-mode -1)
 (transient-mark-mode -1)
 
 ;; Turn on the good shit
@@ -165,7 +166,7 @@
 (autopair-global-mode 1)
 (global-linum-mode 1)
 (global-auto-revert-mode t)
-(column-number-mode)
+(column-number-mode 1)
 
 (color-theme-twilight)
 
@@ -216,7 +217,7 @@
 ;;       scroll-conservatively 9999999)
 ;; (smooth-scroll-mode 1 )
 
-(global-highline-mode 1)
+(highlight-current-line-on t)
 
 ;; --------------------------------------------------
 ;; Language-specific settings
