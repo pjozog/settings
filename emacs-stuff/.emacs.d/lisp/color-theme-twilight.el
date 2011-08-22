@@ -79,7 +79,7 @@
      (gui-element ((t (:background "#D4D0C8" :foreground "black"))))
      (region ((t (:background "#27292A"))))
      (highlight ((t (:background "#111111"))))
-     (highlight-current-line-face ((t (:background "#470000"))))
+     (highline-face ((t (:background "#470000"))))
      (left-margin ((t (nil))))
      (text-cursor ((t (:background "yellow" :foreground "black"))))
      (toolbar ((t (nil))))
