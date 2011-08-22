@@ -185,6 +185,8 @@
 (global-set-key (kbd "C-S-k") (lambda () (interactive)
 				(kill-all-dired-buffers (user-login-name))))
 (global-set-key (kbd "C-S-a") 'align-regexp)
+(global-set-key (kbd "C-x f") 'find-name-dired)
+(global-set-key (kbd "C-x m") 'comment-region)
 
 (setq ediff-split-window-function 'split-window-horizontally)
 
