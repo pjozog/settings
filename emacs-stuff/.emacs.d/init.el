@@ -148,6 +148,7 @@
 (require 'dired+)
 (require 'smarttabs)
 (require 'color-theme-twilight)
+(require 'browse-kill-ring)
 (require 'dired-mod)            ;; mine
 (require 'myOrgSettings)        ;; mine
 
@@ -165,6 +166,7 @@
 (autopair-global-mode 1)
 (global-linum-mode 1)
 (global-auto-revert-mode t)
+(column-number-mode 1)
 
 (color-theme-twilight)
 
