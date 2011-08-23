@@ -197,6 +197,9 @@
  '(font-lock-warning-face (:bold t :foreground orange-1))
  '(font-lock-function-name-face (:foreground butter-2 :bold t))
 
+ '(woman-italic (:foreground "cyan"))
+ '(woman-bold (:foreground "#0FAA4C"))
+
  '(comint-highlight-prompt ())
 
  '(isearch (:background orange-3 :foreground background))

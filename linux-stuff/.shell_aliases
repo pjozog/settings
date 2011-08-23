@@ -101,7 +101,9 @@ function k() {
 function emacs_man() {
     emacsclient -n -e "(woman \"$1\")"
 }
-alias man=emacs_man
+if ! [ -n "$ZSH_VERSION" ]; then
+    alias man=emacs_man
+fi
 
 #usenet .nzb function
 HELLANZBDIR=${HOME}/external/.hellanzb

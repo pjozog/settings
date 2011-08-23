@@ -212,11 +212,6 @@
     (let ((case-fold-search isearch-case-fold-search))
       (occur (if isearch-regexp isearch-string (regexp-quote isearch-string))))))
 
-;;Enable smooth scrolling
-;; (setq scroll-step           1
-;;       scroll-conservatively 9999999)
-;; (smooth-scroll-mode 1 )
-
 (global-highline-mode 1)
 
 ;; --------------------------------------------------
@@ -323,12 +318,6 @@
 (if (or (string-equal "perl-paulozog" system-name))
     (set-face-attribute 'default nil :height 80))
 
-;; Fix linum margin when running in terminal mode
-(unless (window-system)
-  (setq linum-format "%d ")
-  (set-face-attribute 'default nil :background "unspecified-bg")
-  (set-face-attribute 'default nil :foreground "unspecified-fg"))
-
 ;;--------------------------------------------------
 ;; Open my favorite files and start rocking!
 ;;--------------------------------------------------
@@ -339,5 +328,5 @@
 		 "~/perl/perl-svn/references/bibtex/references.bib"))
 (dired (getenv "HOME"))
 (switch-to-buffer (user-login-name))
-(split-window-horizontally)
+(split-window-sensibly (selected-window))
 (switch-to-buffer "init.el")
