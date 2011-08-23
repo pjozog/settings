@@ -318,6 +318,10 @@
 (if (or (string-equal "perl-paulozog" system-name))
     (set-face-attribute 'default nil :height 80))
 
+;; Fix linum margin when running in terminal mode
+(unless (window-system)
+  (setq linum-format "%d "))
+
 ;;--------------------------------------------------
 ;; Open my favorite files and start rocking!
 ;;--------------------------------------------------
