@@ -12,7 +12,7 @@ if [ -d $HOME/bin ]; then
     export PATH=$HOME/bin:$PATH
 fi
 
-export EDITOR='emacsclient'
+export EDITOR='emacsclient -t'
 export PYTHONSTARTUP=${HOME}/.pythonrc
 export PYTHONPATH=${PYTHONPATH}:{$HOME}/perls/python/lcmtypes
 
