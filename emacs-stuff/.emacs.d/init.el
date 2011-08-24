@@ -187,6 +187,12 @@
 (global-set-key (kbd "C-S-a") 'align-regexp)
 (global-set-key (kbd "C-x f") 'find-name-dired)
 (global-set-key (kbd "C-x m") 'comment-region)
+(global-set-key (kbd "C-X b") 'ibuffer)
+(global-set-key (kbd "<f5>") 'shrink-window-horizontally)
+(global-set-key (kbd "<f6>") 'enlarge-window-horizontally)
+(global-set-key (kbd "<f7>") 'shrink-window)
+(global-set-key (kbd "<f8>") 'enlarge-window)
+
 
 (setq ediff-split-window-function 'split-window-horizontally)
 
