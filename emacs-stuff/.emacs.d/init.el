@@ -149,6 +149,7 @@
 (require 'smarttabs)
 (require 'browse-kill-ring)
 (require 'naquadah-theme)
+(require 'nyan-mode)
 (require 'dired-mod)            ;; mine
 (require 'myOrgSettings)        ;; mine
 
@@ -170,6 +171,10 @@
 
 ;; Woman is pretty cool
 (setq woman-use-own-frame nil)
+
+;; Make the nyan mode line not so long
+(nyan-mode)
+(setq nyan-bar-length 16)
 
 ;; This makes color work in 'M-x shell'
 (autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
