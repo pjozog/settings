@@ -174,7 +174,10 @@
 
 ;; Make the nyan mode line not so long
 (nyan-mode)
-(setq nyan-bar-length 16)
+(setq nyan-bar-length 12)
+
+;; Show time in mode line
+(display-time)
 
 ;; This makes color work in 'M-x shell'
 (autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
@@ -248,6 +251,9 @@
 ;; My hooks
 ;; --------------------------------------------------
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+
+(add-hook 'ibuffer-mode-hook (lambda ()
+			       (define-key ibuffer-mode-map (kbd "C-o") 'other-window)))
 
 (defun my-camel-case-hook ()
   (if (version< my-emacs-version "23.2.1")
@@ -325,11 +331,11 @@
  '(font-latex-string-face ((((class color) (background dark)) (:foreground "#A2AB64"))))
  '(org-column ((t (:background "#000000" :strike-through nil :underline nil :slant normal :weight normal :height 98 :family "DejaVu Sans Mono")))))
 
-(if (or (string-equal "paul-laptop" system-name)
-	(string-equal "paul-box" system-name))
+(if (string-equal "paul-box" system-name)
     (set-face-attribute 'default nil :height 100))
 
-(if (or (string-equal "perl-paulozog" system-name))
+(if (or (string-equal "perl-paulozog" system-name)
+	(string-equal "paul-laptop" system-name))
     (set-face-attribute 'default nil :height 80))
 
 ;; Fix linum margin when running in terminal mode
