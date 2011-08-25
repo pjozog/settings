@@ -127,7 +127,8 @@ Otherwise, an error occurs in these cases."
 (defun dired-find-file-mod ()
   (interactive)
   (let ((file (dired-get-file-for-visit)))
-    (if (car (file-attributes file))
+    (if (or (car (file-attributes file))
+	    (string-equal (buffer-name) "*Find*"))
 	(dired-find-file)
       (dired-find-file-other-window))))
 
