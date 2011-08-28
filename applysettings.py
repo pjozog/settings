@@ -53,7 +53,7 @@ sourceList = [os.path.join(scriptDir, 'linux-stuff', '.bashrc'),
 sourceToDestination = {}
 
 #make a list of tupple pairs
-for i in range(1, len(linkList)):
+for i in range(0, len(linkList)-1):
     sourceToDestination[sourceList[i]] = linkList[i]
 
 #add all the stuff in the 'bin' directory to sourceToDestination
