@@ -169,6 +169,9 @@
 (global-auto-revert-mode t)
 (column-number-mode 1)
 
+;; Transparency looks sweet
+(set-frame-parameter (selected-frame) 'alpha '(85 75))
+
 ;; Woman is pretty cool
 (setq woman-use-own-frame nil)
 
@@ -196,7 +199,7 @@
 (global-set-key (kbd "C-S-a") 'align-regexp)
 (global-set-key (kbd "C-x f") 'find-name-dired)
 (global-set-key (kbd "C-x m") 'comment-region)
-(global-set-key (kbd "C-X b") (lambda () 
+(global-set-key (kbd "C-x b") (lambda () 
 				(interactive)
 				(ibuffer)
 				(isearch-forward)))

@@ -28,6 +28,9 @@ which nvidia-settings > /dev/null 2>&1
 which dropbox > /dev/null 2>&1
 [ $? -eq 0 ] && dropbox start -i &
 
+which xcompmgr > /dev/null 2>&1
+[ $? -eq 0 ] && xcompmgr -cf &
+
 gnome-power-manager &
 gnome-volume-control-applet &
 checkgmail &
