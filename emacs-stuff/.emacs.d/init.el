@@ -170,7 +170,8 @@
 (column-number-mode 1)
 
 ;; Transparency looks sweet
-(set-frame-parameter (selected-frame) 'alpha '(85 75))
+(set-frame-parameter (selected-frame) 'alpha '(85 85))
+(add-to-list 'default-frame-alist '(alpha 85 85))
 
 ;; Woman is pretty cool
 (setq woman-use-own-frame nil)
