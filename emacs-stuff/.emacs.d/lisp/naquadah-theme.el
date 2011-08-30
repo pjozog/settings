@@ -191,7 +191,7 @@
  '(font-lock-comment-delimiter-face (:inherit 'font-lock-comment-face))
  '(font-lock-constant-face (:foreground chameleon-2))
  '(font-lock-type-face (:inherit 'font-lock-constant-face :bold t))
- '(font-lock-doc-face (:inherit 'shadow))
+ '(font-lock-doc-face (:foreground orange-2))
  '(font-lock-string-face (:foreground orange-1))
  '(font-lock-variable-name-face (:foreground scarlet-red-1))
  '(font-lock-warning-face (:bold t :foreground orange-1))
