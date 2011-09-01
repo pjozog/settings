@@ -5,6 +5,8 @@
 
 (setq my-emacs-version (nth 2 (split-string (emacs-version))))
 
+(setq my-emacs-dir (file-name-directory load-file-name))
+
 ;; --------------------------------------------------
 ;; Function definitions
 ;; --------------------------------------------------
@@ -115,15 +117,15 @@
 ;; --------------------------------------------------
 ;; append my stuff to load-path
 (add-to-list 'load-path
-	     "~/.emacs.d/lisp")
+	     (concat (file-name-as-directory my-emacs-dir) "lisp"))
 (add-to-list 'load-path
-	     "~/.emacs.d/plugins")
+	     (concat (file-name-as-directory my-emacs-dir) "plugins"))
 (add-to-list 'load-path
-	     "~/.emacs.d/plugins/yasnippet-0.6.1c")
+	     (concat (file-name-as-directory my-emacs-dir) "plugins/yasnippet-0.6.1c"))
 (add-to-list 'load-path
-	     "~/.emacs.d/plugins/emacs-w3m")
+	     (concat (file-name-as-directory my-emacs-dir) "plugins/emacs-w3m"))
 (add-to-list 'load-path
-	     "~/.emacs.d/plugins/org")
+	     (concat (file-name-as-directory my-emacs-dir) "plugins/org"))
 
 (require 'htmlize)
 (require 'matlab)
@@ -218,7 +220,7 @@
     (visit-tags-table "~/TAGS"))
 
 (yas/initialize)
-(yas/load-directory "~/.emacs.d/plugins/yasnippet-0.6.1c/snippets")
+(yas/load-directory (concat (file-name-as-directory my-emacs-dir) "plugins/yasnippet-0.6.1c/snippets"))
 
 (put 'downcase-region 'disabled nil)
 
