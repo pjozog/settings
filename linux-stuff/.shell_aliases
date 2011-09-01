@@ -14,15 +14,24 @@ fi
 function pu {
     arg="$1"
     fullname=$(readlink -f "$arg")
-    match=$(dirs -v | sed 's@~@'${HOME}'@' | grep -P "[0-9]\t+$fullname"'$')
-    if [ $? -eq 0 ]; then
-	num=$(echo $match | awk '{print $1}')
-	echo $num
-	pushd +$num > /dev/null 2>&1
-    else
-	pushd $arg > /dev/null 2>&1
-    fi
+    match=1
+
+    #See if our argument matches any in `dirs -v'
+    for f in $(dirs -v | sed 's@~@'${HOME}'@' | awk '{print $2}'); do
+	f=$(readlink -f "$f")
+	if [ "$f" = "$fullname" ]; then
+	    num=$(echo $match | awk '{print $1}')
+	    echo $num
+	    pushd +$num > /dev/null 2>&1
+	    unset arg match fullname num
+	    return
+	fi
+    done
+
+    #If not, just continue as a regular `pushd'
+    pushd $arg > /dev/null 2>&1
     unset arg match fullname num
+    
 }
 
 
