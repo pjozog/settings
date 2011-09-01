@@ -343,6 +343,7 @@
  '(diff-function (:foreground orange-1))
  '(diff-header (:background aluminium-6))
  '(diff-file-header (:foreground aluminium-1))
+ '(diff-refine-change (:background aluminium-6))
 
  ;; magit
  '(magit-diff-add (:inherit diff-added))

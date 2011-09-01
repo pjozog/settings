@@ -160,7 +160,6 @@ Otherwise, an error occurs in these cases."
 			     (define-key dired-mode-map "e" 'wdired-change-to-wdired-mode)
 			     (define-key dired-mode-map "/" 'dired-isearch-filenames)
 			     (define-key dired-mode-map "v" 'dired-view-file-other-window)
-			     (define-key dired-mode-map "f" 'dired-find-file-other-window)
 			     (define-key dired-mode-map "F" 'find-name-dired)
 			     (define-key dired-mode-map "c" 'dired-run-shell)
 			     (define-key dired-mode-map "w" 'dired-cd)
