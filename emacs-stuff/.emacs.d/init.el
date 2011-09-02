@@ -150,8 +150,9 @@
 (require 'dired+)
 (require 'smarttabs)
 (require 'browse-kill-ring)
-(require 'naquadah-theme)
 (require 'nyan-mode)
+(show-paren-mode 1) ;;This needs to be enabled before changing color theme
+(require 'naquadah-theme)
 (require 'dired-mod)            ;; mine
 (require 'myOrgSettings)        ;; mine
 
@@ -164,7 +165,6 @@
 
 ;; Turn on the good shit
 (ido-mode 1)
-(show-paren-mode 1)
 (setq mouse-yank-at-point 1)
 (autopair-global-mode 1)
 (global-linum-mode 1)

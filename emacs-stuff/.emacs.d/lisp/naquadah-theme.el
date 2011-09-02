@@ -207,7 +207,7 @@
  '(lazy-highlight (:background chocolate-1 :foreground background))
 
  '(show-paren-match-face (:background chameleon-3))
- '(show-paren-mismatch-face (:background plum-3))
+ '(show-paren-mismatch-face (:background scarlet-red-3))
 
  '(minibuffer-prompt (:foreground sky-blue-1 :bold t))
 
