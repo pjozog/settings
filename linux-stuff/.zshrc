@@ -15,6 +15,9 @@ fi
 WORDCHARS='*?_.[]~=&;!#$%^(){}<>'
 WORDCHARS=''
 
+#Make kill-region behave as in Emacs (w/ C-w):
+bindkey '^w' kill-region
+
 alias history='history 1'
 
 setopt NO_HUP
