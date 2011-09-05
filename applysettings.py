@@ -10,7 +10,8 @@ binDir              = os.path.join(scriptDir, 'linux-stuff', 'bin')
 homeDir             = os.getenv('HOME')
 requiredDirs        = [os.path.join(homeDir, '.config'),
                        os.path.join(homeDir, 'bin'),
-                       os.path.join(homeDir, '.themes')]
+                       os.path.join(homeDir, '.themes'),
+                       os.path.join(homeDir, 'Documents', 'MATLAB')]
 
 #These home dir files will be links to version controlled files
 linkList = [os.path.join(homeDir, '.bashrc'),
