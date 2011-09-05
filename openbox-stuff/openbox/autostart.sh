@@ -36,5 +36,4 @@ gnome-volume-control-applet &
 checkgmail &
 nm-applet &
 
-xscreensaver -no-splash &
-xset +dpms
+gnome-screensaver &
