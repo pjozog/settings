@@ -29,7 +29,8 @@ linkList = [os.path.join(homeDir, '.bashrc'),
             os.path.join(homeDir, '.themes', 'Radiance_ob_test'),
             os.path.join(homeDir, '.xmodmap'),
             os.path.join(homeDir, '.swapcaps'),
-            os.path.join(homeDir, '.svn_project')]
+            os.path.join(homeDir, '.svn_project'),
+            os.path.join(homeDir, 'Documents', 'MATLAB', 'my_path.m')]
 
 #These will be the actual version controlled files (the sources)
 sourceList = [os.path.join(scriptDir, 'linux-stuff', '.bashrc'),
@@ -48,12 +49,13 @@ sourceList = [os.path.join(scriptDir, 'linux-stuff', '.bashrc'),
               os.path.join(scriptDir, 'openbox-stuff', 'Radiance_ob_test'),
               os.path.join(scriptDir, 'linux-stuff', '.xmodmap'),
               os.path.join(scriptDir, 'linux-stuff', '.swapcaps'),
-              os.path.join(scriptDir, 'linux-stuff', '.svn_project')]
+              os.path.join(scriptDir, 'linux-stuff', '.svn_project'),
+              os.path.join(scriptDir, 'matlab-stuff', 'my_path.m')]
 
 sourceToDestination = {}
 
 #make a list of tupple pairs
-for i in range(0, len(linkList)-1):
+for i in range(0, len(linkList)):
     sourceToDestination[sourceList[i]] = linkList[i]
 
 #add all the stuff in the 'bin' directory to sourceToDestination
