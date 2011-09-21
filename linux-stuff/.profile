@@ -31,7 +31,3 @@ if [ $? -eq 0 ]; then
 fi
 
 export PROFILE_SOURCED="TRUE"
-
-#April codebase
-export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${HOME}/Documents/umich-grad/EECS/f11/568/eecs568/java/jni
-export CLASSPATH=${CLASSPATH}:.:${HOME}/Documents/umich-grad/EECS/f11/568/eecs568/java/april.jar
