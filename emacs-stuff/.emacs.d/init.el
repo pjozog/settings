@@ -262,10 +262,9 @@
 (add-hook 'ibuffer-mode-hook (lambda ()
 			       (define-key ibuffer-mode-map (kbd "C-o") 'other-window)))
 
-(defun my-camel-case-hook ()
-  (if (version< my-emacs-version "23.2.1")
-      (c-subword-mode 1)
-    (subword-mode 1)))
+(condition-case nil
+    (global-subword-mode 1)
+  (error nil))
 
 ;; apply CamelCase hooks
 (let (modeList)
@@ -277,7 +276,6 @@
 		   cmake-mode-hook))
   (while modeList
     (add-hook (car modeList) (lambda ()
-			       (my-camel-case-hook)
 			       (hs-minor-mode)
 			       (define-key hs-minor-mode-map [(control tab)] 'hs-toggle-hiding)))
     (setq modeList (cdr modeList))))
