@@ -152,6 +152,7 @@
 (require 'browse-kill-ring)
 (require 'nyan-mode)
 (show-paren-mode 1) ;;This needs to be enabled before changing color theme
+(require 'subword)
 (require 'naquadah-theme)
 (require 'dired-mod)            ;; mine
 (require 'myOrgSettings)        ;; mine
