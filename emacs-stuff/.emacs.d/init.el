@@ -141,7 +141,6 @@
 (require 'org-install)
 (require 'uniquify)
 (require 'rainbow-mode)
-(require 'smooth-scroll)
 (require 'reftex)
 (require 'w3m-load)
 (require 'mediawiki)
@@ -156,7 +155,7 @@
 (require 'naquadah-theme)
 (require 'dired-mod)            ;; mine
 (require 'myOrgSettings)        ;; mine
-
+(require 'smooth-scrolling)
 
 ;; Turn off the bad shit
 (menu-bar-mode -1)
