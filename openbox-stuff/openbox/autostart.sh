@@ -33,7 +33,6 @@ which xcompmgr > /dev/null 2>&1
 
 gnome-power-manager &
 gnome-volume-control-applet &
-checkgmail &
 nm-applet &
 
 gnome-screensaver &
