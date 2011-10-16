@@ -327,6 +327,7 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
+ '(default ((t (:stipple nil :background "#130015" :foreground "#eeeeec" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 110 :width normal :foundry "unknown" :family "DejaVu Sans Mono"))))
  '(cursor ((t (:background "red"))))
  '(dired-directory ((t (:inherit font-lock-builtin-face))))
  '(dired-symlink ((t (:inherit font-lock-comment-face))))
@@ -336,7 +337,7 @@
  '(org-column ((t (:background "#000000" :strike-through nil :underline nil :slant normal :weight normal :height 98 :family "DejaVu Sans Mono")))))
 
 (if (string-equal "paul-box" system-name)
-    (set-face-attribute 'default nil :height 80))
+    (set-face-attribute 'default nil :height 90))
 
 (if (string-equal "paul-laptop" system-name)
     (set-face-attribute 'default nil :height 70))

@@ -1,8 +1,8 @@
 #!/bin/sh
 
-which gnome-terminal > /dev/null
-[ $? -eq 0 ] && myTerm=gnome-terminal || myTerm=xterm
+which terminator > /dev/null
+[ $? -eq 0 ] && myTerm=terminator || myTerm=xterm
 
-$myTerm --hide-menubar --geometry 125x40 "$@"
+$myTerm --geometry 125x40 "$@"
 
 #Eterm -F lime -sl 1000 --buttonbar 0 -c red -b black -f white -g 95x55
