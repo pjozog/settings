@@ -9,7 +9,7 @@ scriptDir           = sys.path[0]
 binDir              = os.path.join(scriptDir, 'linux-stuff', 'bin')
 homeDir             = os.getenv('HOME')
 requiredDirs        = [os.path.join(homeDir, '.config'),
-                       os.path.join(homeDir, '.config', '.gtk-3.0'),
+                       os.path.join(homeDir, '.config', 'gtk-3.0'),
                        os.path.join(homeDir, 'bin'),
                        os.path.join(homeDir, '.themes'),
                        os.path.join(homeDir, 'Documents'),
