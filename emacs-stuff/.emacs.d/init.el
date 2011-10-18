@@ -105,6 +105,12 @@
 	  (kill-buffer buffer)))
       (message "Killed %i dired buffer(s)." count ))))
 
+(defun eval-and-replace (value)
+  "Evaluate the sexp at point and replace it with its value"
+  (interactive (list (eval-last-sexp nil)))
+  (kill-sexp -1)
+  (insert (format "%S" value)))
+
 ;; --------------------------------------------------
 ;; Aliases
 ;; --------------------------------------------------
@@ -210,7 +216,8 @@
 (global-set-key (kbd "<f6>") 'enlarge-window-horizontally)
 (global-set-key (kbd "<f7>") 'shrink-window)
 (global-set-key (kbd "<f8>") 'enlarge-window)
-
+(global-set-key (kbd "C-z") 'undo)
+(global-set-key (kbd "C-c e") 'eval-and-replace)
 
 (setq ediff-split-window-function 'split-window-horizontally)
 
