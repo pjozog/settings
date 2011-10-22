@@ -218,6 +218,7 @@
 (global-set-key (kbd "<f8>") 'enlarge-window)
 (global-set-key (kbd "C-z") 'undo)
 (global-set-key (kbd "C-c e") 'eval-and-replace)
+(global-set-key (kbd "C-c u") 'cua-mode)
 
 (setq ediff-split-window-function 'split-window-horizontally)
 
