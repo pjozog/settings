@@ -11,9 +11,6 @@ color =
 
 [auth]
 
-[ui]
-merge = meld
-
 [extdiff]
 cmd.ediff = sh
 opts.ediff = -c 'if [ -d $0 ]; then emacsclient --eval "(ediff-directories \"$0\" \"$1\" \"\")"; else emacsclient --eval "(ediff-files \"$0\" \"$1\")"; fi'
