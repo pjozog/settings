@@ -344,10 +344,10 @@
  '(org-column ((t (:background "#000000" :strike-through nil :underline nil :slant normal :weight normal :height 98 :family "DejaVu Sans Mono")))))
 
 (if (string-equal "paul-box" system-name)
-    (set-face-attribute 'default nil :height 90))
+    (set-face-attribute 'default nil :height 90 :family "ubuntu mono"))
 
 (if (string-equal "paul-laptop" system-name)
-    (set-face-attribute 'default nil :height 70))
+    (set-face-attribute 'default nil :height 100 :family "ubuntu mono"))
 
 (if (string-equal "perl-paulozog" system-name)
     (set-face-attribute 'default nil :height 80))
