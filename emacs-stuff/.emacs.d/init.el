@@ -136,9 +136,7 @@
 (require 'anything-match-plugin)
 (require 'anything-config)
 (require 'anything-dabbrev-expand)
-(global-set-key "\M-/" 'anything-dabbrev-expand)
-(define-key anything-dabbrev-map "\M-/" 'anything-dabbrev-find-all-buffers)
-(setq anything-dabbrev-idle-delay 0.0)
+(require 'anything-etags+)
 (require 'htmlize)
 (require 'matlab)
 (require 'cmake-mode)
@@ -182,6 +180,16 @@
 (global-linum-mode 1)
 (global-auto-revert-mode t)
 (column-number-mode 1)
+
+;; stuff for anything library
+(global-set-key "\M-/" 'anything-dabbrev-expand)
+(define-key anything-dabbrev-map "\M-/" 'anything-dabbrev-find-all-buffers)
+(setq anything-dabbrev-idle-delay 0.0)
+(global-set-key "\M-." 'anything-etags+-select-one-key)
+;;list all visited tags
+(global-set-key "\M-*" 'anything-etags+-history)
+;;go back directly
+(global-set-key "\M-," 'anything-etags+-history-action-go-back)
 
 ;; Transparency looks sweet
 (set-frame-parameter (selected-frame) 'alpha '(90 90))
