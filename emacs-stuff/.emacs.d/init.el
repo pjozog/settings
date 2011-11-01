@@ -133,6 +133,11 @@
 (add-to-list 'load-path
 	     (concat (file-name-as-directory my-emacs-dir) "plugins/org"))
 
+(require 'anything-match-plugin)
+(require 'anything-config)
+(require 'anything-dabbrev-expand)
+(global-set-key "\M-/" 'anything-dabbrev-expand)
+(define-key anything-dabbrev-map "\M-/" 'anything-dabbrev-find-all-buffers)
 (require 'htmlize)
 (require 'matlab)
 (require 'cmake-mode)
