@@ -138,6 +138,7 @@
 (require 'anything-dabbrev-expand)
 (global-set-key "\M-/" 'anything-dabbrev-expand)
 (define-key anything-dabbrev-map "\M-/" 'anything-dabbrev-find-all-buffers)
+(setq anything-dabbrev-idle-delay 0.0)
 (require 'htmlize)
 (require 'matlab)
 (require 'cmake-mode)
