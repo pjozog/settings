@@ -187,9 +187,7 @@
 (setq anything-dabbrev-idle-delay 0.0)
 (global-set-key "\M-." 'anything-etags+-select-one-key)
 ;;list all visited tags
-(global-set-key "\M-*" 'anything-etags+-history)
-;;go back directly
-(global-set-key "\M-," 'anything-etags+-history-action-go-back)
+(global-set-key "\M-*" 'anything-etags+-history-go-back)
 
 ;; Transparency looks sweet
 (set-frame-parameter (selected-frame) 'alpha '(90 90))
