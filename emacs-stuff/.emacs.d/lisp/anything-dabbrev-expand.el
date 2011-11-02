@@ -282,7 +282,7 @@ The behavior is controlled by `anything-dabbrev-expand-strategies'.
                        (length anything-dabbrev-expand-strategies)))
          (strategy (nthcdr n anything-dabbrev-expand-strategies)))
     (when (zerop n)
-      (setq anything-dabbrev-last-target (dabbrev--abbrev-at-point)))
+      (setq anything-dabbrev-last-target (nth 0 (last (split-string (dabbrev--abbrev-at-point) "\\.")))))
     (run-hook-with-args-until-success
      'strategy anything-dabbrev-last-target
      (- seq-start-point (length anything-dabbrev-last-target)))))
