@@ -170,7 +170,7 @@
  '(cursor (:background scarlet-red-3))
  '(hl-line (:background aluminium-6))
  '(highline-face (:background "#470000"))
- '(highlight (:background sky-blue-2))
+ '(highlight (:background chameleon-2 :foreground "black"))
  '(fringe (:background black))
  '(mode-line (:foreground "green" :background "#222222" :box (:line-width 1 :color nil :style released-button)))
  '(mode-line-inactive (:foreground "#bbbbbc" :background "#555753"))

@@ -186,7 +186,6 @@
 (define-key anything-dabbrev-map "\M-/" 'anything-dabbrev-find-all-buffers)
 (setq anything-dabbrev-idle-delay 0.0)
 (global-set-key "\M-." 'anything-etags+-select-one-key)
-;;list all visited tags
 (global-set-key "\M-*" 'anything-etags+-history-go-back)
 
 ;; Transparency looks sweet
