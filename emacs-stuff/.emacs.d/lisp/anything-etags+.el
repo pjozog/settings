@@ -614,7 +614,7 @@ If SYMBOL-NAME is non-nil, jump tag position with SYMBOL-NAME."
     ;; Initialize input with current symbol
     (message (thing-at-point 'symbol))
     (anything-etags+-select-internal
-     (concat "\\_<" (regexp-quote (nth 0 (last (split-string (thing-at-point 'symbol) "\\.")))) "\\_>"
+     (concat "\\_<" (regexp-quote (car (last (split-string (thing-at-point 'symbol) "\\.")))) "\\_>"
              (if (featurep 'anything-match-plugin) " "))
      "Find Tag: ")))
 
