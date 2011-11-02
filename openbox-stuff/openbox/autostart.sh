@@ -31,7 +31,9 @@ which dropbox > /dev/null 2>&1
 which xcompmgr > /dev/null 2>&1
 [ $? -eq 0 ] && xcompmgr -cf &
 
-gnome-power-manager &
+which xfce4-power-manager > /dev/null 2>&1
+[ $? -eq 0 ] && xfce4-power-manager &
+
 gnome-volume-control-applet &
 nm-applet &
 
