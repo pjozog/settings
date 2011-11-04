@@ -22,6 +22,10 @@ alias history='history 1'
 
 setopt NO_HUP
 
+#So you don't have to run rehash everytime new executable is added to
+#PATH
+zstyle ":completion:*:commands" rehash 1
+
 function precmd {
 
     local TERMWIDTH
