@@ -37,11 +37,11 @@
     (setq fileList (file-expand-wildcards (concat dir "/*")))
     (while fileList
       (let (currentFile)
-	(setq currentFile (car fileList))
-	(if (not (car (file-attributes currentFile)))
-	    (setq returnList (cons currentFile returnList))
-	  (if (string-equal (car (file-attributes currentFile)) "t")
-	      (setq returnList (append (find-files-recursively currentFile) returnList)))))
+    (setq currentFile (car fileList))
+    (if (not (car (file-attributes currentFile)))
+        (setq returnList (cons currentFile returnList))
+      (if (string-equal (car (file-attributes currentFile)) "t")
+          (setq returnList (append (find-files-recursively currentFile) returnList)))))
       (pop fileList))
     returnList))
 
@@ -49,7 +49,7 @@
   (while fileList
     (let ((currentFile (car fileList)))
       (if (file-exists-p currentFile)
-	(find-file (file-truename currentFile))))
+    (find-file (file-truename currentFile))))
     (setq fileList (cdr fileList))))
       
 (defun file-basename (file)
@@ -60,17 +60,17 @@
   (let ((returnList ()))
     (while list
       (let ((currentItem (car list)))
-	(if (not (string-match expr currentItem))
-	    (setq returnList (cons currentItem returnList)))
-	(setq list (cdr list))))
+    (if (not (string-match expr currentItem))
+        (setq returnList (cons currentItem returnList)))
+    (setq list (cdr list))))
     returnList))
 
 (defun extract-from-filelist (list expr)
   (let ((returnList ()))
     (while list
       (let ((currentFile (car list)))
-	(if (string-match expr currentFile)
-	    (setq returnList (cons currentFile returnList))))
+    (if (string-match expr currentFile)
+        (setq returnList (cons currentFile returnList))))
       (setq list (cdr list)))
     returnList))
 
@@ -80,7 +80,7 @@
 
 (defun command-line-diff (switch)
   (let ((file1 (pop command-line-args-left))
-	(file2 (pop command-line-args-left)))
+    (file2 (pop command-line-args-left)))
     (ediff file1 file2)))
 (add-to-list 'command-switch-alist '("-diff" . command-line-diff))
 
@@ -98,11 +98,11 @@
   (save-excursion
     (let((count 0))
       (dolist(buffer (buffer-list))
-	(set-buffer buffer)
-	(when (and (equal major-mode 'dired-mode)
-		   (not (string-equal (buffer-name) exclude)))
-	  (setq count (1+ count))
-	  (kill-buffer buffer)))
+    (set-buffer buffer)
+    (when (and (equal major-mode 'dired-mode)
+           (not (string-equal (buffer-name) exclude)))
+      (setq count (1+ count))
+      (kill-buffer buffer)))
       (message "Killed %i dired buffer(s)." count ))))
 
 (defun eval-and-replace (value)
@@ -110,6 +110,10 @@
   (interactive (list (eval-last-sexp nil)))
   (kill-sexp -1)
   (insert (format "%S" value)))
+
+(defun untabify-buffer ()
+  (interactive)
+  (untabify (point-min) (point-max)))
 
 ;; --------------------------------------------------
 ;; Aliases
@@ -123,15 +127,15 @@
 ;; --------------------------------------------------
 ;; append my stuff to load-path
 (add-to-list 'load-path
-	     (concat (file-name-as-directory my-emacs-dir) "lisp"))
+         (concat (file-name-as-directory my-emacs-dir) "lisp"))
 (add-to-list 'load-path
-	     (concat (file-name-as-directory my-emacs-dir) "plugins"))
+         (concat (file-name-as-directory my-emacs-dir) "plugins"))
 (add-to-list 'load-path
-	     (concat (file-name-as-directory my-emacs-dir) "plugins/yasnippet-0.6.1c"))
+         (concat (file-name-as-directory my-emacs-dir) "plugins/yasnippet-0.6.1c"))
 (add-to-list 'load-path
-	     (concat (file-name-as-directory my-emacs-dir) "plugins/emacs-w3m"))
+         (concat (file-name-as-directory my-emacs-dir) "plugins/emacs-w3m"))
 (add-to-list 'load-path
-	     (concat (file-name-as-directory my-emacs-dir) "plugins/org"))
+         (concat (file-name-as-directory my-emacs-dir) "plugins/org"))
 
 (require 'anything-match-plugin)
 (require 'anything-config)
@@ -181,6 +185,11 @@
 (global-auto-revert-mode t)
 (column-number-mode 1)
 
+;; To keep Pat happy
+(set-default 'indent-tabs-mode nil)
+(setq-default tab-width 4)
+(defalias 'un 'untabify-buffer)
+
 ;; stuff for anything library
 (global-set-key "\M-/" 'anything-dabbrev-expand)
 (define-key anything-dabbrev-map "\M-/" 'anything-dabbrev-find-all-buffers)
@@ -215,20 +224,20 @@
 (global-set-key [(meta h)] 'ff-find-other-file)
 (global-set-key (kbd "C-c k") 'ido-kill-buffer)
 (global-set-key (kbd "C-S-k") (lambda () (interactive)
-				(kill-all-dired-buffers (user-login-name))))
+                (kill-all-dired-buffers (user-login-name))))
 (global-set-key (kbd "C-S-a") 'align-regexp)
 (global-set-key (kbd "C-x f") 'find-name-dired)
 (global-set-key (kbd "C-x m") 'comment-region)
 (global-set-key (kbd "C-x C-b") (lambda () 
-				  (interactive)
-				  (ibuffer)
-				  (isearch-forward)))
+                  (interactive)
+                  (ibuffer)
+                  (isearch-forward)))
 (global-set-key (kbd "M-e") (lambda () 
-			      (interactive)
-			      (next-line 4)))
+                  (interactive)
+                  (next-line 4)))
 (global-set-key (kbd "M-a") (lambda () 
-			      (interactive)
-			      (previous-line 4)))
+                  (interactive)
+                  (previous-line 4)))
 (global-set-key (kbd "<f5>") 'shrink-window-horizontally)
 (global-set-key (kbd "<f6>") 'enlarge-window-horizontally)
 (global-set-key (kbd "<f7>") 'shrink-window)
@@ -285,7 +294,7 @@
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
 (add-hook 'ibuffer-mode-hook (lambda ()
-			       (define-key ibuffer-mode-map (kbd "C-o") 'other-window)))
+                   (define-key ibuffer-mode-map (kbd "C-o") 'other-window)))
 
 (condition-case nil
     (global-subword-mode 1)
@@ -294,38 +303,38 @@
 ;; apply CamelCase hooks
 (let (modeList)
   (setq modeList '(python-mode-hook 
-		   java-mode-hook
-		   c-mode-hook
-		   c++-mode-hook
-		   matlab-mode-hook
-		   cmake-mode-hook))
+           java-mode-hook
+           c-mode-hook
+           c++-mode-hook
+           matlab-mode-hook
+           cmake-mode-hook))
   (while modeList
     (add-hook (car modeList) (lambda ()
-			       (hs-minor-mode)
-			       (define-key hs-minor-mode-map [(control tab)] 'hs-toggle-hiding)))
+                   (hs-minor-mode)
+                   (define-key hs-minor-mode-map [(control tab)] 'hs-toggle-hiding)))
     (setq modeList (cdr modeList))))
 
 ;; apply LaTeX hooks (spellcheck, etc.)
 (add-hook 'LaTeX-mode-hook (lambda ()
-			     (flyspell-mode)
-			     (outline-minor-mode)
-			     (auto-fill-mode)
-			     (flymake-mode)
-			     (turn-on-reftex)
-			     (define-key LaTeX-mode-map (kbd "C-7") 'insert-amps)))
+                 (flyspell-mode)
+                 (outline-minor-mode)
+                 (auto-fill-mode)
+                 (flymake-mode)
+                 (turn-on-reftex)
+                 (define-key LaTeX-mode-map (kbd "C-7") 'insert-amps)))
 
 ;; this makes control-tab function like org-mode
 (add-hook 'outline-minor-mode-hook
-	  (lambda ()
-	    (define-key outline-minor-mode-map [(control tab)] 'org-cycle)))
+      (lambda ()
+        (define-key outline-minor-mode-map [(control tab)] 'org-cycle)))
 
 ;; elisp documentation in minibuffer
 (add-hook 'emacs-lisp-mode-hook (lambda ()
-				  (turn-on-eldoc-mode)
-				  (rainbow-mode)))
+                  (turn-on-eldoc-mode)
+                  (rainbow-mode)))
 
 (add-hook 'vc-dir-mode-hook (lambda ()
-			      (define-key vc-dir-mode-map (kbd "RET") 'vc-dir-find-file-other-window)))
+                  (define-key vc-dir-mode-map (kbd "RET") 'vc-dir-find-file-other-window)))
 
 (server-start)
 ;; diable warning when killing buffers opened with emacsclient 
@@ -376,10 +385,10 @@
 ;; Open my favorite files and start rocking!
 ;;--------------------------------------------------
 (open-filelist '("~/.emacs.d/init.el" "~/.shell_aliases" "~/.profile"
-		 "~/.config/openbox/autostart.sh"
-		 "~/.config/awesome/rc.lua"
-		 "~/Dropbox/org/projects.org"
-		 "~/perl/perl-svn/references/bibtex/references.bib"))
+         "~/.config/openbox/autostart.sh"
+         "~/.config/awesome/rc.lua"
+         "~/Dropbox/org/projects.org"
+         "~/perl/perl-svn/references/bibtex/references.bib"))
 (dired (getenv "HOME"))
 (switch-to-buffer (user-login-name))
 (split-window-sensibly (selected-window))
