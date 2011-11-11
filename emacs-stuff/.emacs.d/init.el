@@ -178,7 +178,12 @@
 
 ;; Turn on the good shit
 (transient-mark-mode 1)
-(ido-mode 1)
+(ido-mode t)
+(setq ido-enable-prefix nil
+      ido-enable-flex-matching t
+      ido-create-new-buffer 'always
+      ido-use-filename-at-point nil
+      ido-max-prospects 10)
 (setq mouse-yank-at-point 1)
 (autopair-global-mode 1)
 (global-linum-mode 1)

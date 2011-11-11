@@ -5,7 +5,7 @@ merge = meld
 [extensions]
 extdiff =
 convert =
-graphlog =
+hgext.graphlog =
 hgext.fetch =
 color =
 

@@ -84,7 +84,7 @@ alias ss='svn status'
 alias hd='GTK2_RC_FILES="/usr/share/themes/Radiance/gtk-2.0/gtkrc" hg extdiff -p meld'
 alias meld='GTK2_RC_FILES="/usr/share/themes/Radiance/gtk-2.0/gtkrc" meld'
 function hl() {
-    hg glog -v "$1" | less
+    hg log -v "$1" | less
 }
 
 function hs() {
@@ -136,6 +136,8 @@ which mycowsay > /dev/null 2>&1
 #Classes
 alias 492='cd ~/Documents/umich-grad/EECS/f11/492/'
 alias 568='cd ~/Documents/umich-grad/EECS/f11/568/'
+
+alias java='java -ea -server'
 
 #April codebase
 export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${HOME}/Documents/umich-grad/EECS/f11/568/eecs568/java/jni
