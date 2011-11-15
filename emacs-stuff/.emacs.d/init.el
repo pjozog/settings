@@ -139,7 +139,6 @@
 
 (require 'anything-match-plugin)
 (require 'anything-config)
-(require 'anything-dabbrev-expand)
 (require 'anything-etags+)
 (require 'htmlize)
 (require 'matlab)
@@ -196,9 +195,6 @@
 (defalias 'un 'untabify-buffer)
 
 ;; stuff for anything library
-(global-set-key "\M-/" 'anything-dabbrev-expand)
-(define-key anything-dabbrev-map "\M-/" 'anything-dabbrev-find-all-buffers)
-(setq anything-dabbrev-idle-delay 0.0)
 (global-set-key "\M-." 'anything-etags+-select-one-key)
 (global-set-key "\M-*" 'anything-etags+-history-go-back)
 
