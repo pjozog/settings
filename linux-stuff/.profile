@@ -27,7 +27,7 @@ export MATLABPATH=~/Documents/MATLAB
 which source-highlight > /dev/null 2>&1
 if [ $? -eq 0 ]; then
     export LESSOPEN="| /usr/share/source-highlight/src-hilite-lesspipe.sh %s"
-    export LESS=' -R'
 fi
+export LESS=' -R'
 
 export PROFILE_SOURCED="TRUE"
