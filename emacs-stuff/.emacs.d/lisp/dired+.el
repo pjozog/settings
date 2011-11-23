@@ -7,9 +7,9 @@
 ;; Copyright (C) 1999-2011, Drew Adams, all rights reserved.
 ;; Created: Fri Mar 19 15:58:58 1999
 ;; Version: 21.2
-;; Last-Updated: Fri Jul  1 06:53:56 2011 (-0700)
+;; Last-Updated: Thu Nov 10 13:42:14 2011 (-0800)
 ;;           By: dradams
-;;     Update #: 4148
+;;     Update #: 4188
 ;; URL: http://www.emacswiki.org/cgi-bin/wiki/dired+.el
 ;; Keywords: unix, mouse, directories, diredp, dired
 ;; Compatibility: GNU Emacs: 20.x, 21.x, 22.x, 23.x
@@ -22,7 +22,8 @@
 ;;   `ediff-diff', `ediff-help', `ediff-init', `ediff-merg',
 ;;   `ediff-mult', `ediff-util', `ediff-wind', `ffap', `fit-frame',
 ;;   `info', `info+', `misc-fns', `mkhtml', `mkhtml-htmlize', `pp',
-;;   `pp+', `strings', `thingatpt', `thingatpt+', `w32-browser'.
+;;   `pp+', `strings', `thingatpt', `thingatpt+', `w32-browser',
+;;   `widget'.
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -159,7 +160,7 @@
 ;;    `diredp-unmark-files-tagged-some', `diredp-unmark-region-files',
 ;;    `diredp-untag-this-file', `diredp-upcase-this-file',
 ;;    `diredp-w32-drives', `diredp-w32-drives-mode',
-;;    `toggle-dired-find-file-reuse-dir'.
+;;    `toggle-diredp-find-file-reuse-dir'.
 ;;
 ;;  Non-interactive functions defined here:
 ;;
@@ -252,8 +253,19 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;;; Change log:
+;;; Change Log:
 ;;
+;; 2011/10/31 dadams
+;;     dired-mode-hook: Call font-lock-refresh-defaults - see Emacs 24 bugs #6662 and #9919.
+;; 2011/10/24 dadams
+;;     Protect dired-show-file-type with fboundp.
+;; 2011/09/03 dadams
+;;     diredp-do-grep-1: Map shell-quote-argument over file names.  Thx to Joe Bloggs.
+;; 2011/08/07 dadams
+;;     diredp-bookmark (need to keep in sync with bmkp-make-record-for-target-file):
+;;       Instead of image-bookmark-make-record, use explicit function that includes file, type.
+;; 2011/07/25 dadams
+;;     Changed featurep to eval-after-load, for bookmark+-1.el and w32-browser.el.
 ;; 2011/07/01 dadams
 ;;     Fixed typo: dired-toggle-find-file-reuse-dir -> ...diredp....  Thx to pasja on Emacs Wiki.
 ;; 2011/06/18 dadams
@@ -261,7 +273,7 @@
 ;;            diredp-dired-plus-description(+links), diredp-send-bug-report.
 ;;     Bound diredp-describe-mode to whatever describe-mode is bound to.
 ;;     All menus, :enable with mark-active: Added transient-mark-mode and mark != point.
-;;     toggle-dired-find-file-reuse-dir: Swapped which one is the alias.
+;;     toggle-diredp-find-file-reuse-dir: Swapped which one is the alias.
 ;;     diredp-w32-list-mapped-drives: Display *Shell Command Output* at end.
 ;;     diredp-mouse-(describe-file|3-menu|mark/unmark|(find|view)-file(-other-window)):
 ;;       save-excursion set-buffer -> with-current-buffer.
@@ -485,7 +497,7 @@
 ;;     Alias dired-do-toggle to dired-toggle-marks, if defined.
 ;; 2005/11/02 dadams
 ;;     Added: dired-get-file-for-visit, dired(-mouse)-find-alternate-file*, 
-;;            toggle-dired-find-file-reuse-dir, dired+-subst-find-*.
+;;            togglep-dired-find-file-reuse-dir, dired+-subst-find-*.
 ;;     Use defface for all faces.  Renamed without "-face".  No longer require def-face-const.
 ;;     dired-simultaneous-find-file: Minor bug fix (typo).
 ;; 2005/07/10 dadams
@@ -560,15 +572,15 @@
 
 (require 'dired) ;; dired-revert
 (require 'dired-aux) ;; dired-bunch-files, dired-do-chxxx, dired-do-create-files,
-;; dired-mark-read-string, dired-read-shell-command,
-;; dired-run-shell-command, dired-shell-stuff-it
+                     ;; dired-mark-read-string, dired-read-shell-command,
+                     ;; dired-run-shell-command, dired-shell-stuff-it
 (require 'ediff-util) ;; ediff-read-file-name
 
 (require 'dired-x nil t) ;; (no error if not found) dired-do-relsymlink
 (require 'misc-fns nil t) ;; (no error if not found): undefine-killer-commands
 (when (eq system-type 'windows-nt) ;; (no error if not found):
   (require 'w32-browser nil t)) ;; dired-w32explore, dired-w32-browser, dired-mouse-w32-browser,
-;; dired-multiple-w32-browser
+                                ;; dired-multiple-w32-browser
 (when (< emacs-major-version 21)
   (require 'mkhtml nil t)) ;; (no error if not found): mkhtml-dired-files
 
@@ -591,7 +603,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;
 
-
+ 
 ;;; Variables
 
 ;; `dired-do-toggle' was renamed to `dired-toggle-marks' after Emacs 20.
@@ -634,7 +646,7 @@ name and DESCRIPTION describes DRIVE."
 ;;; The default value is designed to recognize dates and times
 ;;; regardless of the language."))
 
-
+ 
 ;;; Macros
 
 
@@ -650,23 +662,23 @@ It should end with a noun that can be pluralized by adding `s'.
 Return value is the number of files marked, or nil if none were marked."
   `(let ((inhibit-read-only  t)
          count)
-     (save-excursion
-       (setq count  0)
-       (when ,msg (message "%s %ss%s..."
-			   ,(cond ((eq ?\040 dired-marker-char)            "Unmarking")
-				  ((eq dired-del-marker dired-marker-char) "Flagging")
-				  (t                                       "Marking"))
-			   ,msg
-			   ,(if (eq dired-del-marker dired-marker-char) " for deletion" "")))
-       (goto-char (point-min))
-       (while (not (eobp))
-	 (when ,predicate (delete-char 1) (insert dired-marker-char) (setq count  (1+ count)))
-	 (forward-line 1))
-       (when ,msg (message "%s %s%s %s%s" count ,msg
-			   (dired-plural-s count)
-			   (if (eq dired-marker-char ?\040) "un" "")
-			   (if (eq dired-marker-char dired-del-marker) "flagged" "marked"))))
-     (and (> count 0) count)))
+    (save-excursion
+      (setq count  0)
+      (when ,msg (message "%s %ss%s..."
+                          ,(cond ((eq ?\040 dired-marker-char)            "Unmarking")
+                                 ((eq dired-del-marker dired-marker-char) "Flagging")
+                                 (t                                       "Marking"))
+                          ,msg
+                          ,(if (eq dired-del-marker dired-marker-char) " for deletion" "")))
+      (goto-char (point-min))
+      (while (not (eobp))
+        (when ,predicate (delete-char 1) (insert dired-marker-char) (setq count  (1+ count)))
+        (forward-line 1))
+      (when ,msg (message "%s %s%s %s%s" count ,msg
+                          (dired-plural-s count)
+                          (if (eq dired-marker-char ?\040) "un" "")
+                          (if (eq dired-marker-char dired-del-marker) "flagged" "marked"))))
+    (and (> count 0) count)))
 
 
 ;; REPLACE ORIGINAL in `dired.el'.
@@ -674,7 +686,7 @@ Return value is the number of files marked, or nil if none were marked."
 ;; Treat multiple `C-u' specially.
 ;;
 (defmacro dired-map-over-marks (body arg &optional show-progress
-				     distinguish-one-marked)
+                                distinguish-one-marked)
   "Eval BODY with point on each marked line.  Return a list of BODY's results.
 If no marked file could be found, execute BODY on the current line.
 ARG, if non-nil, specifies the files to use instead of the marked files.
@@ -703,54 +715,54 @@ If DISTINGUISH-ONE-MARKED is non-nil, then return (t FILENAME) instead
   ;;endless loop.
   ;;This warning should not apply any longer, sk  2-Sep-1991 14:10.
   `(prog1
-       (let ((inhibit-read-only  t)
-	     (newarg             ,arg)
-	     multi-C-u case-fold-search found results)
-	 (when (and (consp newarg) (> (prefix-numeric-value newarg) 4))
-	   (setq newarg     (case (prefix-numeric-value newarg)
-			      (16   'all-files-no-dirs) ; `C-u C-u'
-			      (64   'all-files-no-dots) ; `C-u C-u C-u'
-			      (256  'all-files) ; `C-u C-u C-u C-u'
-			      (t    'all-files-no-dirs))
-		 multi-C-u  t))
-	 (if (and newarg (not multi-C-u))
-	     (if (integerp newarg)
-		 (progn                    ; No `save-excursion', want to move point.
-		   (dired-repeat-over-lines newarg
-					    (function (lambda ()
-							(if ,show-progress (sit-for 0))
-							(setq results  (cons ,body results)))))
-		   (if (< newarg 0) (nreverse results) results))
-	       ;; Non-nil, non-integer ARG means use current file:
-	       (list ,body))
-	   (let ((regexp  (dired-marker-regexp))
-		 next-position)
-	     (save-excursion
-	       (goto-char (point-min))
-	       ;; Remember position of next marked file before BODY can insert lines before the
-	       ;; just found file, confusing us by finding the same marked file again and again...
-	       (setq next-position  (and (if multi-C-u
-					     (diredp-get-file-or-dir-name newarg)
-					   (re-search-forward regexp nil t))
-					 (point-marker))
-		     found          (not (null next-position)))
-	       (while next-position
-		 (goto-char next-position)
-		 (when ,show-progress (sit-for 0))
-		 (setq results  (cons ,body results))
-		 ;; move after last match
-		 (goto-char next-position)
-		 (forward-line 1)
-		 (set-marker next-position nil)
-		 (setq next-position  (and (if multi-C-u
-					       (diredp-get-file-or-dir-name newarg)
-					     (re-search-forward regexp nil t))
-					   (point-marker)))))
-	     (when (and ,distinguish-one-marked (= (length results) 1))
-	       (setq results  (cons t results)))
-	     (if found results (list ,body)))))
-     ;; `save-excursion' loses, again
-     (dired-move-to-filename)))
+    (let ((inhibit-read-only  t)
+          (newarg             ,arg)
+          multi-C-u case-fold-search found results)
+      (when (and (consp newarg) (> (prefix-numeric-value newarg) 4))
+        (setq newarg     (case (prefix-numeric-value newarg)
+                           (16   'all-files-no-dirs) ; `C-u C-u'
+                           (64   'all-files-no-dots) ; `C-u C-u C-u'
+                           (256  'all-files) ; `C-u C-u C-u C-u'
+                           (t    'all-files-no-dirs))
+              multi-C-u  t))
+      (if (and newarg (not multi-C-u))
+          (if (integerp newarg)
+              (progn                    ; No `save-excursion', want to move point.
+                (dired-repeat-over-lines newarg
+                                         (function (lambda ()
+                                           (if ,show-progress (sit-for 0))
+                                           (setq results  (cons ,body results)))))
+                (if (< newarg 0) (nreverse results) results))
+            ;; Non-nil, non-integer ARG means use current file:
+            (list ,body))
+        (let ((regexp  (dired-marker-regexp))
+              next-position)
+          (save-excursion
+            (goto-char (point-min))
+            ;; Remember position of next marked file before BODY can insert lines before the
+            ;; just found file, confusing us by finding the same marked file again and again...
+            (setq next-position  (and (if multi-C-u
+                                          (diredp-get-file-or-dir-name newarg)
+                                        (re-search-forward regexp nil t))
+                                      (point-marker))
+                  found          (not (null next-position)))
+            (while next-position
+              (goto-char next-position)
+              (when ,show-progress (sit-for 0))
+              (setq results  (cons ,body results))
+              ;; move after last match
+              (goto-char next-position)
+              (forward-line 1)
+              (set-marker next-position nil)
+              (setq next-position  (and (if multi-C-u
+                                            (diredp-get-file-or-dir-name newarg)
+                                          (re-search-forward regexp nil t))
+                                        (point-marker)))))
+          (when (and ,distinguish-one-marked (= (length results) 1))
+            (setq results  (cons t results)))
+          (if found results (list ,body)))))
+    ;; `save-excursion' loses, again
+    (dired-move-to-filename)))
 
 ;; Just a helper function for `dired-map-over-marks'.
 (defun diredp-get-file-or-dir-name (arg)
@@ -770,7 +782,7 @@ Argument ARG:
     (forward-line -1)
     fname))
 
-
+ 
 ;;; UNALTERED vanilla Emacs code to be reloaded, to use the new definition
 ;;; of `dired-map-over-marks'.  Unless otherwise noted, these are from the Emacs 23+ libraries.
 ;;; These definitions should be IDENTICAL to what's in vanilla Emacs.
@@ -1001,7 +1013,7 @@ If HDR is non-nil, insert a header line with the directory name."
      nil)
     (add-hook 'dired-after-readin-hook 'image-dired-dired-after-readin-hook nil t)))
 
-
+ 
 ;;; Key Bindings.
 
 
@@ -1025,65 +1037,65 @@ If HDR is non-nil, insert a header line with the directory name."
   (cons "Single" diredp-menu-bar-immediate-menu))
 (define-key diredp-menu-bar-immediate-menu [diredp-describe-file]
   '(menu-item "Describe" diredp-describe-file
-	      :help "Describe the file or directory at cursor"))
+    :help "Describe the file or directory at cursor"))
 (when (fboundp 'image-dired-dired-display-external) ; Emacs 22+
   (define-key diredp-menu-bar-immediate-menu [image-dired-dired-display-external]
     '(menu-item "Display Image Externally" image-dired-dired-display-external
-		:help "Display image in external viewer"))
+      :help "Display image in external viewer"))
   (define-key diredp-menu-bar-immediate-menu [image-dired-dired-display-image]
     '(menu-item "Display Image" image-dired-dired-display-image
-		:help "Display image in a separate window"))
+      :help "Display image in a separate window"))
   (define-key diredp-menu-bar-immediate-menu [separator-image] '("--")))
 (define-key diredp-menu-bar-immediate-menu [chown]
   '(menu-item "Change Owner..." diredp-chown-this-file
-	      :visible (not (memq system-type '(ms-dos windows-nt)))
-	      :help "Change the owner of file at cursor"))
+    :visible (not (memq system-type '(ms-dos windows-nt)))
+    :help "Change the owner of file at cursor"))
 (define-key diredp-menu-bar-immediate-menu [chgrp]
   '(menu-item "Change Group..." diredp-chgrp-this-file
-	      :visible (not (memq system-type '(ms-dos windows-nt)))
-	      :help "Change the group of file at cursor"))
+    :visible (not (memq system-type '(ms-dos windows-nt)))
+    :help "Change the group of file at cursor"))
 (define-key diredp-menu-bar-immediate-menu [chmod]
   '(menu-item "Change Mode..." diredp-chmod-this-file
-	      :help "Change mode (attributes) of file at cursor"))
+    :help "Change mode (attributes) of file at cursor"))
 (define-key diredp-menu-bar-immediate-menu [separator-ch] '("--"))
 (define-key diredp-menu-bar-immediate-menu [load]
   '(menu-item "Load" diredp-load-this-file
-	      :help "Load this Emacs Lisp file"))
+    :help "Load this Emacs Lisp file"))
 (define-key diredp-menu-bar-immediate-menu [compile]
   '(menu-item "Byte Compile" diredp-byte-compile-this-file
-	      :help "Byte-compile this Emacs Lisp file"))
+    :help "Byte-compile this Emacs Lisp file"))
 (define-key diredp-menu-bar-immediate-menu [command]
   '(menu-item "Shell Command..." diredp-shell-command-this-file
-	      :help "Run a shell command on file at cursor"))
+    :help "Run a shell command on file at cursor"))
 (define-key diredp-menu-bar-immediate-menu [compress]
   '(menu-item "Compress/Uncompress" diredp-compress-this-file
-	      :help "Compress/uncompress file at cursor"))
+    :help "Compress/uncompress file at cursor"))
 (define-key diredp-menu-bar-immediate-menu [grep]
   '(menu-item "Grep..." diredp-grep-this-file :help "Grep file at cursor"))
 (define-key diredp-menu-bar-immediate-menu [print]
   '(menu-item "Print..." diredp-print-this-file
-	      :help "Print file at cursor, supplying print command"))
+    :help "Print file at cursor, supplying print command"))
 
 (when (require 'bookmark+ nil t)
   (define-key diredp-menu-bar-immediate-menu [separator-immediate-tags] '("--"))
   (define-key diredp-menu-bar-immediate-menu [diredp-set-tag-value-this-file]
     '(menu-item "Set Tag Value..." diredp-set-tag-value-this-file
-		:help "Set the value (not the name) of a given tag for this file"))
+      :help "Set the value (not the name) of a given tag for this file"))
   (define-key diredp-menu-bar-immediate-menu [diredp-paste-replace-tags-this-file]
     '(menu-item "Paste Tags (Replace)" diredp-paste-replace-tags-this-file
-		:help "Replace tags for this file with previously copied tags"))
+      :help "Replace tags for this file with previously copied tags"))
   (define-key diredp-menu-bar-immediate-menu [diredp-paste-add-tags-this-file]
     '(menu-item "Paste Tags (Add)" diredp-paste-add-tags-this-file
-		:help "Add previously copied tags to this file"))
+      :help "Add previously copied tags to this file"))
   (define-key diredp-menu-bar-immediate-menu [diredp-copy-tags-this-file]
     '(menu-item "Copy Tags" diredp-copy-tags-this-file
-		:help "Copy the tags from this file, so you can paste them to another"))
+      :help "Copy the tags from this file, so you can paste them to another"))
   (define-key diredp-menu-bar-immediate-menu [diredp-remove-all-tags-this-file]
     '(menu-item "Remove All Tags" diredp-remove-all-tags-this-file
-		:help "Remove all tags from the file at cursor"))
+      :help "Remove all tags from the file at cursor"))
   (define-key diredp-menu-bar-immediate-menu [diredp-untag-this-file]
     '(menu-item "Remove Tags..." diredp-untag-this-file
-		:help "Remove some tags from the file at cursor (`C-u': remove all tags)"))
+      :help "Remove some tags from the file at cursor (`C-u': remove all tags)"))
   (define-key diredp-menu-bar-immediate-menu [diredp-tag-this-file]
     '(menu-item "Add Tags..." diredp-tag-this-file :help "Add some tags to the file at cursor")))
 (define-key diredp-menu-bar-immediate-menu [diredp-bookmark-this-file]
@@ -1092,36 +1104,36 @@ If HDR is non-nil, insert a header line with the directory name."
 (when (fboundp 'mkhtml-dired-files)
   (define-key diredp-menu-bar-immediate-menu [mkhtml-dired-files]
     '(menu-item "Create HTML" mkhtml-dired-files
-		:help "Create an HTML file corresponding to file at cursor")))
+      :help "Create an HTML file corresponding to file at cursor")))
 (define-key diredp-menu-bar-immediate-menu [separator-misc] '("--"))
 (define-key diredp-menu-bar-immediate-menu [hardlink]
   '(menu-item "Hardlink to..." diredp-hardlink-this-file
-	      :help "Make hard links for current or marked files"))
+    :help "Make hard links for current or marked files"))
 (if (not (fboundp 'dired-do-relsymlink))
     (define-key diredp-menu-bar-immediate-menu [symlink]
       '(menu-item "Symlink to..." diredp-symlink-this-file
-		  :visible (fboundp 'make-symbolic-link) :help "Make symbolic link for file at cursor"))
+        :visible (fboundp 'make-symbolic-link) :help "Make symbolic link for file at cursor"))
   (define-key diredp-menu-bar-immediate-menu [symlink]
     '(menu-item "Symlink to (Absolute)..." diredp-symlink-this-file
-		:help "Make absolute symbolic link for file at cursor"))
+      :help "Make absolute symbolic link for file at cursor"))
   (define-key diredp-menu-bar-immediate-menu [relsymlink]
     '(menu-item "Symlink to (Relative)..." diredp-relsymlink-this-file ; In `dired-x.el'.
-		:help "Make relative symbolic link for file at cursor")))
+      :help "Make relative symbolic link for file at cursor")))
 (define-key diredp-menu-bar-immediate-menu [separator-link] '("--"))
 (define-key diredp-menu-bar-immediate-menu [delete]
   '(menu-item "Delete" diredp-delete-this-file :help "Delete file at cursor"))
 (define-key diredp-menu-bar-immediate-menu [capitalize]
   '(menu-item "Capitalize" diredp-capitalize-this-file
-	      :help "Capitalize (initial caps) name of file at cursor"))
+    :help "Capitalize (initial caps) name of file at cursor"))
 (define-key diredp-menu-bar-immediate-menu [downcase]
   '(menu-item "Downcase" diredp-downcase-this-file
-	      ;; When running on plain MS-DOS, there is only one letter-case for file names.
-	      :enable (or (not (fboundp 'msdos-long-file-names)) (msdos-long-file-names))
-	      :help "Rename file at cursor to a lower-case name"))
+    ;; When running on plain MS-DOS, there is only one letter-case for file names.
+    :enable (or (not (fboundp 'msdos-long-file-names)) (msdos-long-file-names))
+    :help "Rename file at cursor to a lower-case name"))
 (define-key diredp-menu-bar-immediate-menu [upcase]
   '(menu-item "Upcase" diredp-upcase-this-file
-	      :enable (or (not (fboundp 'msdos-long-file-names)) (msdos-long-file-names))
-	      :help "Rename file at cursor to an upper-case name"))
+    :enable (or (not (fboundp 'msdos-long-file-names)) (msdos-long-file-names))
+    :help "Rename file at cursor to an upper-case name"))
 (define-key diredp-menu-bar-immediate-menu [rename]
   '(menu-item "Rename to..." diredp-rename-this-file :help "Rename file at cursor"))
 (define-key diredp-menu-bar-immediate-menu [copy]
@@ -1129,28 +1141,28 @@ If HDR is non-nil, insert a header line with the directory name."
 (define-key diredp-menu-bar-immediate-menu [separator-chg] '("--"))
 (define-key diredp-menu-bar-immediate-menu [backup-diff]
   '(menu-item "Diff with Backup" dired-backup-diff
-	      :help "Diff file at cursor with its latest backup"))
+    :help "Diff file at cursor with its latest backup"))
 (define-key diredp-menu-bar-immediate-menu [diff]
   '(menu-item "Diff..." dired-diff
-	      :help "Compare file at cursor with another file using `diff'"))
+    :help "Compare file at cursor with another file using `diff'"))
 (define-key diredp-menu-bar-immediate-menu [ediff]
   '(menu-item "Compare..." diredp-ediff :help "Compare file at cursor with another file"))
 (define-key diredp-menu-bar-immediate-menu [separator-diff] '("--"))
 (define-key diredp-menu-bar-immediate-menu [insert-subdir]
   '(menu-item "Insert This Subdir" dired-maybe-insert-subdir
-	      :enable (atom (diredp-this-subdir)) :help "Insert a listing of this subdirectory"))
+    :enable (atom (diredp-this-subdir)) :help "Insert a listing of this subdirectory"))
 (define-key diredp-menu-bar-immediate-menu [view]
   '(menu-item "View (Read Only)" dired-view-file
-	      :help "Examine file at cursor in read-only mode"))
+    :help "Examine file at cursor in read-only mode"))
 (define-key diredp-menu-bar-immediate-menu [display]
   '(menu-item "Display in Other Window" dired-display-file
-	      :help "Display file at cursor in a different window"))
+    :help "Display file at cursor in a different window"))
 (define-key diredp-menu-bar-immediate-menu [find-file-other-frame]
   '(menu-item "Open in Other Frame" diredp-find-file-other-frame
-	      :help "Edit file at cursor in a different frame"))
+    :help "Edit file at cursor in a different frame"))
 (define-key diredp-menu-bar-immediate-menu [find-file-other-window]
   '(menu-item "Open in Other Window" dired-find-file-other-window
-	      :help "Edit file at cursor in a different window"))
+    :help "Edit file at cursor in a different window"))
 (define-key diredp-menu-bar-immediate-menu [find-file]
   '(menu-item "Open" dired-find-file :help "Edit file at cursor"))
 
@@ -1167,7 +1179,7 @@ If HDR is non-nil, insert a header line with the directory name."
     '(menu-item "Decrypt" epa-dired-do-decrypt :help "Decrypt file at cursor"))
   (define-key diredp-menu-bar-operate-menu [epa-dired-do-verify]
     '(menu-item "Verify" epa-dired-do-verify
-		:help "Verify digital signature of file at cursor"))
+      :help "Verify digital signature of file at cursor"))
   (define-key diredp-menu-bar-operate-menu [epa-dired-do-sign]
     '(menu-item "Sign" epa-dired-do-sign :help "Create digital signature of file at cursor"))
   (define-key diredp-menu-bar-operate-menu [epa-dired-do-encrypt]
@@ -1176,25 +1188,25 @@ If HDR is non-nil, insert a header line with the directory name."
 (when (fboundp 'image-dired-delete-tag) ; Emacs 22+
   (define-key diredp-menu-bar-operate-menu [image-dired-delete-tag]
     '(menu-item "Delete Image Tag..." image-dired-delete-tag
-		:help "Delete image tag from marked files"))
+      :help "Delete image tag from marked files"))
   (define-key diredp-menu-bar-operate-menu [image-dired-tag-files]
     '(menu-item "Add Image Tags..." image-dired-tag-files
-		:help "Add image tags to marked files"))
+      :help "Add image tags to marked files"))
   (define-key diredp-menu-bar-operate-menu [image-dired-dired-comment-files]
     '(menu-item "Add Image Comment..." image-dired-dired-comment-files
-		:help "Add image comment to marked files"))
+      :help "Add image comment to marked files"))
   (define-key diredp-menu-bar-operate-menu [image-dired-display-thumbs]
     '(menu-item "Display Image Thumbnails" image-dired-display-thumbs
-		:help "Display image thumbnails for marked image files"))
+      :help "Display image thumbnails for marked image files"))
   (define-key diredp-menu-bar-operate-menu [separator-image] '("--")))
 (define-key diredp-menu-bar-operate-menu [chown]
   '(menu-item "Change Owner..." dired-do-chown
-	      :visible (not (memq system-type '(ms-dos windows-nt)))
-	      :help "Change the owner of marked files"))
+    :visible (not (memq system-type '(ms-dos windows-nt)))
+    :help "Change the owner of marked files"))
 (define-key diredp-menu-bar-operate-menu [chgrp]
   '(menu-item "Change Group..." dired-do-chgrp
-	      :visible (not (memq system-type '(ms-dos windows-nt)))
-	      :help "Change the owner of marked files"))
+    :visible (not (memq system-type '(ms-dos windows-nt)))
+    :help "Change the owner of marked files"))
 (define-key diredp-menu-bar-operate-menu [chmod]
   '(menu-item "Change Mode..." dired-do-chmod :help "Change mode (attributes) of marked files"))
 (when (> emacs-major-version 21)
@@ -1204,15 +1216,15 @@ If HDR is non-nil, insert a header line with the directory name."
 (when (fboundp 'dired-do-isearch-regexp) ; Emacs 23+
   (define-key diredp-menu-bar-operate-menu [isearch-regexp]
     '(menu-item "Isearch Regexp Files..." dired-do-isearch-regexp
-		:help "Incrementally search marked files for regexp"))
+      :help "Incrementally search marked files for regexp"))
   (define-key diredp-menu-bar-operate-menu [isearch]
     '(menu-item "Isearch Files..." dired-do-isearch
-		:help "Incrementally search marked files for string")))
+      :help "Incrementally search marked files for string")))
 (define-key diredp-menu-bar-operate-menu [query-replace]
   (if (< emacs-major-version 21)
       '(menu-item "Query Replace..." dired-do-query-replace)
     '(menu-item "Query Replace..." dired-do-query-replace-regexp
-		:help "Replace regexp in marked files")))
+      :help "Replace regexp in marked files")))
 (define-key diredp-menu-bar-operate-menu [search]
   '(menu-item "Search Files..." dired-do-search :help "Search marked files for regexp"))
 (define-key diredp-menu-bar-operate-menu [grep]
@@ -1224,7 +1236,7 @@ If HDR is non-nil, insert a header line with the directory name."
   '(menu-item "Byte Compile" dired-do-byte-compile :help "Byte-compile marked Emacs Lisp files"))
 (define-key diredp-menu-bar-operate-menu [command]
   '(menu-item "Shell Command..." dired-do-shell-command
-	      :help "Run a shell command on each of marked files"))
+    :help "Run a shell command on each of marked files"))
 (define-key diredp-menu-bar-operate-menu [compress]
   '(menu-item "Compress/Uncompress" dired-do-compress :help "Compress/uncompress marked files"))
 (define-key diredp-menu-bar-operate-menu [print]
@@ -1234,68 +1246,68 @@ If HDR is non-nil, insert a header line with the directory name."
   (define-key diredp-menu-bar-operate-menu [separator-operate-tags] '("--"))
   (define-key diredp-menu-bar-operate-menu [diredp-do-set-tag-value]
     '(menu-item "Set Tag Value..." diredp-do-set-tag-value
-		:help "Set the value of a given tag for the marked or next N files"))
+      :help "Set the value of a given tag for the marked or next N files"))
   (define-key diredp-menu-bar-operate-menu [diredp-do-paste-replace-tags]
     '(menu-item "Paste Tags (Replace)" diredp-do-paste-replace-tags
-		:help "Replace tags for the marked or next N files with copied tags"))
+      :help "Replace tags for the marked or next N files with copied tags"))
   (define-key diredp-menu-bar-operate-menu [diredp-do-paste-add-tags]
     '(menu-item "Paste Tags (Add)" diredp-do-paste-add-tags
-		:help "Add previously copied tags to the marked or next N files"))
+      :help "Add previously copied tags to the marked or next N files"))
   (define-key diredp-menu-bar-operate-menu [diredp-do-remove-all-tags]
     '(menu-item "Remove All Tags" diredp-do-remove-all-tags
-		:help "Remove all tags from the marked or next N files"))
+      :help "Remove all tags from the marked or next N files"))
   (define-key diredp-menu-bar-operate-menu [diredp-do-untag]
     '(menu-item "Remove Tags..." diredp-do-untag
-		:help "Remove some tags from the marked or next N files"))
+      :help "Remove some tags from the marked or next N files"))
   (define-key diredp-menu-bar-operate-menu [diredp-do-tag]
     '(menu-item "Add Tags..." diredp-do-tag
-		:help "Add some tags to the marked or next N files")))
+      :help "Add some tags to the marked or next N files")))
 
 (define-key diredp-menu-bar-operate-menu [diredp-do-bookmark-in-bookmark-file]
   '(menu-item "Bookmark in Bookmark File..." diredp-do-bookmark-in-bookmark-file
-	      :help "Bookmark the marked files in BOOKMARK-FILE and save BOOKMARK-FILE"))
+    :help "Bookmark the marked files in BOOKMARK-FILE and save BOOKMARK-FILE"))
 (define-key diredp-menu-bar-operate-menu [diredp-set-bookmark-file-bookmark-for-marked]
   '(menu-item "Bookmark Project..." diredp-set-bookmark-file-bookmark-for-marked
-	      :help "Bookmark the marked files and create a bookmark-file bookmark for them"))
+    :help "Bookmark the marked files and create a bookmark-file bookmark for them"))
 (define-key diredp-menu-bar-operate-menu [diredp-do-bookmark]
   '(menu-item "Bookmark..." diredp-do-bookmark :help "Bookmark the marked or next N files"))
 (when (fboundp 'mkhtml-dired-files)
   (define-key diredp-menu-bar-operate-menu [mkhtml-dired-files]
     '(menu-item "Create HTML" mkhtml-dired-files
-		:help "Create HTML files corresponding to marked files")))
+      :help "Create HTML files corresponding to marked files")))
 (define-key diredp-menu-bar-operate-menu [separator-link] '("--"))
 (define-key diredp-menu-bar-operate-menu [hardlink]
   '(menu-item "Hardlink to..." dired-do-hardlink
-	      :help "Make hard links for current or marked files"))
+    :help "Make hard links for current or marked files"))
 (if (not (fboundp 'dired-do-relsymlink))
     (define-key diredp-menu-bar-operate-menu [symlink]
       '(menu-item "Symlink to..." dired-do-symlink
-		  :visible (fboundp 'make-symbolic-link)
-		  :help "Make symbolic links for current or marked files"))
+        :visible (fboundp 'make-symbolic-link)
+        :help "Make symbolic links for current or marked files"))
   (define-key diredp-menu-bar-operate-menu [symlink]
     '(menu-item "Symlink to (Absolute)..." dired-do-symlink
-		:help "Make absolute symbolic links for current or marked files"))
+      :help "Make absolute symbolic links for current or marked files"))
   (define-key diredp-menu-bar-operate-menu [relsymlink] ; In `dired-x.el'.
     '(menu-item "Symlink to (Relative)..." dired-do-relsymlink
-		:help "Make relative symbolic links for current or marked files")))
+      :help "Make relative symbolic links for current or marked files")))
 (define-key diredp-menu-bar-operate-menu [separator-move] '("--"))
 (define-key diredp-menu-bar-operate-menu [delete-flagged]
   '(menu-item "Delete Flagged" dired-do-flagged-delete
-	      :help "Delete all files flagged for deletion (D)"))
+    :help "Delete all files flagged for deletion (D)"))
 (define-key diredp-menu-bar-operate-menu [delete]
   '(menu-item "Delete Marked (not Flagged)" dired-do-delete
-	      :help "Delete current file or all marked files (not flagged files)"))
+    :help "Delete current file or all marked files (not flagged files)"))
 (define-key diredp-menu-bar-operate-menu [capitalize]
   '(menu-item "Capitalize" diredp-capitalize
-	      :help "Capitalize (initial caps) the names of all marked files"))
+    :help "Capitalize (initial caps) the names of all marked files"))
 (define-key diredp-menu-bar-operate-menu [downcase]
   '(menu-item "Downcase" dired-downcase
-	      :enable (or (not (fboundp 'msdos-long-file-names)) (msdos-long-file-names))
-	      :help "Rename marked files to lowercase names"))
+    :enable (or (not (fboundp 'msdos-long-file-names)) (msdos-long-file-names))
+    :help "Rename marked files to lowercase names"))
 (define-key diredp-menu-bar-operate-menu [upcase]
   '(menu-item "Upcase" dired-upcase
-	      :enable (or (not (fboundp 'msdos-long-file-names)) (msdos-long-file-names))
-	      :help "Rename marked files to uppercase names"))
+    :enable (or (not (fboundp 'msdos-long-file-names)) (msdos-long-file-names))
+    :help "Rename marked files to uppercase names"))
 (define-key diredp-menu-bar-operate-menu [rename]
   '(menu-item "Rename to..." dired-do-rename :help "Rename current file or move marked files"))
 (define-key diredp-menu-bar-operate-menu [copy]
@@ -1304,23 +1316,23 @@ If HDR is non-nil, insert a header line with the directory name."
 (when (fboundp 'dired-copy-filename-as-kill)
   (define-key diredp-menu-bar-operate-menu [kill-ring]
     '(menu-item "Copy File Names (to Paste)" dired-copy-filename-as-kill
-		:help "Copy names of marked files onto kill ring, for pasting")))
+      :help "Copy names of marked files onto kill ring, for pasting")))
 (define-key diredp-menu-bar-operate-menu [diredp-marked-other-window]
   '(menu-item "Dired (Marked) in Other Window" diredp-marked-other-window
-	      :enable (save-excursion (goto-char (point-min))
-				      (and (re-search-forward (dired-marker-regexp) nil t)
-					   (re-search-forward (dired-marker-regexp) nil t)))
-	      :help "Open Dired on marked files only, in other window"))
+    :enable (save-excursion (goto-char (point-min))
+                            (and (re-search-forward (dired-marker-regexp) nil t)
+                                 (re-search-forward (dired-marker-regexp) nil t)))
+    :help "Open Dired on marked files only, in other window"))
 (define-key diredp-menu-bar-operate-menu [diredp-marked]
   '(menu-item "Dired (Marked)" diredp-marked
-	      :enable (save-excursion (goto-char (point-min))
-				      (and (re-search-forward (dired-marker-regexp) nil t)
-					   (re-search-forward (dired-marker-regexp) nil t)))
-	      :help "Open Dired on marked files only"))
+    :enable (save-excursion (goto-char (point-min))
+                            (and (re-search-forward (dired-marker-regexp) nil t)
+                                 (re-search-forward (dired-marker-regexp) nil t)))
+    :help "Open Dired on marked files only"))
 (when (fboundp 'dired-do-find-marked-files)
   (define-key diredp-menu-bar-operate-menu [find-files]
     '(menu-item "Open" dired-do-find-marked-files ; In `dired-x.el'.
-		:help "Open each marked file for editing")))
+      :help "Open each marked file for editing")))
 
 
 ;; "Regexp" menu.
@@ -1332,20 +1344,20 @@ If HDR is non-nil, insert a header line with the directory name."
   (cons "Regexp" diredp-menu-bar-regexp-menu))
 (define-key diredp-menu-bar-regexp-menu [hardlink]
   '(menu-item "Hardlink to..." dired-do-hardlink-regexp
-	      :help "Make hard links for files matching regexp"))
+    :help "Make hard links for files matching regexp"))
 (if (not (fboundp 'dired-do-relsymlink-regexp))
     (define-key diredp-menu-bar-regexp-menu [symlink]
       '(menu-item "Symlink to..." dired-do-symlink-regexp
-		  :visible (fboundp 'make-symbolic-link)
-		  :help "Make symbolic links for files matching regexp"))
+        :visible (fboundp 'make-symbolic-link)
+        :help "Make symbolic links for files matching regexp"))
   (define-key diredp-menu-bar-regexp-menu [symlink]
     '(menu-item "Symlink to (Absolute)..." dired-do-symlink-regexp
-		:visible (fboundp 'make-symbolic-link)
-		:help "Make absolute symbolic links for files matching regexp"))
+      :visible (fboundp 'make-symbolic-link)
+      :help "Make absolute symbolic links for files matching regexp"))
   (define-key diredp-menu-bar-regexp-menu [relsymlink] ; In `dired-x.el'.
     '(menu-item "Symlink to (Relative)..." dired-do-relsymlink-regexp
-		:visible (fboundp 'make-symbolic-link)
-		:help "Make relative symbolic links for files matching regexp")))
+      :visible (fboundp 'make-symbolic-link)
+      :help "Make relative symbolic links for files matching regexp")))
 (define-key diredp-menu-bar-regexp-menu [rename]
   '(menu-item "Rename to..." dired-do-rename-regexp :help "Rename marked files matching regexp"))
 (define-key diredp-menu-bar-regexp-menu [copy]
@@ -1354,10 +1366,10 @@ If HDR is non-nil, insert a header line with the directory name."
   '(menu-item "Flag..." dired-flag-files-regexp :help "Flag files matching regexp for deletion"))
 (define-key diredp-menu-bar-regexp-menu [mark]
   '(menu-item "Mark..." dired-mark-files-regexp
-	      :help "Mark files matching regexp for future operations"))
+    :help "Mark files matching regexp for future operations"))
 (define-key diredp-menu-bar-regexp-menu [mark-cont]
   '(menu-item "Mark Containing..." dired-mark-files-containing-regexp
-	      :help "Mark files whose contents matches regexp"))
+    :help "Mark files whose contents matches regexp"))
 
 
 ;; "Mark" menu.
@@ -1370,20 +1382,20 @@ If HDR is non-nil, insert a header line with the directory name."
 (when (fboundp 'dired-flag-extension)
   (define-key diredp-menu-bar-mark-menu [flag-extension] ; In `dired-x.el'
     '(menu-item "Flag Extension..." dired-flag-extension
-		:help "Flag all files that have a certain extension, for deletion")))
+      :help "Flag all files that have a certain extension, for deletion")))
 (define-key diredp-menu-bar-mark-menu [garbage-files]
   '(menu-item "Flag Garbage Files" dired-flag-garbage-files
-	      :help "Flag unneeded files for deletion"))
+    :help "Flag unneeded files for deletion"))
 (define-key diredp-menu-bar-mark-menu [backup-files]
   '(menu-item "Flag Backup Files" dired-flag-backup-files
-	      :help "Flag all backup files for deletion"))
+    :help "Flag all backup files for deletion"))
 (define-key diredp-menu-bar-mark-menu [auto-save-files]
   '(menu-item "Flag Auto-save Files" dired-flag-auto-save-files
-	      :help "Flag auto-save files for deletion"))
+    :help "Flag auto-save files for deletion"))
 (define-key diredp-menu-bar-mark-menu [flag-region]
   '(menu-item "Flag Region" diredp-flag-region-files-for-deletion
-	      :enable (and transient-mark-mode mark-active (not (eq (mark) (point))))
-	      :help "Flag all files in the region (selection) for deletion"))
+    :enable (and transient-mark-mode mark-active (not (eq (mark) (point))))
+    :help "Flag all files in the region (selection) for deletion"))
 (when (< emacs-major-version 21)
   (put 'diredp-flag-region-files-for-deletion
        'menu-enable '(and transient-mark-mode mark-active (not (eq (mark) (point))))))
@@ -1396,7 +1408,7 @@ If HDR is non-nil, insert a header line with the directory name."
   '(menu-item "Next Marked" dired-next-marked-file :help "Move to next marked file"))
 (define-key diredp-menu-bar-mark-menu [marks]
   '(menu-item "Change Marks..." dired-change-marks
-	      :help "Replace marker with another character"))
+    :help "Replace marker with another character"))
 (define-key diredp-menu-bar-mark-menu [revert]
   '(menu-item "Refresh (Show All)" revert-buffer :help "Update directory contents"))
 (define-key diredp-menu-bar-mark-menu [omit-unmarked]
@@ -1406,32 +1418,32 @@ If HDR is non-nil, insert a header line with the directory name."
 (define-key diredp-menu-bar-mark-menu [toggle-marks]
   (if (> emacs-major-version 21)
       '(menu-item "Toggle Marked/Unmarked" dired-toggle-marks
-		  :help "Mark unmarked files, unmark marked ones")
+        :help "Mark unmarked files, unmark marked ones")
     '(menu-item "Toggle Marked/Unmarked" dired-do-toggle
-		:help "Mark unmarked files, unmark marked ones")))
+      :help "Mark unmarked files, unmark marked ones")))
 (define-key diredp-menu-bar-mark-menu [separator-mark] '("--"))
 (when (fboundp 'dired-mark-sexp)
   (define-key diredp-menu-bar-mark-menu [mark-sexp] ; In `dired-x.el'.
     '(menu-item "Mark If..." dired-mark-sexp
-		:help "Mark files for which specified condition is true")))
+      :help "Mark files for which specified condition is true")))
 (define-key diredp-menu-bar-mark-menu [mark-extension]
   '(menu-item "Mark Extension..." diredp-mark/unmark-extension
-	      :help "Mark all files with specified extension"))
+    :help "Mark all files with specified extension"))
 (define-key diredp-menu-bar-mark-menu [symlinks]
   '(menu-item "Mark Symlinks" dired-mark-symlinks
-	      :visible (fboundp 'make-symbolic-link) :help "Mark all symbolic links"))
+    :visible (fboundp 'make-symbolic-link) :help "Mark all symbolic links"))
 (define-key diredp-menu-bar-mark-menu [directories]
   '(menu-item "Mark Directories" dired-mark-directories
-	      :help "Mark all directories except `.' and `..'"))
+    :help "Mark all directories except `.' and `..'"))
 (define-key diredp-menu-bar-mark-menu [directory]
   '(menu-item "Mark Old Backups" dired-clean-directory
-	      :help "Flag old numbered backups for deletion"))
+    :help "Flag old numbered backups for deletion"))
 (define-key diredp-menu-bar-mark-menu [executables]
   '(menu-item "Mark Executables" dired-mark-executables :help "Mark all executable files"))
 (define-key diredp-menu-bar-mark-menu [mark-region]
   '(menu-item "Mark Region" diredp-mark-region-files
-	      :enable (and transient-mark-mode mark-active (not (eq (mark) (point))))
-	      :help "Mark all of the files in the region (selection)"))
+    :enable (and transient-mark-mode mark-active (not (eq (mark) (point))))
+    :help "Mark all of the files in the region (selection)"))
 (when (< emacs-major-version 21)
   (put 'diredp-mark-region-files
        'menu-enable '(and transient-mark-mode mark-active (not (eq (mark) (point))))))
@@ -1442,11 +1454,11 @@ If HDR is non-nil, insert a header line with the directory name."
   '(menu-item "Unmark All" dired-unmark-all-marks :help "Remove all marks from all files"))
 (define-key diredp-menu-bar-mark-menu [unmark-with]
   '(menu-item "Unmark Marked-With..." dired-unmark-all-files
-	      :help "Remove a specific mark (or all marks) from every file"))
+    :help "Remove a specific mark (or all marks) from every file"))
 (define-key diredp-menu-bar-mark-menu [unmark-region]
   '(menu-item "Unmark Region" diredp-unmark-region-files
-	      :enable (and transient-mark-mode mark-active (not (eq (mark) (point))))
-	      :help "Unmark all files in the region (selection)"))
+    :enable (and transient-mark-mode mark-active (not (eq (mark) (point))))
+    :help "Unmark all files in the region (selection)"))
 (when (< emacs-major-version 21)
   (put 'diredp-unmark-region-files
        'menu-enable '(and transient-mark-mode mark-active (not (eq (mark) (point))))))
@@ -1460,35 +1472,35 @@ If HDR is non-nil, insert a header line with the directory name."
 
   (define-key diredp-mark-tags-menu [diredp-unmark-files-tagged-none]
     '(menu-item "Unmark Not Tagged with Any..." diredp-unmark-files-tagged-none
-		:help "Unmark files that are not tagged with *any* of the tags you enter"))
+      :help "Unmark files that are not tagged with *any* of the tags you enter"))
   (define-key diredp-mark-tags-menu [diredp-unmark-files-tagged-not-all]
     '(menu-item "Unmark Not Tagged with All..." diredp-unmark-files-tagged-not-all
-		:help "Unmark files that are not tagged with *all* tags"))
+      :help "Unmark files that are not tagged with *all* tags"))
   (define-key diredp-mark-tags-menu [diredp-unmark-files-tagged-some]
     '(menu-item "Unmark Tagged with Some..." diredp-unmark-files-tagged-some
-		:help "Unmark files that are tagged with at least one of the tags you enter"))
+      :help "Unmark files that are tagged with at least one of the tags you enter"))
   (define-key diredp-mark-tags-menu [diredp-unmark-files-tagged-all]
     '(menu-item "Unmark Tagged with All..." diredp-unmark-files-tagged-all
-		:help "Unmark files that are tagged with *each* tag you enter"))
+      :help "Unmark files that are tagged with *each* tag you enter"))
   (define-key diredp-mark-tags-menu [diredp-unmark-files-tagged-regexp]
     '(menu-item "Unmark Tagged Matching Regexp..." diredp-unmark-files-tagged-regexp
-		:help "Unmark files that have at least one tag that matches a regexp"))
+      :help "Unmark files that have at least one tag that matches a regexp"))
 
   (define-key diredp-mark-tags-menu [diredp-mark-files-tagged-none]
     '(menu-item "Mark Not Tagged with Any..." diredp-mark-files-tagged-none
-		:help "Mark files that are not tagged with *any* of the tags you enter"))
+      :help "Mark files that are not tagged with *any* of the tags you enter"))
   (define-key diredp-mark-tags-menu [diredp-mark-files-tagged-not-all]
     '(menu-item "Mark Not Tagged with All..." diredp-mark-files-tagged-not-all
-		:help "Mark files that are not tagged with *all* tags"))
+      :help "Mark files that are not tagged with *all* tags"))
   (define-key diredp-mark-tags-menu [diredp-mark-files-tagged-some]
     '(menu-item "Mark Tagged with Some..." diredp-mark-files-tagged-some
-		:help "Mark files that are tagged with at least one of the tags you enter"))
+      :help "Mark files that are tagged with at least one of the tags you enter"))
   (define-key diredp-mark-tags-menu [diredp-mark-files-tagged-all]
     '(menu-item "Mark Tagged with All..." diredp-mark-files-tagged-all
-		:help "Mark files that are tagged with *each* tag you enter"))
+      :help "Mark files that are tagged with *each* tag you enter"))
   (define-key diredp-mark-tags-menu [diredp-mark-files-tagged-regexp]
     '(menu-item "Mark Tagged Matching Regexp..." diredp-mark-files-tagged-regexp
-		:help "Mark files that have at least one tag that matches a regexp")))
+      :help "Mark files that have at least one tag that matches a regexp")))
 
 
 ;; "Dir" menu.
@@ -1500,10 +1512,10 @@ If HDR is non-nil, insert a header line with the directory name."
   (cons "Dir" diredp-menu-bar-subdir-menu))
 (define-key diredp-menu-bar-subdir-menu [hide-all]
   '(menu-item "Hide/Show All" dired-hide-all
-	      :help "Hide all subdirectories, leave only header lines"))
+    :help "Hide all subdirectories, leave only header lines"))
 (define-key diredp-menu-bar-subdir-menu [hide-subdir]
   '(menu-item "Hide/Show Subdir" dired-hide-subdir
-	      :help "Hide or unhide current directory listing"))
+    :help "Hide or unhide current directory listing"))
 (define-key diredp-menu-bar-subdir-menu [tree-down]
   '(menu-item "Tree Down" dired-tree-down :help "Go to first subdirectory header down the tree"))
 (define-key diredp-menu-bar-subdir-menu [tree-up]
@@ -1518,26 +1530,26 @@ If HDR is non-nil, insert a header line with the directory name."
   '(menu-item "Next Dirline" dired-next-dirline :help "Move to next directory-file line"))
 (define-key diredp-menu-bar-subdir-menu [insert]
   '(menu-item "This Subdir" dired-maybe-insert-subdir
-	      :help "Move to subdirectory line or listing"))
+    :help "Move to subdirectory line or listing"))
 (define-key diredp-menu-bar-subdir-menu [separator-subdir] '("--"))
 (define-key diredp-menu-bar-mark-menu [revert]
   '(menu-item "Refresh" revert-buffer :help "Update directory contents"))
 (when (fboundp 'dired-isearch-filenames) ; Emacs 23+
   (define-key diredp-menu-bar-subdir-menu [isearch-filenames-regexp]
     '(menu-item "Isearch Regexp in File Names..." dired-isearch-filenames-regexp
-		:help "Incrementally search for regexp in file names only"))
+      :help "Incrementally search for regexp in file names only"))
   (define-key diredp-menu-bar-subdir-menu [isearch-filenames]
     '(menu-item "Isearch in File Names..." dired-isearch-filenames
-		:help "Incrementally search for literal text in file names only.")))
+      :help "Incrementally search for literal text in file names only.")))
 (when (or (> emacs-major-version 21) (fboundp 'wdired-change-to-wdired-mode))
   (define-key diredp-menu-bar-subdir-menu [wdired-mode]
     '(menu-item "Edit File Names (Wdired)" wdired-change-to-wdired-mode
-		:help "Put a dired buffer in a mode in which filenames are editable"
-		:keys "C-x C-q" :filter (lambda (x) (if (eq major-mode 'dired-mode) x)))))
+      :help "Put a dired buffer in a mode in which filenames are editable"
+      :keys "C-x C-q" :filter (lambda (x) (if (eq major-mode 'dired-mode) x)))))
 (when (fboundp 'dired-compare-directories) ; Emacs 22+
   (define-key diredp-menu-bar-subdir-menu [compare-directories]
     '(menu-item "Compare Directories..." dired-compare-directories
-		:help "Mark files with different attributes in two Dired buffers")))
+      :help "Mark files with different attributes in two Dired buffers")))
 (define-key diredp-menu-bar-subdir-menu [up]
   '(menu-item "Up Directory" dired-up-directory :help "Dired the parent directory"))
 (define-key diredp-menu-bar-subdir-menu [create-directory] ; Moved from "Immediate".
@@ -1545,22 +1557,22 @@ If HDR is non-nil, insert a header line with the directory name."
 (define-key diredp-menu-bar-subdir-menu [separator-dired-on-set] '("--"))
 (define-key diredp-menu-bar-subdir-menu [diredp-fileset]
   '(menu-item "Dired Fileset..." diredp-fileset
-	      :enable (> emacs-major-version 21) :help "Open Dired on an Emacs fileset"))
+    :enable (> emacs-major-version 21) :help "Open Dired on an Emacs fileset"))
 (define-key diredp-menu-bar-subdir-menu [diredp-marked-other-window]
   '(menu-item "Dired Marked Files in Other Window" diredp-marked-other-window
-	      :enable (save-excursion (goto-char (point-min))
-				      (and (re-search-forward (dired-marker-regexp) nil t)
-					   (re-search-forward (dired-marker-regexp) nil t)))
-	      :help "Open Dired on marked files only, in other window"))
+    :enable (save-excursion (goto-char (point-min))
+                            (and (re-search-forward (dired-marker-regexp) nil t)
+                                 (re-search-forward (dired-marker-regexp) nil t)))
+    :help "Open Dired on marked files only, in other window"))
 (define-key diredp-menu-bar-subdir-menu [diredp-marked]
   '(menu-item "Dired Marked Files" diredp-marked
-	      :enable (save-excursion (goto-char (point-min))
-				      (and (re-search-forward (dired-marker-regexp) nil t)
-					   (re-search-forward (dired-marker-regexp) nil t)))
-	      :help "Open Dired on marked files only"))
+    :enable (save-excursion (goto-char (point-min))
+                            (and (re-search-forward (dired-marker-regexp) nil t)
+                                 (re-search-forward (dired-marker-regexp) nil t)))
+    :help "Open Dired on marked files only"))
 (define-key diredp-menu-bar-subdir-menu [dired]
   '(menu-item "Dired (Filter via Wildcards)..." dired
-	      :help "Explore a directory (you can provide wildcards)"))
+    :help "Explore a directory (you can provide wildcards)"))
 
 
 ;;; Mouse-3 menu binding.
@@ -1660,24 +1672,26 @@ If HDR is non-nil, insert a header line with the directory name."
 (define-key dired-mode-map "r"       'diredp-rename-this-file) ; `r'
 (define-key dired-mode-map "y"       'diredp-relsymlink-this-file) ; `y'
 (define-key dired-mode-map "z"       'diredp-compress-this-file) ; `z'
-(define-key dired-mode-map "_"       'dired-show-file-type) ; `_' (underscore)
+(when (fboundp 'dired-show-file-type)
+  (define-key dired-mode-map "_"      'dired-show-file-type)) ; `_' (underscore)
 (substitute-key-definition 'kill-line 'diredp-delete-this-file ; `C-k', `delete'
                            dired-mode-map (current-global-map))
 
 ;; On Windows, bind some more keys.
-(when (featurep 'w32-browser)
-  (define-key dired-mode-map [(control return)] 'dired-w32-browser) ; `C-RET'
-  (define-key dired-mode-map [(meta return)] 'dired-w32explore) ; `M-RET'
-  (define-key diredp-menu-bar-immediate-menu [dired-w32-browser]
-    '(menu-item "Open Associated Windows App" dired-w32-browser
-		:help "Open file using the Windows app associated with its file type"))
-  (define-key diredp-menu-bar-immediate-menu [dired-w32explore]
-    '(menu-item "Open in Windows Explorer" dired-w32explore
-		:help "Open file in Windows Explorer"))
-  (define-key dired-mode-map [mouse-2] 'dired-mouse-w32-browser)
-  (define-key diredp-menu-bar-operate-menu [dired-multiple-w32-browser]
-    '(menu-item "Open Associated Windows Apps" dired-multiple-w32-browser
-		:help "Open files using the Windows apps associated with their file types")))
+(eval-after-load "w32-browser"
+  '(progn
+    (define-key dired-mode-map [(control return)] 'dired-w32-browser) ; `C-RET'
+    (define-key dired-mode-map [(meta return)] 'dired-w32explore) ; `M-RET'
+    (define-key diredp-menu-bar-immediate-menu [dired-w32-browser]
+      '(menu-item "Open Associated Windows App" dired-w32-browser
+        :help "Open file using the Windows app associated with its file type"))
+    (define-key diredp-menu-bar-immediate-menu [dired-w32explore]
+      '(menu-item "Open in Windows Explorer" dired-w32explore
+        :help "Open file in Windows Explorer"))
+    (define-key dired-mode-map [mouse-2] 'dired-mouse-w32-browser)
+    (define-key diredp-menu-bar-operate-menu [dired-multiple-w32-browser]
+      '(menu-item "Open Associated Windows Apps" dired-multiple-w32-browser
+        :help "Open files using the Windows apps associated with their file types"))))
 
 ;; Undefine some bindings that would try to modify a Dired buffer.  Their key sequences will
 ;; then appear to the user as available for local (Dired) definition.
@@ -1688,111 +1702,111 @@ If HDR is non-nil, insert a header line with the directory name."
   "Various enhancements to Dired."
   :prefix "diredp-" :group 'dired
   :link `(url-link :tag "Send Bug Report"
-		   ,(concat "mailto:" "drew.adams" "@" "oracle" ".com?subject=\
+          ,(concat "mailto:" "drew.adams" "@" "oracle" ".com?subject=\
 dired+.el bug: \
 &body=Describe bug here, starting with `emacs -q'.  \
 Don't forget to mention your Emacs and library versions."))
   :link '(url-link :tag "Other Libraries by Drew"
-		   "http://www.emacswiki.org/cgi-bin/wiki/DrewsElispLibraries")
+          "http://www.emacswiki.org/cgi-bin/wiki/DrewsElispLibraries")
   :link '(url-link :tag "Download"
-		   "http://www.emacswiki.org/cgi-bin/wiki/dired+.el")
+          "http://www.emacswiki.org/cgi-bin/wiki/dired+.el")
   :link '(url-link :tag "Description"
-		   "http://www.emacswiki.org/cgi-bin/wiki/DiredPlus")
+          "http://www.emacswiki.org/cgi-bin/wiki/DiredPlus")
   :link '(emacs-commentary-link :tag "Commentary" "dired+"))
 
-
+ 
 ;;; Face Definitions
 
 ;;; Miscellaneous faces.
 (defface diredp-display-msg 
-  '((((background dark)) (:foreground "Yellow"))
-    (t                   (:foreground "Blue")))
+    '((((background dark)) (:foreground "Yellow"))
+      (t                   (:foreground "Blue")))
   "*Face used for message display."
   :group 'Dired-Plus)
 (defvar diredp-display-msg 'diredp-display-msg)
 
 ;;; Faces used to fontify buffer when using second level of fontifying.
 (defface diredp-dir-heading
-  '((((background dark)) (:foreground "Yellow" :background "#00003F3F3434")) ; ~ dark green
-    (t                   (:foreground "Blue" :background "Pink")))
+    '((((background dark)) (:foreground "Yellow" :background "#00003F3F3434")) ; ~ dark green
+      (t                   (:foreground "Blue" :background "Pink")))
   "*Face used for directory headings in dired buffers."
   :group 'Dired-Plus :group 'font-lock-highlighting-faces)
 (defvar diredp-dir-heading 'diredp-dir-heading)
 
 (defface diredp-deletion
-  '((t (:foreground "Yellow" :background "Red")))
+    '((t (:foreground "Yellow" :background "Red")))
   "*Face used for deletion flags (D) in dired buffers."
   :group 'Dired-Plus :group 'font-lock-highlighting-faces)
 (defvar diredp-deletion 'diredp-deletion)
 
 (defface diredp-deletion-file-name
-  '((t (:foreground "Red")))
+    '((t (:foreground "Red")))
   "*Face used for names of deleted files in dired buffers."
   :group 'Dired-Plus :group 'font-lock-highlighting-faces)
 (defvar diredp-deletion-file-name 'diredp-deletion-file-name)
 
 (defface diredp-flag-mark
-  '((((background dark)) (:foreground "Blue" :background "#7575D4D41D1D")) ; ~ olive green
-    (t                   (:foreground "Yellow" :background "Blueviolet")))
+    '((((background dark)) (:foreground "Blue" :background "#7575D4D41D1D")) ; ~ olive green
+      (t                   (:foreground "Yellow" :background "Blueviolet")))
   "*Face used for flags and marks (except D) in dired buffers."
   :group 'Dired-Plus :group 'font-lock-highlighting-faces)
 (defvar diredp-flag-mark 'diredp-flag-mark)
 
 (defface diredp-flag-mark-line
-  '((((background dark)) (:background "#787831311414")) ; ~ dark red brown
-    (t                   (:background "Skyblue")))
+    '((((background dark)) (:background "#787831311414")) ; ~ dark red brown
+      (t                   (:background "Skyblue")))
   "*Face used for flagged and marked lines in dired buffers."
   :group 'Dired-Plus :group 'font-lock-highlighting-faces)
 (defvar diredp-flag-mark-line 'diredp-flag-mark-line)
 
 (defface diredp-file-suffix
-  '((((background dark)) (:foreground "#7474FFFF7474")) ; ~ light green
-    (t                   (:foreground "DarkMagenta")))
+    '((((background dark)) (:foreground "#7474FFFF7474")) ; ~ light green
+      (t                   (:foreground "DarkMagenta")))
   "*Face used for file suffixes in dired buffers."
   :group 'Dired-Plus :group 'font-lock-highlighting-faces)
 (defvar diredp-file-suffix 'diredp-file-suffix)
 
 (defface diredp-number
-  '((((background dark)) (:foreground "#FFFFFFFF7474")) ; ~ light yellow
-    (t                   (:foreground "DarkBlue")))
+    '((((background dark)) (:foreground "#FFFFFFFF7474")) ; ~ light yellow
+      (t                   (:foreground "DarkBlue")))
   "*Face used for numerical fields in dired buffers.
 In particular, inode number, number of hard links, and file size."
   :group 'Dired-Plus :group 'font-lock-highlighting-faces)
 (defvar diredp-number 'diredp-number)
 
 (defface diredp-symlink
-  '((((background dark)) (:foreground "#00007373FFFF")) ; ~ blue
-    (t                   (:foreground "DarkOrange")))
+    '((((background dark)) (:foreground "#00007373FFFF")) ; ~ blue
+      (t                   (:foreground "DarkOrange")))
   "*Face used for symbolic links in dired buffers."
   :group 'Dired-Plus :group 'font-lock-highlighting-faces)
 (defvar diredp-symlink 'diredp-symlink)
 
 (defface diredp-date-time
-  '((((background dark)) (:foreground "#74749A9AF7F7")) ; ~ med blue
-    (t                   (:foreground "DarkGoldenrod4")))
+    '((((background dark)) (:foreground "#74749A9AF7F7")) ; ~ med blue
+      (t                   (:foreground "DarkGoldenrod4")))
   "*Face used for date and time in dired buffers."
   :group 'Dired-Plus :group 'font-lock-highlighting-faces)
 (defvar diredp-date-time 'diredp-date-time)
 
 (defface diredp-file-name
-  '((((background dark)) (:foreground "Yellow"))
-    (t                   (:foreground "Blue")))
+    '((((background dark)) (:foreground "Yellow"))
+      (t                   (:foreground "Blue")))
   "*Face used for file names (without suffixes) in dired buffers."
   :group 'Dired-Plus :group 'font-lock-highlighting-faces)
 (defvar diredp-file-name 'diredp-file-name)
 
 (defface diredp-ignored-file-name
-  '(;; (((background dark)) (:foreground "#FFFF921F921F")) ; ~ salmon
-    ;; (((background dark)) (:foreground "#A71F5F645F64")) ; ~ dark salmon
-    (((background dark)) (:foreground "#C29D6F156F15")) ; ~ salmon
-    (t                   (:foreground "#00006DE06DE0")))                  ; ~ dark cyan
+    '(;; (((background dark)) (:foreground "#FFFF921F921F")) ; ~ salmon
+      ;; (((background dark)) (:foreground "#A71F5F645F64")) ; ~ dark salmon
+      (((background dark)) (:foreground "#C29D6F156F15")) ; ~ salmon
+      (t                   (:foreground "#00006DE06DE0")))                  ; ~ dark cyan
   "*Face used for ignored file names  in dired buffers."
   :group 'Dired-Plus :group 'font-lock-highlighting-faces)
 (defvar diredp-ignored-file-name 'diredp-ignored-file-name)
 
 (defface diredp-compressed-file-suffix
-  '((((background dark)) (:foreground "Blue"))
-    (t                   (:foreground "Yellow")))
+    '((((background dark)) (:foreground "Blue"))
+      (t                   (:foreground "Yellow")))
   "*Face used for compressed file suffixes in dired buffers."
   :group 'Dired-Plus :group 'font-lock-highlighting-faces)
 (defvar diredp-compressed-file-suffix 'diredp-compressed-file-suffix)
@@ -1800,64 +1814,64 @@ In particular, inode number, number of hard links, and file size."
 ;; For this to show up, you need `F' among the options in `dired-listing-switches'.
 ;; For example, I use "-alF" for `dired-listing-switches'.
 (defface diredp-executable-tag
-  '((t (:foreground "Red")))
+    '((t (:foreground "Red")))
   "*Face used for executable tag (*) on file names in dired buffers."
   :group 'Dired-Plus :group 'font-lock-highlighting-faces)
 (defvar diredp-executable-tag 'diredp-executable-tag)
 
 (defface diredp-dir-priv
-  '((((background dark))
-     (:foreground "#7474FFFFFFFF" :background "#2C2C2C2C2C2C")) ; ~ cyan, dark gray
-    (t (:foreground "DarkRed" :background "LightGray")))
+    '((((background dark))
+       (:foreground "#7474FFFFFFFF" :background "#2C2C2C2C2C2C")) ; ~ cyan, dark gray
+      (t (:foreground "DarkRed" :background "LightGray")))
   "*Face used for directory privilege indicator (d) in dired buffers."
   :group 'Dired-Plus :group 'font-lock-highlighting-faces)
 (defvar diredp-dir-priv 'diredp-dir-priv)
 
 (defface diredp-exec-priv
-  '((((background dark)) (:background "#4F4F3B3B2121")) ; ~ dark brown
-    (t                   (:background "LightSteelBlue")))
+    '((((background dark)) (:background "#4F4F3B3B2121")) ; ~ dark brown
+      (t                   (:background "LightSteelBlue")))
   "*Face used for execute privilege indicator (x) in dired buffers."
   :group 'Dired-Plus :group 'font-lock-highlighting-faces)
 (defvar diredp-exec-priv 'diredp-exec-priv)
 
 (defface diredp-other-priv
-  '((((background dark)) (:background "#111117175555")) ; ~ dark blue
-    (t                   (:background "PaleGoldenrod")))
+    '((((background dark)) (:background "#111117175555")) ; ~ dark blue
+      (t                   (:background "PaleGoldenrod")))
   "*Face used for l,s,S,t,T privilege indicators in dired buffers."
   :group 'Dired-Plus :group 'font-lock-highlighting-faces)
 (defvar diredp-other-priv 'diredp-other-priv)
 
 (defface diredp-write-priv
-  '((((background dark)) (:background "#25258F8F2929")) ; ~ dark green
-    (t                   (:background "Orchid")))
+    '((((background dark)) (:background "#25258F8F2929")) ; ~ dark green
+      (t                   (:background "Orchid")))
   "*Face used for write privilege indicator (w) in dired buffers."
   :group 'Dired-Plus :group 'font-lock-highlighting-faces)
 (defvar diredp-write-priv 'diredp-write-priv)
 
 (defface diredp-read-priv
-  '((((background dark)) (:background "#999932325555")) ; ~ burgundy / dark magenta
-    (t                   (:background "MediumAquamarine")))
+    '((((background dark)) (:background "#999932325555")) ; ~ burgundy / dark magenta
+      (t                   (:background "MediumAquamarine")))
   "*Face used for read privilege indicator (w) in dired buffers."
   :group 'Dired-Plus :group 'font-lock-highlighting-faces)
 (defvar diredp-read-priv 'diredp-read-priv)
 
 (defface diredp-no-priv
-  '((((background dark)) (:background "#2C2C2C2C2C2C")) ; ~ dark gray
-    (t                   (:background "LightGray")))
+    '((((background dark)) (:background "#2C2C2C2C2C2C")) ; ~ dark gray
+      (t                   (:background "LightGray")))
   "*Face used for no privilege indicator (-) in dired buffers."
   :group 'Dired-Plus :group 'font-lock-highlighting-faces)
 (defvar diredp-no-priv 'diredp-no-priv)
 
 (defface diredp-rare-priv
-  '((((background dark)) (:foreground "Green" :background "#FFFF00008080")) ; ~ hot pink
-    (t                   (:foreground "Magenta" :background "SpringGreen")))
+    '((((background dark)) (:foreground "Green" :background "#FFFF00008080")) ; ~ hot pink
+      (t                   (:foreground "Magenta" :background "SpringGreen")))
   "*Face used for rare privilege indicators (b,c,s,m,p,S) in dired buffers."
   :group 'Dired-Plus :group 'font-lock-highlighting-faces)
 (defvar diredp-rare-priv 'diredp-rare-priv)
 
 (defface diredp-link-priv
-  '((((background dark)) (:foreground "#00007373FFFF")) ; ~ blue
-    (t                   (:foreground "DarkOrange")))
+    '((((background dark)) (:foreground "#00007373FFFF")) ; ~ blue
+      (t                   (:foreground "DarkOrange")))
   "*Face used for link privilege indicator (l) in dired buffers."
   :group 'Dired-Plus :group 'font-lock-highlighting-faces)
 (defvar diredp-link-priv 'diredp-link-priv)
@@ -1931,10 +1945,12 @@ In particular, inode number, number of hard links, and file size."
 ;;; Provide for the second level of fontifying.
 (add-hook 'dired-mode-hook
           '(lambda ()
-	     (set (make-local-variable 'font-lock-defaults)
-		  (cons '(dired-font-lock-keywords diredp-font-lock-keywords-1) ; Two levels.
-			(cdr font-lock-defaults)))))
-
+            (set (make-local-variable 'font-lock-defaults)
+             (cons '(dired-font-lock-keywords diredp-font-lock-keywords-1) ; Two levels.
+              (cdr font-lock-defaults)))
+            ;; Emacs 24+: Need to refresh `font-lock-keywords' from `font-lock-defaults'.
+            (when (fboundp 'font-lock-refresh-defaults) (font-lock-refresh-defaults))))
+ 
 ;;; Function Definitions
 
 ;;;###autoload
@@ -2049,27 +2065,27 @@ hidden, but its contained files are also listed."
     (dolist (buf  (reverse (cdr dirbufs))) ; The car is the new Dired buffer name.
       (with-current-buffer buf
         (unwind-protect
-	    (progn
-	      (setq hid-here    (save-excursion (dired-remember-hidden))
-		    files-here  (if (consp dired-directory)
-				    (reverse (cdr dired-directory)) ; Reverse bc will push.
-				  ()))
-	      (unless files-here
-		(save-excursion        ; This bit is more or less from `dired-toggle-marks'.
-		  (goto-char (point-min))
-		  (while (not (eobp))
-		    (or (looking-at dired-re-dot)
-			(push (dired-get-filename nil 'NO-ERROR-P) files-here))
-		    (forward-line 1)))
-		(setq files-here  (delq nil files-here)))
-	      (dolist (hid-here  hid-here) (push hid-here hidden-dirs))
-	      (dolist (sub  (cdr (reverse dired-subdir-alist)))
-		(push (list (car sub)) subdirs))
-	      (dolist (mkd  (dired-remember-marks (point-min) (point-max))) ; This unhides.
-		(push (car mkd) marked))
-	      (dolist (file  files-here)
-		(when (or (not (file-name-absolute-p file)) (not (member file files)))
-		  (push file files))))
+             (progn
+               (setq hid-here    (save-excursion (dired-remember-hidden))
+                     files-here  (if (consp dired-directory)
+                                     (reverse (cdr dired-directory)) ; Reverse bc will push.
+                                   ()))
+               (unless files-here
+                 (save-excursion        ; This bit is more or less from `dired-toggle-marks'.
+                   (goto-char (point-min))
+                   (while (not (eobp))
+                     (or (looking-at dired-re-dot)
+                         (push (dired-get-filename nil 'NO-ERROR-P) files-here))
+                     (forward-line 1)))
+                 (setq files-here  (delq nil files-here)))
+               (dolist (hid-here  hid-here) (push hid-here hidden-dirs))
+               (dolist (sub  (cdr (reverse dired-subdir-alist)))
+                 (push (list (car sub)) subdirs))
+               (dolist (mkd  (dired-remember-marks (point-min) (point-max))) ; This unhides.
+                 (push (car mkd) marked))
+               (dolist (file  files-here)
+                 (when (or (not (file-name-absolute-p file)) (not (member file files)))
+                   (push file files))))
           (save-excursion               ; Hide subdirs that were hidden.
             (dolist (dir  hid-here)  (when (dired-goto-subdir dir) (dired-hide-subdir 1)))))))
     ;; (pp-eval-expression '(list (cons 'FILES files) (cons 'MARKED marked)
@@ -2131,8 +2147,8 @@ Read names of Dired buffers to include, and then the new, Dired-union
                                          (expand-file-name file)
                                        file))
                                    files))))))
-
-
+  
+         
 
 ;;; `diredp-marked(-other-window)' tries to treat SWITCHES, but SWITCHES seems to be ignored
 ;;; by `dired' when the DIRNAME arg is a cons, at least on MS Windows.  I filed Emacs bug #952
@@ -2884,7 +2900,16 @@ If you use library `bookmark+.el' then the bookmark is an autofile."
           (let ((bookmark-make-record-function
                  (cond ((and (require 'image nil t) (require 'image-mode nil t)
                              (condition-case nil (image-type file) (error nil)))
-                        'image-bookmark-make-record)
+                        ;; Last two lines of function are from `image-bookmark-make-record'.
+                        ;; But don't use that directly, because it uses
+                        ;; `bookmark-make-record-default', which gets nil for `filename'.
+
+                        ;; NEED to keep this code sync'd with `bmkp-make-record-for-target-file'.
+                        (lambda ()
+                          `((filename   . ,file)
+                            (position   . 0)
+                            (image-type . ,(image-type file))
+                            (handler    . image-bookmark-jump))))
                        (t
                         (lambda ()
                           `((filename . ,file)
@@ -2985,12 +3010,12 @@ bookmark-file bookmark for BOOKMARK-FILE."
     (unless bmkp-current-bookmark-file (setq bmkp-current-bookmark-file  bookmark-default-file))
     (let ((old-bmkp-current-bookmark-file  bmkp-current-bookmark-file))
       (unwind-protect
-	  (progn (bmkp-switch-bookmark-file bookmark-file) ; Changes `*-current-bookmark-file'.
-		 (dired-map-over-marks-check
-		  #'(lambda () (diredp-bookmark prefix)) arg 'bookmark
-		  (diredp-fewer-than-2-files-p arg))
-		 (bookmark-save)
-		 (unless bfile-exists-p (revert-buffer)))
+           (progn (bmkp-switch-bookmark-file bookmark-file) ; Changes `*-current-bookmark-file'.
+                  (dired-map-over-marks-check
+                   #'(lambda () (diredp-bookmark prefix)) arg 'bookmark
+                   (diredp-fewer-than-2-files-p arg))
+                  (bookmark-save)
+                  (unless bfile-exists-p (revert-buffer)))
         (unless (bmkp-same-file-p old-bmkp-current-bookmark-file  bmkp-current-bookmark-file)
           (bmkp-switch-bookmark-file old-bmkp-current-bookmark-file 'NO-MSG))))
     (when bfile-bookmarkp (bmkp-set-bookmark-file-bookmark bookmark-file))))
@@ -3075,7 +3100,7 @@ As a side effect, killed dired buffers for DIR are removed from
   (defun diredp-find-a-file-read-args (prompt mustmatch) ; Not bound
     (list (let ((find-file-default  (abbreviate-file-name (dired-get-file-for-visit))))
             (minibuffer-with-setup-hook (lambda () (setq minibuffer-default  find-file-default))
-	      (read-file-name prompt nil default-directory mustmatch)))
+                                        (read-file-name prompt nil default-directory mustmatch)))
           t)))
 
 ;; Define these for Emacs 20 and 21.
@@ -3307,15 +3332,17 @@ files in the Dired buffer."
 Non-nil optional arg FILES are the files to grep, overriding the files
 choice described for `diredp-do-grep'."
   (let ((default  (and (fboundp 'grep-default-command) (grep-default-command))))
-    (read-from-minibuffer "grep <pattern> <files> :  "
-                          (let ((up-to-files  (concat grep-command "   ")))
-                            (cons (concat up-to-files
-                                          (mapconcat #'identity
-                                                     (or files (dired-get-marked-files
-                                                                nil current-prefix-arg))
-                                                     " "))
-                                  (- (length up-to-files) 2)))
-                          nil nil 'grep-history default)))
+    (read-from-minibuffer
+     "grep <pattern> <files> :  "
+     (let ((up-to-files  (concat grep-command "   ")))
+       (cons (concat up-to-files
+                     (mapconcat #'identity
+                                (or files
+                                    (mapcar 'shell-quote-argument
+                                            (dired-get-marked-files nil current-prefix-arg)))
+                                " "))
+             (- (length up-to-files) 2)))
+     nil nil 'grep-history default)))
 
 ;;;###autoload
 (define-derived-mode diredp-w32-drives-mode fundamental-mode "Drives"
@@ -3673,7 +3700,7 @@ Add text property `dired-filename' to the file name."
               (add-text-properties (save-excursion (beginning-of-line) (point))
                                    (save-excursion (end-of-line) (point))
                                    '(mouse-face highlight
-						help-echo "mouse-2: visit this file in other window"))
+                                     help-echo "mouse-2: visit this file in other window"))
               (put-text-property (point) (save-excursion (dired-move-to-end-of-filename) (point))
                                  'dired-filename t))
           (error nil))
@@ -4400,9 +4427,9 @@ With non-nil prefix arg, mark them instead."
                          '("Open" . diredp-mouse-find-file)
                          '("Open in Other Window" . dired-mouse-find-file-other-window)
                          '("Open in Other Frame" . diredp-mouse-find-file-other-frame)
-                         (and (featurep 'w32-browser)
+                         (and (fboundp 'dired-mouse-w32-browser) ; In `w32-browser.el'.
                               '("Open Associated Windows App" . dired-mouse-w32-browser))
-                         (and (featurep 'w32-browser)
+                         (and (fboundp 'dired-mouse-w32explore) ; In `w32-browser.el'.
                               '("Open in Windows Explorer" . dired-mouse-w32explore))
                          '("View (Read Only)" . diredp-mouse-view-file)
 
@@ -4671,7 +4698,7 @@ Otherwise (cursor's file is unmarked):
     ;; Then toggle the clicked line's mark.
     ;; Else mark all files in region between point and clicked line (included).
     (if (or (eq (count-lines (point-min) (posn-point mouse-pos))
-		(count-lines (point-min) (point)))
+              (count-lines (point-min) (point)))
             (equal dired-marker-char (dired-file-marker (dired-get-filename nil t))))
         (diredp-mouse-mark/unmark event)
       (call-interactively 'mouse-save-then-kill)
@@ -4914,10 +4941,10 @@ For just the latter, use \\<dired-mode-map>`\\[diredp-dired-plus-help]'."
 (when (and (> emacs-major-version 21)
            (require 'help-mode nil t) (get 'help-xref 'button-category-symbol)) ; `button.el'
   (define-button-type 'diredp-help-button
-    :supertype 'help-xref
-    'help-function #'(lambda () (browse-url "http://www.emacswiki.org/cgi-bin/wiki/DiredPlus"))
-    'help-echo
-    (purecopy "mouse-2, RET: Dired+ documentation on the Emacs Wiki (requires \
+      :supertype 'help-xref
+      'help-function #'(lambda () (browse-url "http://www.emacswiki.org/cgi-bin/wiki/DiredPlus"))
+      'help-echo
+      (purecopy "mouse-2, RET: Dired+ documentation on the Emacs Wiki (requires \
 Internet access)")))
 
 (defun diredp-dired-plus-help-link ()
@@ -4957,7 +4984,7 @@ General
 * \\[diredp-dired-for-files]\t- Open Dired on specific files
 * \\[diredp-dired-union]\t- Create union of some Dired buffers
 "
-    (and (featurep 'w32-browser)
+    (and (fboundp 'diredp-w32-drives)   ; In `w32-browser.el'.
          "* \\[diredp-w32-drives]\t- Go up to a list of MS Windows drives
 ")
 
@@ -4989,12 +5016,12 @@ Mouse
     "* \\[diredp-mouse-find-file-other-frame]\t- Open in another frame
 "
 
-    (and (featurep 'w32-browser)
+    (and (fboundp 'dired-mouse-w32-browser) ; In `w32-browser.el'.
          (where-is-internal 'dired-mouse-w32-browser dired-mode-map)
          "* \\[dired-mouse-w32-browser]\t- MS Windows `Open' action
 ")
 
-    (and (featurep 'w32-browser)
+    (and (fboundp 'dired-mouse-w32-browser-reuse-dir-buffer) ; In `w32-browser.el'.
          (where-is-internal 'dired-mouse-w32-browser-reuse-dir-buffer dired-mode-map)
          "* \\[dired-mouse-w32-browser-reuse-dir-buffer]\t- MS Windows `Open' action
 ")
@@ -5037,7 +5064,7 @@ Current file/subdir (current line)
 * \\[diredp-capitalize-this-file]\t- Capitalize (rename)
 * \\[diredp-ediff]\t- Ediff
 "
-    (and (featurep 'bookmark+-1)
+    (and (fboundp 'diredp-tag-this-file) ; In `bookmark+-1.el'.
          "* \\[diredp-tag-this-file]\t- Add some tags to this
 * \\[diredp-untag-this-file]\t- Remove some tags from this
 * \\[diredp-remove-all-tags-this-file]\t- Remove all tags from this
@@ -5047,17 +5074,17 @@ Current file/subdir (current line)
 * \\[diredp-set-tag-value-this-file]\t- Set a tag value for this
 ")
 
-    (and (featurep 'bookmark+-1)
+    (and (fboundp 'diredp-bookmark-this-file) ; In `bookmark+-1.el'.
          "* \\[diredp-bookmark-this-file]\t- Bookmark
 ")
 
-    (and (featurep 'w32-browser)
+    (and (fboundp 'dired-mouse-w32-browser) ; In `w32-browser.el'.
          (where-is-internal 'dired-mouse-w32-browser dired-mode-map)
          "* \\[dired-mouse-w32-browser]\t- MS Windows `Open' action
 * \\[dired-w32explore]\t- MS Windows Explorer
 ")
 
-    (and (featurep 'w32-browser)
+    (and (fboundp 'dired-mouse-w32-browser-reuse-dir-buffer) ; In `w32-browser.el'.
          (where-is-internal 'dired-mouse-w32-browser-reuse-dir-buffer dired-mode-map)
          "* \\[dired-mouse-w32-browser-reuse-dir-buffer]\t- MS Windows `Open' action
 * \\[dired-w32explore]\t- MS Windows Explorer
@@ -5076,7 +5103,7 @@ Marked (or next prefix arg) files/subdirs
 * \\[diredp-omit-unmarked]\t- Omit unmarked
 "
 
-    (and (featurep 'bookmark+-1)
+    (and (fboundp 'diredp-do-tag) ; In `bookmark+-1.el'.
          "* \\[diredp-do-tag]\t- Add some tags to marked
 * \\[diredp-do-untag]\t- Remove some tags from marked 
 * \\[diredp-do-remove-all-tags]\t- Remove all tags from marked
@@ -5095,18 +5122,18 @@ Marked (or next prefix arg) files/subdirs
 * \\[diredp-unmark-files-tagged-none]\t- Unmark those with none of the given tags
 ")
 
-    (and (featurep 'bookmark+-1)
+    (and (fboundp 'diredp-do-bookmark) ; In `bookmark+-1.el'.
          "* \\[diredp-do-bookmark]\t- Bookmark
 * \\[diredp-set-bookmark-file-bookmark-for-marked]\t- \
 Bookmark and create bookmark-file bookmark
 * \\[diredp-do-bookmark-in-bookmark-file]\t- Bookmark in specific bookmark file
 ")
 
-    (and (featurep 'w32-browser)
+    (and (fboundp 'dired-multiple-w32-browser) ; In `w32-browser.el'.
          "* \\[dired-multiple-w32-browser]\t- MS Windows `Open' action
 ")
 
-    (and (featurep 'bookmark+-1)
+    (and (fboundp 'diredp-tag-this-file) ; In `bookmark+-1.el'.
          "
 Tagging
 -------
@@ -5136,7 +5163,7 @@ Tagging
 * \\[diredp-unmark-files-tagged-none]\t- Unmark those with none of the given tags
 ")
 
-    (and (featurep 'bookmark+-1)
+    (and (fboundp 'diredp-bookmark-this-file) ; In `bookmark+-1.el'.
          "
 Bookmarking
 -----------
