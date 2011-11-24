@@ -169,6 +169,7 @@
  '(secondary-selection (:background sky-blue-3))
  '(cursor (:background scarlet-red-3))
  '(hl-line (:background aluminium-6))
+ '(idle-highlight (:foreground "#ff0000" :weight bold))
  '(highline-face (:background "#470000"))
  '(highlight (:background chameleon-2 :foreground "black"))
  '(fringe (:background black))
