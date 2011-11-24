@@ -204,7 +204,7 @@ globalkeys = awful.util.table.join(
    awful.key({ modkey, "Shift"   }, "y", function () awful.util.spawn("mypython") end),
    awful.key({ modkey, "Shift"   }, "f", function () awful.util.spawn("firefox") end),
    awful.key({ modkey, "Shift"   }, "g", function () awful.util.spawn("google-chrome") end),
-   awful.key({ modkey, "Shift"   }, "e", function () awful.util.spawn("emacs") end),
+   awful.key({ modkey, "Shift"   }, "e", function () awful.util.spawn("emacs --debug-init") end),
    awful.key({ modkey, "Shift"   }, "m", function () awful.util.spawn("nautilus --no-desktop") end),
    awful.key({ modkey, "Shift"   }, "a", function () awful.util.spawn("matlab -desktop") end),
    awful.key({ }, "XF86Calculator", function () awful.util.spawn("gnome-calculator") end),
