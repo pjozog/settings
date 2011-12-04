@@ -199,7 +199,7 @@
  '(font-lock-function-name-face (:foreground butter-2 :bold t))
 
  '(woman-italic (:foreground "cyan"))
- '(woman-bold (:foreground "#0FAA4C"))
+ '(woman-bold (:foreground butter-2 :weight bold))
 
  '(comint-highlight-prompt ())
 
