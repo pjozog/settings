@@ -142,3 +142,6 @@ alias java='java -ea -server'
 #April codebase
 export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${HOME}/Documents/umich-grad/EECS/f11/568/eecs568/lib
 export CLASSPATH=${CLASSPATH}:.:${HOME}/Documents/umich-grad/EECS/f11/568/eecs568/java/april.jar:${HOME}/Documents/umich-grad/EECS/f11/568/eecs568/java/lcm.jar
+
+# perls ardrone python path
+export PYTHONPATH=${HOME}/perls/third-party/venthur_drone:$PYTHONPATH
