@@ -214,6 +214,7 @@
 (global-linum-mode 1)
 (global-auto-revert-mode t)
 (column-number-mode 1)
+(setq default-fill-column 90)
 
 ;; To keep myself happy
 (set-default 'indent-tabs-mode nil)
