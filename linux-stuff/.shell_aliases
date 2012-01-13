@@ -134,8 +134,7 @@ which mycowsay > /dev/null 2>&1
 [ $? -eq 0 ] && mycowsay
 
 #Classes and research
-alias 492='cd ~/Documents/umich-grad/EECS/f11/492/'
-alias 568='cd ~/Documents/umich-grad/EECS/f11/568/'
+alias 545='cd ~/Documents/umich-grad/EECS/w12/545/'
 alias java='java -ea -server'
 alias lpg='lcm-logplayer-gui'
 
