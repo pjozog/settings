@@ -312,6 +312,10 @@
 (setq auto-mode-alist (cons '("\\.SRC$" . asm-mode) auto-mode-alist))
 (setq matlab-fill-code nil)
 
+;; set default C style to 4-space indentation with "cc-mode" style (from rme-linux)
+(setq c-default-style
+      '((java-mode . "java") (awk-mode . "awk") (c-mode . "cc-mode") (other . "cc-mode")))
+
 ;; LaTeX: Enable flymake for texlive distribution of LaTeX
 (defun flymake-get-tex-args (file-name)
   (list "pdflatex" (list "-shell-escape" "-draftmode" "-file-line-error" "-interaction=nonstopmode" file-name)))

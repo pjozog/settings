@@ -63,6 +63,9 @@ myawesomemenu = {
 }
 
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
+                                    { "hauv-viewer", myHomeDir .. "/hauv-project/build/bin/hauv-viewer" },
+                                    { "perls-spy", myHomeDir .. "/perls/build/bin/perls-spy" },
+                                    { "logplayer", "lcm-logplayer-gui" },
                                     { "Chrome", "google-chrome" },
                                     { "Nautilus", "nautilus --no-desktop" },
                                     { "Terminal", terminal },

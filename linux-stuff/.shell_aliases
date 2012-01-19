@@ -142,5 +142,8 @@ alias lpg='lcm-logplayer-gui'
 export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${HOME}/Documents/umich-grad/EECS/f11/568/eecs568/lib
 export CLASSPATH=${CLASSPATH}:.:${HOME}/Documents/umich-grad/EECS/f11/568/eecs568/java/april.jar:${HOME}/Documents/umich-grad/EECS/f11/568/eecs568/java/lcm.jar
 
+#Perls path
+export PATH=${HOME}/perls/build/bin:${PATH}
+
 # perls ardrone python path
 export PYTHONPATH=${HOME}/perls/third-party/venthur_drone:$PYTHONPATH
