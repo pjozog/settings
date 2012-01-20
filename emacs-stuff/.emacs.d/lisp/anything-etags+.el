@@ -3,9 +3,9 @@
 ;; Description: Another Etags anything.el interface
 ;; Filename: anything-etags+.el
 ;; Created: 2011-02-23
-;; Last Updated: Joseph 2011-10-22 18:04:03 星期六
+;; Last Updated: Joseph 2011-11-25 11:49:44 星期五
 ;; Version: 0.1.4
-;; Author: Joseph <jixiuf@gmail.com>
+;; Author: 纪秀峰(Joseph) <jixiuf@gmail.com>
 ;; Maintainer: Joseph <jixiuf@gmail.com>
 ;; Copyright (C) 2011~, Joseph, all rights reserved.
 ;; URL:http://www.emacswiki.org/emacs/anything-etags+.el
@@ -47,7 +47,7 @@
 ;;
 ;;  it support multiple tag files.
 ;;  and it can recursively searches each parent directory for a file named
-;;  'TAGS'. so you needn't add this special to `tags-table-list'
+;;  'TAGS'. so you needn't add this special file to `tags-table-list'
 ;;
 ;;  if you use GNU/Emacs ,you can set `tags-table-list' like this.
 ;;  (setq tags-table-list '("/java/tags/TAGS"
@@ -151,6 +151,9 @@
 ;;  `anything-etags+-use-short-file-name'
 ;;    Use short source file name as each candidate's display.
 ;;    default = t
+;;  `anything-etags+-filename-location'
+;;    this var only work when `anything-etags+-use-short-file-name' is nil.
+;;    default = (quote last)
 ;;  `anything-etags+-highlight-tag-after-jump'
 ;;    *If non-nil, temporarily highlight the tag
 ;;    default = t
@@ -180,6 +183,11 @@
   "Use short source file name as each candidate's display.
  search '(DISPLAY . REAL)' in anything.el for more info."
   :type 'boolean
+  :group 'anything-etags+)
+
+(defcustom anything-etags+-filename-location 'last
+  "this var only work when `anything-etags+-use-short-file-name' is nil."
+  :type '(choice (const first) (const last))
   :group 'anything-etags+)
 
 (defcustom anything-etags+-highlight-tag-after-jump t
@@ -404,16 +412,15 @@ not visiting a file"
   (progn
     (defun find-tags-file-r (path)
       "find the tags file from the parent directories"
-      (let* ((parent (file-name-directory path))
-             (possible-tags-file (concat parent "TAGS")))
+      (let* ((possible-tags-file (expand-file-name "TAGS" path)))
         (cond
          ((file-exists-p possible-tags-file) (throw 'found-it possible-tags-file))
          ((string-match "^/TAGS\\|^[a-zA-Z]:/TAGS" possible-tags-file) nil)
-         (t (find-tags-file-r (directory-file-name parent))))))
-    (if (buffer-file-name)
-        (catch 'found-it
-          (find-tags-file-r (buffer-file-name)))
-      (message "buffer is not visiting a file") nil)))
+         (t (find-tags-file-r
+             (file-name-directory
+              (substring (expand-file-name  path) 0 (1- (length  (expand-file-name  path) )))))))))
+    (catch 'found-it
+      (find-tags-file-r default-directory))))
 
 (defun anything-etags+-get-tag-files()
   "Get tag files."
@@ -491,17 +498,21 @@ needn't search tag file again."
   (catch 'failed
     (let ((case-fold-search (anything-etags+-case-fold-search))
           tag-info tag-line src-file-name full-tagname
-          tag-regex candidates)
-      (if (string-match "\\\\_<\\|\\\\_>" tagname)
+          tag-regex
+          tagname-regexp-quoted
+          candidates)
+      (if (string-match "\\\\_<\\|\\\\_>[ \t]*" tagname)
           (progn
-            (setq tagname (replace-regexp-in-string "\\\\_<\\|\\\\_>" ""  tagname))
-            (setq tag-regex (concat "^.*?\\(" "\^?\\(.+[:.']" tagname "\\)\^A"
-                                    "\\|" "\^?" tagname "\^A"
-                                    "\\|" "\\<" tagname "[ \f\t()=,;]*\^?[0-9,]"
+            (setq tagname (replace-regexp-in-string "\\\\_<\\|\\\\_>[ \t]*" ""  tagname))
+            (setq tagname-regexp-quoted (regexp-quote tagname))
+            (setq tag-regex (concat "^.*?\\(" "\^?\\(.+[:.']"  tagname-regexp-quoted "\\)\^A"
+                                    "\\|" "\^?"  tagname-regexp-quoted "\^A"
+                                    "\\|" "\\<"  tagname-regexp-quoted "[ \f\t()=,;]*\^?[0-9,]"
                                     "\\)")))
-        (setq tag-regex (concat "^.*?\\(" "\^?\\(.+[:.'].*" tagname ".*\\)\^A"
-                                "\\|" "\^?.*" tagname ".*\^A"
-                                "\\|" ".*" tagname ".*[ \f\t()=,;]*\^?[0-9,]"
+        (setq tagname-regexp-quoted (regexp-quote tagname))
+        (setq tag-regex (concat "^.*?\\(" "\^?\\(.+[:.'].*"  tagname-regexp-quoted ".*\\)\^A"
+                                "\\|" "\^?.*"  tagname-regexp-quoted ".*\^A"
+                                "\\|" ".*"  tagname-regexp-quoted ".*[ \f\t()=,;]*\^?[0-9,]"
                                 "\\)")))
       (with-current-buffer tag-table-buffer
         (modify-syntax-entry ?_ "w")
@@ -518,20 +529,24 @@ needn't search tag file again."
             (setq tag-line (replace-regexp-in-string  "\t" (make-string tab-width ? ) tag-line))
             (end-of-line)
             ;;(setq src-file-name (etags-file-of-tag))
-            (setq src-file-name (anything-etags+-file-of-tag))
-            (let ((display)(real (list  src-file-name tag-info full-tagname)))
-              (let ((tag-table-parent (anything-etags+-file-truename (file-name-directory (buffer-file-name tag-table-buffer)))))
-                (when (string-match  tag-table-parent (anything-etags+-file-truename src-file-name))
-                  (setq src-file-name (substring src-file-name (length  tag-table-parent)))))
-              (if anything-etags+-use-short-file-name
-                  (setq src-file-name (file-name-nondirectory src-file-name)))
+            (setq src-file-name   (anything-etags+-file-truename (anything-etags+-file-of-tag)))
+            (let ((display)(real (list  src-file-name tag-info full-tagname))
+                  (src-location-display  (file-name-nondirectory src-file-name)))
+              (unless anything-etags+-use-short-file-name
+                (let ((tag-table-parent (anything-etags+-file-truename (file-name-directory (buffer-file-name tag-table-buffer))))
+                      (src-file-parent (file-name-directory src-file-name)))
+                  (when (string-match  (regexp-quote tag-table-parent) src-file-name)
+                    (if (equal 'last anything-etags+-filename-location)
+                        (setq src-location-display (substring src-file-name (length  tag-table-parent)))
+                      (setq src-location-display (concat src-location-display "  "  (substring src-file-parent (length  tag-table-parent))))
+                      ))))
               (setq display (concat tag-line
                                     (or (ignore-errors
-                                          (make-string (- (window-width) 6
+                                          (make-string (- (window-width)
                                                           (string-width tag-line)
-                                                          (string-width src-file-name))
-                                                       ? )) "")
-                                    src-file-name))
+                                                          (string-width  src-location-display))
+                                                       ? )) " ")
+                                    src-location-display))
               (add-to-list 'candidates (cons display real)))))
         (modify-syntax-entry ?_ "_"))
       candidates)))
@@ -612,9 +627,8 @@ If SYMBOL-NAME is non-nil, jump tag position with SYMBOL-NAME."
         (anything-candidate-number-limit nil)
         (anything-idle-delay 0))
     ;; Initialize input with current symbol
-    (message (thing-at-point 'symbol))
     (anything-etags+-select-internal
-     (concat "\\_<" (regexp-quote (car (last (split-string (thing-at-point 'symbol) "\\.")))) "\\_>"
+     (concat "\\_<" (thing-at-point 'symbol) "\\_>"
              (if (featurep 'anything-match-plugin) " "))
      "Find Tag: ")))
 
@@ -634,7 +648,7 @@ If SYMBOL-NAME is non-nil, jump tag position with SYMBOL-NAME."
     (volatile);;candidates
     (pattern-transformer (lambda (anything-pattern)
                            (setq anything-etags+-untransformed-anything-pattern anything-pattern)
-                           (replace-regexp-in-string "\\\\_<\\|\\\\_>" ""  anything-pattern)))
+                           (regexp-quote (replace-regexp-in-string "\\\\_<\\|\\\\_>" ""  anything-pattern))))
     (requires-pattern  . 3);;need at least 3 char
     (delayed);; (setq anything-idle-delay-4-anthing-etags+ 1)
     (action ("Goto the location" . anything-c-etags+-goto-location))))
@@ -665,9 +679,7 @@ If SYMBOL-NAME is non-nil, jump tag position with SYMBOL-NAME."
       ;;      (save-excursion
       ;;        (set-buffer buf)
       (with-current-buffer buf
-        (if anything-etags+-use-short-file-name
-            (setq file-name (or (file-name-nondirectory (buffer-file-name)) (buffer-name)))
-          (setq file-name (or (buffer-file-name) (buffer-name))))
+        (setq file-name  (buffer-name))
         (goto-char pos)
         (setq line-num (int-to-string (count-lines (point-min) pos)))
         (setq line-text (buffer-substring-no-properties (point-at-bol)(point-at-eol)))
@@ -679,7 +691,7 @@ If SYMBOL-NAME is non-nil, jump tag position with SYMBOL-NAME."
           ;;this one will be preselected
           (setq line-text (concat line-text "\t")))
       (setq empty-string  (or (ignore-errors
-                                (make-string (- (window-width)  6
+                                (make-string (- (window-width) 4
                                                 (string-width  line-num)
                                                 (string-width file-name)
                                                 (string-width line-text))
@@ -795,5 +807,4 @@ If SYMBOL-NAME is non-nil, jump tag position with SYMBOL-NAME."
               ""  nil nil "\t")))
 
 (provide 'anything-etags+)
-
 ;;;anything-etags+.el ends here.
