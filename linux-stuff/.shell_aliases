@@ -134,8 +134,15 @@ which mycowsay > /dev/null 2>&1
 [ $? -eq 0 ] && mycowsay
 
 #Classes and research
+alias 501='cd ~/Documents/umich-grad/EECS/f10/501/'
+alias 551='cd ~/Documents/umich-grad/EECS/f10/551/'
+alias 442='cd ~/Documents/umich-grad/EECS/f10/442/'
+alias 564='cd ~/Documents/umich-grad/EECS/w11/564/'
+alias 556='cd ~/Documents/umich-grad/EECS/w11/556/'
+alias 568='cd ~/Documents/umich-grad/EECS/f11/568/'
+alias 492='cd ~/Documents/umich-grad/EECS/f11/492/'
 alias 545='cd ~/Documents/umich-grad/EECS/w12/545/'
-alias java='java -ea -server'
+alias java='java -ea -server -Dawt.useSystemAAFontSettings=lcd'
 alias lpg='lcm-logplayer-gui'
 
 #Jeff's magic bus tool
