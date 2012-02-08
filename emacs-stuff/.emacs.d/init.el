@@ -226,8 +226,8 @@
 (global-set-key "\M-*" 'anything-etags+-history-go-back)
 
 ;; Transparency looks sweet
-(set-frame-parameter (selected-frame) 'alpha '(90 90))
-(add-to-list 'default-frame-alist '(alpha 90 90))
+(set-frame-parameter (selected-frame) 'alpha '(95 95))
+(add-to-list 'default-frame-alist '(alpha 95 95))
 
 ;; Woman is pretty cool
 (setq woman-use-own-frame nil)
