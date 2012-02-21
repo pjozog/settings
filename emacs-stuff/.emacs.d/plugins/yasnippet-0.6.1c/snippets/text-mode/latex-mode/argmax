@@ -1,0 +1,4 @@
+#contributor : Paul Ozog
+#name : argmin
+# --
+\underset{$1}{\operatorname{argmax}}
