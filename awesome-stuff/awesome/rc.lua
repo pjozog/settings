@@ -49,7 +49,7 @@ layouts =
 tags = {}
 for s = 1, screen.count() do
    -- Each screen has its own tag table.
-   tags[s] = awful.tag({ 1, 2, 3, 4, 5, 6, 7, 8, 9 }, s, layouts[1])
+   tags[s] = awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, layouts[1])
 end
 -- }}}
 
@@ -260,17 +260,9 @@ globalkeys = awful.util.table.join(
                   awful.prompt.run({ prompt = "nickname this tag: " },
                   mypromptbox[mouse.screen].widget,
                   function(text)
-                    if awful.tag.getidx(awful.tag.selected(mouse.screen)) > 10 then
-                      return
-                    end
-                    if text == "" then
-                      awful.tag.selected(mouse.screen).name = 
-                        awful.tag.getidx(awful.tag.selected(mouse.screen))
-                    else
-                      awful.tag.selected(mouse.screen).name = 
-                        "[" .. awful.tag.getidx(awful.tag.selected(mouse.screen))
-                     .. "] " .. text
-                    end
+                     awful.tag.selected(mouse.screen).name = 
+                     string.sub(awful.tag.selected(mouse.screen).name, 1, 1)
+                     .. " " .. text
                   end, nil,
                   awful.util.getdir("cache") .. "/history_nickname")
                end)
