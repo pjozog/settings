@@ -30,8 +30,8 @@
           (package-install p)))
 
       (ido-ubiquitous t)
-      (setq ido-use-virtual-buffers 
-            recentf-max-menu-items 500)
+      (setq ido-use-virtual-buffers t
+            recentf-max-menu-items 500))
   (error nil))
 
 ;; --------------------------------------------------
