@@ -30,7 +30,8 @@
           (package-install p)))
 
       (ido-ubiquitous t)
-      (setq ido-use-virtual-buffers t))
+      (setq ido-use-virtual-buffers 
+            recentf-max-menu-items 500)
   (error nil))
 
 ;; --------------------------------------------------
@@ -219,6 +220,7 @@
 (global-auto-revert-mode t)
 (column-number-mode 1)
 (setq default-fill-column 90)
+(setq scroll-preserve-screen-position 1)
 
 ;; To keep myself happy
 (set-default 'indent-tabs-mode nil)
