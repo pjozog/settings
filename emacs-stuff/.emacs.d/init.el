@@ -1,6 +1,3 @@
-;; TODO: flyspell prog mode
-;;       fontlock-add-keywords
-
 ;; Recite the holy words
 (defun confess-faith ()
   (interactive)
@@ -31,7 +28,11 @@
 
       (ido-ubiquitous t)
       (setq ido-use-virtual-buffers t
-            recentf-max-menu-items 500))
+            recentf-max-menu-items 500)
+
+      (add-hook 'prog-mode-hook (lambda () (font-lock-add-keywords
+                                            nil '(("\\<\\(FIX\\|TODO\\|FIXME\\|HACK\\|REFACTOR\\):"
+                                                   1 font-lock-warning-face t))))))
   (error nil))
 
 ;; --------------------------------------------------
@@ -138,9 +139,20 @@
   (kill-sexp -1)
   (insert (format "%S" value)))
 
+(defun indent-buffer ()
+  (interactive)
+  (indent-region (point-min) (point-max)))
+
 (defun untabify-buffer ()
   (interactive)
   (untabify (point-min) (point-max)))
+
+(defun cleanup-buffer ()
+  "Perform a bunch of operations on the whitespace content of a buffer."
+  (interactive)
+  (indent-buffer)
+  (untabify-buffer)
+  (whitespace-cleanup))
 
 ;; --------------------------------------------------
 ;; Aliases
@@ -244,6 +256,8 @@
 
 ;; This makes color work in 'M-x shell'
 (autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
+(if (string-equal system-type "gnu/linux")
+    (setq shell-file-name "/bin/bash"))
 
 ;; My key bindings
 (global-set-key [(meta return)] 'shell-resync-dirs)
