@@ -1,3 +1,6 @@
+;; TODO: flyspell prog mode
+;;       fontlock-add-keywords
+
 ;; Recite the holy words
 (defun confess-faith ()
   (interactive)
@@ -27,7 +30,8 @@
           (package-install p)))
 
       (ido-ubiquitous t)
-      (setq ido-use-virtual-buffers t))
+      (setq ido-use-virtual-buffers t
+            recentf-max-menu-items 500))
   (error nil))
 
 ;; --------------------------------------------------
@@ -211,10 +215,12 @@
       ido-max-prospects 10)
 (setq mouse-yank-at-point 1)
 (autopair-global-mode 1)
+(setq autopair-autowrap t)
 (global-linum-mode 1)
 (global-auto-revert-mode t)
 (column-number-mode 1)
 (setq default-fill-column 90)
+(setq scroll-preserve-screen-position 1)
 
 ;; To keep myself happy
 (set-default 'indent-tabs-mode nil)
