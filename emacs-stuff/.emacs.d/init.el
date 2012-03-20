@@ -369,7 +369,7 @@
                              (flyspell-mode)
                              (outline-minor-mode)
                              (auto-fill-mode)
-                             (flymake-mode)
+                             ;;(flymake-mode)
                              (turn-on-reftex)
                              (define-key LaTeX-mode-map (kbd "C-7") 'insert-amps)))
 
