@@ -383,6 +383,15 @@
                                   (turn-on-eldoc-mode)
                                   (rainbow-mode)))
 
+;; matlab rebinds M-e and M-a
+(add-hook 'matlab-mode-hook (lambda ()
+                              (define-key matlab-mode-map (kbd "M-e") (lambda ()
+                                                                        (interactive)
+                                                                        (next-line 4)))
+                              (define-key matlab-mode-map (kbd "M-a") (lambda ()
+                                                                        (interactive)
+                                                                        (previous-line 4)))))
+
 (add-hook 'vc-dir-mode-hook (lambda ()
                               (define-key vc-dir-mode-map (kbd "RET") 'vc-dir-find-file-other-window)))
 
