@@ -228,6 +228,7 @@
 (setq mouse-yank-at-point 1)
 (autopair-global-mode 1)
 (setq autopair-autowrap t)
+(global-linum-mode 1)
 (global-auto-revert-mode t)
 (column-number-mode 1)
 (setq default-fill-column 90)
