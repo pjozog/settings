@@ -196,7 +196,7 @@
 (require 'reftex)
 (require 'w3m-load)
 (require 'mediawiki)
-;;(require 'highline)
+(require 'highline)
 (require 'diff-mode-)
 (require 'dired+)
 (require 'smarttabs)
@@ -315,7 +315,7 @@
     (let ((case-fold-search isearch-case-fold-search))
       (occur (if isearch-regexp isearch-string (regexp-quote isearch-string))))))
 
-;;(global-highline-mode 1)
+(global-highline-mode 1)
 
 ;; --------------------------------------------------
 ;; Language-specific settings
