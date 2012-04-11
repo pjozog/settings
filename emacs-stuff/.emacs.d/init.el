@@ -28,7 +28,7 @@
 
       (ido-ubiquitous t)
       (setq ido-use-virtual-buffers t
-            recentf-max-menu-items 500)
+            recentf-max-saved-items 500)
 
       (add-hook 'prog-mode-hook (lambda () (font-lock-add-keywords
                                             nil '(("\\<\\(FIX\\|TODO\\|FIXME\\|HACK\\|REFACTOR\\):"

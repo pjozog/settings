@@ -21,6 +21,7 @@ bindkey '^w' kill-region
 alias history='history 1'
 
 setopt NO_HUP
+setopt auto_cd
 
 #So you don't have to run rehash everytime new executable is added to
 #PATH
