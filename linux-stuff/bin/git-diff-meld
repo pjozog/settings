@@ -1,0 +1,11 @@
+#!/bin/sh
+# SVN Diff Wrapper for Meld
+# KOG 2008-02
+# http://www.nabble.com/How-to-use-meld-with-'svn-diff'-td16765244.html
+
+export GTK2_RC_FILES="/usr/share/themes/Radiance/gtk-2.0/gtkrc"
+
+left="$2"
+right="$5"
+
+meld "$left" "$right"
