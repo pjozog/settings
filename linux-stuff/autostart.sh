@@ -17,7 +17,7 @@ xmodmap -e "remove mod1 = Alt_R"
 xmodmap -e "add mod4 = Alt_R"
 
 if [ -f ${HOME}/currentWallpaper ]; then
-    Esetroot ${HOME}/currentWallpaper    
+    Esetroot -s ${HOME}/currentWallpaper    
 else
     Esetroot -s ~/pics/netwall/lava_mario.jpg
 fi
