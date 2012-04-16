@@ -95,6 +95,10 @@ function hs() {
     fi
 }
 
+#Git
+alias gs='git status -s'
+alias gd='git diff'
+
 alias ns='ssh -X -p 2219 pjozog@nslab.ccs.neu.edu'
 
 alias rmq='rm -r $(svn status | grep ^? | awk "{print \$2}")'
