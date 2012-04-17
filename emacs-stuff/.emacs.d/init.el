@@ -77,7 +77,7 @@
   (while fileList
     (let ((currentFile (car fileList)))
       (if (file-exists-p currentFile)
-          (find-file (file-truename currentFile))))
+          (find-file-noselect (file-truename currentFile))))
     (setq fileList (cdr fileList))))
 
 (defun file-basename (file)
