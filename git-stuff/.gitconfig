@@ -3,5 +3,3 @@
 	email = pjozog@gmail.com
 [color]
 	ui = auto
-[diff]
-	external = git-diff-meld
