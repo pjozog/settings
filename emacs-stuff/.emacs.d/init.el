@@ -384,6 +384,10 @@
                                   (turn-on-eldoc-mode)
                                   (rainbow-mode)))
 
+;; spell check should be enabled in .txt files
+(add-hook 'text-mode-hook (lambda ()
+                            (flyspell-mode)))
+
 ;; matlab rebinds M-e and M-a
 (add-hook 'matlab-mode-hook (lambda ()
                               (define-key matlab-mode-map (kbd "M-e") (lambda ()
