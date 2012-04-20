@@ -285,7 +285,11 @@ clientkeys = awful.util.table.join(
 	     function (c)
 		c.maximized_horizontal = not c.maximized_horizontal
 		c.maximized_vertical   = not c.maximized_vertical
-	     end)
+	     end),
+    awful.key({ modkey }, "F2", function (c)
+       if   c.titlebar then awful.titlebar.remove(c)
+       else awful.titlebar.add(c, { modkey = modkey }) end
+    end)
 )
 
 -- Compute the maximum number of digit we need, limited to 9
