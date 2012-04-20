@@ -88,7 +88,7 @@ theme.titlebar_maximized_button_focus_active  = "/usr/share/awesome/themes/defau
 -- You can use your own command to set your wallpaper
 wallpaper = myHomeDir .. "/currentWallpaper"
 if fileExists(wallpaper) then
-   theme.wallpaper_cmd = { "awsetbg " .. "-c " .. wallpaper }
+   theme.wallpaper_cmd = { "awsetbg " .. "-f " .. wallpaper }
 end
 
 -- You can use your own layout icons like this:
