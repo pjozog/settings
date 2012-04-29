@@ -290,7 +290,9 @@
 (global-set-key (kbd "C-z") 'undo)
 (global-set-key (kbd "C-c e") 'eval-and-replace)
 (global-set-key (kbd "C-c u") 'cua-mode)
-
+(global-set-key (kbd "M-Q") (lambda ()
+                              (interactive)
+                              (fill-paragraph 1)))
 (setq ediff-split-window-function 'split-window-horizontally)
 
 (put 'upcase-region 'disabled nil)
