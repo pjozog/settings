@@ -402,6 +402,10 @@
 (add-hook 'vc-dir-mode-hook (lambda ()
                               (define-key vc-dir-mode-map (kbd "RET") 'vc-dir-find-file-other-window)))
 
+;; check the buffer when flyspell loads
+(add-hook 'flyspell-mode-hook (lambda ()
+                                (flyspell-buffer)))
+
 (server-start)
 ;; diable warning when killing buffers opened with emacsclient 
 ;; (must be set after calling (server-start))
