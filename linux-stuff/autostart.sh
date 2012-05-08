@@ -38,3 +38,5 @@ gnome-volume-control-applet &
 nm-applet &
 
 gnome-screensaver &
+
+xset r rate 500 75
