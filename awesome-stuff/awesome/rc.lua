@@ -262,12 +262,34 @@ globalkeys = awful.util.table.join(
                   awful.prompt.run({ prompt = "nickname this tag: " },
                   mypromptbox[mouse.screen].widget,
                   function(text)
-                     awful.tag.selected(mouse.screen).name = 
-                     string.sub(awful.tag.selected(mouse.screen).name, 1, 1)
-                     .. " " .. text
+                    if awful.tag.getidx(awful.tag.selected(mouse.screen)) > 10 then
+                      return
+                    end
+                    if text == "" then
+                      awful.tag.selected(mouse.screen).name = 
+                        awful.tag.getidx(awful.tag.selected(mouse.screen))
+                    else
+                      awful.tag.selected(mouse.screen).name = 
+                        "[" .. awful.tag.getidx(awful.tag.selected(mouse.screen))
+                            .. "] " .. text
+                    end
                   end, nil,
                   awful.util.getdir("cache") .. "/history_nickname")
-               end)
+              end)
+
+    -- Uncomment for old versions of awesome (like the one in Ubuntu 10.04)
+    -- -- renaming trick
+    -- awful.key({ modkey}, "c",
+    --           function ()
+    --               awful.prompt.run({ prompt = "nickname this tag: " },
+    --               mypromptbox[mouse.screen].widget,
+    --               function(text)
+    --                  awful.tag.selected(mouse.screen).name = 
+    --                  string.sub(awful.tag.selected(mouse.screen).name, 1, 1)
+    --                  .. " " .. text
+    --               end, nil,
+    --               awful.util.getdir("cache") .. "/history_nickname")
+    --            end)
 )
 
 clientkeys = awful.util.table.join(
