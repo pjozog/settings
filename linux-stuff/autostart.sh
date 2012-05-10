@@ -34,9 +34,12 @@ which xcompmgr > /dev/null 2>&1
 which xfce4-power-manager > /dev/null 2>&1
 [ $? -eq 0 ] && xfce4-power-manager &
 
+which ubuntuone-launch > /dev/null 2>&1
+[ $? -eq 0 ] && ubuntuone-launch &
+
 gnome-volume-control-applet &
 nm-applet &
 
 gnome-screensaver &
 
-xset r rate 500 75
+xset r rate 300 40
