@@ -446,7 +446,7 @@
     (set-face-attribute 'default nil :height 100 :family "ubuntu mono"))
 
 (if (string-equal "perl-paulozog" system-name)
-    (set-face-attribute 'default nil :height 80))
+    (set-face-attribute 'default nil :height 110 :family "ubuntu mono"))
 
 (open-filelist '("~/.emacs.d/init.el" "~/.shell_aliases" "~/.profile"
                  "~/.config/openbox/autostart.sh"
