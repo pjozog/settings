@@ -10,5 +10,17 @@ from math import *
 import sys
 import os
 
-from scipy import *
-from pylab import *
+try:
+    from scipy import *
+except ImportError:
+    print "Module scipy not available."
+
+try:
+    from pylab import *
+except ImportError:
+    print "Module pylab not available."
+
+try:
+    from cv2 import cv
+except ImportError:
+    print "Module cv2 not available"
