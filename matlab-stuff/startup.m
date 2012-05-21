@@ -3,6 +3,7 @@ addpath(genpath('~/perl/perl-svn/perls/matlab/van'));
 addpath('~/perl/perl-svn/perls/matlab/');
 addpath('~/Documents/MATLAB/sift');
 addpath('~/Documents/MATLAB/toolbox_calib');
+addpath('~/Documents/MATLAB/misc');
 addpath('~/perl/perl-svn/sba-eval/matlab/kuka');
 addpath('~/perl/perl-svn/sba-eval/matlab/utils');
 addpath('~/perl/perl-svn/sba-eval/matlab/kuka/postProcess');
