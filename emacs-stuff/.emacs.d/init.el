@@ -443,7 +443,7 @@
     (set-face-attribute 'default nil :height 110 :family "ubuntu mono"))
 
 (if (string-equal "paul-laptop" system-name)
-    (set-face-attribute 'default nil :height 100 :family "ubuntu mono"))
+    (set-face-attribute 'default nil :height 80 :family "ubuntu mono"))
 
 (if (string-equal "perl-paulozog" system-name)
     (set-face-attribute 'default nil :height 110 :family "ubuntu mono"))
