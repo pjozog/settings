@@ -260,6 +260,7 @@
     (setq shell-file-name "/bin/bash"))
 
 ;; My key bindings
+(global-set-key (kbd "C-x h") 'global-highline-mode)
 (global-set-key (kbd "C-x l") 'linum-mode)
 (global-set-key [(meta return)] 'shell-resync-dirs)
 (global-set-key (kbd "C-c C-f") 'find-file-this)
