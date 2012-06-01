@@ -208,7 +208,14 @@
 (require 'dired-mod)            ;; mine
 (require 'myOrgSettings)        ;; mine
 (require 'smooth-scrolling)
-(require 'idle-highlight-mode)
+
+;; idle-highlight-mode only works on emacs 24
+(condition-case nil
+    (progn
+      (require 'idle-highlight-mode))
+  (error nil))
+
+;; (require 'idle-highlight-mode)
 
 ;; Turn off the bad shit
 (menu-bar-mode -1)
@@ -365,7 +372,11 @@
     (add-hook (car modeList) (lambda ()
                                (hs-minor-mode)
                                (define-key hs-minor-mode-map [(control tab)] 'hs-toggle-hiding)
-                               (idle-highlight-mode t)))
+                               ;; Only supported in emacs 24
+                               (condition-case nil
+                                   (progn
+                                     (idle-highlight-mode t))
+                                 (error nil))))
     (setq modeList (cdr modeList))))
 
 ;; apply LaTeX hooks (spellcheck, etc.)
