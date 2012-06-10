@@ -399,7 +399,7 @@
                                   (rainbow-mode)))
 
 ;; spell check should be enabled in .txt files
-(add-hook 'text-mode-hook (lambda ()
+(add-hook 'mediawiki-mode-hook (lambda ()
                             (flyspell-mode)))
 
 ;; matlab rebinds M-e and M-a
