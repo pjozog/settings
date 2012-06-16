@@ -1,0 +1,5 @@
+#!/bin/bash
+
+cd ${HOME}/perls/build
+
+make -j4

@@ -154,12 +154,17 @@
   (untabify-buffer)
   (whitespace-cleanup))
 
+(defun my-compile ()
+  (interactive)
+  (compile "compile"))
+
 ;; --------------------------------------------------
 ;; Aliases
 ;; --------------------------------------------------
 (defalias 'yes-or-no-p 'y-or-n-p) ;; That 'yes' or 'no' shit is anoying:
 (defalias 'man 'woman) ;; Doesn't work at startup?
 (defalias 'cf 'customize-face)
+(defalias 'c 'my-compile)
 
 ;; --------------------------------------------------
 ;; Packages / Minor modes / Keybindings
