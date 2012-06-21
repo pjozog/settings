@@ -300,7 +300,7 @@
 (global-set-key (kbd "<f6>") 'enlarge-window-horizontally)
 (global-set-key (kbd "<f7>") 'shrink-window)
 (global-set-key (kbd "<f8>") 'enlarge-window)
-(global-set-key (kbd "C-z") 'undo)
+;; (global-set-key (kbd "C-z") 'undo)
 (global-set-key (kbd "C-c e") 'eval-and-replace)
 (global-set-key (kbd "C-c u") 'cua-mode)
 (global-set-key (kbd "M-Q") (lambda ()
