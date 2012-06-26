@@ -11,9 +11,14 @@ import sys
 import os
 
 try:
-    from scipy import *
+    import scipy
 except ImportError:
     print "Module scipy not available."
+
+try:
+    import numpy
+except ImportError:
+    print "Module numpy not available."
 
 try:
     from pylab import *
