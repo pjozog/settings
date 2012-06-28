@@ -31,7 +31,7 @@
             recentf-max-saved-items 500)
 
       (add-hook 'prog-mode-hook (lambda () (font-lock-add-keywords
-                                            nil '(("\\<\\(FIX\\|TODO\\|FIXME\\|HACK\\|REFACTOR\\):"
+                                            nil '(("\\<\\(FIX\\|TODO\\|FIXME\\|HACK\\|REFACTOR\\|DEBUG\\):"
                                                    1 font-lock-warning-face t))))))
   (error nil))
 
@@ -422,6 +422,11 @@
 ;; check the buffer when flyspell loads
 (add-hook 'flyspell-mode-hook (lambda ()
                                 (flyspell-buffer)))
+
+;; Use /* comment */ for c++
+(add-hook 'c++-mode-hook (lambda ()
+                           (setq comment-start "/* "
+                                 comment-end " */")))
 
 (server-start)
 ;; diable warning when killing buffers opened with emacsclient 
