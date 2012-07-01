@@ -347,6 +347,14 @@
 ;; set default C style to 4-space indentation with "cc-mode" style (from rme-linux)
 (setq c-default-style
       '((java-mode . "java") (awk-mode . "awk") (c-mode . "cc-mode") (other . "cc-mode")))
+;; Also make function calls highlighted
+(font-lock-add-keywords 'c-mode
+  '(("\\s\"?\\(\\(\\sw\\|\\s_\\)+\\(<-\\)?\\)\\s\"?*\\s-*("
+    (1 font-lock-function-name-face)))  t)
+;; And for python-mode too...
+(font-lock-add-keywords 'python-mode
+  '(("\\s\"?\\(\\(\\sw\\|\\s_\\)+\\(<-\\)?\\)\\s\"?*\\s-*("
+    (1 font-lock-function-name-face)))  t)
 
 ;; LaTeX: Enable flymake for texlive distribution of LaTeX
 (defun flymake-get-tex-args (file-name)
