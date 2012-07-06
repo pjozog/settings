@@ -31,7 +31,7 @@
             recentf-max-saved-items 500)
 
       (add-hook 'prog-mode-hook (lambda () (font-lock-add-keywords
-                                            nil '(("\\<\\(FIX\\|TODO\\|FIXME\\|HACK\\|REFACTOR\\):"
+                                            nil '(("\\<\\(FIX\\|TODO\\|FIXME\\|HACK\\|REFACTOR\\|DEBUG\\):"
                                                    1 font-lock-warning-face t))))))
   (error nil))
 
@@ -300,7 +300,7 @@
 (global-set-key (kbd "<f6>") 'enlarge-window-horizontally)
 (global-set-key (kbd "<f7>") 'shrink-window)
 (global-set-key (kbd "<f8>") 'enlarge-window)
-(global-set-key (kbd "C-z") 'undo)
+;; (global-set-key (kbd "C-z") 'undo)
 (global-set-key (kbd "C-c e") 'eval-and-replace)
 (global-set-key (kbd "C-c u") 'cua-mode)
 (global-set-key (kbd "M-Q") (lambda ()
@@ -347,6 +347,14 @@
 ;; set default C style to 4-space indentation with "cc-mode" style (from rme-linux)
 (setq c-default-style
       '((java-mode . "java") (awk-mode . "awk") (c-mode . "cc-mode") (other . "cc-mode")))
+;; Also make function calls highlighted
+(font-lock-add-keywords 'c-mode
+  '(("\\s\"?\\(\\(\\sw\\|\\s_\\)+\\(<-\\)?\\)\\s\"?*\\s-*("
+    (1 font-lock-function-name-face)))  t)
+;; And for python-mode too...
+(font-lock-add-keywords 'python-mode
+  '(("\\s\"?\\(\\(\\sw\\|\\s_\\)+\\(<-\\)?\\)\\s\"?*\\s-*("
+    (1 font-lock-function-name-face)))  t)
 
 ;; LaTeX: Enable flymake for texlive distribution of LaTeX
 (defun flymake-get-tex-args (file-name)
@@ -422,6 +430,11 @@
 ;; check the buffer when flyspell loads
 (add-hook 'flyspell-mode-hook (lambda ()
                                 (flyspell-buffer)))
+
+;; Use /* comment */ for c++
+(add-hook 'c++-mode-hook (lambda ()
+                           (setq comment-start "/* "
+                                 comment-end " */")))
 
 (server-start)
 ;; diable warning when killing buffers opened with emacsclient 

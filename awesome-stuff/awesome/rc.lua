@@ -64,6 +64,7 @@ myawesomemenu = {
 
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
                                     { "perls-viewer", myHomeDir .. "/bin/my-viewer" },
+                                    { "keepassx", "keepassx" },
                                     { "Chrome", "google-chrome" },
                                     { "Nautilus", "nautilus --no-desktop" },
                                     { "Terminal", terminal },

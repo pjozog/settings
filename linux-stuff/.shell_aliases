@@ -160,5 +160,9 @@ export CLASSPATH=${CLASSPATH}:.:${HOME}/Documents/umich-grad/EECS/f11/568/eecs56
 #Perls path
 export PATH=${HOME}/perls/build/bin:${PATH}
 
+#ipython
+alias ipython='ipython -i --pylab gtk --colors=Linux ~/.pythonrc'
+alias i='ipython'
+
 # perls ardrone python path
 export PYTHONPATH=${HOME}/perls/third-party/venthur_drone:$PYTHONPATH
