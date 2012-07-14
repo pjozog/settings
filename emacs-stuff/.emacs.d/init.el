@@ -27,6 +27,9 @@
           (package-install p)))
 
       (ido-ubiquitous t)
+      ;; Use regular find-tag (no ido)
+      (setq ido-ubiquitous-command-exceptions '(find-tag))
+
       (setq ido-use-virtual-buffers t
             recentf-max-saved-items 500)
 
@@ -181,9 +184,9 @@
 (add-to-list 'load-path
              (concat (file-name-as-directory my-emacs-dir) "plugins/org"))
 
-(require 'anything-match-plugin)
-(require 'anything-config)
-(require 'anything-etags+)
+;; (require 'anything-match-plugin)
+;; (require 'anything-config)
+;; (require 'anything-etags+)
 (require 'htmlize)
 (require 'matlab)
 (require 'cmake-mode)
@@ -252,8 +255,8 @@
 (defalias 'un 'untabify-buffer)
 
 ;; stuff for anything library
-(global-set-key "\M-." 'anything-etags+-select-one-key)
-(global-set-key "\M-*" 'anything-etags+-history-go-back)
+;; (global-set-key "\M-." 'anything-etags+-select-one-key)
+;; (global-set-key "\M-*" 'anything-etags+-history-go-back)
 
 ;; Woman is pretty cool
 (setq woman-use-own-frame nil)
@@ -270,6 +273,9 @@
 (autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
 (if (string-equal system-type "gnu/linux")
     (setq shell-file-name "/bin/bash"))
+
+;; Number of killed things to remember
+(setq kill-ring-max 6000)
 
 ;; My key bindings
 (global-set-key (kbd "C-x h") 'global-highline-mode)
