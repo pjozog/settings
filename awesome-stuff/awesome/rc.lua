@@ -65,7 +65,7 @@ myawesomemenu = {
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
                                     { "perls-viewer", myHomeDir .. "/bin/my-viewer" },
                                     { "keepassx", "keepassx" },
-                                    { "Chrome", "google-chrome" },
+                                    { "Chrome", "chromium-browser" },
                                     { "Nautilus", "nautilus --no-desktop" },
                                     { "Terminal", terminal },
 				 }
@@ -205,7 +205,7 @@ globalkeys = awful.util.table.join(
    awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),
    awful.key({ modkey, "Shift"   }, "y", function () awful.util.spawn("mypython") end),
    awful.key({ modkey, "Shift"   }, "f", function () awful.util.spawn("firefox") end),
-   awful.key({ modkey, "Shift"   }, "g", function () awful.util.spawn("google-chrome") end),
+   awful.key({ modkey, "Shift"   }, "g", function () awful.util.spawn("chromium") end),
    awful.key({ modkey, "Shift"   }, "e", function () awful.util.spawn("emacs --debug-init") end),
    awful.key({ modkey, "Shift"   }, "m", function () awful.util.spawn("nautilus --no-desktop") end),
    awful.key({ modkey, "Shift"   }, "a", function () awful.util.spawn("matlab -desktop") end),
