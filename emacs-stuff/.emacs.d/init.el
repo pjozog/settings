@@ -405,7 +405,8 @@
                              (auto-fill-mode)
                              ;;(flymake-mode)
                              (turn-on-reftex)
-                             (define-key LaTeX-mode-map (kbd "C-7") 'insert-amps)))
+                             (define-key LaTeX-mode-map (kbd "C-7") 'insert-amps)
+                             (orgtbl-mode)))
 
 ;; this makes control-tab function like org-mode
 (add-hook 'outline-minor-mode-hook
