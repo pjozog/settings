@@ -6,7 +6,7 @@ import sys
 keyword = sys.argv[1]
 
 path = os.getenv('PATH')
-files = [os.listdir(d) for d in path.split(':')]
+files = [os.listdir(d) for d in path.split(':') if os.path.exists(d)]
 filesFlat = []
 [filesFlat.extend(thing) for thing in files]
 
