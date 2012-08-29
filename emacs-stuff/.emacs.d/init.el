@@ -248,6 +248,7 @@
 (column-number-mode 1)
 (setq default-fill-column 90)
 (setq scroll-preserve-screen-position 1)
+(setq woman-fill-column default-fill-column)
 
 ;; To keep myself happy
 (set-default 'indent-tabs-mode nil)
