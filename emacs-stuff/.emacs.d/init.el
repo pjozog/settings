@@ -362,6 +362,10 @@
 (font-lock-add-keywords 'python-mode
   '(("\\s\"?\\(\\(\\sw\\|\\s_\\)+\\(<-\\)?\\)\\s\"?*\\s-*("
     (1 font-lock-function-name-face)))  t)
+;; And for matlab-mode too...
+(font-lock-add-keywords 'matlab-mode
+  '(("\\s\"?\\(\\(\\sw\\|\\s_\\)+ \\(<-\\)?\\)\\s\"?*\\s-*("
+    (1 font-lock-function-name-face)))  t)
 
 ;; LaTeX: Enable flymake for texlive distribution of LaTeX
 (defun flymake-get-tex-args (file-name)
