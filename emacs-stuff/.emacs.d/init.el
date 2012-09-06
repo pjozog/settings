@@ -354,15 +354,18 @@
 ;; set default C style to 4-space indentation with "cc-mode" style (from rme-linux)
 (setq c-default-style
       '((java-mode . "java") (awk-mode . "awk") (c-mode . "cc-mode") (other . "cc-mode")))
-;; Also make function calls highlighted
-(font-lock-add-keywords 'c-mode
-  '(("\\s\"?\\(\\(\\sw\\|\\s_\\)+\\(<-\\)?\\)\\s\"?*\\s-*("
-    (1 font-lock-function-name-face)))  t)
-;; And for python-mode too...
-(font-lock-add-keywords 'python-mode
-  '(("\\s\"?\\(\\(\\sw\\|\\s_\\)+\\(<-\\)?\\)\\s\"?*\\s-*("
-    (1 font-lock-function-name-face)))  t)
-;; And for matlab-mode too...
+;; Also make function calls highlighted for common programming modes
+(let (modeList)
+  (setq modeList '(c-mode
+                   c++-mode
+                   python-mode
+                   java-mode))
+  (while modeList
+    (font-lock-add-keywords (car modeList)
+                            '(("\\s\"?\\(\\(\\sw\\|\\s_\\)+\\(<-\\)?\\)\\s\"?*\\s-*("
+                               (1 font-lock-function-name-face)))  t)
+    (setq modeList (cdr modeList))))
+;; Special case: require space before opening parenthesis:
 (font-lock-add-keywords 'matlab-mode
   '(("\\s\"?\\(\\(\\sw\\|\\s_\\)+ \\(<-\\)?\\)\\s\"?*\\s-*("
     (1 font-lock-function-name-face)))  t)
