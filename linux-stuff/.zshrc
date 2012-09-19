@@ -15,6 +15,10 @@ fi
 WORDCHARS='*?_.[]~=&;!#$%^(){}<>'
 WORDCHARS=''
 
+# autocomplete for arch
+autoload -U compinit
+compinit
+
 #Make kill-region behave as in Emacs (w/ C-w):
 bindkey '^w' kill-region
 
