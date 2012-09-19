@@ -349,6 +349,7 @@
 (setq auto-mode-alist (cons '("Doxyfile$" . conf-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.shell_aliases$" . sh-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.SRC$" . asm-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.isam$" . python-mode) auto-mode-alist))
 (setq matlab-fill-code nil)
 
 ;; set default C style to 4-space indentation with "cc-mode" style (from rme-linux)
