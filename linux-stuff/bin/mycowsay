@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 
 import os
 import sys
@@ -7,11 +7,14 @@ import commands
 from random import randint
 
 COWPATH    = os.getenv('COWPATH')
-COWBIN     = '/usr/games/cowsay'
-FORTUNEBIN = '/usr/games/fortune'
+COWBIN     = commands.getoutput(' '.join(['which', 'cowsay']))
+FORTUNEBIN = commands.getoutput(' '.join(['which', 'fortune']))
 
 if COWPATH is None:
-    COWPATH = '/usr/share/cowsay/cows/'
+    if os.path.exists ('/usr/share/cowsay/cows/'):
+        COWPATH = '/usr/share/cowsay/cows/' # ubuntu
+    else:
+        COWPATH = '/usr/share/cows/' # arch
 
 def getCow(d = COWPATH):
     cows = os.listdir(d)

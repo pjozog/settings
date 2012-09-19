@@ -1,7 +1,7 @@
 try:
     import readline
 except ImportError:
-    print "Module readline not available."
+    print ("Module readline not available.")
 else:
     import rlcompleter
     readline.parse_and_bind("tab: complete")
@@ -13,19 +13,19 @@ import os
 try:
     import scipy
 except ImportError:
-    print "Module scipy not available."
+    print ("Module scipy not available.")
 
 try:
     import numpy
 except ImportError:
-    print "Module numpy not available."
+    print ("Module numpy not available.")
 
 try:
     from pylab import *
 except ImportError:
-    print "Module pylab not available."
+    print ("Module pylab not available.")
 
 try:
     from cv2 import cv
 except ImportError:
-    print "Module cv2 not available"
+    print ("Module cv2 not available")
