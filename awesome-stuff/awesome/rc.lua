@@ -49,7 +49,11 @@ layouts =
 tags = {}
 for s = 1, screen.count() do
    -- Each screen has its own tag table.
-   tags[s] = awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, layouts[1])
+   if s == 1 then
+      tags[s] = awful.tag({ "[1] emacs", "[2] shell", "[3] web", "[4] matlab", 5, 6, 7, 8, "[9] spotify" }, s, layouts[1])
+   else
+      tags[s] = awful.tag({ 1, 2, 3, 4, 5, 6, 7, 8, 9  }, s, layouts[1])
+   end
 end
 -- }}}
 
@@ -65,7 +69,7 @@ myawesomemenu = {
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
                                     { "perls-viewer", myHomeDir .. "/bin/my-viewer" },
                                     { "keepassx", "keepassx" },
-                                    { "Chrome", "google-chrome" },
+                                    { "Chrome", "chromium-browser" },
                                     { "Nautilus", "nautilus --no-desktop" },
                                     { "Terminal", terminal },
 				 }
@@ -205,7 +209,7 @@ globalkeys = awful.util.table.join(
    awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),
    awful.key({ modkey, "Shift"   }, "y", function () awful.util.spawn("mypython") end),
    awful.key({ modkey, "Shift"   }, "f", function () awful.util.spawn("firefox") end),
-   awful.key({ modkey, "Shift"   }, "g", function () awful.util.spawn("google-chrome") end),
+   awful.key({ modkey, "Shift"   }, "g", function () awful.util.spawn("chromium-browser") end),
    awful.key({ modkey, "Shift"   }, "e", function () awful.util.spawn("emacs --debug-init") end),
    awful.key({ modkey, "Shift"   }, "m", function () awful.util.spawn("nautilus --no-desktop") end),
    awful.key({ modkey, "Shift"   }, "a", function () awful.util.spawn("matlab -desktop") end),
@@ -385,6 +389,8 @@ awful.rules.rules = {
    { rule = { name = "Snes9x" },
      properties = { floating = true } },
    { rule = { name = "Ediff" },
+     properties = { floating = true } },
+   { rule = { name = "keepassx" },
      properties = { floating = true } },
    -- Set Firefox to always map on tags number 2 of screen 1.
    -- { rule = { class = "Firefox" },

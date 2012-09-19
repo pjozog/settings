@@ -100,7 +100,7 @@
          (scarlet-red-1 . "color-196")
          (scarlet-red-2 . "color-160")
          (scarlet-red-3 . "color-124")
-         (background . "color-234")
+         (background . "unspecified-bg")
          (black . "color-16")
          (gradient-1 . "color-117")    ;; sky-blue-1
          (gradient-2 . "color-82")     ;; chameleon-1

@@ -22,6 +22,9 @@ compinit
 #Make kill-region behave as in Emacs (w/ C-w):
 bindkey '^w' kill-region
 
+#Make tab in the middle of a word to behave more like BASH
+bindkey '^i' expand-or-complete-prefix
+
 alias history='history 1'
 
 setopt NO_HUP

@@ -1,7 +1,8 @@
-personal_ws-1.1 en 27 
+personal_ws-1.1 en 32 
 Eustice
 Zisserman's
 hyperellipses
+fiducial
 Grossman
 pdf
 RBT
@@ -12,16 +13,20 @@ Santes
 TODO
 MLE
 online
+keyframes
 odometry
 Mahalanobis
+linearization
 Haralick
 Ozog
+linearizing
 Levenberg
 ONR
 PJO
 Haralick's
 Taubman
 Advisor
+homography
 reprojection
 egomotion
 Zisserman

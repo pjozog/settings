@@ -248,6 +248,7 @@
 (column-number-mode 1)
 (setq default-fill-column 90)
 (setq scroll-preserve-screen-position 1)
+(setq woman-fill-column default-fill-column)
 
 ;; To keep myself happy
 (set-default 'indent-tabs-mode nil)
@@ -353,13 +354,20 @@
 ;; set default C style to 4-space indentation with "cc-mode" style (from rme-linux)
 (setq c-default-style
       '((java-mode . "java") (awk-mode . "awk") (c-mode . "cc-mode") (other . "cc-mode")))
-;; Also make function calls highlighted
-(font-lock-add-keywords 'c-mode
-  '(("\\s\"?\\(\\(\\sw\\|\\s_\\)+\\(<-\\)?\\)\\s\"?*\\s-*("
-    (1 font-lock-function-name-face)))  t)
-;; And for python-mode too...
-(font-lock-add-keywords 'python-mode
-  '(("\\s\"?\\(\\(\\sw\\|\\s_\\)+\\(<-\\)?\\)\\s\"?*\\s-*("
+;; Also make function calls highlighted for common programming modes
+(let (modeList)
+  (setq modeList '(c-mode
+                   c++-mode
+                   python-mode
+                   java-mode))
+  (while modeList
+    (font-lock-add-keywords (car modeList)
+                            '(("\\s\"?\\(\\(\\sw\\|\\s_\\)+\\(<-\\)?\\)\\s\"?*\\s-*("
+                               (1 font-lock-function-name-face)))  t)
+    (setq modeList (cdr modeList))))
+;; Special case: require space before opening parenthesis:
+(font-lock-add-keywords 'matlab-mode
+  '(("\\s\"?\\(\\(\\sw\\|\\s_\\)+ \\(<-\\)?\\)\\s\"?*\\s-*("
     (1 font-lock-function-name-face)))  t)
 
 ;; LaTeX: Enable flymake for texlive distribution of LaTeX
@@ -405,7 +413,8 @@
                              (auto-fill-mode)
                              ;;(flymake-mode)
                              (turn-on-reftex)
-                             (define-key LaTeX-mode-map (kbd "C-7") 'insert-amps)))
+                             (define-key LaTeX-mode-map (kbd "C-7") 'insert-amps)
+                             (orgtbl-mode)))
 
 ;; this makes control-tab function like org-mode
 (add-hook 'outline-minor-mode-hook
