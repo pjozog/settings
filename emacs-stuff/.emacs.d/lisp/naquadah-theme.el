@@ -138,7 +138,7 @@
   (let ((spec (car face))
         (lst (cadr face)))
     (list spec (mapcar
-                '(lambda (entry)
+                #'(lambda (entry)
                    (let ((color-condition (car entry)))
                      (list color-condition
                            (naquadah-color-list-expand (cdr entry) lst))))
