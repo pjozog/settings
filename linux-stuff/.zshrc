@@ -59,9 +59,9 @@ function precmd {
     ###
     # Get APM info.
 
-    if which ibam > /dev/null; then
+    if which ibam > /dev/null 2>&1; then
 	PR_APM_RESULT=`ibam --percentbattery`
-    elif which apm > /dev/null; then
+    elif which apm > /dev/null 2>&1; then
 	PR_APM_RESULT=`apm`
     fi
 }
@@ -142,9 +142,9 @@ setprompt () {
     ###
     # APM detection
     
-    if which ibam > /dev/null; then
+    if which ibam > /dev/null 2>&1; then
 	PR_APM='$PR_RED${${PR_APM_RESULT[(f)1]}[(w)-2]}%%(${${PR_APM_RESULT[(f)3]}[(w)-1]})$PR_LIGHT_BLUE:'
-    elif which apm > /dev/null; then
+    elif which apm > /dev/null 2>&1; then
 	PR_APM='$PR_RED${PR_APM_RESULT[(w)5,(w)6]/\% /%%}$PR_LIGHT_BLUE:'
     else
 	PR_APM=''
