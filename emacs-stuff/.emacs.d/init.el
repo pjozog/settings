@@ -415,7 +415,8 @@
                              ;;(flymake-mode)
                              (turn-on-reftex)
                              (define-key LaTeX-mode-map (kbd "C-7") 'insert-amps)
-                             (orgtbl-mode)))
+                             (orgtbl-mode)
+                             (TeX-global-PDF-mode t)))
 
 ;; this makes control-tab function like org-mode
 (add-hook 'outline-minor-mode-hook
