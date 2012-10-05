@@ -26,6 +26,7 @@
         (when (not (package-installed-p p))
           (package-install p)))
 
+      (ido-mode t)
       (ido-ubiquitous t)
       ;; Use regular find-tag (no ido)
       (setq ido-ubiquitous-command-exceptions '(find-tag))
