@@ -452,7 +452,8 @@
 ;; Use /* comment */ for c++
 (add-hook 'c++-mode-hook (lambda ()
                            (setq comment-start "/* "
-                                 comment-end " */")))
+                                 comment-end " */")
+                           (c-set-offset 'innamespace 0)))
 
 (server-start)
 ;; diable warning when killing buffers opened with emacsclient 
