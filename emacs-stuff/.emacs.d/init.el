@@ -449,6 +449,10 @@
 (add-hook 'flyspell-mode-hook (lambda ()
                                 (flyspell-buffer)))
 
+;; Don't indent extern "C"
+(add-hook 'c-mode-hook (lambda ()
+                         (c-set-offset 'inextern-lang 0)))
+
 ;; Use /* comment */ for c++
 (add-hook 'c++-mode-hook (lambda ()
                            (setq comment-start "/* "
