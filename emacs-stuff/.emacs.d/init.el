@@ -266,7 +266,7 @@
 ;; Make the nyan mode line not so long
 (nyan-mode)
 (setq nyan-bar-length 12)
-;; (nyan-start-animation)
+(nyan-start-animation)
 
 ;; Show time in mode line
 (display-time)
