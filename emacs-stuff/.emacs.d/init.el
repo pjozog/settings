@@ -505,7 +505,7 @@
 (open-filelist '("~/.emacs.d/init.el" "~/.shell_aliases" "~/.profile"
                  "~/.config/openbox/autostart.sh"
                  "~/.config/awesome/rc.lua"
-                 "~/Dropbox/org/projects.org"
+                 "~/Dropbox/personal/org/projects.org"
                  "~/perl/perl-svn/references/bibtex/references.bib"))
 
 ;; Fix linum margin when running in terminal mode

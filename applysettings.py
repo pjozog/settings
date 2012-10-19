@@ -39,6 +39,7 @@ linkList = [os.path.join(homeDir, '.bashrc'),
             os.path.join(homeDir, '.svn_project'),
             os.path.join(homeDir, '.aspell.en.pws'),
             os.path.join(homeDir, '.fonts'),
+            os.path.join(homeDir, '.xinitrc'),
             os.path.join(homeDir, 'Documents', 'MATLAB', 'startup.m')]
 
 #These will be the actual version controlled files (the sources)
@@ -65,6 +66,7 @@ sourceList = [os.path.join(scriptDir, 'linux-stuff', '.bashrc'),
               os.path.join(scriptDir, 'linux-stuff', '.svn_project'),
               os.path.join(scriptDir, 'linux-stuff', '.aspell.en.pws'),
               os.path.join(scriptDir, 'linux-stuff', '.fonts'),
+              os.path.join(scriptDir, 'linux-stuff', '.xinitrc'),
               os.path.join(scriptDir, 'matlab-stuff', 'startup.m')]
 
 sourceToDestination = {}
