@@ -1,5 +1,5 @@
 #!/bin/bash
 
-cd ${HOME}/perls/build
+cd ${HOME}/perls-10dof/build
 
-make -j4
+make -j4 > /dev/null
