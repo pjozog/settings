@@ -20,7 +20,7 @@ def getCow(d = COWPATH):
     cows = os.listdir(d)
     cow = cows[randint(0, len(cows)-1)]
     cowBasename = os.path.basename(cow)
-    if re.match('sodomized.*|head-in.*|telebears.*', cowBasename):
+    if re.match('sodomized.*|head-in.*|telebears.*|kiss.*', cowBasename):
         return getCow()
     else:
         return cow
