@@ -149,6 +149,7 @@ alias 492='cd ~/Documents/umich-grad/EECS/f11/492/'
 alias 545='cd ~/Documents/umich-grad/EECS/w12/545/'
 alias 587='cd ~/Documents/umich-grad/EECS/f12/587/'
 alias 560='cd ~/Documents/umich-grad/EECS/f12/560/'
+alias 592='cd ~/Documents/umich-grad/EECS/w13/592/'
 alias java='java -ea -server -Dawt.useSystemAAFontSettings=lcd'
 alias lpg='lcm-logplayer-gui'
 
