@@ -1,0 +1,16 @@
+#name : header
+# --
+#ifndef __${1:headername}__
+#define __$1__
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+$0
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif  /* __$1__ */
