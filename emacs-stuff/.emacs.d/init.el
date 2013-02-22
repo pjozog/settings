@@ -162,6 +162,10 @@
   (interactive)
   (compile "compile"))
 
+(defun my-compile2 ()
+  (interactive)
+  (compile "compile2"))
+
 ;; --------------------------------------------------
 ;; Aliases
 ;; --------------------------------------------------
@@ -169,6 +173,7 @@
 (defalias 'man 'woman) ;; Doesn't work at startup?
 (defalias 'cf 'customize-face)
 (defalias 'c 'my-compile)
+(defalias 'cc 'my-compile2)
 
 ;; --------------------------------------------------
 ;; Packages / Minor modes / Keybindings
