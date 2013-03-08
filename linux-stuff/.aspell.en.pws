@@ -1,8 +1,9 @@
-personal_ws-1.1 en 33 
+personal_ws-1.1 en 36 
 Eustice
 Zisserman's
 hyperellipses
 fiducial
+parameterization
 Grossman
 pdf
 RBT
@@ -16,6 +17,7 @@ MLE
 online
 keyframes
 odometry
+parameterized
 Mahalanobis
 linearization
 Haralick
@@ -27,6 +29,7 @@ PJO
 Haralick's
 Taubman
 Advisor
+unary
 homography
 reprojection
 egomotion
