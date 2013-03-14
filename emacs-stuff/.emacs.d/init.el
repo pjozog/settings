@@ -349,7 +349,7 @@
 ;; --------------------------------------------------
 ;; Language-specific settings
 ;; --------------------------------------------------
-(setq auto-mode-alist (cons '("\\.m$" . matlab-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.m$" . octave-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.txt$" . mediawiki-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("CMakeLists\\.txt$" . cmake-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.lcm$" . java-mode) auto-mode-alist))
@@ -375,6 +375,9 @@
     (setq modeList (cdr modeList))))
 ;; Special case: require space before opening parenthesis:
 (font-lock-add-keywords 'matlab-mode
+  '(("\\s\"?\\(\\(\\sw\\|\\s_\\)+ \\(<-\\)?\\)\\s\"?*\\s-*("
+    (1 font-lock-function-name-face)))  t)
+(font-lock-add-keywords 'octave-mode
   '(("\\s\"?\\(\\(\\sw\\|\\s_\\)+ \\(<-\\)?\\)\\s\"?*\\s-*("
     (1 font-lock-function-name-face)))  t)
 
@@ -465,6 +468,11 @@
                                  comment-end " */")
                            (c-set-offset 'innamespace 0)))
 
+;; Use % for octave
+(add-hook 'octave-mode-hook (lambda ()
+                              (setq comment-start "% ")))
+
+
 (server-start)
 ;; diable warning when killing buffers opened with emacsclient 
 ;; (must be set after calling (server-start))
@@ -500,7 +508,7 @@
  '(org-column ((t (:background "#000000" :strike-through nil :underline nil :slant normal :weight normal :height 98 :family "DejaVu Sans Mono")))))
 
 (if (string-equal "paul-box" system-name)
-    (set-face-attribute 'default nil :height 110 :family "ubuntu mono"))
+    (set-face-attribute 'default nil :height 100 :family "ubuntu mono"))
 
 (if (string-equal "paul-laptop" system-name)
     (set-face-attribute 'default nil :height 80 :family "ubuntu mono"))
