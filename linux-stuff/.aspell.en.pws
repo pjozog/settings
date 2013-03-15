@@ -1,4 +1,4 @@
-personal_ws-1.1 en 36 
+personal_ws-1.1 en 48 
 Eustice
 Zisserman's
 hyperellipses
@@ -6,25 +6,36 @@ fiducial
 parameterization
 Grossman
 pdf
+al
 RBT
 LM
 percept
+hauv
 HAUV
+DVL
 Santes
 hyperparameters
+curtiss
 TODO
 MLE
 online
 keyframes
 odometry
+backend
 parameterized
 Mahalanobis
 linearization
+EKF
+HAUV's
+LIDAR
+Velodyne
+et
 Haralick
 Ozog
 linearizing
 Levenberg
 ONR
+multibeam
 PJO
 Haralick's
 Taubman
@@ -35,3 +46,4 @@ reprojection
 egomotion
 Zisserman
 nonlinearity
+ICP
