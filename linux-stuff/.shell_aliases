@@ -172,3 +172,4 @@ alias gentags='ctags-exuberant -Rea ~/perls/src && ctags-exuberant -Rea ~/perls/
 
 # perls ardrone python path
 export PYTHONPATH=${HOME}/perls/third-party/venthur_drone:$PYTHONPATH
+export PYTHONPATH=${HOME}/Documents/umich-grad/matplotlib:$PYTHONPATH

@@ -1,6 +1,7 @@
 #!/bin/bash
 
 cd ${HOME}/perl-suppliments/build
+cd ${HOME}/Dropbox/code/psam/build
 
 NUM_PROCS=4
 
