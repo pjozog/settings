@@ -510,8 +510,9 @@
 (if (string-equal "paul-box" system-name)
     (set-face-attribute 'default nil :height 100 :family "ubuntu mono"))
 
-(if (string-equal "paul-laptop" system-name)
-    (set-face-attribute 'default nil :height 80 :family "ubuntu mono"))
+(if (or (string-equal "paul-laptop" system-name)
+        (string-equal "birdo" system-name))
+    (set-face-attribute 'default nil :height 75 :family "ubuntu mono"))
 
 (if (string-equal "perl-paulozog" system-name)
     (set-face-attribute 'default nil :height 90 :family "ubuntu mono"))
