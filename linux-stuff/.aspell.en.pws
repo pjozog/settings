@@ -1,7 +1,9 @@
-personal_ws-1.1 en 48 
+personal_ws-1.1 en 51 
+PCA
 Eustice
 Zisserman's
 hyperellipses
+iSAM
 fiducial
 parameterization
 Grossman
@@ -11,7 +13,6 @@ RBT
 LM
 percept
 hauv
-HAUV
 DVL
 Santes
 hyperparameters
@@ -22,6 +23,7 @@ online
 keyframes
 odometry
 backend
+DOF
 parameterized
 Mahalanobis
 linearization
@@ -33,6 +35,7 @@ et
 Haralick
 Ozog
 linearizing
+Jacobian
 Levenberg
 ONR
 multibeam
