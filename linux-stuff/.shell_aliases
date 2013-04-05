@@ -50,7 +50,7 @@ fi
 alias l='ls'
 alias ll='ls -lh'
 alias lt='ll -tr'
-alias ds='du --max-depth=1 -h'
+alias ds='du --max-depth=1 | sort -n | perl -ne '\''($s,$f)=split(m{\t});for (qw(K M G)) {if($s<1024) {printf("%.1f",$s);print "$_\t$f"; last};$s=$s/1024}'\'
 alias g='grep --color=auto'
 alias gg='grep --color=always'
 alias eg='egrep --color=auto'
