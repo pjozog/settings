@@ -1,0 +1,6 @@
+#contributor : Paul Ozog
+#name : begin itemize
+# --
+\begin{itemize}
+\item{$1}
+\end{itemize}
