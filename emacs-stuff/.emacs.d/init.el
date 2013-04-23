@@ -507,15 +507,9 @@
  '(font-latex-string-face ((((class color) (background dark)) (:foreground "#A2AB64"))))
  '(org-column ((t (:background "#000000" :strike-through nil :underline nil :slant normal :weight normal :height 98 :family "DejaVu Sans Mono")))))
 
-(if (or (string-equal "paul-box" system-name)
-        (string-equal "birdo" system-name))
-    (set-face-attribute 'default nil :height 100 :family "ubuntu mono"))
-
 (if (string-equal "paul-laptop" system-name)
-    (set-face-attribute 'default nil :height 75 :family "ubuntu mono"))
-
-(if (string-equal "perl-paulozog" system-name)
-    (set-face-attribute 'default nil :height 90 :family "ubuntu mono"))
+    (set-face-attribute 'default nil :height 75 :family "ubuntu mono")
+  (set-face-attribute 'default nil :height 100 :family "ubuntu mono"))
 
 (open-filelist '("~/.emacs.d/init.el" "~/.shell_aliases" "~/.profile"
                  "~/.config/openbox/autostart.sh"

@@ -10,7 +10,7 @@ addpath('~/perl/perl-svn/sba-eval/matlab/kuka/postProcess');
 
 % lcm stuff
 import java.io.*;
-eval(['javaaddpath ',sprintf('%s/perls/third-party/build/lcm-0.9.0/lcm-java/lcm.jar', getenv ('HOME'))])
+eval(['javaaddpath ',sprintf('%s/perls/third-party/build/lcm-0.9.2/lcm-java/lcm.jar', getenv ('HOME'))])
 eval(['javaaddpath ',sprintf('%s/perls/build/share/java/perls_lcmtypes.jar', getenv ('HOME'))])
 
 % increase default text size
