@@ -1,15 +1,14 @@
 #contributor : Paul Ozog
 #name : insert figure
 # --
-\begin{figure}[h]
+\begin{figure}[t]
   \begin{center}
-    \subfigure[${1:SUBCAPTION1}] {
-      \includegraphics[width=0.45\columnwidth]{${2:PIC1}}
-      \label{${3:LABEL1}}}
-    \subfigure[${4:SUBCAPTION2}] {
-      \includegraphics[width=0.45\columnwidth]{${5:PIC2}}
-      \label{${6:LABEL2}}}
-    \caption{${7:FIGCAPTION}}
-    \label{${8:FIGLABEL}}
+    \begin{subfigure}[b]{${1:WIDTH}\columnwidth}
+      \includegraphics[width=\textwidth]{FILENAME}
+      \caption{${2:SUBCAPTION}}
+      \label{${3:SUBFIGLABEL}}
+    \end{subfigure}
+    \caption{${4:ALLCAPTION}}
+    \label{${5:FIGLABEL}}
   \end{center}
 \end{figure}
