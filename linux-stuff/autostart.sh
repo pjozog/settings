@@ -37,6 +37,9 @@ which xfce4-power-manager > /dev/null 2>&1
 which ubuntuone-launch > /dev/null 2>&1
 [ $? -eq 0 ] && ubuntuone-launch &
 
+which xautolock > /dev/null 2>&1
+[ $? -eq 0 ] && xautolock -time 10 -locker xlock &
+
 gnome-volume-control-applet &
 nm-applet &
 
