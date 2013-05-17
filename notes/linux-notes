@@ -1,0 +1,81 @@
+#!/bin/bash
+
+#USE SSH TO ENCRYPT VNC TRAFFIC:
+ #forward port 12345 on localhost to 5901 on bubbles:
+ ssh -f paul@pjozog.dyndns.org -L 12345:pjozog.dyndns.org:5901 -N
+ #the 5901 is the port that the application (vnc) uses
+ #12345 is the port to access on localhost
+ #run vncviewer:
+ vncviewer localhost:12345
+
+#PASSWORD-ENCRYPT A FILE USING GPG:
+ gpg -c plaintext
+#PASSWORD-DECRYPT A FILE USING GPG:
+ gpg plaintext.gpg # this will create 'plaintext' in the cwd
+
+#BUILD UBUNTU PACKAGES USING THE OFFICIAL COPY OF THE SOURCE 
+#make the build directory
+mkdir ffmpeg
+cd ffmpeg
+apt-get source ffmpeg
+#enter the build directory
+cd ffmpeg-0.cvs20050918
+#options and stuff...
+DEB_BUILD_OPTIONS=risky dpkg-buildpackage -uc -us -rfakeroot
+#install the built packages
+cd ..
+dpkg -i *.deb
+
+#Compile linux 
+make menuconfig; #use ".config" from ubuntu
+make && make modules && make modules_install && make install
+mkinitramfs -o /boot/initrd.img-2.6.37-rc2-MIRACLE_PATCH 2.6.37-rc2-MIRACLE_PATCH
+
+#Modules
+# they are stored in /lib/modules.  They are NOT removed automatically
+
+#Module dependencies
+depmod -a
+
+#To install some python packages (OpenCV) to /usr/local/, I had to make a 
+# symbolic link
+ln -sf /usr/local/lib/python2.6/dist-packages /usr/local/lib/python2.6/site-packages
+
+#Make /usr/local a valid 'make install' location
+#In /etc/ld.so.conf:
+#include /etc/ld.so.conf.d/*.conf
+#/usr/local/lib
+
+#Only get certain files using rsync:
+sudo rsync --stats --progress -avz --include '*/' --include '*.tif' --include '*.JPG' --include '*.png' --include '*.jpg' --include '*.PNG' --exclude '*' paulozog@robots:/var/data/DSL/ .
+
+#Emacs margin and "strip" color: search for "fringe"
+# rsync -avz -e "ssh -p $portNumber" user@remoteip:/path/to/files/ /local/path/
+
+#zsh:
+# To expand wild cards via rsync/scp, put argument in double quotes:
+rsync -avk "paul@someHost:/var/data/*" .
+
+#remove white background from image and replace with transparency
+convert +antialias -transparent '#ffffff' -density 600x -trim -geometry 50% infile outfile
+# viewer color is '#f2f2ff'
+
+#patch entire source tree source
+diff -Naur olddir newdir > new-patch
+#from olddir:
+patch -p1 < new-patch
+
+# use a different default application (ie - web browser)
+sudo update-alternatives --config x-www-browser
+
+# decrease the size of .pdf with images
+\gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/screen -dNOPAUSE -dQUIET -dBATCH -sOutputFile=output.pdf input.pdf
+
+# wget a directory on some server
+wget -H -r --level=1 -k -p http://www.ctan.org/tex-archive/fonts/cm/ps-type1/bakoma/otf/
+
+# MATLAB sometimes displays latex labels in figures with weird spacing.  Solution: Make
+# sure DPI is 100x100.  Can be set in xorg.cfg in display
+
+# scan for open ports
+sudo nmap -sS -O -PN pjozog.dyndns.org
