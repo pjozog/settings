@@ -182,6 +182,8 @@
 (add-to-list 'load-path
              (concat (file-name-as-directory my-emacs-dir) "lisp"))
 (add-to-list 'load-path
+             (concat (file-name-as-directory my-emacs-dir) "lisp/ein"))
+(add-to-list 'load-path
              (concat (file-name-as-directory my-emacs-dir) "plugins"))
 (add-to-list 'load-path
              (concat (file-name-as-directory my-emacs-dir) "plugins/yasnippet-0.6.1c"))
@@ -189,6 +191,8 @@
              (concat (file-name-as-directory my-emacs-dir) "plugins/emacs-w3m"))
 (add-to-list 'load-path
              (concat (file-name-as-directory my-emacs-dir) "plugins/org"))
+(add-to-list 'load-path
+             (concat (file-name-as-directory my-emacs-dir) "plugins/emacs-ipython-notebook/lisp"))
 
 ;; (require 'anything-match-plugin)
 ;; (require 'anything-config)
@@ -260,6 +264,11 @@
 (set-default 'indent-tabs-mode nil)
 (setq-default tab-width 4)
 (defalias 'un 'untabify-buffer)
+
+;; ipython notebook mode
+(defun ipn ()
+  (interactive)
+  (load "zeroein.el"))
 
 ;; stuff for anything library
 ;; (global-set-key "\M-." 'anything-etags+-select-one-key)
