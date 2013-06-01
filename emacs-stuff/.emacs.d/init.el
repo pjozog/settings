@@ -226,6 +226,7 @@
 (require 'dired-mod)            ;; mine
 (require 'myOrgSettings)        ;; mine
 (require 'smooth-scrolling)
+(require 'markdown-mode)
 
 ;; idle-highlight-mode only works on emacs 24
 (condition-case nil
