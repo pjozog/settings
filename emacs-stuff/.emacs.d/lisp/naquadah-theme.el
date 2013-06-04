@@ -396,7 +396,10 @@
  '(rst-level-3-face (:foreground gradient-3 :height 1.1))
  '(rst-level-4-face (:foreground gradient-4))
  '(rst-level-5-face (:foreground gradient-5))
- '(rst-level-6-face (:foreground gradient-6)))
+ '(rst-level-6-face (:foreground gradient-6))
+
+ ;; ipython notebook
+ '(ein:cell-input-area (:background aluminium-6)))
 
 (provide-theme 'naquadah)
 
@@ -405,3 +408,4 @@
 ;; End:
 
 ;;; naquadah-theme.el ends here
+
