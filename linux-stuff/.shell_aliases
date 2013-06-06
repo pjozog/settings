@@ -169,7 +169,3 @@ alias i='ipython'
 
 # common ctags for perls
 alias gentags='ctags-exuberant -Rea ~/perls/src && ctags-exuberant -Rea ~/perls/matlab && ctags-exuberant -Rea ~/perls/matlab && ctags-exuberant -Rea ~/perls/third-party/build/libbot2 && ctags-exuberant -Rea ~/perls/build/src/core/lcmtypes'
-
-# perls ardrone python path
-export PYTHONPATH=${HOME}/perls/third-party/venthur_drone:$PYTHONPATH
-export PYTHONPATH=${HOME}/Documents/umich-grad/matplotlib:$PYTHONPATH

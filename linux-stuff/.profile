@@ -14,7 +14,6 @@ fi
 
 export EDITOR='emacsclient -t'
 export PYTHONSTARTUP=${HOME}/.pythonrc
-export PYTHONPATH=${PYTHONPATH}:{$HOME}/perls/python/lcmtypes
 export MATLABPATH=~/documents/MATLAB
 
 [ -d ${HOME}/texpath ] && export TEXINPUTS=.:${HOME}/texpath:${HOME}/texpath/images:$TEXINPUTS
