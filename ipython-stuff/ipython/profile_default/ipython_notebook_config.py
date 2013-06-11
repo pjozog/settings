@@ -44,7 +44,7 @@ c = get_config()
 # c.NotebookApp.keyfile = u''
 
 # Whether to open in a browser after starting.
-# c.NotebookApp.open_browser = True
+c.NotebookApp.open_browser = False
 
 # Set the log level by value or name.
 # c.NotebookApp.log_level = 20

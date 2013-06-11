@@ -169,3 +169,5 @@ alias i='ipython'
 
 # common ctags for perls
 alias gentags='ctags-exuberant -Rea ~/perls/src && ctags-exuberant -Rea ~/perls/matlab && ctags-exuberant -Rea ~/perls/matlab && ctags-exuberant -Rea ~/perls/third-party/build/libbot2 && ctags-exuberant -Rea ~/perls/build/src/core/lcmtypes'
+
+alias ipn='cd ~/documents/umich-grad/research/ipython-notebooks/ && \ipython notebook --pylab inline'
