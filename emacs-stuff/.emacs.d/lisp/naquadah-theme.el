@@ -399,7 +399,7 @@
  '(rst-level-6-face (:foreground gradient-6))
 
  ;; ipython notebook
- '(ein:cell-input-area (:background aluminium-6)))
+ '(ein:cell-input-area (:background "#000000")))
 
 (provide-theme 'naquadah)
 
