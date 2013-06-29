@@ -115,6 +115,7 @@
       (require 'ein-dev)
       (ein:dev-print-sys-info))
   ;; To make EIN configurable by --eval, use idle timer:
-  (run-with-idle-timer 0 nil 'call-interactively 'ein:notebooklist-open))
+  (run-with-idle-timer 0 nil 'call-interactively 'ein:notebooklist-open)
+  (global-auto-complete-mode -1))
 
 ;;; zeroein.el ends here
