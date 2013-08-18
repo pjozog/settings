@@ -8,4 +8,8 @@ if [ $(hostname) = 'paul-laptop' ]; then
     NUM_PROCS=2
 fi
 
+if [ $(hostname) = 'birdo' ]; then
+    NUM_PROCS=8
+fi
+
 make -j${NUM_PROCS} > /dev/null
