@@ -151,7 +151,7 @@ alias 587='cd ~/Documents/umich-grad/EECS/f12/587/'
 alias 560='cd ~/Documents/umich-grad/EECS/f12/560/'
 alias 592='cd ~/Documents/umich-grad/EECS/w13/592/'
 alias java='java -ea -server -Dawt.useSystemAAFontSettings=lcd'
-alias lpg='lcm-logplayer-gui'
+alias lpg='lcm-logplayer-gui -p'
 
 #Jeff's magic bus tool
 alias mb='magic_bus.py'
@@ -168,7 +168,7 @@ alias ipython='ipython -i --pylab gtk --colors=Linux ~/.pythonrc'
 alias i='ipython'
 
 # common ctags for perls
-alias gentags='ctags-exuberant -Rea ~/perls/src && ctags-exuberant -Rea ~/perls/matlab && ctags-exuberant -Rea ~/perls/matlab && ctags-exuberant -Rea ~/perls/third-party/build/libbot2 && ctags-exuberant -Rea ~/perls/build/src/core/lcmtypes'
+alias gentags='ctags-exuberant -Rea ~/perls/src && ctags-exuberant -Rea ~/perls/matlab && ctags-exuberant -Rea ~/perls/matlab && ctags-exuberant -Rea ~/perls/third-party/build/libbot2 && ctags-exuberant -Rea ~/perls/build/src/core/perls-lcmtypes && ctags-exuberant -Rea ~/perls/build/src/core/perls-lcmtypes++'
 
 alias ipn='cd ~/Dropbox/code/ipython-notebooks/ && \ipython notebook --pylab inline'
 alias ipn3='cd ~/Dropbox/code/ipython-notebooks/ && \ipython notebook --pylab=wx inline'

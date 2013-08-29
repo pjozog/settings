@@ -8,13 +8,15 @@ import shutil
 scriptDir           = sys.path[0]
 binDir              = os.path.join(scriptDir, 'linux-stuff', 'bin')
 homeDir             = os.getenv('HOME')
+dropboxDir          = os.path.join(os.getenv('HOME'), 'Dropbox')
 requiredDirs        = [os.path.join(homeDir, '.config'),
                        os.path.join(homeDir, '.config', 'gtk-3.0'),
                        os.path.join(homeDir, '.matplotlib'),
                        os.path.join(homeDir, 'bin'),
                        os.path.join(homeDir, '.themes'),
                        os.path.join(homeDir, 'Documents'),
-                       os.path.join(homeDir, 'Documents', 'MATLAB')]
+                       os.path.join(homeDir, 'Documents', 'MATLAB'),
+                       os.path.join(homeDir, '.ssh')]
 
 #These home dir files will be links to version controlled files
 linkList = [os.path.join(homeDir, '.bashrc'),
@@ -42,7 +44,8 @@ linkList = [os.path.join(homeDir, '.bashrc'),
             os.path.join(homeDir, '.aspell.en.pws'),
             os.path.join(homeDir, '.fonts'),
             os.path.join(homeDir, '.xinitrc'),
-            os.path.join(homeDir, 'Documents', 'MATLAB', 'startup.m')]
+            os.path.join(homeDir, 'Documents', 'MATLAB', 'startup.m'),
+            os.path.join(homeDir, '.ssh', 'config')]
 
 #These will be the actual version controlled files (the sources)
 sourceList = [os.path.join(scriptDir, 'linux-stuff', '.bashrc'),
@@ -70,7 +73,8 @@ sourceList = [os.path.join(scriptDir, 'linux-stuff', '.bashrc'),
               os.path.join(scriptDir, 'linux-stuff', '.aspell.en.pws'),
               os.path.join(scriptDir, 'linux-stuff', '.fonts'),
               os.path.join(scriptDir, 'linux-stuff', '.xinitrc'),
-              os.path.join(scriptDir, 'matlab-stuff', 'startup.m')]
+              os.path.join(scriptDir, 'matlab-stuff', 'startup.m'),
+              os.path.join(dropboxDir, 'ssh', 'config')]
 
 sourceToDestination = {}
 

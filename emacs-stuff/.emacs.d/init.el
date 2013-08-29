@@ -174,6 +174,11 @@
 (defalias 'cf 'customize-face)
 (defalias 'c 'my-compile)
 (defalias 'cc 'my-compile2)
+(defalias 'ac (lambda ()
+                (interactive)
+                (if auto-complete-mode
+                    (auto-complete-mode -1)
+                  (auto-complete-mode t))))
 
 ;; --------------------------------------------------
 ;; Packages / Minor modes / Keybindings

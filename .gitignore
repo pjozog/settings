@@ -22,3 +22,7 @@ _region_
 auto
 tramp
 dhist
+ac-comphist.dat
+emacs-stuff/.emacs.d/elpa
+emacs-stuff/.emacs.d/request
+ipython-stuff/ipython/profile_default/security

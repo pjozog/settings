@@ -43,3 +43,6 @@ nm-applet &
 gnome-screensaver &
 
 xset r rate 300 40
+
+# disable uber annoying overlay scroll bar
+export LIBOVERLAY_SCROLLBAR=0
