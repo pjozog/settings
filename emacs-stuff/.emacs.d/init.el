@@ -265,6 +265,7 @@
 (setq default-fill-column 90)
 (setq scroll-preserve-screen-position 1)
 (setq woman-fill-column default-fill-column)
+(setq-default indicate-empty-lines t)
 
 ;; To keep myself happy
 (set-default 'indent-tabs-mode nil)
@@ -372,6 +373,7 @@
 (setq auto-mode-alist (cons '("\\.shell_aliases$" . sh-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.SRC$" . asm-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.isam$" . python-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.moos$" . conf-mode) auto-mode-alist))
 (setq matlab-fill-code nil)
 
 ;; set default C style to 4-space indentation with "cc-mode" style (from rme-linux)
