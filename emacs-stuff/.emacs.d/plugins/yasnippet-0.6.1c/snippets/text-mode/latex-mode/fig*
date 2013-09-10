@@ -1,0 +1,17 @@
+#contributor : Paul Ozog
+#name : insert figure
+# --
+\begin{figure*}[!tb]%
+  \centering%
+    \subfigure[${1:TITLE}]{%
+      \includegraphics[width=0.3\textwidth]{${2:PATH}}%
+      \label{${3:LABEL}}%
+    }%
+    \hfil%
+    \subfigure[${4:TITLE}]{%
+      \includegraphics[width=0.35\textwidth]{${5:PATH}}%
+      \label{${6:LABEL}}%
+    }\hfil%
+    \caption{${7:CAPTION}}%
+    \label{${8:ALL_LABEL}}%
+\end{figure*}

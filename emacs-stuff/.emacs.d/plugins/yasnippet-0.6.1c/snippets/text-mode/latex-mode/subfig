@@ -1,14 +1,13 @@
 #contributor : Paul Ozog
 #name : insert figure
 # --
-\begin{figure}[t]
-  \begin{center}
-    \begin{subfigure}[b]{${1:WIDTH}\columnwidth}
-      \includegraphics[width=\textwidth]{FILENAME}
-      \caption{${2:SUBCAPTION}}
-      \label{${3:SUBFIGLABEL}}
-    \end{subfigure}
-    \caption{${4:ALLCAPTION}}
-    \label{${5:FIGLABEL}}
-  \end{center}
+\begin{figure}[!tb]%
+  \centering%
+  \subfigure[${1:CAPTION}]{%
+    \includegraphics[width=\columnwidth]{${2:FILE}}%
+    \label{${3:LABEL}}%
+  }%
+  \hfil%
+  \caption{${4:ALLCAPTION}}
+  \label{${5:ALLLABEL}}
 \end{figure}
