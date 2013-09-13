@@ -1,4 +1,4 @@
-personal_ws-1.1 en 51 
+personal_ws-1.1 en 54 
 PCA
 Eustice
 Zisserman's
@@ -27,6 +27,7 @@ DOF
 parameterized
 Mahalanobis
 linearization
+sparsification
 EKF
 HAUV's
 LIDAR
@@ -35,6 +36,8 @@ et
 Haralick
 Ozog
 linearizing
+sparsified
+sparsify
 Jacobian
 Levenberg
 ONR
