@@ -14,5 +14,5 @@ eval(['javaaddpath ',sprintf('%s/perls/third-party/build/lcm-0.9.2/lcm-java/lcm.
 eval(['javaaddpath ',sprintf('%s/perls/build/share/java/perls_lcmtypes.jar', getenv ('HOME'))])
 
 % increase default text size
-set (0,'DefaultAxesFontSize', 16)
-set (0,'DefaultTextFontSize', 16)
+set (0,'DefaultAxesFontSize', 20)
+set (0,'DefaultTextFontSize', 20)
