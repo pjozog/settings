@@ -1,11 +1,11 @@
 ;;; sb-itmedia.el --- shimbun backend for ITmedia -*- coding: iso-2022-7bit -*-
 
-;; Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010
-;; Yuuichi Teranishi <teranisi@gohome.org>
+;; Copyright (C) 2004-2011, 2013 Yuuichi Teranishi <teranisi@gohome.org>
 
 ;; Author: TSUCHIYA Masatoshi <tsuchiya@namazu.org>,
-;;         Yuuichi Teranishi  <teranisi@gohome.org>
-;;         ARISAWA Akihiro    <ari@mbf.sphere.ne.jp>
+;;         Yuuichi Teranishi  <teranisi@gohome.org>,
+;;         ARISAWA Akihiro    <ari@mbf.sphere.ne.jp>,
+;;         Katsumi Yamaoka    <yamaoka@jpl.org>
 ;; Keywords: news
 
 ;; This file is a part of shimbun.
@@ -138,8 +138,9 @@ R[TQ[*i0d##D=I3|g`2yr@sc<pK1SB
 	  (delete-region (match-beginning 0) (point-max)))
 	(goto-char (point-min))
 	(setq regexp (if (string-equal group "kodera")
-			 "<a[\t\n ]+href=\"\
-\\(http://plusd\\.itmedia\\.co\\.jp/[^\"]+/articles/\
+			 "<a[\t\n ]+href=\"\\(http://\
+\\(?:\\(?:plusd\\|www\\)\\.itmedia\\|monoist\\.atmarkit\\)\\.co\\.jp/\
+\[^\"]+/articles/\
 \\([0-9][0-9]\\)\\([01][0-9]\\)/\\([0-3][0-9]\\)/news\\([0-9]+\\)\\.html\\)\
 \"[\t\n ]*>\\(?:[\t\n ]*\\|[\t\n ]*<strong>[\t\n ]*\\)\\([^<]+\\)"
 		       "<a[\t\n ]+href=\"\
@@ -222,55 +223,39 @@ R[TQ[*i0d##D=I3|g`2yr@sc<pK1SB
 (luna-define-method shimbun-clear-contents :around ((shimbun shimbun-itmedia)
 						    header)
   (or (luna-call-next-method)
-      (prog1
-	  (let ((case-fold-search t)
-		icon start)
-	    (goto-char (point-min))
-	    (when (and (re-search-forward "<div\\(?:[\t\n ]+[^\t\n >]+\\)*\
-\[\t\n ]+class=\"article-icon\""
-					  nil t)
-		       (shimbun-end-of-tag "div"))
-	      (setq icon (match-string 0)))
-	    (goto-char (point-min))
-	    (when (and (search-forward "<!--BODY-->" nil t)
-		       (progn
-			 (setq start (match-end 0))
-			 (when (and (re-search-backward "<h[0-9]>[^<]+</h[0-9]>"
-							nil t)
-				    (progn
-				      (goto-char (match-end 0))
-				      (not (re-search-forward "<h[0-9]>" start t))))
-			   (delete-region (match-end 0) start)
-			   (setq start (match-beginning 0)))
-			 (re-search-forward "<!--BODY ?END-->" nil t)))
-	      (delete-region (match-beginning 0) (point-max))
-	      (delete-region (point-min) start)
-	      ;; Remove anchors to both the next page and the previous page.
-	      ;; These anchors are inserted into the head and the tail of the
-	      ;; article body.
-	      (skip-chars-backward " \t\r\f\n")
-	      (forward-line 0)
-	      (when (looking-at "<P ALIGN=\"CENTER\"><[AB]")
-		(delete-region (point) (point-max)))
-	      (goto-char (point-min))
-	      (skip-chars-forward " \t\r\f\n")
-	      (when (looking-at "<P ALIGN=\"CENTER\"><[AB]")
-		(delete-region (point-min) (point-at-eol)))
-	      (when icon
-		(goto-char (point-min))
-		(insert icon "\n"))
-	      t))
-	(shimbun-remove-tags "<!-- AD START -->" "<!-- AD END -->")
-	(shimbun-remove-tags "\
+      ;; Extract the article body and return t if successful.
+      (let ((case-fold-search t)
+	    start end md)
+	(goto-char (point-min))
+	(when (and (re-search-forward "<div[\t\n ]+\\(?:[^\t\n >]+[\t\n ]+\\)*\
+id=\"cms\\(?:Abstract\\|Byline\\|\\(Body\\)\\)\"" nil t)
+		   (progn
+		     (setq start (match-beginning 0))
+		     (or (match-beginning 1)
+			 (re-search-forward "\
+<div[\t\n ]+\\(?:[^\t\n >]+[\t\n ]+\\)*id=\"cmsBody\"" nil t)))
+		   (shimbun-end-of-tag "div" t))
+	  (setq end (match-end 1))
+	  (goto-char start)
+	  (delete-region (if (re-search-forward "[\t\n ]*<h[0-9]>[\t\n ]*関連"
+						end t)
+			     (match-beginning 0)
+			   end)
+			 (point-max))
+	  (delete-region (point-min) start)
+	  (goto-char (point-max))
+	  (insert "\n")
+	  (shimbun-remove-tags "<!-- ad_start_new -->" "<!-- ad_end_new -->")
+	  (shimbun-remove-tags "<!-- AD START -->" "<!-- AD END -->")
+	  (shimbun-remove-tags "\
 <IMG [^>]*SRC=\"http:/[^\"]*/\\(ad\\.itmedia\\.co\\.jp\\|\
 a1100\\.g\\.akamai\\.net\\)/[^>]+>")
-	(shimbun-remove-tags "\
+	  (shimbun-remove-tags "\
 <A [^>]*HREF=\"http:/[^\"]*/\\(ad\\.itmedia\\.co\\.jp\\|\
 a1100\\.g\\.akamai\\.net\\)/[^>]+>[^<]*</A>")
 
-	;; Insert line-break after images.
-	(goto-char (point-min))
-	(let (start md)
+	  ;; Insert line-break after images.
+	  (goto-char (point-min))
 	  (while (re-search-forward
 		  "\\(<img[\t\n ]+[^>]+>\\(?:[\t\n ]*<[^>]+>\\)*\\)[\t\n ]*"
 		  nil t)
@@ -291,14 +276,15 @@ a1100\\.g\\.akamai\\.net\\)/[^>]+>[^<]*</A>")
 				       (match-beginning 1) t))
 	      (goto-char (match-end 0)))
 	    (unless
-		;; Check if there's a tag that is likely to cause the line-break.
+		;; Check if there's a tag that is likely to cause
+		;; the line-break.
 		(looking-at "\\(?:<![^>]+>[\t\n ]*\\)*\
 <\\(?:br\\|div\\|h[0-9]+\\|p\\)\\(?:[\t\n ]*>\\|[\t\n ]\\)")
-	      (replace-match "\\1<br>\n"))))
-
-	(let ((hankaku (shimbun-japanese-hankaku shimbun)))
-	  (when (and hankaku (not (memq hankaku '(header subject))))
-	    (shimbun-japanese-hankaku-buffer t))))))
+	      (replace-match "\\1<br>\n")))
+	  (let ((hankaku (shimbun-japanese-hankaku shimbun)))
+	    (when (and hankaku (not (memq hankaku '(header subject))))
+	      (shimbun-japanese-hankaku-buffer t)))
+	  t))))
 
 (luna-define-method shimbun-make-contents :before ((shimbun shimbun-itmedia)
 						   header)

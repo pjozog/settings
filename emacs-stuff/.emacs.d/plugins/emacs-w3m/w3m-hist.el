@@ -1,7 +1,6 @@
 ;;; w3m-hist.el --- the history management system for emacs-w3m
 
-;; Copyright (C) 2001, 2002, 2003, 2004, 2005, 2008, 2009, 2010
-;; TSUCHIYA Masatoshi <tsuchiya@namazu.org>
+;; Copyright (C) 2001-2012 TSUCHIYA Masatoshi <tsuchiya@namazu.org>
 
 ;; Author: Katsumi Yamaoka <yamaoka@jpl.org>
 ;; Keywords: w3m, WWW, hypermedia
@@ -35,6 +34,7 @@
 
 (eval-when-compile
   (require 'cl))
+(require 'w3m-util)
 
 (defcustom w3m-history-reuse-history-elements nil
   "Non-nil means reuse the history element when re-visiting the page.
@@ -626,12 +626,31 @@ Data consist of the position where the window starts and the cursor
 position.  Naturally, those should be treated as buffer-local."
   (interactive)
   (when (cadar w3m-history)
-    (w3m-history-add-properties
-     (list :window-start (window-start)
-	   :position (cons (count-lines (point-min) (point-at-bol))
-			   (current-column))
-	   :window-hscroll (window-hscroll)))
-    (when (interactive-p)
+    ;; Emacs lies about the column number in the results of
+    ;; the functions `current-column', `window-hscroll', etc. if there
+    ;; are images; it is likely larger than the position of the cursor
+    ;; actually visible, and restoring it causes h-scrolling too much.
+    ;; So, we store the position of an image if the cursor follows.
+    (let ((column (current-column))
+	  (hscroll (window-hscroll))
+	  pos)
+      (when (cond ((bobp) nil)
+		  ((get-text-property (point) 'w3m-image) nil)
+		  ((get-text-property (1-(point)) 'w3m-image)
+		   (goto-char (1- (point))))
+		  ((setq pos (previous-single-property-change
+			      (point) 'w3m-image nil (point-at-bol)))
+		   (unless (= pos (point-at-bol))
+		     (goto-char (1- pos)))))
+	(setq pos (current-column))
+	(move-to-column column)
+	(setq hscroll (max (- hscroll (- column pos)) 0)
+	      column pos))
+      (w3m-history-add-properties
+       (list :window-start (window-start)
+	     :position (cons (count-lines (point-min) (point-at-bol)) column)
+	     :window-hscroll hscroll)))
+    (when (w3m-interactive-p)
       (message "The current cursor position saved"))))
 
 (defun w3m-history-restore-position ()
@@ -645,17 +664,17 @@ it works although it may not be perfect."
       (cond ((and start
 		  (setq position (w3m-history-plist-get :position)))
 	     (when (<= start (point-max))
+	       (goto-char (point-min))
+	       (forward-line (car position))
 	       (setq window (get-buffer-window (current-buffer) 'all-frames))
 	       (when window
 		 (set-window-start window start)
 		 (set-window-hscroll
 		  window (or (w3m-history-plist-get :window-hscroll) 0)))
-	       (goto-char (point-min))
-	       (forward-line (car position))
 	       (move-to-column (cdr position))
 	       (let ((deactivate-mark nil))
 		 (run-hooks 'w3m-after-cursor-move-hook))))
-	    ((interactive-p)
+	    ((w3m-interactive-p)
 	     (message "No cursor position saved"))))))
 
 (defun w3m-history-minimize ()

@@ -1,6 +1,6 @@
 ;;; shimbun.el --- interfacing with web newspapers -*- coding: iso-2022-7bit; -*-
 
-;; Copyright (C) 2001-2011 Yuuichi Teranishi <teranisi@gohome.org>
+;; Copyright (C) 2001-2013 Yuuichi Teranishi <teranisi@gohome.org>
 
 ;; Author: TSUCHIYA Masatoshi <tsuchiya@namazu.org>,
 ;;         Akihiro Arisawa    <ari@mbf.sphere.ne.jp>,
@@ -96,9 +96,6 @@
 			  ;; Say whether to convert Japanese zenkaku
 			  ;; ASCII chars into hankaku.
 			  japanese-hankaku
-			  ;; Coding system for encoding URIs when
-			  ;; accessing the server.
-			  url-coding-system
 			  ;; Number of times to retry fetching contents.
 			  retry-fetching))
   (luna-define-internal-accessors 'shimbun))
@@ -234,11 +231,21 @@ Default is the value of `w3m-default-save-directory'."
   (shimbun-mua-shimbun-internal mua))
 
 ;;; emacs-w3m implementation of url retrieval and entity decoding.
-(defun shimbun-retrieve-url (url &optional no-cache no-decode
-				 referer url-coding-system)
+(defalias 'shimbun-beginning-of-tag 'w3m-beginning-of-tag)
+(defalias 'shimbun-decode-anchor-string 'w3m-decode-anchor-string)
+(defalias 'shimbun-decode-entities 'w3m-decode-entities)
+(defalias 'shimbun-decode-entities-string 'w3m-decode-entities-string)
+(defalias 'shimbun-end-of-tag 'w3m-end-of-tag)
+(defalias 'shimbun-expand-url 'w3m-expand-url)
+(defalias 'shimbun-find-coding-system 'w3m-find-coding-system)
+(defalias 'shimbun-flet 'w3m-flet)
+(defalias 'shimbun-interactive-p 'w3m-interactive-p)
+(defalias 'shimbun-replace-in-string 'w3m-replace-in-string)
+(defalias 'shimbun-url-encode-string 'w3m-url-encode-string)
+
+(defun shimbun-retrieve-url (url &optional no-cache no-decode referer)
   "Rertrieve URL contents and insert to current buffer.
-Return content-type of URL as string when retrieval succeeded.
-Non-ASCII characters `url' are escaped based on `url-coding-system'."
+Return content-type of URL as string when retrieval succeeded."
   (let (type charset fname)
     (if (and url
 	     shimbun-use-local
@@ -262,9 +269,8 @@ Non-ASCII characters `url' are escaped based on `url-coding-system'."
 	      (delete-region (point-min) pos))))
       ;; retrieve URL
       (when url
-	(setq type (w3m-retrieve
-		    (w3m-url-transfer-encode-string url url-coding-system)
-		    nil no-cache nil referer))))
+	(setq type (w3m-retrieve (w3m-url-transfer-encode-string url)
+				 nil no-cache nil referer))))
     (if type
 	(progn
 	  (unless no-decode
@@ -285,21 +291,11 @@ Non-ASCII characters `url' are escaped based on `url-coding-system'."
       shimbun-retry-fetching))
 
 (defun shimbun-fetch-url (shimbun url &optional no-cache no-decode referer)
-  "Retrieve contents specified by URL for SHIMBUN.
-This function is exacly similar to `shimbun-retrieve-url', but
-considers the `coding-system' slot of SHIMBUN when estimating a
-coding system of retrieved contents and the `url-coding-system'
-slot of SHIMBUN to encode URL."
-  (let* ((coding (shimbun-coding-system-internal shimbun))
-	 (w3m-coding-system-priority-list
-	  (if coding
-	      (cons coding w3m-coding-system-priority-list)
-	    w3m-coding-system-priority-list))
-	 (retry (shimbun-retry-fetching shimbun)))
-    (setq coding (or (shimbun-url-coding-system-internal shimbun) coding))
+  "Retrieve contents specified by URL for SHIMBUN."
+  (let ((retry (shimbun-retry-fetching shimbun)))
     (save-restriction
       (narrow-to-region (point) (point))
-      (or (shimbun-retrieve-url url no-cache no-decode referer coding)
+      (or (shimbun-retrieve-url url no-cache no-decode referer)
 	  (and retry
 	       (let (retval)
 		 (shimbun-message
@@ -307,7 +303,7 @@ slot of SHIMBUN to encode URL."
 		 (while (and (> retry 0) (not retval))
 		   (delete-region (point-min) (point-max))
 		   (setq retval (shimbun-retrieve-url
-				 url no-cache no-decode referer coding)
+				 url no-cache no-decode referer)
 			 retry (1- retry)))
 		 (shimbun-message shimbun
 				  "shimbun: Retrying to fetch contents...%s"
@@ -317,16 +313,6 @@ slot of SHIMBUN to encode URL."
 (defun shimbun-real-url (url &optional no-cache)
   "Return a real URL."
   (w3m-real-url url no-cache))
-
-(defalias 'shimbun-beginning-of-tag 'w3m-beginning-of-tag)
-(defalias 'shimbun-decode-anchor-string 'w3m-decode-anchor-string)
-(defalias 'shimbun-decode-entities 'w3m-decode-entities)
-(defalias 'shimbun-decode-entities-string 'w3m-decode-entities-string)
-(defalias 'shimbun-end-of-tag 'w3m-end-of-tag)
-(defalias 'shimbun-expand-url 'w3m-expand-url)
-(defalias 'shimbun-find-coding-system 'w3m-find-coding-system)
-(defalias 'shimbun-replace-in-string 'w3m-replace-in-string)
-(defalias 'shimbun-url-encode-string 'w3m-url-encode-string)
 
 ;;; Implementation of Header API.
 (eval-and-compile
@@ -879,7 +865,7 @@ you want to use no database."
   '(url groups coding-system server-name from-address
 	content-start content-end x-face-alist expiration-days
 	prefer-text-plain text-content-start text-content-end
-	japanese-hankaku url-coding-system retry-fetching))
+	japanese-hankaku retry-fetching))
 
 (defun shimbun-open (server &optional mua)
   "Open a shimbun for SERVER.
@@ -1251,14 +1237,14 @@ integer n:    Retrieve n pages of header indices.")
       (concat "<div align=\"left\">\n--&nbsp;<br>\n$B$3$N5-;v$NCx:n8"$O!"(B"
 	      (shimbun-server-name shimbun)
 	      "$B<R$K5"B0$7$^$9!#(B<br>\n$B86J*$O(B <a href=\""
-	      (shimbun-article-base-url shimbun header) "\">"
+	      (shimbun-article-base-url shimbun header) "\">&lt;"
 	      (shimbun-article-base-url shimbun header)
-	      "</a> $B$G8x3+$5$l$F$$$^$9!#(B\n</div>\n")
+	      "&gt;</a> $B$G8x3+$5$l$F$$$^$9!#(B\n</div>\n")
     (concat "-- \n$B$3$N5-;v$NCx:n8"$O!"(B"
 	    (shimbun-server-name shimbun)
-	    "$B<R$K5"B0$7$^$9!#(B\n$B86J*$O(B "
+	    "$B<R$K5"B0$7$^$9!#(B\n$B86J*$O(B <"
 	    (shimbun-article-base-url shimbun header)
-	    " $B$G8x3+$5$l$F$$$^$9!#(B\n")))
+	    "> $B$G8x3+$5$l$F$$$^$9!#(B\n")))
 
 ;;; Misc Functions
 (defun shimbun-header-insert-and-buffer-string (shimbun header
@@ -1616,7 +1602,7 @@ it considers the buffer has already been narrowed to an article."
 	(error))
       (goto-char start)
       (while (re-search-forward
-	      "[^$B!!!"!#!$!%!2!<!=!>!A!F!G!H!I!J!K!N!O!P!Q!R!S!a!l!m!o(B]+"
+	      "[^$B!!!"!#!$!%!2!<!=!>!A!A!F!G!H!I!J!K!N!O!P!Q!R!S!a!l!m!o(B]+"
 	      nil t)
 	(japanese-hankaku-region (match-beginning 0) (match-end 0) t))
       (goto-char start)
@@ -1707,7 +1693,7 @@ it considers the buffer has already been narrowed to an article."
 		   (and (member (match-string 1) '("$B8aA0(B" "$B8a8e(B"))
 			(eq (char-before) ?$B;~(B))
 		   (memq (char-before (match-end 1))
-			 '(?$B!!(B ?$B!\(B ?$B!](B ?$B!^(B ?$B!_(B ?$B!`(B ?$B!a(B ?$B!b(B ?$B!e(B ?$B!f(B ?$B"b(B
+			 '(?$B!!(B ?$B!\(B ?$B!](B ?$B!^(B ?$B!_(B ?$B!`(B ?$B!a(B ?$B!b(B ?$B!e(B ?$B!f(B ?$B-p(B
 			       ?$B"c(B ?$B"d(B))
 		   (and (memq (char-before (match-end 1)) '(?$BBh(B ?$BLs(B))
 			(memq ?j
@@ -1754,12 +1740,12 @@ it considers the buffer has already been narrowed to an article."
       (let ((regexp
 	     (if (eq w3m-output-coding-system 'utf-8)
 		 (eval-when-compile
-		   (let ((chars "$A!2!4!6!8!:!<!>#"#($B!"!#!$!%!&!+!,!1!3!4!5!6!7(B\
+		   (let ((chars "$A!2!4!6!8!:!<!>$B|~$A#($B!"!#!$!%!&!+!,!1!3!4!5!6!7(B\
 $B!A!J!K!L!M!N!O!P!Q!R!S!T!U!V!W!X!Y!Z![(B"))
 		     (concat "\\(?:[ $B!!(B]\\|&nbsp;\\)\\([" chars "$A!f$B!9!n(B]\\)"
 			     "\\|\\([" chars "]\\)\\(?:[ $B!!(B]\\|&nbsp;\\)")))
 	       (eval-when-compile
-		 (let ((chars "$A!.!0!2!4!6!8!:!<!>!c!d!e!l#"#($B!"!#!$!%!&!+!,!/(B\
+		 (let ((chars "$A!.!0!2!4!6!8!:!<!>!c!d!e!l$B|~$A#($B!"!#!$!%!&!+!,!/(B\
 $B!1!3!4!5!6!7!A!B!D!E!F!G!H!I!J!K!L!M!N!O!P!Q!R!S!T!U!V!W!X!Y!Z![!k!l!m!x(B"))
 		   (concat "\\(?:[ $B!!(B]\\|&nbsp;\\)\\([" chars "$A!f$B!9!n(B]\\)"
 			   "\\|\\([" chars "]\\)\\(?:[ $B!!(B]\\|&nbsp;\\)"))))))
@@ -1815,39 +1801,47 @@ There are exceptions; some chars aren't converted, and \"$B!c(B\", \"$B!d(B\
     (unless (eobp)
       (shimbun-japanese-hankaku-region start (point-max) quote))))
 
+;; Silence XEmacs's byte compiler.
+(eval-when-compile
+  (if (fboundp 'libxml-parse-xml-region) nil
+    (defalias 'libxml-parse-xml-region 'ignore)))
+
 (defun shimbun-xml-parse-buffer ()
   "Calls (lib)xml-parse-region on the whole buffer.
-This is a wrapper for xml-parse-region, which will resort to
-using libxml-parse-xml-region if available, since it is much
+This is a wrapper for `xml-parse-region', which will resort to
+using `libxml-parse-xml-region' if available, since it is much
 faster."
-  (if (fboundp 'libxml-parse-xml-region)
+  (if (and (fboundp 'libxml-parse-xml-region)
+	   (not (eq (symbol-function 'libxml-parse-xml-region) 'ignore)))
       (save-excursion
 	(goto-char (point-min))
-	(let ((xml (libxml-parse-xml-region
-		    (1- (search-forward "<" nil t)) (point-max)))
-	      (start 0)
-	      (stylestring
-	       (progn (goto-char (point-min))
-		      (when (re-search-forward "<\\(rss\\|feed\\)\\(.*?\\)>" nil t)
-			(match-string 2))))
-	      stylesheet)
-	  ;; Parse the stylesheet
-	  (when stylestring
-	    (while (string-match "\\(xmlns:?.*?\\)=\"\\(.*?\\)\"" stylestring start)
-	      (setq start (match-end 0))
-	      (push (cons (intern (match-string 1 stylestring))
-			  (match-string 2 stylestring))
-		    stylesheet)))
-	  ;; Add stylesheet into XML structure
-	  (when stylesheet
-	    (if (nth 1 xml)
-		(nconc (nth 1 xml) stylesheet)
-	      (setcar (cdr xml) stylesheet)))
-	  (list xml)))
+	(let ((xml (when (search-forward "<" nil t)
+		     (libxml-parse-xml-region (match-beginning 0) (point-max))))
+	      start stylestring stylesheet)
+	  (if xml
+	      (progn
+		;; Parse the stylesheet
+		(goto-char (point-min))
+		(when (re-search-forward "<\\(rss\\|feed\\)\\(.*?\\)>"
+					 nil t)
+		  (setq stylestring (match-string 2)
+			start 0)
+		  (while (string-match "\\(xmlns:?.*?\\)=\"\\(.*?\\)\""
+				       stylestring start)
+		    (setq start (match-end 0))
+		    (push (cons (intern (match-string 1 stylestring))
+				(match-string 2 stylestring))
+			  stylesheet)))
+		;; Add stylesheet into XML structure
+		(when stylesheet
+		  (if (nth 1 xml)
+		      (nconc (nth 1 xml) stylesheet)
+		    (setcar (cdr xml) stylesheet)))
+		(list xml))
+	    ;; Unfortunately libxml failed parsing for some reason.
+	    (xml-parse-region (point-min) (point-max)))))
     ;; We don't have libxml, so just use the slow one.
     (xml-parse-region (point-min) (point-max))))
-
-
 
 (provide 'shimbun)
 

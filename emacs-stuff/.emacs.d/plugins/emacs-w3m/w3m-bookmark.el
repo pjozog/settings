@@ -1,7 +1,6 @@
 ;;; w3m-bookmark.el --- Functions to operate bookmark file of w3m
 
-;; Copyright (C) 2001, 2002, 2003, 2005, 2006, 2007, 2008, 2009, 2010
-;; TSUCHIYA Masatoshi <tsuchiya@namazu.org>
+;; Copyright (C) 2001-2003, 2005-2012 TSUCHIYA Masatoshi <tsuchiya@namazu.org>
 
 ;; Authors: Shun-ichi GOTO     <gotoh@taiyo.co.jp>,
 ;;          TSUCHIYA Masatoshi <tsuchiya@namazu.org>
@@ -178,9 +177,7 @@ file exists, otherwise nil."
 	  (setq w3m-bookmark-buffer-file-name w3m-bookmark-file)
 	  (set-visited-file-modtime (or (w3m-bookmark-file-modtime)
 					;; No bookmark file.
-					(with-temp-buffer
-					  ;; 0 in Emacs; (0 . 0) in XEmacs
-					  (visited-file-modtime))))
+					'(0 0)))
 	  (buffer-enable-undo))
 	(current-buffer)))))
 
@@ -238,7 +235,8 @@ file exists, otherwise nil."
 	  (file-error nil)))))))
 
 (defun w3m-bookmark-safe-string (string format)
-  (labels ((filter (s c) (decode-coding-string (encode-coding-string s c) c)))
+  (w3m-labels ((filter (s c)
+		       (decode-coding-string (encode-coding-string s c) c)))
     (if (let ((encoding (w3m-static-when (featurep 'mule)
 			  buffer-file-coding-system)))
 	  (or (string= string (filter string encoding))
