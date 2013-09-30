@@ -259,13 +259,14 @@
 (setq mouse-yank-at-point 1)
 (autopair-global-mode 1)
 (setq autopair-autowrap t)
-(global-linum-mode 1)
+;; (global-linum-mode 1)
 (global-auto-revert-mode t)
 (column-number-mode 1)
 (setq default-fill-column 90)
 (setq scroll-preserve-screen-position 1)
 (setq woman-fill-column default-fill-column)
 (setq-default indicate-empty-lines t)
+(setq gdb-many-windows t)
 
 ;; To keep myself happy
 (set-default 'indent-tabs-mode nil)
