@@ -509,7 +509,7 @@
  '(org-agenda-files (quote ("~/Dropbox/org/projects.org")))
  '(org-hide-leading-stars nil)
  '(uniquify-buffer-name-style (quote forward) nil (uniquify))
- '(vc-follow-symlinks nil)
+ '(vc-follow-symlinks t)
  '(vc-hg-log-switches (quote ("-v")))
  '(search-whitespace-regexp "[ \t\r\n]+"))
 (custom-set-faces
