@@ -62,7 +62,9 @@ for s = 1, screen.count() do
                           s, 
                           {layouts[1], layouts[1], layouts[1], layouts[2], layouts[2], layouts[2], layouts[1], layouts[1], layouts[1]})
    elseif s == 2 then
-      tags[s] = awful.tag({ "[1] web", "[2] shell", "[3] procman", "[4] evince", "[5] xbmc", 6, 7, 8, 9 }, s, layouts[1])
+      tags[s] = awful.tag({ "[1] web", "[2] shell", "[3] procman", "[4] evince", "[5] xbmc", 6, 7, 8, 9 },
+                          s, 
+                          {layouts[1], layouts[1], layouts[2], layouts[1], layouts[1], layouts[1], layouts[1], layouts[1], layouts[1]})
    else
       tags[s] = awful.tag({ 1, 2, 3, 4, 5, 6, 7, 8, 9  }, s, layouts[1])
    end
