@@ -49,12 +49,20 @@ layouts =
 tags = {}
 for s = 1, screen.count() do
    -- Each screen has its own tag table.
+   tag2 = "shell"
+   tag3 = "web"
+   tag6 = "procman"
+   if screen.count() == 2 then
+      tag2 = "nautilus"
+      tag3 = "media"
+      tag6 = "vbox"
+   end
    if s == 1 then
-      tags[s] = awful.tag({ "[1] emacs", "[2] shell", "[3] web", "[4] matlab", "[5] ipn", "[6] procman", 7, 8, "[9] spotify" },
+      tags[s] = awful.tag({ "[1] emacs", "[2] " .. tag2, "[3] " .. tag3, "[4] matlab", "[5] ipn", "[6] " .. tag6, 7, 8, "[9] spotify" },
                           s, 
                           {layouts[1], layouts[1], layouts[1], layouts[2], layouts[2], layouts[2], layouts[1], layouts[1], layouts[1]})
    elseif s == 2 then
-      tags[s] = awful.tag({ "[1] web", "[2] shell", 3, 4, 5, 6, 7, 8, 9 }, s, layouts[1])
+      tags[s] = awful.tag({ "[1] web", "[2] shell", "[3] procman", "[4] evince", "[5] xbmc", 6, 7, 8, 9 }, s, layouts[1])
    else
       tags[s] = awful.tag({ 1, 2, 3, 4, 5, 6, 7, 8, 9  }, s, layouts[1])
    end
