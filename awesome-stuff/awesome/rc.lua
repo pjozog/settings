@@ -54,7 +54,7 @@ for s = 1, screen.count() do
    tag6 = "procman"
    if screen.count() == 2 then
       tag2 = "nautilus"
-      tag3 = "media"
+      tag3 = "misc"
       tag6 = "vbox"
    end
    if s == 1 then
