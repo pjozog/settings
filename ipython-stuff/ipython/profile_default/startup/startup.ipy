@@ -1,2 +1,4 @@
 %load_ext autoreload
 %autoreload 2
+%precision 4
+numpy.set_printoptions(threshold=sys.maxint)

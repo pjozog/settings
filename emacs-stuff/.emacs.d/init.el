@@ -199,10 +199,6 @@
 (add-to-list 'load-path
              (concat (file-name-as-directory my-emacs-dir) "plugins/emacs-ipython-notebook/lisp"))
 
-;; (require 'anything-match-plugin)
-;; (require 'anything-config)
-;; (require 'anything-etags+)
-(require 'htmlize)
 (require 'matlab)
 (require 'cmake-mode)
 (require 'lua-mode)
