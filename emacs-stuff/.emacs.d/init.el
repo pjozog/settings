@@ -166,6 +166,15 @@
   (interactive)
   (compile "compile2"))
 
+(defun c-c++-header ()
+  "sets either c-mode or c++-mode, whichever is appropriate for
+header, based on presence of .c file"
+  (interactive)
+  (let ((c-file (concat (substring (buffer-file-name) 0 -1) "c")))
+    (if (file-exists-p c-file)
+        (c-mode)
+      (c++-mode))))
+
 ;; --------------------------------------------------
 ;; Aliases
 ;; --------------------------------------------------
@@ -366,16 +375,16 @@
 ;; --------------------------------------------------
 ;; Language-specific settings
 ;; --------------------------------------------------
-(setq auto-mode-alist (cons '("\\.m$" . octave-mode) auto-mode-alist))
-(setq auto-mode-alist (cons '("\\.txt$" . mediawiki-mode) auto-mode-alist))
-(setq auto-mode-alist (cons '("CMakeLists\\.txt$" . cmake-mode) auto-mode-alist))
-(setq auto-mode-alist (cons '("\\.lcm$" . java-mode) auto-mode-alist))
-(setq auto-mode-alist (cons '("Doxyfile$" . conf-mode) auto-mode-alist))
-(setq auto-mode-alist (cons '("\\.shell_aliases$" . sh-mode) auto-mode-alist))
-(setq auto-mode-alist (cons '("\\.SRC$" . asm-mode) auto-mode-alist))
-(setq auto-mode-alist (cons '("\\.isam$" . python-mode) auto-mode-alist))
-(setq auto-mode-alist (cons '("\\.moos$" . conf-mode) auto-mode-alist))
-(setq matlab-fill-code nil)
+(add-to-list 'auto-mode-alist '("\\.txt$" . mediawiki-mode))
+(add-to-list 'auto-mode-alist '("CMakeLists\\.txt$" . cmake-mode))
+(add-to-list 'auto-mode-alist '("\\.lcm$" . java-mode))
+(add-to-list 'auto-mode-alist '("Doxyfile$" . conf-mode))
+(add-to-list 'auto-mode-alist '("\\.shell_aliases$" . sh-mode))
+(add-to-list 'auto-mode-alist '("\\.SRC$" . asm-mode))
+(add-to-list 'auto-mode-alist '("\\.isam$" . python-mode))
+(add-to-list 'auto-mode-alist '("\\.moos$" . conf-mode))
+(add-to-list 'auto-mode-alist '("\\.h\\'" . c-c++-header))
+(setq matlabf-fill-code nil)
 
 ;; set default C style to 4-space indentation with "cc-mode" style (from rme-linux)
 (setq c-default-style
