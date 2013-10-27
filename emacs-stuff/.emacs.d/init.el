@@ -544,5 +544,6 @@ header, based on presence of .c file"
 (setq linum-format "%d ")
 (dired (getenv "HOME"))
 (switch-to-buffer (user-login-name))
+(setq split-height-threshold 90)
 (split-window-sensibly (selected-window))
 (switch-to-buffer "*scratch*")
