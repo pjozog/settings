@@ -1,12 +1,15 @@
 #!/bin/bash
 
 #USE SSH TO ENCRYPT VNC TRAFFIC:
- #forward port 12345 on localhost to 5901 on bubbles:
- ssh -f paul@pjozog.dyndns.org -L 12345:pjozog.dyndns.org:5901 -N
- #the 5901 is the port that the application (vnc) uses
- #12345 is the port to access on localhost
- #run vncviewer:
- vncviewer localhost:12345
+# let's say the remote router has port 33 forwarded to port 22 on one of its clients
+# Further, let's say that client has apache running on port 80, but the router blocks port 80 for all outside connections
+# What we'd like is to access the firewalled client's webpage.
+# To conceptually complicate things, the router has a web server running on port 80, accessible only from the LAN
+# Just do:
+ ssh -p 33 username@ip.of.router.org -L 12345:localhost:80
+ #wait to login...leave session running
+# now we can securely login from the current computer using the address
+ http://localhost:12345
 
 #PASSWORD-ENCRYPT A FILE USING GPG:
  gpg -c plaintext
