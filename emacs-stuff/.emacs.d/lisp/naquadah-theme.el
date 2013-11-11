@@ -167,7 +167,7 @@
  '(default (:background background :foreground aluminium-1))
  '(shadow (:foreground aluminium-3))
  '(secondary-selection (:background sky-blue-3))
- '(cursor (:background scarlet-red-3))
+ '(cursor (:background "red"))
  '(hl-line (:background aluminium-6))
  '(idle-highlight (:foreground "#ff0000" :weight bold))
  '(highline-face (:background "#470000"))
