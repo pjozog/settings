@@ -158,14 +158,6 @@
   (untabify-buffer)
   (whitespace-cleanup))
 
-(defun my-compile ()
-  (interactive)
-  (compile "compile"))
-
-(defun my-compile2 ()
-  (interactive)
-  (compile "compile2"))
-
 (defun c-c++-header ()
   "sets either c-mode or c++-mode, whichever is appropriate for
 header, based on presence of .c file"
@@ -181,8 +173,12 @@ header, based on presence of .c file"
 (defalias 'yes-or-no-p 'y-or-n-p) ;; That 'yes' or 'no' shit is anoying:
 (defalias 'man 'woman) ;; Doesn't work at startup?
 (defalias 'cf 'customize-face)
-(defalias 'c 'my-compile)
-(defalias 'cc 'my-compile2)
+(defalias 'c (lambda ()
+               (interactive)
+               (compile "compile")))
+(defalias 'cc (lambda ()
+                (interactive)
+                (compile "compile2")))
 (defalias 'ac (lambda ()
                 (interactive)
                 (if auto-complete-mode
@@ -272,6 +268,8 @@ header, based on presence of .c file"
 (setq woman-fill-column default-fill-column)
 (setq-default indicate-empty-lines t)
 (setq gdb-many-windows t)
+;; Makes bibtex-reformat align equals sign (=), too
+(setq bibtex-align-at-equal-sign t)
 
 ;; To keep myself happy
 (set-default 'indent-tabs-mode nil)
