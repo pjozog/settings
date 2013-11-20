@@ -272,6 +272,7 @@ header, based on presence of .c file"
 (setq woman-fill-column default-fill-column)
 (setq-default indicate-empty-lines t)
 (setq gdb-many-windows t)
+(setq ns-command-modifier 'meta)
 
 ;; To keep myself happy
 (set-default 'indent-tabs-mode nil)
@@ -529,9 +530,16 @@ header, based on presence of .c file"
  '(font-latex-string-face ((((class color) (background dark)) (:foreground "#A2AB64"))))
  '(org-column ((t (:background "#000000" :strike-through nil :underline nil :slant normal :weight normal :height 98 :family "DejaVu Sans Mono")))))
 
-(if (string-equal "paul-laptop" system-name)
-    (set-face-attribute 'default nil :height 75 :family "ubuntu mono")
-  (set-face-attribute 'default nil :height 100 :family "ubuntu mono"))
+;; os-specific stuff:
+;; GNU/Linux
+(if (string-equal "gnu/linux" system-type)
+    (if (string-equal "paul-laptop" system-name)
+        (set-face-attribute 'default nil :height 75 :family "ubuntu mono")
+      (set-face-attribute 'default nil :height 100 :family "ubuntu mono")))
+
+;; OS X
+(if (string-equal "darwin" system-type)
+    (setq ns-command-modifier 'meta))
 
 (open-filelist '("~/.emacs.d/init.el" "~/.shell_aliases" "~/.profile"
                  "~/.config/openbox/autostart.sh"
