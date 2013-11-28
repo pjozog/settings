@@ -27,7 +27,7 @@
           (package-install p)))
 
       (ido-mode t)
-      (ido-ubiquitous t)
+      (ido-ubiquitous-mode)
       ;; Use regular find-tag (no ido)
       (setq ido-ubiquitous-command-exceptions '(find-tag))
 
@@ -305,6 +305,9 @@ header, based on presence of .c file"
 ;; Number of killed things to remember
 (setq kill-ring-max 6000)
 
+;; Autocomplete in M-x
+(smex-initialize)
+
 ;; My key bindings
 (global-set-key (kbd "C-x h") 'global-highline-mode)
 (global-set-key (kbd "C-x l") 'linum-mode)
@@ -340,6 +343,7 @@ header, based on presence of .c file"
 (global-set-key (kbd "M-Q") (lambda ()
                               (interactive)
                               (fill-paragraph 1)))
+(global-set-key (kbd "M-x") 'smex)
 (setq ediff-split-window-function 'split-window-horizontally)
 
 (put 'upcase-region 'disabled nil)
