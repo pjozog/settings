@@ -34,6 +34,10 @@
       (setq ido-use-virtual-buffers t
             recentf-max-saved-items 500)
 
+      ;; Autocomplete in M-x
+      (smex-initialize)
+      (global-set-key (kbd "M-x") 'smex)
+
       (add-hook 'prog-mode-hook (lambda () (font-lock-add-keywords
                                             nil '(("\\<\\(FIX\\|TODO\\|FIXME\\|HACK\\|REFACTOR\\|DEBUG\\):"
                                                    1 font-lock-warning-face t))))))
@@ -305,9 +309,6 @@ header, based on presence of .c file"
 ;; Number of killed things to remember
 (setq kill-ring-max 6000)
 
-;; Autocomplete in M-x
-(smex-initialize)
-
 ;; My key bindings
 (global-set-key (kbd "C-x h") 'global-highline-mode)
 (global-set-key (kbd "C-x l") 'linum-mode)
@@ -343,7 +344,6 @@ header, based on presence of .c file"
 (global-set-key (kbd "M-Q") (lambda ()
                               (interactive)
                               (fill-paragraph 1)))
-(global-set-key (kbd "M-x") 'smex)
 (setq ediff-split-window-function 'split-window-horizontally)
 
 (put 'upcase-region 'disabled nil)
