@@ -20,6 +20,7 @@ requiredDirs        = [os.path.join(homeDir, '.config'),
 
 #These home dir files will be links to version controlled files
 linkList = [os.path.join(homeDir, '.bashrc'),
+            os.path.join(homeDir, '.bash_profile'),
             os.path.join(homeDir, '.zshrc'),
             os.path.join(homeDir, '.profile'),
             os.path.join(homeDir, '.shell_aliases'),
@@ -50,6 +51,7 @@ linkList = [os.path.join(homeDir, '.bashrc'),
 
 #These will be the actual version controlled files (the sources)
 sourceList = [os.path.join(scriptDir, 'linux-stuff', '.bashrc'),
+              os.path.join(scriptDir,  'linux-stuff', '.bash_profile'),
               os.path.join(scriptDir,  'linux-stuff', '.zshrc'),
               os.path.join(scriptDir,  'linux-stuff', '.profile'),
               os.path.join(scriptDir,  'linux-stuff', '.shell_aliases'),
