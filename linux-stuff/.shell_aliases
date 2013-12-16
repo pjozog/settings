@@ -12,32 +12,25 @@ if [ $TERM = "xterm" ]; then
 fi
 
 function pu {
-    arg="$1"
-    fullname=$(readlink -f "$arg")
-    match=1
+	arg="$1"
+	fullname=$(readlink -f "$arg")
+	match=1
 
-    #See if our argument matches any in `dirs -v'
-    for f in $(dirs -v | sed 's@~@'${HOME}'@' | awk '{print $2}'); do
-	f=$(readlink -f "$f")
-	if [ "$f" = "$fullname" ]; then
-	    num=$(echo $match | awk '{print $1}')
-	    echo $num
-	    pushd +$num > /dev/null 2>&1
-	    unset arg match fullname num
-	    return
-	fi
-    done
+	#See if our argument matches any in `dirs -v'
+	for f in $(dirs -v | sed 's@~@'${HOME}'@' | awk '{print $2}'); do
+	    f=$(readlink -f "$f")
+	    if [ "$f" = "$fullname" ]; then
+		    num=$(echo $match | awk '{print $1}')
+		    pushd +$num
+		    unset arg match fullname num
+		    return
+	    fi
+	done
 
-    #If not, just continue as a regular `pushd'
-    pushd $arg > /dev/null 2>&1
-    unset arg match fullname num
-    
+	#If not, just continue as a regular `pushd'
+	pushd $arg
+	unset arg match fullname num
 }
-
-
-if [ -f $HOME/.svn_project ]; then
-    . $HOME/.svn_project
-fi
 
 #only list directories first if ls supports it
 ls --group-directories-first > /dev/null 2>&1
@@ -98,8 +91,6 @@ function hs() {
 #Git
 alias gs='git status -s'
 alias gd='git diff'
-
-alias ns='ssh -X -p 2219 pjozog@nslab.ccs.neu.edu'
 
 alias rmq='rm -r $(svn status | grep ^? | awk "{print \$2}")'
 alias hrmq='rm -r $(hs | grep ^? | awk "{print \$2}")'
