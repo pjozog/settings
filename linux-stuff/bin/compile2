@@ -2,10 +2,4 @@
 
 cd ${HOME}/perl-suppliments/build
 
-NUM_PROCS=4
-
-if [ $(hostname) = 'paul-laptop' ]; then
-    NUM_PROCS=2
-fi
-
-make -j${NUM_PROCS} > /dev/null
+make -j$(nproc) > /dev/null
