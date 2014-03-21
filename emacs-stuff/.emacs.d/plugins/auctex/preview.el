@@ -3518,7 +3518,7 @@ internal parameters, STR may be a log to insert into the current log."
 	     (preview-reraise-error process)))))
 
 (defconst preview-version (eval-when-compile
-  (let ((name "$Name:  $")
+  (let ((name "$Name: release_11_87 $")
 	(rev "$Revision: 1.286 $"))
     (or (when (string-match "\\`[$]Name: *release_\\([^ ]+\\) *[$]\\'" name)
 	  (setq name (match-string 1 name))

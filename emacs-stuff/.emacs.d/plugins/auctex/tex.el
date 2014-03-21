@@ -135,6 +135,7 @@ If nil, none is specified."
      TeX-run-TeX nil
      (context-mode) :help "Run ConTeXt until completion")
     ("BibTeX" "bibtex %s" TeX-run-BibTeX nil t :help "Run BibTeX")
+    ("Biber" "biber %s" TeX-run-Biber nil t :help "Run Biber")
     ,(if (or window-system (getenv "DISPLAY"))
 	'("View" "%V" TeX-run-discard-or-function t t :help "Run Viewer")
        '("View" "dvi2tty -q -w 132 %s" TeX-run-command t t
@@ -178,6 +179,8 @@ TeX-run-TeX: For TeX output.
 TeX-run-interactive: Run TeX or LaTeX interactively.
 
 TeX-run-BibTeX: For BibTeX output.
+
+TeX-run-Biber: For Biber output.
 
 TeX-run-compile: Use `compile' to run the process.
 
@@ -227,6 +230,7 @@ Any additional elements get just transferred to the respective menu entries."
 				(function-item TeX-run-TeX)
 				(function-item TeX-run-interactive)
 				(function-item TeX-run-BibTeX)
+				(function-item TeX-run-Biber)
 				(function-item TeX-run-compile)
 				(function-item TeX-run-shell)
 				(function-item TeX-run-discard)
@@ -1003,6 +1007,72 @@ The following built-in predicates are available:
   :group 'TeX-view
   :type '(alist :key-type symbol :value-type (group sexp)))
 
+(defun TeX-evince-dbus-p (&rest options)
+  "Return non-nil, if evince is installed and accessible via DBUS.
+Additional OPTIONS may be given to extend the check.  If none are
+given, only the minimal requirements needed by backward search
+are checked.  If OPTIONS include `:forward', which is currently
+the only option, then additional requirements needed by forward
+search are checked, too."
+  (and (not (featurep 'xemacs)) ; XEmacs 21.4 has no `require' with
+			        ; arity 3, and no dbus support anyway.
+       (require 'dbus nil :no-error)
+       (functionp 'dbus-register-signal)
+       (getenv "DBUS_SESSION_BUS_ADDRESS")
+       (executable-find "evince")
+       (or (not (memq :forward options))
+	   (let ((spec (dbus-introspect-get-method
+			:session "org.gnome.evince.Daemon"
+			"/org/gnome/evince/Daemon"
+			"org.gnome.evince.Daemon"
+			"FindDocument")))
+	     ;; FindDocument must exist, and its signature must be (String,
+	     ;; Boolean, String).  Evince versions between 2.30 and 2.91.x
+	     ;; didn't have the Boolean spawn argument we need to start evince
+	     ;; initially.
+	     (and spec
+		  (equal '("s" "b" "s")
+			 (delq nil (mapcar (lambda (elem)
+					     (when (and (listp elem)
+							(eq (car elem) 'arg))
+					       (cdr (caar (cdr elem)))))
+					   spec))))))))
+
+(defun TeX-evince-sync-view ()
+  "Focus the focused page/paragraph in Evince with the position
+of point in emacs by using Evince's DBUS API.  Used by default
+for the Evince viewer entry in `TeX-view-program-list-builtin' if
+the requirements are met."
+  (let* ((uri (concat "file://" (expand-file-name
+				 (concat file "." (TeX-output-extension)))))
+	 (owner (dbus-call-method
+		 :session "org.gnome.evince.Daemon"
+		 "/org/gnome/evince/Daemon"
+		 "org.gnome.evince.Daemon"
+		 "FindDocument"
+		 uri
+		 t)))
+    (if owner
+	(dbus-call-method
+	 :session owner
+	 "/org/gnome/evince/Window/0"
+	 "org.gnome.evince.Window"
+	 "SyncView"
+	 (buffer-file-name)
+	 (list :struct :int32 (line-number-at-pos) :int32 (1+ (current-column)))
+	 :uint32 (let ((time (float-time)))
+		   ;; FIXME: Evince wants a timestamp as UInt32, but POSIX time
+		   ;; is too large for emacs integers on 32 bit systems.  Emacs
+		   ;; 24.2 will allow providing DBUS ints as floats, and this
+		   ;; dbus version will be identifiable by its new variables
+		   ;; `dbus-compiled-version' and `dbus-runtime-version'.  But
+		   ;; it seems providing just 1 as timestamp has no negative
+		   ;; consequences, anyway.
+		   (if (> most-positive-fixnum time)
+		       (round time)
+		     1)))
+      (error "Couldn't find the Evince instance for %s" uri))))
+
 (defvar TeX-view-program-list-builtin
   (cond
    ((eq system-type 'windows-nt)
@@ -1017,7 +1087,7 @@ The following built-in predicates are available:
 ;;       ("displayline" "displayline %n %o %b")
 ;;       ("open" "open %o")))
    (t
-    '(("xdvi" ("%(o?)xdvi"
+    `(("xdvi" ("%(o?)xdvi"
 	       (mode-io-correlate " -sourceposition \"%n %b\" -editor \"%cS\"")
 	       ((paper-a4 paper-portrait) " -paper a4")
 	       ((paper-a4 paper-landscape) " -paper a4r")
@@ -1031,7 +1101,15 @@ The following built-in predicates are available:
       ("dvips and gv" "%(o?)dvips %d -o && gv %f")
       ("gv" "gv %o")
       ("xpdf" ("xpdf -remote %s -raise %o" (mode-io-correlate " %(outpage)")))
-      ("Evince" ("evince" (mode-io-correlate " -p %(outpage)") " %o"))
+      ("Evince" ,(if (TeX-evince-dbus-p :forward)
+		     'TeX-evince-sync-view
+		   `("evince" (mode-io-correlate
+			       ;; With evince 3, -p N opens the page *labeled* N,
+			       ;; and -i,--page-index the physical page N.
+			       ,(if (string-match "--page-index"
+						  (shell-command-to-string "evince --help"))
+				    " -i %(outpage)"
+				  " -p %(outpage)")) " %o")))
       ("Okular" ("okular --unique %o" (mode-io-correlate "#src:%n%b")))
       ("xdg-open" "xdg-open %o"))))
   "Alist of built-in viewer specifications.
@@ -1275,10 +1353,8 @@ It should be one of the following symbols:\n\n"
      (lambda (arg) (memq arg (mapcar 'car TeX-engine-alist-builtin))))
 
 (defun TeX-engine-set (type)
-  (concat "Set TeX engine to TYPE.
-TYPE can be one of the following symbols:\n"
-	  (mapconcat (lambda (x) (format "* `%s'" (car x)))
-		     (TeX-engine-alist) "\n"))
+  "Set TeX engine to TYPE.
+For available TYPEs, see variable `TeX-engine'."
   (interactive (list (completing-read "Engine: "
 				      (mapcar (lambda (x)
 						(symbol-name (car x)))
@@ -1385,7 +1461,7 @@ This is the case if `TeX-source-correlate-start-server-flag' is non-nil."
 		    (call-process LaTeX-command
 				  nil (list standard-output nil) nil "--help"))
 		(error ""))))
-    (if (string-match "^[ ]*-synctex" help)
+    (if (string-match "^[ ]*-?-synctex" help)
 	'synctex
       'source-specials)))
 
@@ -1467,11 +1543,7 @@ SyncTeX are recognized."
   (TeX-set-mode-name 'TeX-source-correlate-mode t t)
   (setq TeX-source-correlate-start-server-flag TeX-source-correlate-mode)
   ;; Register Emacs for the SyncSource DBUS signal emitted by Evince.
-  (when (and (fboundp 'dbus-register-signal)
-	     (fboundp 'dbus-call-method)
-	     (getenv "DBUS_SESSION_BUS_ADDRESS")
-	     (executable-find "evince"))
-    (require 'dbus)
+  (when (TeX-evince-dbus-p)
     (dbus-register-signal
      :session nil "/org/gnome/evince/Window/0"
      "org.gnome.evince.Window" "SyncSource"
@@ -1601,13 +1673,18 @@ enabled and the `synctex' binary is available."
   "Return the page corresponding to the position in the current buffer.
 This method assumes that the document was compiled with SyncTeX
 enabled and the `synctex' binary is available."
-  (let ((file (file-relative-name (buffer-file-name)
+  (let* ((file (file-relative-name (buffer-file-name)
 				   (file-name-directory
-				    (TeX-active-master)))))
-    ;; On some systems, synctex wants foo/bar.tex for multifile docs, while on
-    ;; others it wants ./foo/bar.tex.  So try both variants before falling back
-    ;; to page 1.
-    (or (TeX-synctex-output-page-1 file)
+				    (TeX-active-master))))
+	 (abs-file (concat (expand-file-name (or (file-name-directory (TeX-active-master))
+						 (file-name-directory (buffer-file-name))))
+			   "./" file)))
+    ;; It's known that depending on synctex version one of
+    ;; /absolute/path/./foo/bar.tex, foo/bar.tex, or ./foo/bar.tex (relative to
+    ;; TeX-master, and the "." in the absolute path is important) are needed.
+    ;; So try all variants before falling back to page 1.
+    (or (TeX-synctex-output-page-1 abs-file)
+	(TeX-synctex-output-page-1 file)
 	(TeX-synctex-output-page-1 (concat "./" file))
 	"1")))
 
@@ -1710,6 +1787,12 @@ already established, don't do anything."
   :type 'string)
   (make-variable-buffer-local 'TeX-command-BibTeX)
 
+(defcustom TeX-command-Biber "Biber"
+  "*The name of the Biber entry in `TeX-command-list'."
+  :group 'TeX-command-name
+  :type 'string)
+  (make-variable-buffer-local 'TeX-command-Biber)
+
 (defcustom TeX-command-Show "View"
   "*The default command to show (view or print) a TeX file.
 Must be the car of an entry in `TeX-command-list'."
@@ -1748,7 +1831,8 @@ Must be the car of an entry in `TeX-command-list'."
   '("\\.aux" "\\.bbl" "\\.blg" "\\.brf" "\\.fot"
     "\\.glo" "\\.gls" "\\.idx" "\\.ilg" "\\.ind"
     "\\.lof" "\\.log" "\\.lot" "\\.nav" "\\.out"
-    "\\.snm" "\\.toc" "\\.url" "\\.synctex\\.gz")
+    "\\.snm" "\\.toc" "\\.url" "\\.synctex\\.gz"
+    "\\.bcf" "\\.run\\.xml")
   "List of regexps matching suffixes of files to be cleaned.
 Used as a default in TeX, LaTeX and docTeX mode.")
 
@@ -3221,8 +3305,10 @@ If TEX is a directory, generate style files for all files in the directory."
 	       (concat (file-name-as-directory auto)
 		       (TeX-strip-extension tex TeX-all-extensions t)
 		       ".el"))))
-	((TeX-match-extension tex (append TeX-file-extensions
-					  BibTeX-file-extensions))
+	((TeX-match-extension tex (TeX-delete-duplicate-strings
+				   (append TeX-file-extensions
+					   BibTeX-file-extensions
+					   TeX-Biber-file-extensions)))
 	 (save-excursion
 	   (set-buffer (let (enable-local-eval)
 			 (find-file-noselect tex)))
@@ -3242,7 +3328,8 @@ If TEX is a directory, generate style files for all files in the directory."
   (unless (file-directory-p TeX-auto-global)
     (make-directory TeX-auto-global))
   (let ((TeX-file-extensions '("cls" "sty"))
-	(BibTeX-file-extensions nil))
+	(BibTeX-file-extensions nil)
+	(TeX-Biber-file-extensions nil))
     (mapc (lambda (macro) (TeX-auto-generate macro TeX-auto-global))
 	  TeX-macro-global))
   (byte-recompile-directory TeX-auto-global 0))
@@ -3539,7 +3626,7 @@ Check for potential LaTeX environments."
 
   (make-variable-buffer-local 'TeX-default-extension)
 
-(defvar TeX-doc-extenstions
+(defvar TeX-doc-extensions
   '("dvi" "pdf" "ps" "txt" "html" "dvi.gz" "pdf.gz" "ps.gz" "txt.gz" "html.gz"
     "dvi.bz2" "pdf.bz2" "ps.bz2" "txt.bz2" "html.bz2")
   "File extensions of documentation files.")
@@ -3556,6 +3643,11 @@ a string as element.  Its value is obtained from `TeX-command-output-list'.
 Access to the value should be through the function `TeX-output-extension'.")
 
   (make-variable-buffer-local 'TeX-output-extension)
+
+(defcustom TeX-Biber-file-extensions '("bib" "ris" "xml")
+  "Valid file extensions for Biber files."
+  :group 'TeX-file-extension
+  :type '(repeat (string :format "%v")))
 
 (defcustom BibTeX-file-extensions '("bib")
   "Valid file extensions for BibTeX files."
@@ -5091,6 +5183,7 @@ With optional argument ARG, also reload the style hooks."
       (setq TeX-style-hook-list nil
 	    BibTeX-global-style-files nil
 	    BibTeX-global-files nil
+	    TeX-Biber-global-files nil
 	    TeX-global-input-files nil))
   (let ((TeX-auto-save t))
     (if (buffer-modified-p)

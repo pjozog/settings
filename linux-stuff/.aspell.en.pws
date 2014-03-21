@@ -1,4 +1,4 @@
-personal_ws-1.1 en 56 
+personal_ws-1.1 en 57 
 multibeam
 Haralick
 indices
@@ -13,6 +13,7 @@ LIDAR
 linearizing
 sparsification
 percept
+novelly
 Haralick's
 Ozog
 hauv
@@ -31,8 +32,8 @@ PJO
 hyperellipses
 HAUV's
 parameterized
-DOF
 odometry
+DOF
 Mahalanobis
 backend
 EKF
