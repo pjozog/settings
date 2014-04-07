@@ -1,4 +1,4 @@
-personal_ws-1.1 en 58 
+personal_ws-1.1 en 62 
 multibeam
 Haralick
 indices
@@ -12,6 +12,7 @@ Zisserman
 LIDAR
 linearizing
 sparsification
+saliency
 percept
 novelly
 Haralick's
@@ -27,6 +28,8 @@ hyperparameters
 TODO
 et
 stereophotogrammetry
+stereopsis
+Stereopsis
 homography
 ONR
 PJO
@@ -46,6 +49,7 @@ unary
 online
 parameterization
 Advisor
+timeline
 Jacobian
 Zisserman's
 linearization
