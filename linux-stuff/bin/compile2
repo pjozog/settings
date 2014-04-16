@@ -1,5 +1,0 @@
-#!/bin/bash
-
-cd ${HOME}/perl-suppliments/build
-
-make -j$(nproc) > /dev/null

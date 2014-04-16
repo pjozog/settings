@@ -179,10 +179,10 @@ header, based on presence of .c file"
 (defalias 'cf 'customize-face)
 (defalias 'c (lambda ()
                (interactive)
-               (compile "compile")))
+               (compile "compile ~/perls/build")))
 (defalias 'cc (lambda ()
                 (interactive)
-                (compile "compile2")))
+                (compile "compile ~/perl-suppliments/build")))
 (defalias 'ac (lambda ()
                 (interactive)
                 (if auto-complete-mode
