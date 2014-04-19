@@ -17,79 +17,106 @@ requiredDirs        = [os.path.join(homeDir, '.config'),
                        os.path.join(homeDir, 'Documents', 'MATLAB'),
                        os.path.join(homeDir, '.ssh')]
 
-#These home dir files will be links to version controlled files
-linkList = [os.path.join(homeDir, '.bashrc'),
-            os.path.join(homeDir, '.bash_profile'),
-            os.path.join(homeDir, '.zshrc'),
-            os.path.join(homeDir, '.profile'),
-            os.path.join(homeDir, '.shell_aliases'),
-            os.path.join(homeDir, '.emacs.d'),
-            os.path.join(homeDir, '.config', 'openbox'),
-            os.path.join(homeDir, '.config', 'awesome'),
-            os.path.join(homeDir, '.config', 'ipython'),
-            os.path.join(homeDir, '.matplotlib'),
-            os.path.join(homeDir, '.config', 'matplotlib'),
-            os.path.join(homeDir, '.config', 'autostart.sh'),
-            os.path.join(homeDir, '.config', 'gtk-3.0', 'settings.ini'),
-            os.path.join(homeDir, '.fonts.conf'),
-            os.path.join(homeDir, '.dircolors'),
-            os.path.join(homeDir, '.pythonrc'),
-            os.path.join(homeDir, 'texpath'),
-            os.path.join(homeDir, '.hgrc'),
-            os.path.join(homeDir, '.gitconfig'),
-            os.path.join(homeDir, '.gtkrc-mine'),
-            os.path.join(homeDir, '.themes', 'Radiance_ob_test'),
-            os.path.join(homeDir, '.Xmodmap'),
-            os.path.join(homeDir, '.svn_project'),
-            os.path.join(homeDir, '.aspell.en.pws'),
-            os.path.join(homeDir, '.fonts'),
-            os.path.join(homeDir, '.xinitrc'),
-            os.path.join(homeDir, '.gdbinit'),
-            os.path.join(homeDir, 'Documents', 'MATLAB', 'startup.m'),
-            os.path.join(homeDir, '.ssh', 'config')]
+linkPairs = [
+    # format:
+    # (path to version-controlled file,
+    #  name of symbolic link)
+    # 
+    # think of it as running 'ln -sf <first_thing> <second_thing>'
 
-#These will be the actual version controlled files (the sources)
-sourceList = [os.path.join(scriptDir, 'linux-stuff', '.bashrc'),
-              os.path.join(scriptDir,  'linux-stuff', '.bash_profile'),
-              os.path.join(scriptDir,  'linux-stuff', '.zshrc'),
-              os.path.join(scriptDir,  'linux-stuff', '.profile'),
-              os.path.join(scriptDir,  'linux-stuff', '.shell_aliases'),
-              os.path.join(scriptDir,  'emacs-stuff', '.emacs.d'),
-              os.path.join(scriptDir, 'openbox-stuff', 'openbox'),
-              os.path.join(scriptDir, 'awesome-stuff', 'awesome'),
-              os.path.join(scriptDir, 'ipython-stuff', 'ipython'),
-              os.path.join(scriptDir, 'ipython-stuff', 'matplotlib'),
-              os.path.join(scriptDir, 'ipython-stuff', 'matplotlib'),
-              os.path.join(scriptDir, 'linux-stuff', 'autostart.sh'),
-              os.path.join(scriptDir, 'linux-stuff', 'settings.ini'),
-              os.path.join(scriptDir, 'linux-stuff', '.fonts.conf'),
-              os.path.join(scriptDir, 'linux-stuff', '.dircolors'),
-              os.path.join(scriptDir, 'linux-stuff', '.pythonrc'),
-              os.path.join(scriptDir, 'texpath'),
-              os.path.join(scriptDir, 'mercurial-stuff', '.hgrc'),
-              os.path.join(scriptDir, 'git-stuff', '.gitconfig'),
-              os.path.join(scriptDir, 'linux-stuff', '.gtkrc-mine'),
-              os.path.join(scriptDir, 'openbox-stuff', 'Radiance_ob_test'),
-              os.path.join(scriptDir, 'linux-stuff', '.Xmodmap'),
-              os.path.join(scriptDir, 'linux-stuff', '.svn_project'),
-              os.path.join(scriptDir, 'linux-stuff', '.aspell.en.pws'),
-              os.path.join(scriptDir, 'linux-stuff', '.fonts'),
-              os.path.join(scriptDir, 'linux-stuff', '.xinitrc'),
-              os.path.join(scriptDir, 'gdb-stuff', '.gdbinit'),
-              os.path.join(scriptDir, 'matlab-stuff', 'startup.m'),
-              os.path.join(dropboxDir, 'ssh', 'config')]
+    (os.path.join(scriptDir, 'linux-stuff', '.bashrc'),
+     os.path.join(homeDir, '.bashrc')),
 
-sourceToDestination = []
+    (os.path.join(scriptDir,  'linux-stuff', '.bash_profile'),
+     os.path.join(homeDir, '.bash_profile')),
 
-#make a list of tupple pairs
-for i in range(0, len(linkList)):
-    sourceToDestination.append ((sourceList[i], linkList[i]))
+    (os.path.join(scriptDir,  'linux-stuff', '.zshrc'),
+     os.path.join(homeDir, '.zshrc')),
 
-#add all the stuff in the 'bin' directory to sourceToDestination
+    (os.path.join(scriptDir,  'linux-stuff', '.profile'),
+     os.path.join(homeDir, '.profile')),
+
+    (os.path.join(scriptDir,  'linux-stuff', '.shell_aliases'),
+     os.path.join(homeDir, '.shell_aliases')),
+
+    (os.path.join(scriptDir,  'emacs-stuff', '.emacs.d'),
+     os.path.join(homeDir, '.emacs.d')),
+
+    (os.path.join(scriptDir, 'openbox-stuff', 'openbox'),
+     os.path.join(homeDir, '.config', 'openbox')),
+    
+    (os.path.join(scriptDir, 'awesome-stuff', 'awesome'),
+     os.path.join(homeDir, '.config', 'awesome')),
+
+    (os.path.join(scriptDir, 'ipython-stuff', 'ipython'),
+     os.path.join(homeDir, '.config', 'ipython')),
+
+    (os.path.join(homeDir, '.config', 'matplotlib'),
+     os.path.join(homeDir, '.matplotlib')),
+
+    (os.path.join(scriptDir, 'ipython-stuff', 'matplotlib'),
+     os.path.join(homeDir, '.config', 'matplotlib')),
+
+    (os.path.join(scriptDir, 'linux-stuff', 'autostart.sh'),
+     os.path.join(homeDir, '.config', 'autostart.sh')),
+
+    (os.path.join(scriptDir, 'linux-stuff', 'settings.ini'),
+     os.path.join(homeDir, '.config', 'gtk-3.0', 'settings.ini')),
+
+    (os.path.join(scriptDir, 'linux-stuff', '.fonts.conf'),
+     os.path.join(homeDir, '.fonts.conf')),
+
+    (os.path.join(scriptDir, 'linux-stuff', '.dircolors'),
+     os.path.join(homeDir, '.dircolors')),
+
+    (os.path.join(scriptDir, 'linux-stuff', '.pythonrc'),
+     os.path.join(homeDir, '.pythonrc')),
+
+    (os.path.join(scriptDir, 'texpath'),
+     os.path.join(homeDir, 'texpath')),
+
+    (os.path.join(scriptDir, 'mercurial-stuff', '.hgrc'),
+     os.path.join(homeDir, '.hgrc')),
+
+    (os.path.join(scriptDir, 'git-stuff', '.gitconfig'),
+     os.path.join(homeDir, '.gitconfig')),
+
+    (os.path.join(scriptDir, 'linux-stuff', '.gtkrc-mine'),
+     os.path.join(homeDir, '.gtkrc-mine')),
+
+    (os.path.join(scriptDir, 'openbox-stuff', 'Radiance_ob_test'),
+     os.path.join(homeDir, '.themes', 'Radiance_ob_test')),
+
+    (os.path.join(scriptDir, 'linux-stuff', '.Xmodmap'),
+     os.path.join(homeDir, '.Xmodmap')),
+
+    (os.path.join(scriptDir, 'linux-stuff', '.svn_project'),
+     os.path.join(homeDir, '.svn_project')),
+
+    (os.path.join(scriptDir, 'linux-stuff', '.aspell.en.pws'),
+     os.path.join(homeDir, '.aspell.en.pws')),
+
+    (os.path.join(scriptDir, 'linux-stuff', '.fonts'),
+     os.path.join(homeDir, '.fonts')),
+
+    (os.path.join(scriptDir, 'linux-stuff', '.xinitrc'),
+     os.path.join(homeDir, '.xinitrc')),
+
+    (os.path.join(scriptDir, 'gdb-stuff', '.gdbinit'),
+     os.path.join(homeDir, '.gdbinit')),
+
+    (os.path.join(scriptDir, 'matlab-stuff', 'startup.m'),
+     os.path.join(homeDir, 'Documents', 'MATLAB', 'startup.m')),
+
+    (os.path.join(homeDir, '.ssh', 'config'),
+     os.path.join(dropboxDir, 'ssh', 'config'))
+]
+
+#add all the stuff in the 'bin' directory to linkPairs
 for basename in os.listdir(binDir):
-    source = os.path.abspath(os.path.join(binDir, basename))
-    dest = os.path.join(homeDir, 'bin', basename)
-    sourceToDestination.append ((source, dest))
+    sourceName = os.path.abspath(os.path.join(binDir, basename))
+    linkName = os.path.join(homeDir, 'bin', basename)
+    linkPairs.append ((sourceName, linkName))
 
 def createLink(src, dest):
     os.symlink(src, dest)
@@ -120,16 +147,15 @@ def main():
     for d in requiredDirs:
         makeDir(d)
 
-    for src_dest in sourceToDestination:
-        src = src_dest[0]
-        dest = src_dest[1]
-        printInfo("Creating link: " + dest)
-        removeFile(dest)
-        createLink(src, dest)
+    for tuple in linkPairs:
+        sourceName = tuple[0]
+        linkName = tuple[1]
+        printInfo("Creating link: " + linkName)
+        removeFile(linkName)
+        createLink(sourceName, linkName)
         
     return 0
     
 if __name__ == '__main__':
 
     sys.exit(main())
-
