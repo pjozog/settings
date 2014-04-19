@@ -11,7 +11,6 @@ homeDir             = os.getenv('HOME')
 dropboxDir          = os.path.join(os.getenv('HOME'), 'Dropbox')
 requiredDirs        = [os.path.join(homeDir, '.config'),
                        os.path.join(homeDir, '.config', 'gtk-3.0'),
-                       os.path.join(homeDir, '.matplotlib'),
                        os.path.join(homeDir, 'bin'),
                        os.path.join(homeDir, '.themes'),
                        os.path.join(homeDir, 'Documents'),
@@ -28,7 +27,8 @@ linkList = [os.path.join(homeDir, '.bashrc'),
             os.path.join(homeDir, '.config', 'openbox'),
             os.path.join(homeDir, '.config', 'awesome'),
             os.path.join(homeDir, '.config', 'ipython'),
-            os.path.join(homeDir, '.matplotlib', 'matplotlibrc'),
+            os.path.join(homeDir, '.matplotlib'),
+            os.path.join(homeDir, '.config', 'matplotlib'),
             os.path.join(homeDir, '.config', 'autostart.sh'),
             os.path.join(homeDir, '.config', 'gtk-3.0', 'settings.ini'),
             os.path.join(homeDir, '.fonts.conf'),
@@ -39,8 +39,7 @@ linkList = [os.path.join(homeDir, '.bashrc'),
             os.path.join(homeDir, '.gitconfig'),
             os.path.join(homeDir, '.gtkrc-mine'),
             os.path.join(homeDir, '.themes', 'Radiance_ob_test'),
-            os.path.join(homeDir, '.xmodmap'),
-            os.path.join(homeDir, '.swapcaps'),
+            os.path.join(homeDir, '.Xmodmap'),
             os.path.join(homeDir, '.svn_project'),
             os.path.join(homeDir, '.aspell.en.pws'),
             os.path.join(homeDir, '.fonts'),
@@ -59,7 +58,8 @@ sourceList = [os.path.join(scriptDir, 'linux-stuff', '.bashrc'),
               os.path.join(scriptDir, 'openbox-stuff', 'openbox'),
               os.path.join(scriptDir, 'awesome-stuff', 'awesome'),
               os.path.join(scriptDir, 'ipython-stuff', 'ipython'),
-              os.path.join(scriptDir, 'ipython-stuff', 'matplotlibrc'),
+              os.path.join(scriptDir, 'ipython-stuff', 'matplotlib'),
+              os.path.join(scriptDir, 'ipython-stuff', 'matplotlib'),
               os.path.join(scriptDir, 'linux-stuff', 'autostart.sh'),
               os.path.join(scriptDir, 'linux-stuff', 'settings.ini'),
               os.path.join(scriptDir, 'linux-stuff', '.fonts.conf'),
@@ -70,8 +70,7 @@ sourceList = [os.path.join(scriptDir, 'linux-stuff', '.bashrc'),
               os.path.join(scriptDir, 'git-stuff', '.gitconfig'),
               os.path.join(scriptDir, 'linux-stuff', '.gtkrc-mine'),
               os.path.join(scriptDir, 'openbox-stuff', 'Radiance_ob_test'),
-              os.path.join(scriptDir, 'linux-stuff', '.xmodmap'),
-              os.path.join(scriptDir, 'linux-stuff', '.swapcaps'),
+              os.path.join(scriptDir, 'linux-stuff', '.Xmodmap'),
               os.path.join(scriptDir, 'linux-stuff', '.svn_project'),
               os.path.join(scriptDir, 'linux-stuff', '.aspell.en.pws'),
               os.path.join(scriptDir, 'linux-stuff', '.fonts'),
@@ -80,17 +79,17 @@ sourceList = [os.path.join(scriptDir, 'linux-stuff', '.bashrc'),
               os.path.join(scriptDir, 'matlab-stuff', 'startup.m'),
               os.path.join(dropboxDir, 'ssh', 'config')]
 
-sourceToDestination = {}
+sourceToDestination = []
 
 #make a list of tupple pairs
 for i in range(0, len(linkList)):
-    sourceToDestination[sourceList[i]] = linkList[i]
+    sourceToDestination.append ((sourceList[i], linkList[i]))
 
 #add all the stuff in the 'bin' directory to sourceToDestination
 for basename in os.listdir(binDir):
     source = os.path.abspath(os.path.join(binDir, basename))
     dest = os.path.join(homeDir, 'bin', basename)
-    sourceToDestination[source] = dest;
+    sourceToDestination.append ((source, dest))
 
 def createLink(src, dest):
     os.symlink(src, dest)
@@ -121,8 +120,9 @@ def main():
     for d in requiredDirs:
         makeDir(d)
 
-    for src, dest in sourceToDestination.items():
-
+    for src_dest in sourceToDestination:
+        src = src_dest[0]
+        dest = src_dest[1]
         printInfo("Creating link: " + dest)
         removeFile(dest)
         createLink(src, dest)

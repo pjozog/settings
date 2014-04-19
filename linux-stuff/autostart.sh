@@ -6,15 +6,10 @@ export OOO_FORCE_DESKTOP='gnome'
 #Temporary fix for latex files being used in openbox
 eval "$(grep 'export ...INPUTS=' ~/.bashrc)"
 
-[ -f ${HOME}/.swapcaps ] && xmodmap .swapcaps
-[ -f ${HOME}/swapcaps ] && xmodmap swapcaps
-[ -f ${HOME}/.xmodmap  ] && xmodmap .xmodmap
+# .Xmodmap should be sourced by lightdm on startup.  No need to put it here
 
+# xrandr
 rr
-
-xmodmap -e "remove mod4 = grave"
-xmodmap -e "remove mod1 = Alt_R"
-xmodmap -e "add mod4 = Alt_R"
 
 if [ -f ${HOME}/currentWallpaper ]; then
     Esetroot -s ${HOME}/currentWallpaper    
@@ -37,8 +32,7 @@ which xfce4-power-manager > /dev/null 2>&1
 which ubuntuone-launch > /dev/null 2>&1
 [ $? -eq 0 ] && ubuntuone-launch &
 
-gnome-volume-control-applet &
-nm-applet &
+nm-applet --sm-disable &
 
 gnome-screensaver &
 
