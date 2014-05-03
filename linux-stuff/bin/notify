@@ -7,6 +7,8 @@ if len (sys.argv) != 4:
     print 'Usage: %s [title] [text] [urgency (0, 1, or 2)]' % os.path.basename (sys.argv[0])
     sys.exit (-1)
 
+scriptdir = os.path.dirname (os.path.realpath(__file__))
+
 NONE = 0
 IMPORTANT = 1
 URGENT = 2
@@ -16,10 +18,10 @@ path = "/org/freedesktop/Notifications"
 interface = "org.freedesktop.Notifications"
 app_name = "Test Application"
 id_num_to_replace = 0
-icon = "/usr/share/icons/oxygen/128x128/actions/dialog-ok-apply.png"
+icon = os.path.join (scriptdir, "dialog-ok-apply.png")
 urgency = int (sys.argv[3])
 if urgency == URGENT:
-    icon = "/usr/share/icons/oxygen/128x128/actions/application-exit.png"
+    icon = os.path.join (scriptdir, "application-exit.png")
 title = sys.argv[1]
 text = sys.argv[2]
 actions_list = ''
