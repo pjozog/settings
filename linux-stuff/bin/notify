@@ -16,10 +16,10 @@ path = "/org/freedesktop/Notifications"
 interface = "org.freedesktop.Notifications"
 app_name = "Test Application"
 id_num_to_replace = 0
-icon = "/usr/share/icons/Humanity/status/48/gtk-dialog-info.svg"
+icon = "/usr/share/icons/oxygen/128x128/actions/dialog-ok-apply.png"
 urgency = int (sys.argv[3])
 if urgency == URGENT:
-    icon = "/usr/share/icons/Humanity/status/48/dialog-warning.svg"
+    icon = "/usr/share/icons/oxygen/128x128/actions/application-exit.png"
 title = sys.argv[1]
 text = sys.argv[2]
 actions_list = ''
