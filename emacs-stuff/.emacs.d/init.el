@@ -518,7 +518,8 @@ header, based on presence of .c file"
  '(uniquify-buffer-name-style (quote forward) nil (uniquify))
  '(vc-follow-symlinks t)
  '(vc-hg-log-switches (quote ("-v")))
- '(search-whitespace-regexp "[ \t\r\n]+"))
+ '(search-whitespace-regexp "[ \t\r\n]+")
+ '(c-doc-comment-style 'gtkdoc))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
