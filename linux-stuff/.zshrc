@@ -29,6 +29,8 @@ alias history='history 1'
 
 setopt NO_HUP
 setopt auto_cd
+setopt inc_append_history
+setopt share_history
 
 #So you don't have to run rehash everytime new executable is added to
 #PATH
