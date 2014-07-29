@@ -315,9 +315,6 @@ setopt completeinword
 # Don't send SIGHUP to background processes when the shell exits.
 setopt nohup
 
-# make cd push the old directory onto the directory stack.
-setopt auto_pushd
-
 # avoid "beep"ing
 setopt nobeep
 
@@ -544,7 +541,6 @@ if [[ -z "$SHELL" ]] ; then
 fi
 
 # color setup for ls:
-check_com -c dircolors && eval $(dircolors -b)
 # color setup for ls on OS X / FreeBSD:
 isdarwin && export CLICOLOR=1
 isfreebsd && export CLICOLOR=1
@@ -655,9 +651,6 @@ grmlcomp() {
     # ignore duplicate entries
     zstyle ':completion:*:history-words'   remove-all-dups yes
     zstyle ':completion:*:history-words'   stop yes
-
-    # match uppercase from lowercase
-    zstyle ':completion:*'                 matcher-list 'm:{a-z}={A-Z}'
 
     # separate matches into groups
     zstyle ':completion:*:matches'         group 'yes'
@@ -1529,28 +1522,6 @@ HISTFILE=${ZDOTDIR:-${HOME}}/.zsh_history
 isgrmlcd && HISTSIZE=500  || HISTSIZE=5000
 isgrmlcd && SAVEHIST=1000 || SAVEHIST=10000 # useful for setopt append_history
 
-# dirstack handling
-
-DIRSTACKSIZE=${DIRSTACKSIZE:-20}
-DIRSTACKFILE=${DIRSTACKFILE:-${ZDOTDIR:-${HOME}}/.zdirs}
-
-if [[ -f ${DIRSTACKFILE} ]] && [[ ${#dirstack[*]} -eq 0 ]] ; then
-    dirstack=( ${(f)"$(< $DIRSTACKFILE)"} )
-    # "cd -" won't work after login by just setting $OLDPWD, so
-    [[ -d $dirstack[1] ]] && cd $dirstack[1] && cd $OLDPWD
-fi
-
-chpwd() {
-    if (( $DIRSTACKSIZE <= 0 )) || [[ -z $DIRSTACKFILE ]]; then return; fi
-    local -ax my_stack
-    my_stack=( ${PWD} ${dirstack} )
-    if is42 ; then
-        builtin print -l ${(u)my_stack} >! ${DIRSTACKFILE}
-    else
-        uprint my_stack >! ${DIRSTACKFILE}
-    fi
-}
-
 # directory based profiles
 
 if is433 ; then
@@ -1925,7 +1896,7 @@ grml_prompt_token_default=(
     host              '%m '
     jobs              '[%j running job(s)] '
     newline           $'\n'
-    path              '%40<..<%~%<< '
+    path              '%4~ '
     percent           '%# '
     rc                '%(?..%? )'
     rc-always         '%?'
@@ -3338,6 +3309,18 @@ if (( GRMLSMALL_SPECIFIC > 0 )) && isgrmlsmall ; then
     unfunction man2     &> /dev/null
 
 fi
+
+# to disable the grml prompt:
+# prompt off
+
+prompt grml-large
+zstyle ':prompt:grml-large:left:setup' items rc jobs shell-level change-root time date newline user at host path vcs percent
+zstyle ':prompt:grml-large:*:items:user' pre '%B%F{gree}'
+zstyle ':prompt:grml-large:*:items:at' pre '%B%F{red}'
+zstyle ':prompt:grml-large:*:items:host' pre '%B%F{yellow}'
+zstyle ':prompt:grml-large:*:items:time' pre '%B%F{red}'
+zstyle ':prompt:grml-large:*:items:date' pre '%B%F{red}'
+zstyle ':prompt:grml-large:*:items:path' pre '%B%F{cyan}'
 
 zrclocal
 
