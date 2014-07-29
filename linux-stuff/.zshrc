@@ -398,46 +398,6 @@ check_com() {
     return 1
 }
 
-# creates an alias and precedes the command with
-# sudo if $EUID is not zero.
-salias() {
-    emulate -L zsh
-    local only=0 ; local multi=0
-    local key val
-    while [[ $1 == -* ]] ; do
-        case $1 in
-            (-o) only=1 ;;
-            (-a) multi=1 ;;
-            (--) shift ; break ;;
-            (-h)
-                printf 'usage: salias [-h|-o|-a] <alias-expression>\n'
-                printf '  -h      shows this help text.\n'
-                printf '  -a      replace '\'' ; '\'' sequences with '\'' ; sudo '\''.\n'
-                printf '          be careful using this option.\n'
-                printf '  -o      only sets an alias if a preceding sudo would be needed.\n'
-                return 0
-                ;;
-            (*) printf "unkown option: '%s'\n" "$1" ; return 1 ;;
-        esac
-        shift
-    done
-
-    if (( ${#argv} > 1 )) ; then
-        printf 'Too many arguments %s\n' "${#argv}"
-        return 1
-    fi
-
-    key="${1%%\=*}" ;  val="${1#*\=}"
-    if (( EUID == 0 )) && (( only == 0 )); then
-        alias -- "${key}=${val}"
-    elif (( EUID > 0 )) ; then
-        (( multi > 0 )) && val="${val// ; / ; sudo }"
-        alias -- "${key}=sudo ${val}"
-    fi
-
-    return 0
-}
-
 # a "print -l ${(u)foo}"-workaround for pre-4.2.0 shells
 # usage: uprint foo
 #   Where foo is the *name* of the parameter you want printed.
@@ -485,19 +445,6 @@ xcat() {
     fi
 
     [[ -r $1 ]] && cat $1
-    return 0
-}
-
-# Remove these functions again, they are of use only in these
-# setup files. This should be called at the end of .zshrc.
-xunfunction() {
-    emulate -L zsh
-    local -a funcs
-    funcs=(salias xcat xsource xunfunction zrcautoload zrcautozle)
-    for func in $funcs ; do
-        [[ -n ${functions[$func]} ]] \
-            && unfunction $func
-    done
     return 0
 }
 
@@ -1357,15 +1304,6 @@ key=(
 zrcautoload zmv
 zrcautoload zed
 
-# we don't want to quote/espace URLs on our own...
-# if autoload -U url-quote-magic ; then
-#    zle -N self-insert url-quote-magic
-#    zstyle ':url-quote-magic:*' url-metas '*?[]^()~#{}='
-# else
-#    print 'Notice: no url-quote-magic available :('
-# fi
-alias url-quote='autoload -U url-quote-magic ; zle -N self-insert url-quote-magic'
-
 #m# k ESC-h Call \kbd{run-help} for the 1st word on the command line
 alias run-help >&/dev/null && unalias run-help
 for rh in run-help{,-git,-svk,-svn}; do
@@ -2146,57 +2084,6 @@ hash -d tt=/usr/share/doc/texttools-doc
 hash -d www=/var/www
 #d# end
 
-# some aliases
-if check_com -c screen ; then
-    if [[ $UID -eq 0 ]] ; then
-        if [[ -r /etc/grml/screenrc ]]; then
-            alias screen="${commands[screen]} -c /etc/grml/screenrc"
-        fi
-    elif [[ -r $HOME/.screenrc ]] ; then
-        alias screen="${commands[screen]} -c $HOME/.screenrc"
-    else
-        if [[ -r /etc/grml/screenrc_grml ]]; then
-            alias screen="${commands[screen]} -c /etc/grml/screenrc_grml"
-        else
-            if [[ -r /etc/grml/screenrc ]]; then
-                alias screen="${commands[screen]} -c /etc/grml/screenrc"
-            fi
-        fi
-    fi
-fi
-
-# do we have GNU ls with color-support?
-if [[ "$TERM" != dumb ]]; then
-    #a1# List files with colors (\kbd{ls -CF \ldots})
-    alias ls='ls -CF '${ls_options:+"${ls_options[*]}"}
-    #a1# List all files, with colors (\kbd{ls -la \ldots})
-    alias la='ls -la '${ls_options:+"${ls_options[*]}"}
-    #a1# List files with long colored list, without dotfiles (\kbd{ls -l \ldots})
-    alias ll='ls -l '${ls_options:+"${ls_options[*]}"}
-    #a1# List files with long colored list, human readable sizes (\kbd{ls -hAl \ldots})
-    alias lh='ls -hAl '${ls_options:+"${ls_options[*]}"}
-    #a1# List files with long colored list, append qualifier to filenames (\kbd{ls -lF \ldots})\\&\quad(\kbd{/} for directories, \kbd{@} for symlinks ...)
-    alias l='ls -lF '${ls_options:+"${ls_options[*]}"}
-else
-    alias ls='ls -CF'
-    alias la='ls -la'
-    alias ll='ls -l'
-    alias lh='ls -hAl'
-    alias l='ls -lF'
-fi
-
-alias mdstat='cat /proc/mdstat'
-alias ...='cd ../../'
-
-# generate alias named "$KERNELVERSION-reboot" so you can use boot with kexec:
-if [[ -x /sbin/kexec ]] && [[ -r /proc/cmdline ]] ; then
-    alias "$(uname -r)-reboot"="kexec -l --initrd=/boot/initrd.img-"$(uname -r)" --command-line=\"$(cat /proc/cmdline)\" /boot/vmlinuz-"$(uname -r)""
-fi
-
-# see http://www.cl.cam.ac.uk/~mgk25/unicode.html#term for details
-alias term2iso="echo 'Setting terminal to iso mode' ; print -n '\e%@'"
-alias term2utf="echo 'Setting terminal to utf-8 mode'; print -n '\e%G'"
-
 # make sure it is not assigned yet
 [[ -n ${aliases[utf2iso]} ]] && unalias utf2iso
 utf2iso() {
@@ -2289,42 +2176,6 @@ $bg[white]$fg[black]
 Please report wishes + bugs to the grml-team: http://grml.org/bugs/
 Enjoy your grml system with the zsh!$reset_color"
 }
-
-# debian stuff
-if [[ -r /etc/debian_version ]] ; then
-    #a3# Execute \kbd{apt-cache search}
-    alias acs='apt-cache search'
-    #a3# Execute \kbd{apt-cache show}
-    alias acsh='apt-cache show'
-    #a3# Execute \kbd{apt-cache policy}
-    alias acp='apt-cache policy'
-    #a3# Execute \kbd{apt-get dist-upgrade}
-    salias adg="apt-get dist-upgrade"
-    #a3# Execute \kbd{apt-get install}
-    salias agi="apt-get install"
-    #a3# Execute \kbd{aptitude install}
-    salias ati="aptitude install"
-    #a3# Execute \kbd{apt-get upgrade}
-    salias ag="apt-get upgrade"
-    #a3# Execute \kbd{apt-get update}
-    salias au="apt-get update"
-    #a3# Execute \kbd{aptitude update ; aptitude safe-upgrade}
-    salias -a up="aptitude update ; aptitude safe-upgrade"
-    #a3# Execute \kbd{dpkg-buildpackage}
-    alias dbp='dpkg-buildpackage'
-    #a3# Execute \kbd{grep-excuses}
-    alias ge='grep-excuses'
-
-    # get a root shell as normal user in live-cd mode:
-    if isgrmlcd && [[ $UID -ne 0 ]] ; then
-       alias su="sudo su"
-     fi
-
-    #a1# Take a look at the syslog: \kbd{\$PAGER /var/log/syslog}
-    salias llog="$PAGER /var/log/syslog"     # take a look at the syslog
-    #a1# Take a look at the syslog: \kbd{tail -f /var/log/syslog}
-    salias tlog="tail -f /var/log/syslog"    # follow the syslog
-fi
 
 # sort installed Debian-packages by size
 if check_com -c dpkg-query ; then
@@ -2683,71 +2534,6 @@ export COLORTERM="yes"
 
 # aliases
 
-# general
-#a2# Execute \kbd{du -sch}
-alias da='du -sch'
-#a2# Execute \kbd{jobs -l}
-alias j='jobs -l'
-
-# listing stuff
-#a2# Execute \kbd{ls -lSrah}
-alias dir="ls -lSrah"
-#a2# Only show dot-directories
-alias lad='ls -d .*(/)'
-#a2# Only show dot-files
-alias lsa='ls -a .*(.)'
-#a2# Only files with setgid/setuid/sticky flag
-alias lss='ls -l *(s,S,t)'
-#a2# Only show symlinks
-alias lsl='ls -l *(@)'
-#a2# Display only executables
-alias lsx='ls -l *(*)'
-#a2# Display world-{readable,writable,executable} files
-alias lsw='ls -ld *(R,W,X.^ND/)'
-#a2# Display the ten biggest files
-alias lsbig="ls -flh *(.OL[1,10])"
-#a2# Only show directories
-alias lsd='ls -d *(/)'
-#a2# Only show empty directories
-alias lse='ls -d *(/^F)'
-#a2# Display the ten newest files
-alias lsnew="ls -rtlh *(D.om[1,10])"
-#a2# Display the ten oldest files
-alias lsold="ls -rtlh *(D.Om[1,10])"
-#a2# Display the ten smallest files
-alias lssmall="ls -Srl *(.oL[1,10])"
-#a2# Display the ten newest directories and ten newest .directories
-alias lsnewdir="ls -rthdl *(/om[1,10]) .*(D/om[1,10])"
-#a2# Display the ten oldest directories and ten oldest .directories
-alias lsolddir="ls -rthdl *(/Om[1,10]) .*(D/Om[1,10])"
-
-# some useful aliases
-#a2# Remove current empty directory. Execute \kbd{cd ..; rmdir \$OLDCWD}
-alias rmcdir='cd ..; rmdir $OLDPWD || cd $OLDPWD'
-
-#a2# ssh with StrictHostKeyChecking=no \\&\quad and UserKnownHostsFile unset
-alias insecssh='ssh -o "StrictHostKeyChecking=no" -o "UserKnownHostsFile=/dev/null"'
-#a2# scp with StrictHostKeyChecking=no \\&\quad and UserKnownHostsFile unset
-alias insecscp='scp -o "StrictHostKeyChecking=no" -o "UserKnownHostsFile=/dev/null"'
-
-# work around non utf8 capable software in utf environment via $LANG and luit
-if check_com isutfenv && check_com luit ; then
-    if check_com -c mrxvt ; then
-        isutfenv && [[ -n "$LANG" ]] && \
-            alias mrxvt="LANG=${LANG/(#b)(*)[.@]*/$match[1].iso885915} luit mrxvt"
-    fi
-
-    if check_com -c aterm ; then
-        isutfenv && [[ -n "$LANG" ]] && \
-            alias aterm="LANG=${LANG/(#b)(*)[.@]*/$match[1].iso885915} luit aterm"
-    fi
-
-    if check_com -c centericq ; then
-        isutfenv && [[ -n "$LANG" ]] && \
-            alias centericq="LANG=${LANG/(#b)(*)[.@]*/$match[1].iso885915} luit centericq"
-    fi
-fi
-
 # useful functions
 
 #f5# Backup \kbd{file {\rm to} file\_timestamp}
@@ -2814,15 +2600,6 @@ modified() {
 }
 # modified() was named new() in earlier versions, add an alias for backwards compatibility
 check_com new || alias new=modified
-
-# use colors when GNU grep with color-support
-if (( $#grep_options > 0 )); then
-    o=${grep_options:+"${grep_options[*]}"}
-    #a2# Execute \kbd{grep -{}-color=auto}
-    alias grep='grep '$o
-    alias egrep='egrep '$o
-    unset o
-fi
 
 # Translate DE<=>EN
 # 'translate' looks up fot a word in a file with language-to-language
@@ -3002,7 +2779,6 @@ _simple_extract()
         '*:Archive Or Uri:__archive_or_uri'
 }
 compdef _simple_extract simple-extract
-alias se=simple-extract
 
 #f5# Set all ulimit parameters to \kbd{unlimited}
 allulimit() {
