@@ -1,0 +1,7 @@
+if [ ! -n "$PROFILE_SOURCED" ]; then
+    . ${HOME}/.profile
+fi
+
+if [ -f ${HOME}/.shell_aliases ]; then
+    . ${HOME}/.shell_aliases
+fi

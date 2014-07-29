@@ -33,6 +33,12 @@ linkPairs = [
     (os.path.join(scriptDir,  'linux-stuff', '.zshrc'),
      os.path.join(homeDir, '.zshrc')),
 
+    (os.path.join(scriptDir,  'linux-stuff', '.zshrc.local'),
+     os.path.join(homeDir, '.zshrc.local')),
+
+    (os.path.join(scriptDir,  'linux-stuff', '.zshrc.pre'),
+     os.path.join(homeDir, '.zshrc.pre')),
+
     (os.path.join(scriptDir,  'linux-stuff', '.profile'),
      os.path.join(homeDir, '.profile')),
 
