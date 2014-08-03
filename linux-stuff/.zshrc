@@ -456,6 +456,11 @@ zrclocal() {
     return 0
 }
 
+zrcprompt() {
+    xsource "${ZDOTDIR:-${HOME}}/.zshrc.prompt"
+    return 0
+}
+
 # locale setup
 if (( ZSH_NO_DEFAULT_LOCALE == 0 )); then
     xsource "/etc/default/locale"
@@ -2961,12 +2966,15 @@ fi
 
 prompt grml-large
 zstyle ':prompt:grml-large:left:setup' items rc jobs shell-level change-root time date newline user at host path vcs percent
-zstyle ':prompt:grml-large:*:items:user' pre '%B%F{gree}'
+zstyle ':prompt:grml-large:*:items:user' pre '%B%F{green}'
 zstyle ':prompt:grml-large:*:items:at' pre '%B%F{red}'
 zstyle ':prompt:grml-large:*:items:host' pre '%B%F{yellow}'
 zstyle ':prompt:grml-large:*:items:time' pre '%B%F{red}'
 zstyle ':prompt:grml-large:*:items:date' pre '%B%F{red}'
 zstyle ':prompt:grml-large:*:items:path' pre '%B%F{cyan}'
+
+# custom alterations to prompt (ie, for certain hostnames). Do NOT track this on github.
+zrcprompt
 
 zrclocal
 
