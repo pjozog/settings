@@ -11,7 +11,6 @@ if [ $# -ne 2 ]; then
     exit
 fi
 
-cd "${BACKUP_TGZ}"
 tar -xvzpf "$BACKUP_TGZ" -C "${DEST_DRIVE}"
 cd "${DEST_DRIVE}"
 mkdir media
