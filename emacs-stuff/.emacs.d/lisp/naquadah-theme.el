@@ -332,6 +332,10 @@
 
  '(dired-directory (:foreground sky-blue-1))
  '(dired-symlink (:bold t :foreground "cyan"))
+ '(dired-file-name (:bold t :foreground "white"))
+ '(diredp-directory (:foreground sky-blue-1))
+ '(diredp-symlink (:bold t :foreground "cyan"))
+ '(diredp-file-name (:bold t :foreground "white"))
  '(dired-marked (:bold t :foreground butter-1))
 
  '(mm-uu-extract (:background aluminium-6))

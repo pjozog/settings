@@ -1,4 +1,4 @@
-personal_ws-1.1 en 63 
+personal_ws-1.1 en 64 
 multibeam
 Haralick
 indices
@@ -12,8 +12,8 @@ Zisserman
 LIDAR
 linearizing
 sparsification
-saliency
 performant
+saliency
 percept
 novelly
 Haralick's
@@ -37,8 +37,8 @@ PJO
 hyperellipses
 HAUV's
 parameterized
-odometry
 DOF
+odometry
 Mahalanobis
 backend
 EKF
@@ -46,6 +46,7 @@ RBT
 curtiss
 LM
 MLE
+regularizer
 unary
 online
 parameterization
