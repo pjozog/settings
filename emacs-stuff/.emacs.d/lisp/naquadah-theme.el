@@ -331,10 +331,10 @@
  '(which-func (:foreground sky-blue-1))
 
  '(dired-directory (:foreground sky-blue-1))
- '(dired-symlink (:bold t :foreground "cyan"))
+ '(dired-symlink (:bold t :foreground "#FFFFFFFF7474"))
  '(dired-file-name (:bold t :foreground "white"))
  '(diredp-directory (:foreground sky-blue-1))
- '(diredp-symlink (:bold t :foreground "cyan"))
+ '(diredp-symlink (:bold t :foreground "#FFFFFFFF7474"))
  '(diredp-file-name (:bold t :foreground "white"))
  '(dired-marked (:bold t :foreground butter-1))
 

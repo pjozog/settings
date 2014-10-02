@@ -451,6 +451,7 @@ header, based on presence of .c file"
                              (turn-on-reftex)
                              (define-key LaTeX-mode-map (kbd "C-7") 'insert-amps)
                              (orgtbl-mode)
+                             (TeX-PDF-mode-on)
                              (TeX-global-PDF-mode t)))
 
 ;; this makes control-tab function like org-mode

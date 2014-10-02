@@ -163,3 +163,5 @@ alias gentags='ctags-exuberant -Rea ~/perls/src && ctags-exuberant -Rea ~/perls/
 
 alias ipn='cd ~/Dropbox/code/ipython-notebooks/ && \ipython notebook --pylab inline'
 alias ipn3='cd ~/Dropbox/code/ipython-notebooks/ && \ipython notebook --pylab=wx inline'
+
+alias mk='make -j$(nproc)'
