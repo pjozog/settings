@@ -118,7 +118,10 @@ linkPairs = [
      os.path.join(homeDir, '.ssh', 'config')),
 
     (os.path.join(dropboxDir, 'zsh', 'prompt'),
-     os.path.join(homeDir, '.zshrc.prompt'))
+     os.path.join(homeDir, '.zshrc.prompt')),
+
+     (os.path.join(scriptDir, 'linux-stuff', '.xbindkeysrc.scm'),
+      os.path.join(homeDir, '.xbindkeysrc.scm'))
 ]
 
 #add all the stuff in the 'bin' directory to linkPairs
