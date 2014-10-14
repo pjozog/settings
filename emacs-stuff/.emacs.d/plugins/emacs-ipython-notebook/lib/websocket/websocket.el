@@ -855,7 +855,8 @@ These are defined as in `websocket-open'."
                   "\r\n")
           (url-host (url-generic-parse-url url))
           key
-          system-name
+          ;; hack
+          "http://127.0.0.1"
           protocol))
 
 (defun websocket-get-server-response (websocket client-protocols client-extensions)
