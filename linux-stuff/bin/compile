@@ -3,7 +3,7 @@
 function my-notify ()
 {
     if [ $DISPLAY ]; then
-        notify "$1" "$2" "$3"
+        notify.py "$1" "$2" "$3"
     fi
 }
 
