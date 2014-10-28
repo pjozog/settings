@@ -1,8 +1,12 @@
 #!/bin/sh
 
 which terminator > /dev/null
-[ $? -eq 0 ] && myTerm=terminator || myTerm=xterm
+[ $? -eq 0 ] && hasTerminator=1
 
-$myTerm --geometry 600x600 "$@"
+if [ $hasTerminator -eq 1 ]; then
+    terminator --geometry 600x600 "$@"
+else
+    xterm "$@"
+fi
 
 #Eterm -F lime -sl 1000 --buttonbar 0 -c red -b black -f white -g 95x55
