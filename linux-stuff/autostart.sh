@@ -8,15 +8,6 @@ eval "$(grep 'export ...INPUTS=' ~/.bashrc)"
 
 # .Xmodmap should be sourced by lightdm on startup.  No need to put it here
 
-# xrandr
-rr
-
-if [ -f ${HOME}/currentWallpaper ]; then
-    Esetroot -s ${HOME}/currentWallpaper    
-else
-    Esetroot -s ~/pics/netwall/lava_mario.jpg
-fi
-
 which nvidia-settings > /dev/null 2>&1
 [ $? -eq 0 ] && nvidia-settings --load-config-only &
 
