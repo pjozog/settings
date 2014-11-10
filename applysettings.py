@@ -11,6 +11,7 @@ homeDir             = os.getenv('HOME')
 dropboxDir          = os.path.join(os.getenv('HOME'), 'Dropbox')
 requiredDirs        = [os.path.join(homeDir, '.config'),
                        os.path.join(homeDir, '.config', 'gtk-3.0'),
+                       os.path.join(homeDir, '.config', 'terminator'),
                        os.path.join(homeDir, 'bin'),
                        os.path.join(homeDir, '.themes'),
                        os.path.join(homeDir, 'Documents'),
@@ -121,7 +122,10 @@ linkPairs = [
      os.path.join(homeDir, '.zshrc.prompt')),
 
      (os.path.join(scriptDir, 'linux-stuff', '.xbindkeysrc.scm'),
-      os.path.join(homeDir, '.xbindkeysrc.scm'))
+      os.path.join(homeDir, '.xbindkeysrc.scm')),
+
+     (os.path.join(scriptDir, 'terminator-stuff', 'config'),
+      os.path.join(homeDir, '.config', 'terminator', 'config'))
 ]
 
 #add all the stuff in the 'bin' directory to linkPairs

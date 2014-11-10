@@ -95,3 +95,6 @@ smbpasswd
 
 # disabling samba for a user
 sudo smbpasswd -d username
+
+# awesome window manager and terminator resizing when in float mode:
+# turn off "Window Geometry Hints" in terminator's preferences
