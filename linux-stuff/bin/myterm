@@ -1,12 +1,4 @@
 #!/bin/sh
 
 which terminator > /dev/null
-[ $? -eq 0 ] && hasTerminator=1
-
-if [ $hasTerminator -eq 1 ]; then
-    terminator --geometry 600x600 "$@"
-else
-    xterm "$@"
-fi
-
-#Eterm -F lime -sl 1000 --buttonbar 0 -c red -b black -f white -g 95x55
+[ $? -eq 0 ] && terminator --geometry 600x600 "$@" || xterm "$@"
