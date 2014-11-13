@@ -402,6 +402,9 @@
  '(rst-level-5-face (:foreground gradient-5))
  '(rst-level-6-face (:foreground gradient-6))
 
+ ;; LaTeX-mode
+ '(font-latex-sedate-face (:foreground gradient-1))
+
  ;; ipython notebook
  '(ein:cell-input-area (:background "#000000")))
 
