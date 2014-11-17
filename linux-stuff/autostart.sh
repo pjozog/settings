@@ -3,9 +3,6 @@
 export GTK2_RC_FILES=/usr/share/themes/Radiance/gtk-2.0/gtkrc:${HOME}/.gtkrc-mine
 export OOO_FORCE_DESKTOP='gnome'
 
-#Temporary fix for latex files being used in openbox
-eval "$(grep 'export ...INPUTS=' ~/.bashrc)"
-
 # .Xmodmap should be sourced by lightdm on startup.  No need to put it here
 
 which nvidia-settings > /dev/null 2>&1

@@ -54,11 +54,7 @@ alias fm='nautilus --no-desktop "$(pwd)"'
 alias less='less -i'
 alias e='emacsclient -n'
 alias et='emacsclient -t'
-alias snes9x='snes9x -conf ${HOME}/.snes96_snapshots/snes9x.conf'
 alias u='df -h .'
-alias mountthumb='sudo mount /dev/sdc1 /mnt/thumb -o uid=1000,gid=1000'
-alias mountsvn='sudo mount -t ext3 /dev/sdc1 /mnt/svn'
-alias c='chromium-browser'
 alias f='find . -iname $@'
 alias ..='cd ..'
 alias ...='cd ../..'
@@ -98,13 +94,6 @@ alias get='sudo apt-get install'
 alias search='apt-cache search'
 alias rs='rsync --stats --progress -avk'
 
-function k() {
-    arg="$1"
-    processToKill=$(ps aux | grep "$arg" | awk '{print $2}')
-    kill -9 $processToKill > /dev/null 2>&1
-    unset processToKill arg
-}
-
 function emacs_man() {
     emacsclient -n -e "(woman \"$1\")"
 }
@@ -112,19 +101,9 @@ if ! [ -n "$ZSH_VERSION" ]; then
     alias man=emacs_man
 fi
 
-#usenet .nzb function
-HELLANZBDIR=${HOME}/external/.hellanzb
-function mz() {
-    if [ ! -d ${HELLANZBDIR}/nzb/daemon.queue ]; then
-	mkdir -p ${HELLANZBDIR}/nzb/daemon.queue
-    fi
-    mv "$1" ${HELLANZBDIR}/nzb/daemon.queue
-}
-
 [ -f $HOME/.dircolors ] && eval $(dircolors -b $HOME/.dircolors)
 
 alias m='wmname LG3D; matlab'
-alias psy='wmname LG3D; cdp; ./perls-spy'
 
 which mycowsay > /dev/null 2>&1
 [ $? -eq 0 ] && mycowsay
@@ -156,7 +135,6 @@ export PATH=${HOME}/perls/build/bin:${PATH}
 
 #ipython
 alias ipython='ipython -i --pylab gtk --colors=Linux ~/.pythonrc'
-alias i='ipython'
 
 # common ctags for perls
 alias gentags='ctags-exuberant -Rea ~/perls/src && ctags-exuberant -Rea ~/perls/matlab && ctags-exuberant -Rea ~/perls/matlab && ctags-exuberant -Rea ~/perls/third-party/libbot2 && ctags-exuberant -Rea ~/perls/build/src/core/perls-lcmtypes && ctags-exuberant -Rea ~/perls/build/src/core/perls-lcmtypes++'

@@ -219,7 +219,6 @@ globalkeys = awful.util.table.join(
    -- Standard program
    -- My favorite programs
    awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),
-   awful.key({ modkey, "Shift"   }, "y", function () awful.util.spawn("mypython") end),
    awful.key({ modkey, "Shift"   }, "f", function () awful.util.spawn("firefox") end),
    awful.key({ modkey, "Shift"   }, "g", function () awful.util.spawn("firefox") end),
    awful.key({ modkey, "Shift"   }, "e", function () awful.util.spawn("emacs --debug-init") end),

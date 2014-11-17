@@ -1,4 +1,4 @@
 #!/bin/sh
 
 which terminator > /dev/null
-[ $? -eq 0 ] && terminator --geometry 600x600 "$@" || xterm "$@"
+[ $? -eq 0 ] && exec terminator --geometry 600x600 "$@" || exec xterm "$@"
