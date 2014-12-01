@@ -17,9 +17,6 @@ which xcompmgr > /dev/null 2>&1
 which xfce4-power-manager > /dev/null 2>&1
 [ $? -eq 0 ] && xfce4-power-manager &
 
-which ubuntuone-launch > /dev/null 2>&1
-[ $? -eq 0 ] && ubuntuone-launch &
-
 nm-applet --sm-disable &
 
 gnome-screensaver &
