@@ -1,0 +1,19 @@
+#!/usr/bin/env python
+
+from distutils.version import LooseVersion, StrictVersion
+import sys, os, subprocess
+
+NEW_NAUTILUS_VERSION = LooseVersion ('3.10')
+
+def getNautilusVersion ():
+    versionCheckProc = subprocess.Popen (['nautilus', '--version'], stdout=subprocess.PIPE)
+    versionCheckProc.wait ()
+    out, err = versionCheckProc.communicate ()
+    versionString = out.split ()[-1]
+    nautVersion = LooseVersion (versionString)
+    return nautVersion
+
+if getNautilusVersion () >= NEW_NAUTILUS_VERSION:
+    os.system (' '.join (['nautilus', '--new-window', '--no-desktop', os.getcwd ()]))
+else:
+    os.system (' '.join (['nautilus', '--no-desktop', os.getcwd ()]))

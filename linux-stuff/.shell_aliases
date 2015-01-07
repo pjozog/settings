@@ -50,7 +50,7 @@ alias eg='egrep --color=auto'
 #alias pu='pushd' #see above function
 alias po='popd'
 alias d='dirs -v'
-alias fm='nautilus --no-desktop "$(pwd)"'
+alias fm='file-manager'
 alias less='less -i'
 alias e='emacsclient -n'
 alias et='emacsclient -t'

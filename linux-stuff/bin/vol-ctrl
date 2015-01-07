@@ -4,12 +4,12 @@
 IF="Master"
 SECS="1"
 
-FONT="fixed"
+FONT="ubuntu-10"
 BG="grey"
 FG="black"
 XPOS="550"
 YPOS="400"
-WIDTH="205"
+WIDTH="250"
 
 #Probably do not customize
 PIPE="/tmp/dvolpipe"

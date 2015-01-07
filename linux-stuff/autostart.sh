@@ -11,9 +11,6 @@ which nvidia-settings > /dev/null 2>&1
 which dropbox > /dev/null 2>&1
 [ $? -eq 0 ] && dropbox start -i &
 
-which xcompmgr > /dev/null 2>&1
-[ $? -eq 0 ] && xcompmgr -a &
-
 which xfce4-power-manager > /dev/null 2>&1
 [ $? -eq 0 ] && xfce4-power-manager &
 
