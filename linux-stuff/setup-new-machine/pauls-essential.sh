@@ -64,6 +64,7 @@ addpkg \
     gnuplot \
     graphviz \
     gtk-doc-tools \
+    htop \
     ipython \
     ipython-notebook \
     libaa1-dev \
@@ -101,11 +102,13 @@ addpkg \
     mesa-common-dev \
     nautilus-dropbox \
     openbox \
+    openssh-server \
     python-dev \
     python-matplotlib \
     python-numpy \
     python-scipy \
     qt4-qtconfig \
+    sshfs \
     subversion \
     suckless-tools \
     terminator \
