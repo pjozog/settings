@@ -103,6 +103,7 @@ addpkg \
     nautilus-dropbox \
     openbox \
     openssh-server \
+    pavucontrol \
     python-dev \
     python-matplotlib \
     python-numpy \
@@ -165,3 +166,7 @@ sudo update-alternatives --config javac
 # install awesome-session
 sudo cp awesome-session /usr/bin
 sudo cp awesome.desktop /usr/share/xsessions
+
+# change to zsh
+echo 'Changing default shell to zsh, please enter your password'
+chsh -s /usr/bin/zsh

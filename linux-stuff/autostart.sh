@@ -5,6 +5,10 @@ export OOO_FORCE_DESKTOP='gnome'
 
 # .Xmodmap should be sourced by lightdm on startup.  No need to put it here
 
+# the idiots at Canonical took out --expire-time support for their desktop notification
+# frontend.  Just use awesome's superior frontend instead.
+killall notify-osd
+
 which nvidia-settings > /dev/null 2>&1
 [ $? -eq 0 ] && nvidia-settings --load-config-only &
 
