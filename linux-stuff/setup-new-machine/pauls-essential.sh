@@ -68,6 +68,7 @@ addpkg \
     ipython \
     ipython-notebook \
     libaa1-dev \
+    libatlas-base-dev \
     libavcodec-dev \
     libavformat-dev \
     libblas-dev \
@@ -92,6 +93,7 @@ addpkg \
     libqhull-dev \
     libraw1394-dev \
     libsdl1.2-dev \
+    libspnav-dev \
     libsuitesparse-dev \
     libtiff4-dev \
     libwxgtk2.8-dev \
@@ -114,6 +116,8 @@ addpkg \
     suckless-tools \
     terminator \
     vlc \
+    xautomation \
+    xbindkeys \
     xfce4-power-manager \
     xfonts-100dpi \
     xfonts-75dpi \
@@ -170,3 +174,7 @@ sudo cp awesome.desktop /usr/share/xsessions
 # change to zsh
 echo 'Changing default shell to zsh, please enter your password'
 chsh -s /usr/bin/zsh
+
+# run xbindkeys
+echo 'Running xbindkeys to enable horizontal scrolling in firefox'
+xbindkeys
