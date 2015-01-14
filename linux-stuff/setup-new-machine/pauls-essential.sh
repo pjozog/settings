@@ -53,6 +53,7 @@ addpkg \
     dbus \
     dbus-x11 \
     doxygen \
+    dvipng \
     dzen2 \
     emacs24 \
     fortune-mod \
@@ -65,8 +66,6 @@ addpkg \
     graphviz \
     gtk-doc-tools \
     htop \
-    ipython \
-    ipython-notebook \
     libaa1-dev \
     libatlas-base-dev \
     libavcodec-dev \
@@ -88,6 +87,7 @@ addpkg \
     libgps-dev \
     libgsl0-dev \
     libgtk2.0-dev \
+    libgtk-3-dev \
     liblapack-dev \
     libncurses-dev \
     libqhull-dev \
@@ -100,16 +100,18 @@ addpkg \
     libxi-dev \
     libxml2-dev \
     libxmu-dev \
+    libzmq-dev \
     meld \
     mesa-common-dev \
     nautilus-dropbox \
     openbox \
     openssh-server \
+    pandoc \
     pavucontrol \
     python-dev \
-    python-matplotlib \
-    python-numpy \
-    python-scipy \
+    python-gtk2-dev \
+    python-pip \
+    python-zmq \
     qt4-qtconfig \
     sshfs \
     subversion \
@@ -180,3 +182,13 @@ chsh -s /usr/bin/zsh
 # run xbindkeys
 echo 'Running xbindkeys to enable horizontal scrolling in firefox'
 xbindkeys
+
+# install python packages, some of which are broken on Ubuntu 14.04
+sudo pip install -U cython
+sudo pip install -U numpy
+sudo pip install -U scipy
+sudo pip install -U matplotlib
+sudo pip install -U pandas
+sudo pip install -U jinja2
+sudo pip install -U tornado
+sudo pip install -U ipython[all]

@@ -1,5 +1,5 @@
 #! /bin/sh
-":"; exec ${EMACS:-emacs} -Q -l "$0" "$@" # -*-emacs-lisp-*-
+":"; exec ${EMACS:-emacs} --no-init -Q -l "$0" "$@" # -*-emacs-lisp-*-
 ;;; zeroein.el --- Zero setup Emacs IPython Notebook client
 
 ;; Copyright (C) 2012- Takafumi Arakaki
@@ -72,7 +72,7 @@
 
 ;;; Configurations
 (eval-when-compile (require 'ein-notebooklist))
-(require 'ein)
+(require 'ein2)
 
 ;; auto-complete
 (setq ein:use-auto-complete-superpack t)

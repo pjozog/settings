@@ -1,3 +1,5 @@
+(setq request-backend 'url-retrieve)
+
 ;; Recite the holy words
 (defun confess-faith ()
   (interactive)
@@ -195,8 +197,6 @@ header, based on presence of .c file"
 ;; append my stuff to load-path
 (add-to-list 'load-path
              (concat (file-name-as-directory my-emacs-dir) "lisp"))
-(add-to-list 'load-path
-             (concat (file-name-as-directory my-emacs-dir) "lisp/ein"))
 (add-to-list 'load-path
              (concat (file-name-as-directory my-emacs-dir) "plugins"))
 (add-to-list 'load-path

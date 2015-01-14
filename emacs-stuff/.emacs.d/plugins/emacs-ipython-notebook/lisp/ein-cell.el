@@ -1,6 +1,6 @@
 ;;; ein-cell.el --- Cell module
 
-;; Copyright (C) 2012- Takafumi Arakaki
+;; (C) 2012- Takafumi Arakaki
 
 ;; Author: Takafumi Arakaki <aka.tkf at gmail.com>
 
@@ -156,8 +156,11 @@ See also: https://github.com/tkf/emacs-ipython-notebook/issues/94"
 
 
 ;;; Utils
+(defvar ein:mime-type-map
+  '((image/svg . svg) (image/png . png) (image/jpeg . jpeg)))
+
 (defun ein:insert-image (&rest args)
-  (let ((img (apply #'create-image args)))
+  (let* ((img (apply #'create-image args)))
     (if ein:slice-image
         (destructuring-bind (&optional rows cols)
             (when (listp ein:slice-image) ein:slice-image)
@@ -177,6 +180,7 @@ See also: https://github.com/tkf/emacs-ipython-notebook/issues/94"
    (input :initarg :input :type string
     :documentation "Place to hold data until it is rendered via `ewoc'.")
    (outputs :initarg :outputs :initform nil :type list)
+   (metadata :initarg :metadata :initform nil :type list) ;; For nbformat >= 4
    (events :initarg :events :type ein:events)
    (cell-id :initarg :cell-id :initform (ein:utils-uuid) :type string))
   "Notebook cell base class")
@@ -210,6 +214,7 @@ slot.")
 This cell is executed when the connected buffer is saved,
 provided that (1) this flag is `t' and (2) corresponding
 auto-execution mode flag in the connected buffer is `t'.")))
+
 
 (defclass ein:textcell (ein:basecell)
   ((cell-type :initarg :cell-type :initform "text")
@@ -247,16 +252,25 @@ auto-execution mode flag in the connected buffer is `t'.")))
   (apply (ein:cell-class-from-type type) "Cell" args))
 
 (defun ein:cell-from-json (data &rest args)
-  (ein:cell-init (apply #'ein:cell-from-type
-                        (plist-get data :cell_type) args) data))
+  (let ((cell (ein:cell-init (apply #'ein:cell-from-type
+                                    (plist-get data :cell_type) args)
+                             data)))
+    (if (plist-get data :metadata)
+        (ein:oset-if-empty cell :metadata (plist-get data :metadata)))
+    cell))
 
 (defmethod ein:cell-init ((cell ein:codecell) data)
   (ein:oset-if-empty cell :outputs (plist-get data :outputs))
-  (ein:oset-if-empty cell :input (plist-get data :input))
+  (ein:oset-if-empty cell :input (or (plist-get data :input)
+                                     (plist-get data :source)))
   (ein:aif (plist-get data :prompt_number)
-      (ein:oset-if-empty cell :input-prompt-number it))
+      (ein:oset-if-empty cell :input-prompt-number it)
+    (ein:aif (plist-get data :execution_count)
+        (ein:oset-if-empty cell :input-prompt-number it)))
   (ein:oset-if-empty cell :collapsed
-                     (let ((v (plist-get data :collapsed)))
+                     (let ((v (or (plist-get data :collapsed)
+                                  (plist-get (slot-value cell 'metadata)
+                                             :collapsed))))
                        (if (eql v json-false) nil v)))
   cell)
 
@@ -541,6 +555,7 @@ Called from ewoc pretty printer via `ein:cell-pp'."
         (("pyout")        (ein:cell-append-pyout        cell out))
         (("pyerr")        (ein:cell-append-pyerr        cell out))
         (("display_data") (ein:cell-append-display-data cell out))
+        (("execute_result") (ein:cell-append-display-data cell out))
         (("stream")       (ein:cell-append-stream       cell out))))))
 
 (defmethod ein:cell-insert-footer ((cell ein:basecell))
@@ -768,7 +783,11 @@ If END is non-`nil', return the location of next element."
      '(output-subarea))
     (("pyerr")
      '(output-subarea))
+    (("error")
+     '(output-subarea))
     (("display_data")
+     '(output-subarea))
+    (("execute_result")
      '(output-subarea))
     (("stream")
      (list 'output-stream 'output-subarea
@@ -832,7 +851,7 @@ Called from ewoc pretty printer via `ein:cell-insert-output'."
     ;; like normal terminal does not.
     (setq ansi-color-context nil))
   (let ((start (point)))
-    (ein:cell-append-stream-text-fontified (plist-get json :text) json)
+    (ein:cell-append-stream-text-fontified (or (plist-get json :text) "") json)
     (comint-carriage-motion start (point)))
   ;; NOTE: newlines for stream is handled in `ein:cell-insert-output'.
   ;; So do not insert newline here.
@@ -854,7 +873,7 @@ Called from ewoc pretty printer via `ein:cell-insert-output'."
   (if (and (fboundp 'shr-insert-document)
            (fboundp 'libxml-parse-xml-region))
       #'ein:output-type-prefer-pretty-text-over-html
-    '(emacs-lisp svg png jpeg text html latex javascript))
+    '(emacs-lisp svg image/svg png image/png jpeg image/jpeg text text/plain html text/html latex text/latex javascript text/javascript))
   "Output types to be used in notebook.
 First output-type found in this list will be used.
 This variable can be a list or a function returning a list given
@@ -878,10 +897,17 @@ HTML for other object.
 If the text type output contains a newline, it is assumed be a
 prettified text thus be used instead of HTML type."
   (if (ein:aand (plist-get data :text) (string-match-p "\n" it))
-      '(emacs-lisp svg png jpeg text html latex javascript)
-    '(emacs-lisp svg png jpeg html text latex javascript)))
+      '(emacs-lisp svg image/svg png image/png jpeg image/jpeg text text/plain html text/html latex text/latex javascript text/javascript)
+    '(emacs-lisp svg image/svg png image/png jpeg image/jpeg html text/html text text/plain latex text/latex javascript text/javascript)))
+
+(defun ein:fix-mime-type (type)
+  (ein:aif (assoc type ein:mime-type-map)
+      (cdr it)
+    type))
 
 (defun ein:cell-append-mime-type (json dynamic)
+  (when (plist-get json :data)
+    (setq json (plist-get json :data))) ;; For nbformat v4 support.
   (loop
    for key in (cond
                ((functionp ein:output-type-preference)
@@ -895,7 +921,7 @@ prettified text thus be used instead of HTML type."
      ;; NOTE: Normally `javascript' and `html' will not be inserted as
      ;; they come out after `text'.  Maybe it is better to inform user
      ;; when one of them is inserted.
-     (javascript
+     ((javascript text/javascript)
       (when dynamic
         (ein:log 'info (concat "ein:cell-append-mime-type does not support "
                                "dynamic javascript. got: %s") value))
@@ -903,14 +929,14 @@ prettified text thus be used instead of HTML type."
      (emacs-lisp
       (when dynamic
         (ein:cell-safe-read-eval-insert (plist-get json type))))
-     (html
+     ((html text/html)
       (funcall (ein:output-area-get-html-renderer) (plist-get json type)))
-     ((latex text)
+     ((latex text/latex text text/plain)
       (ein:insert-read-only (plist-get json type)))
-     (svg
-      (ein:insert-image value key t))
-     ((png jpeg)
-      (ein:insert-image (base64-decode-string value) key t)))))
+     ((svg image/svg)
+      (ein:insert-image value (ein:fix-mime-type key) t))
+     ((png image/png jpeg image/jpeg)
+      (ein:insert-image (base64-decode-string value) (ein:fix-mime-type key) t)))))
 
 (defun ein:cell-append-text (data &rest properties)
   ;; escape ANSI in plaintext:
@@ -937,9 +963,80 @@ prettified text thus be used instead of HTML type."
     (language . "python")
     (collapsed . ,(if (oref cell :collapsed) t json-false))))
 
+(defvar ein:output-type-map
+  '((:svg . :image/svg) (:png . :image/png) (:jpeg . :image/jpeg)
+    (:text . :text/plain)
+    (:html . :text/html) (:latex . :text/latex) (:javascript . :text/javascript)))
+
+(defun ein:output-property-p (maybe-property)
+  (assoc maybe-property ein:output-type-map))
+
+(defmethod ein:cell-to-nb4-json ((cell ein:codecell) &optional discard-output)
+  (let ((metadata `((collapsed . ,(if (oref cell :collapsed) t json-false))))
+        (outputs (if discard-output []
+                   (oref cell :outputs)))
+        (renamed-outputs '()))
+    (unless discard-output
+      (dolist (output outputs)
+        (let ((otype (plist-get output :output_type)))
+          (ein:log 'info "Saving output of type %S" otype)
+          (if (and (or (equal otype "display_data")
+                       (equal otype "execute_result"))
+                   (null (plist-get output :metadata)))
+              (plist-put output :metadata (make-hash-table)))
+          (push (let ((ocopy (copy-list output))
+                      (new-output '()))
+                  (loop while ocopy
+                        do (let ((prop (pop ocopy))
+                                 (value (pop ocopy)))
+                             (ein:log 'info "Checking property %s for output type '%s'"
+                                      prop otype)
+                             (cond
+                              ((equal prop :stream) (progn (push value new-output)
+                                                                (push :name new-output)))
+
+                              ((and (equal otype "display_data")
+                                    (ein:output-property-p prop))
+                               (let ((new-prop (cdr (ein:output-property-p prop))))
+                                 (push (list new-prop (list value)) new-output)
+                                 (push :data new-output)))
+
+                              ((and (equal otype "display_data")
+                                    (equal prop :text))
+                               (ein:log 'info "SAVE-NOTEBOOK: Skipping unnecessary :text data."))
+
+                              ((and (equal otype "execute_result")
+                                    (equal prop :text))
+                               (ein:log 'info "Fixing execute_result (%s?)." otype)
+                               (let ((new-prop (cdr (ein:output-property-p prop))))
+                                 (push (list new-prop (list value)) new-output)
+                                 (push :data new-output)))
+
+                              ((and (equal otype "execute_result")
+                                    (equal prop :prompt_number))
+                               (ein:log 'info "SAVE-NOTEBOOK: Fixing prompt_number property.")
+                               (push value new-output)
+                               (push :execution_count new-output))
+
+                              (t (progn (push value new-output) (push prop new-output)))))
+                        finally return new-output))
+                renamed-outputs))))
+    `((source . ,(ein:cell-get-text cell))
+      (cell_type . "code")
+      ,@(ein:aif (ein:oref-safe cell :input-prompt-number)
+            `((execution_count . ,it))
+          `((execution_count)))
+      (outputs . ,(apply #'vector (or renamed-outputs outputs)))
+      (metadata . ,metadata))))
+
 (defmethod ein:cell-to-json ((cell ein:textcell) &optional discard-output)
   `((cell_type . ,(oref cell :cell-type))
     (source    . ,(ein:cell-get-text cell))))
+
+(defmethod ein:cell-to-nb4-json ((cell ein:textcell) &optional discard-output)
+  `((cell_type . ,(oref cell :cell-type))
+    (source    . ,(ein:cell-get-text cell))
+    (metadata . ((collapsed . t)))))
 
 (defmethod ein:cell-to-json ((cell ein:headingcell) &optional discard-output)
   (let ((json (call-next-method)))
@@ -1016,14 +1113,17 @@ prettified text thus be used instead of HTML type."
   (let* ((json (list :output_type msg-type)))
     (ein:case-equal msg-type
       (("stream")
-       (plist-put json :text (plist-get content :data))
+       (plist-put json :text (or (plist-get content :data)
+                                 (plist-get content :text))) ;; Horrible hack to deal with version 5.0 of messaging protocol.
        (plist-put json :stream (plist-get content :name)))
-      (("display_data" "pyout")
-       (when (equal msg-type "pyout")
+      (("display_data" "pyout" "execute_result") ;; in v4 nbformat execute_result == pyout
+       (when (or (equal msg-type "pyout")
+                 (equal msg-type "execute_result"))
          (plist-put json :prompt_number (plist-get content :execution_count)))
        (setq json (ein:output-area-convert-mime-types
-                   json (plist-get content :data))))
-      (("pyerr")
+                   json (plist-get content :data)))
+       )
+      (("pyerr" "error")
        (plist-put json :ename (plist-get content :ename))
        (plist-put json :evalue (plist-get content :evalue))
        (plist-put json :traceback (plist-get content :traceback))))
@@ -1062,8 +1162,11 @@ prettified text thus be used instead of HTML type."
   "Return `t' if given cell has image output, `nil' otherwise."
   (loop for out in (oref cell :outputs)
         when (or (plist-member out :svg)
+                 (plist-member out :image/svg)
                  (plist-member out :png)
-                 (plist-member out :jpeg))
+                 (plist-member out :image/png)
+                 (plist-member out :jpeg)
+                 (plist-member out :image/jpeg))
         return t))
 
 (defmethod ein:cell-has-image-ouput-p ((cell ein:textcell))

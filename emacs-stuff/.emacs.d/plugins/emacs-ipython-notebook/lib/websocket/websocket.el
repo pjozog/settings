@@ -855,7 +855,6 @@ These are defined as in `websocket-open'."
                   "\r\n")
           (url-host (url-generic-parse-url url))
           key
-          ;; hack
           "http://127.0.0.1"
           protocol))
 
