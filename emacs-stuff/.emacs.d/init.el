@@ -1,5 +1,3 @@
-(setq request-backend 'url-retrieve)
-
 ;; Recite the holy words
 (defun confess-faith ()
   (interactive)
@@ -21,7 +19,7 @@
         (package-refresh-contents))
 
       ;; Add in your own as you wish:
-      (defvar my-packages '(smex ido-ubiquitous idle-highlight-mode)
+      (defvar my-packages '(smex ido-ubiquitous idle-highlight-mode gist)
         "A list of packages to ensure are installed at launch.")
 
       (dolist (p my-packages)
