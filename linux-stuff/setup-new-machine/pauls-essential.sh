@@ -65,6 +65,7 @@ addpkg \
     graphviz \
     gtk-doc-tools \
     htop \
+    inkscape \
     ipython \
     ipython-notebook \
     libaa1-dev \
@@ -113,6 +114,7 @@ addpkg \
     subversion \
     suckless-tools \
     terminator \
+    vinagre \
     vlc \
     xfce4-power-manager \
     xfonts-100dpi \
