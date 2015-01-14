@@ -117,6 +117,10 @@ addpkg \
     subversion \
     suckless-tools \
     terminator \
+    texlive \
+    texlive-generic-extra \
+    texlive-science \
+    texlive-latex-extra \
     vinagre \
     vlc \
     vnc4server \
