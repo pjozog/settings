@@ -53,6 +53,7 @@ addpkg \
     dbus \
     dbus-x11 \
     doxygen \
+    dvipng \
     dzen2 \
     emacs24 \
     fortune-mod \
@@ -66,9 +67,8 @@ addpkg \
     gtk-doc-tools \
     htop \
     inkscape \
-    ipython \
-    ipython-notebook \
     libaa1-dev \
+    libatlas-base-dev \
     libavcodec-dev \
     libavformat-dev \
     libblas-dev \
@@ -88,34 +88,45 @@ addpkg \
     libgps-dev \
     libgsl0-dev \
     libgtk2.0-dev \
+    libgtk-3-dev \
     liblapack-dev \
     libncurses-dev \
     libqhull-dev \
     libraw1394-dev \
     libsdl1.2-dev \
+    libspnav-dev \
     libsuitesparse-dev \
     libtiff4-dev \
     libwxgtk2.8-dev \
     libxi-dev \
     libxml2-dev \
     libxmu-dev \
+    libzmq-dev \
     meld \
     mesa-common-dev \
     nautilus-dropbox \
     openbox \
     openssh-server \
+    pandoc \
     pavucontrol \
     python-dev \
-    python-matplotlib \
-    python-numpy \
-    python-scipy \
+    python-gtk2-dev \
+    python-pip \
+    python-zmq \
     qt4-qtconfig \
     sshfs \
     subversion \
     suckless-tools \
     terminator \
+    texlive \
+    texlive-generic-extra \
+    texlive-science \
+    texlive-latex-extra \
     vinagre \
     vlc \
+    vnc4server \
+    xautomation \
+    xbindkeys \
     xfce4-power-manager \
     xfonts-100dpi \
     xfonts-75dpi \
@@ -172,3 +183,17 @@ sudo cp awesome.desktop /usr/share/xsessions
 # change to zsh
 echo 'Changing default shell to zsh, please enter your password'
 chsh -s /usr/bin/zsh
+
+# run xbindkeys
+echo 'Running xbindkeys to enable horizontal scrolling in firefox'
+xbindkeys
+
+# install python packages, some of which are broken on Ubuntu 14.04
+sudo pip install -U cython
+sudo pip install -U numpy
+sudo pip install -U scipy
+sudo pip install -U matplotlib
+sudo pip install -U pandas
+sudo pip install -U jinja2
+sudo pip install -U tornado
+sudo pip install -U ipython[all]

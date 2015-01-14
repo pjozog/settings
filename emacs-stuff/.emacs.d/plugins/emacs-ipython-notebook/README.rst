@@ -1,18 +1,18 @@
-==============================================
- EIN -- Emacs IPython Notebook |build-status|
-==============================================
+==================================================
+ EIN2 -- Emacs IPython 2.x Notebook |build-status|
+==================================================
 
   --- or **E**\ IN **I**\ s not only for **N**\ otebooks.
 
 
-.. note:: It is stable enough for my day to day work, but I can't
-          guarantee the safety for your notebook data.  So please make
-          sure you have backup.
+.. note:: The code, so far, has been stable enough for day to day work, but
+          there are no guarantees for the safety for your notebook data.  Please
+          make sure you backup, and backup often!
 
 .. |build-status|
-   image:: https://secure.travis-ci.org/tkf/emacs-ipython-notebook.png
+   image:: https://secure.travis-ci.org/millejoh/emacs-ipython-notebook.png
            ?branch=master
-   :target: http://travis-ci.org/tkf/emacs-ipython-notebook
+   :target: http://travis-ci.org/millejoh/emacs-ipython-notebook
    :alt: Build Status
 
 
@@ -27,13 +27,12 @@ See `more <https://github.com/tkf/emacs-ipython-notebook/wiki/Screenshots>`_!
 Features
 ========
 
-Emacs IPython Notebook (EIN) provides a IPython Notebook client and
-integrated REPL (like SLIME_) in Emacs.  While EIN makes notebook
-editing very powerful by allowing you to use any Emacs features, it
-also expose IPython features such as code evaluation, object
-inspection and code completion to the Emacs side.  These features can
-be accessed anywhere in Emacs and improve Python code editing and
-reading in Emacs.
+Emacs IPython Notebook (EIN) provides a client for the IPython v2.x notebook and
+an integrated REPL (like SLIME_) in Emacs.  While EIN makes notebook editing
+very powerful by allowing you to use any Emacs features, it also expose IPython
+features such as code evaluation, object inspection and code completion to the
+Emacs side.  These features can be accessed anywhere in Emacs and improve Python
+code editing and reading in Emacs.
 
 .. _SLIME: http://common-lisp.net/project/slime/
 
@@ -75,9 +74,9 @@ Links:
 * `Downloads
   <https://github.com/tkf/emacs-ipython-notebook/tags>`_
 * `Repository at GitHub
-  <https://github.com/tkf/emacs-ipython-notebook>`_
+  <https://github.com/millejoh/emacs-ipython-notebook>`_
 * `Issue Tracker at GitHub
-  <https://github.com/tkf/emacs-ipython-notebook/issues>`_
+  <https://github.com/millejoh/emacs-ipython-notebook/issues>`_
 
 
 Quick try
@@ -87,7 +86,7 @@ This is a quick and clean way to try EIN separately from your Emacs
 setting.  If you want to try EIN but think preparing all the
 requirements is too much, try this!::
 
-   git clone git://github.com/tkf/emacs-ipython-notebook.git
+   git clone git://github.com/millejoh/emacs-ipython-notebook.git
    cd emacs-ipython-notebook/
    lisp/zeroein.el
 
@@ -107,8 +106,9 @@ The above command requires /bin/sh.  If the above command does not work
 Requirements
 ============
 
-* IPython_ 0.12 or higher.
-* `websocket.el`_ 0.9
+* IPython_ 2.0 or higher.
+* Tornado_ 4.0.2 or higher
+* `websocket.el`_ 1.3. Note that if you are using IPython-dev you should download my fork_ from github which fixes an issue with PING responses.
 * `request.el`_ >= 0.2
 * (optional) mumamo_ developmental version:
   It will be automatically loaded when it is on the path.
@@ -132,6 +132,8 @@ EIEIO and json.el.  EIN is currently tested against Emacs 23.3 and 24.3.
 It is known to work in Emacs 23.2, 24.1 and 24.2.
 
 .. _IPython: http://ipython.org/
+.. _Tornado: http://tornadoweb.org/
+.. _fork http://github.com/millejoh/emacs-websocket
 .. _websocket.el: https://github.com/ahyatt/emacs-websocket
 .. _request.el: https://github.com/tkf/emacs-request
 .. _mumamo: http://www.emacswiki.org/emacs/MuMaMo
@@ -150,7 +152,7 @@ Usage
 
 2. Require module::
 
-     (require 'ein)
+     (require 'ein2)
 
 3. Start `IPython notebook server`_.
 
@@ -174,7 +176,7 @@ Enable `smartrep.el`_::
    (setq ein:use-smartrep t)
 
 
-Keybinds - Notebook
+Keybindings - Notebook
 -------------------
 
 .. (ein:dev-insert-mode-map "\\{ein:notebook-mode-map}")
@@ -259,7 +261,7 @@ Keybinds - Notebook
 .. // KEYS END //
 
 
-Keybinds - Connect
+Keybindings - Connect
 ------------------
 
 In Python (or any other) buffer, you can connect to any open notebook

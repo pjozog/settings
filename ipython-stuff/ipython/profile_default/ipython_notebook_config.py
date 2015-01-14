@@ -2,7 +2,7 @@
 
 c = get_config()
 
-c.InlineBackend.rc = {'font.size': 30, 'font.family': 'sans-serif', 'text.usetex': True, 'figures.figsize' : (10., 8.)}
+c.InlineBackend.rc = {'font.size': 20, 'figure.edgecolor': 'white', 'figure.facecolor': 'white'}
 
 #------------------------------------------------------------------------------
 # NotebookApp configuration

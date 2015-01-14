@@ -56,6 +56,8 @@
   closed-by-client)
 
 
+;; Issues opening websockets in IPython 2.0, think it is related to
+;; http://stackoverflow.com/questions/22202182/error-on-websocket-when-try-to-use-ipython-notebook-in-emacs
 (defun ein:websocket (url &optional onmessage onclose onopen
                           onmessage-args onclose-args onopen-args)
   (let ((websocket (make-ein:$websocket
@@ -96,6 +98,7 @@
 
 
 (defun ein:websocket-send (websocket text)
+  ;;  (ein:log 'info "WS: Sent message %s" text)
   (websocket-send-text (ein:$websocket-ws websocket) text))
 
 

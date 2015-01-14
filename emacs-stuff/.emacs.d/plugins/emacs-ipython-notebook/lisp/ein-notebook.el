@@ -147,9 +147,15 @@ Current buffer for these functions is set to the notebook buffer.")
 
 ;;; Class and variable
 
-(defvar ein:base-kernel-url "/")
-;; Currently there is no way to know this setting.  Maybe I should ask
-;; IPython developers for an API to get this from notebook server.
+(defvar ein:base-kernel-url "/api/")
+(defvar ein:create-session-url "/api/sessions")
+;; Currently there is no way to know this setting.  Maybe I should ask IPython
+;; developers for an API to get this from notebook server.  
+;;
+;; 10April2014 (JMM) - The most recent documentation for the RESTful interface
+;; is at:
+;; https://github.com/ipython/ipython/wiki/IPEP-16%3A-Notebook-multi-directory-dashboard-and-URL-mapping
+
 
 (defvar ein:notebook-pager-buffer-name-template "*ein:pager %s/%s*")
 (defvar ein:notebook-buffer-name-template "*ein: %s/%s*")
@@ -164,7 +170,10 @@ Current buffer for these functions is set to the notebook buffer.")
   URL or port of IPython server.
 
 `ein:$notebook-notebook-id' : string
-  uuid string
+  uuid string (as of ipython 2.0 this is the same is notebook-name).
+
+`ein:$notebook-notebook-path' : string
+  Path to notebook.
 
 `ein:$notebook-kernel' : `ein:$kernel'
   `ein:$kernel' instance.
@@ -198,9 +207,13 @@ Current buffer for these functions is set to the notebook buffer.")
 
 `ein:$notebook-scratchsheets' : list of `ein:worksheet'
   List of scratch worksheets.
+
+`ein:$notebook-api-version' : integer
+   Major version of the IPython notebook server we are talking to.
 "
   url-or-port
-  notebook-id
+  notebook-id ;; In IPython-2.0 this is "[:path]/[:name].ipynb"
+  notebook-path
   kernel
   kernelinfo
   pager
@@ -212,19 +225,24 @@ Current buffer for these functions is set to the notebook buffer.")
   events
   worksheets
   scratchsheets
+  api-version
   )
 
 (ein:deflocal ein:%notebook% nil
   "Buffer local variable to store an instance of `ein:$notebook'.")
 (define-obsolete-variable-alias 'ein:notebook 'ein:%notebook% "0.1.2")
 
+
 
 ;;; Constructor
 
-(defun ein:notebook-new (url-or-port notebook-id &rest args)
+(defun ein:notebook-new (url-or-port api-version notebook-name notebook-path &rest args)
   (let ((notebook (apply #'make-ein:$notebook
                          :url-or-port url-or-port
-                         :notebook-id notebook-id
+                         :api-version api-version
+                         :notebook-id notebook-name
+                         :notebook-name notebook-name
+                         :notebook-path notebook-path
                          args)))
     notebook))
 
@@ -287,16 +305,23 @@ will be updated with kernel's cwd."
 
 (defun ein:notebook-url (notebook)
   (ein:notebook-url-from-url-and-id (ein:$notebook-url-or-port notebook)
+                                    (ein:$notebook-api-version notebook)
+                                    (ein:$notebook-notebook-path notebook)
                                     (ein:$notebook-notebook-id notebook)))
 
-(defun ein:notebook-url-from-url-and-id (url-or-port notebook-id)
-  (ein:url url-or-port "notebooks" notebook-id))
+(defun ein:notebook-url-from-url-and-id (url-or-port api-version path notebook-id)
+  (cond ((= 2 api-version)
+         (ein:url url-or-port "api/notebooks" path notebook-id))
+        ((= 3 api-version)
+         (ein:url url-or-port "api/contents" path notebook-id))))
 
 (defun ein:notebook-pop-to-current-buffer (&rest -ignore-)
   "Default callback for `ein:notebook-open'."
   (pop-to-buffer (current-buffer)))
 
-(defun ein:notebook-open (url-or-port notebook-id &optional callback cbargs)
+;;; TODO - I think notebook-path is unnecessary (JMM).
+
+(defun ein:notebook-open (url-or-port api-version notebook-id path &optional callback cbargs)
   "Open notebook of NOTEBOOK-ID in the server URL-OR-PORT.
 Opened notebook instance is returned.  Note that notebook might not be
 ready at the time when this function is executed.
@@ -320,9 +345,9 @@ notebook buffer when CALLBACK is called."
             (apply callback ein:%notebook% nil cbargs))
           ein:%notebook%)
       (ein:log 'info "Opening notebook %s..." notebook-id)
-      (ein:notebook-request-open url-or-port notebook-id callback cbargs))))
+      (ein:notebook-request-open url-or-port api-version notebook-id path callback cbargs))))
 
-(defun ein:notebook-request-open (url-or-port notebook-id
+(defun ein:notebook-request-open (url-or-port api-version notebook-id path
                                               &optional callback cbargs)
   "Request notebook of NOTEBOOK-ID to the server at URL-OR-PORT.
 Return `ein:$notebook' instance.  Notebook may not be ready at
@@ -331,11 +356,12 @@ the time of execution.
 CALLBACK is called as \(apply CALLBACK notebook t CBARGS).  The second
 argument `t' indicates that the notebook is newly opened.
 See `ein:notebook-open' for more information."
-  (let ((url (ein:notebook-url-from-url-and-id url-or-port notebook-id))
-        (notebook (ein:notebook-new url-or-port notebook-id)))
+  (unless path (setq path ""))
+  (let ((url (ein:notebook-url-from-url-and-id url-or-port api-version path notebook-id))
+        (notebook (ein:notebook-new url-or-port api-version notebook-id path)))
     (ein:log 'debug "Opening notebook at %s" url)
     (ein:query-singleton-ajax
-     (list 'notebook-open url-or-port notebook-id)
+     (list 'notebook-open url-or-port api-version notebook-id path)
      url
      :timeout ein:notebook-querty-timeout-open
      :parser #'ein:json-read
@@ -343,6 +369,7 @@ See `ein:notebook-open' for more information."
                #'ein:notebook-request-open-callback-with-callback
                notebook callback cbargs))
     notebook))
+
 
 (defun ein:notebook-request-open-callback-with-callback (notebook
                                                          callback
@@ -416,11 +443,14 @@ of minor mode."
 
 ;;; Kernel related things
 
+;;; This no longer works in iPython-2.0. Protocol is to create a session for a
+;;; notebook, which will automatically create and associate a kernel with the notebook.
 (defun ein:notebook-start-kernel (notebook)
   (let* ((base-url (concat ein:base-kernel-url "kernels"))
          (kernel (ein:kernel-new (ein:$notebook-url-or-port notebook)
                                  base-url
-                                 (ein:$notebook-events notebook))))
+                                 (ein:$notebook-events notebook)
+                                 (ein:$notebook-api-version notebook))))
     (setf (ein:$notebook-kernel notebook) kernel)
     (ein:pytools-setup-hooks kernel)
     (ein:kernel-start kernel
@@ -477,7 +507,8 @@ This is equivalent to do ``C-c`` in the console program."
 (defun ein:notebook-set-notebook-name (notebook name)
   "Check NAME and change the name of NOTEBOOK to it."
   (if (ein:notebook-test-notebook-name name)
-      (setf (ein:$notebook-notebook-name notebook) name)
+      (setf (ein:$notebook-notebook-name notebook) name
+            (ein:$notebook-notebook-id notebook) name)
     (ein:log 'error "%S is not a good notebook name." name)
     (error "%S is not a good notebook name." name)))
 
@@ -552,60 +583,104 @@ of NOTEBOOK."
      (list notebook (current-buffer)))))
 
 (defun ein:notebook-from-json (notebook data)
-  (destructuring-bind (&key metadata nbformat nbformat_minor
-                            &allow-other-keys)
-      data
-    (setf (ein:$notebook-metadata notebook) metadata)
-    (setf (ein:$notebook-nbformat notebook) nbformat)
-    (setf (ein:$notebook-nbformat-minor notebook) nbformat_minor)
-    (setf (ein:$notebook-notebook-name notebook) (plist-get metadata :name)))
-  (setf (ein:$notebook-worksheets notebook)
-        (mapcar (lambda (ws-data)
-                  (ein:worksheet-from-json
-                   (ein:notebook--worksheet-new notebook) ws-data))
-                (or (plist-get data :worksheets)
-                    (list nil))))
-  (ein:notebook--worksheet-render notebook
-                                  (nth 0 (ein:$notebook-worksheets notebook)))
-  notebook)
+  (let ((data (plist-get data :content)))
+    (destructuring-bind (&key metadata nbformat nbformat_minor
+                              &allow-other-keys)
+        data
+      (setf (ein:$notebook-metadata notebook) metadata)
+      (setf (ein:$notebook-nbformat notebook) nbformat)
+      (setf (ein:$notebook-nbformat-minor notebook) nbformat_minor)
+      ;;(setf (ein:$notebook-notebook-name notebook) (plist-get metadata :name))
+      )
+    (setf (ein:$notebook-worksheets notebook)
+          (cl-case (ein:$notebook-nbformat notebook)
+            (3 (ein:read-nbformat3-worksheets notebook data))
+            (4 (ein:read-nbformat4-worksheets notebook data))
+            (t (ein:log 'error "Do not currently support nbformat version %s" (ein:$notebook-nbformat notebook)))))
+    (ein:notebook--worksheet-render notebook
+                                    (nth 0 (ein:$notebook-worksheets notebook)))
+    notebook))
+
+(defun ein:read-nbformat3-worksheets (notebook data)
+  (mapcar (lambda (ws-data)
+                    (ein:worksheet-from-json
+                     (ein:notebook--worksheet-new notebook)
+                     ws-data))
+          (or (plist-get data :worksheets)
+              (list nil))))
+
+;; nbformat4 gets rid of the concenpt of worksheets. That means, for the moment,
+;; ein will no longer support worksheets. There may be a path forward for
+;; reimplementing this feature, however.  The nbformat 4 json definition says
+;; that cells are allowed to have tags. Clever use of this feature may lead to
+;; good things.
+
+(defun ein:read-nbformat4-worksheets (notebook data)
+  "Convert a notebook in nbformat4 to a list of worksheet-like
+  objects suitable for processing in ein:notebook-from-json."
+  (ein:log 'info "Reading nbformat4 notebook.")
+  (let* ((cells (plist-get data :cells))
+         (ws-cells (mapcar (lambda (data) (ein:cell-from-json data)) cells))
+         (worksheet (ein:notebook--worksheet-new notebook)))
+    (oset worksheet :saved-cells ws-cells)
+    (list worksheet)))
 
 (defun ein:notebook-to-json (notebook)
   "Return json-ready alist."
+  (case (ein:$notebook-nbformat notebook)
+    (3 (ein:write-nbformat3-worksheets notebook))
+    (4 (ein:write-nbformat4-worksheets notebook))
+    (t (ein:log 'error "EIN does not support saving notebook format %s" (ein:$notebook-nbformat notebook)))))
+
+(defun ein:write-nbformat3-worksheets (notebook)
   (let ((worksheets (mapcar #'ein:worksheet-to-json
                             (ein:$notebook-worksheets notebook))))
     `((worksheets . ,(apply #'vector worksheets))
-      (metadata . ,(ein:$notebook-metadata notebook)))))
+      (metadata . ,(ein:$notebook-metadata notebook))
+      )))
+
+(defun ein:write-nbformat4-worksheets (notebook)
+  (ein:log 'info "Writing notebook %s as nbformat 4." (ein:$notebook-notebook-name notebook))
+  (let ((all-cells (first (mapcar #'ein:worksheet-to-nb4-json
+                                  (ein:$notebook-worksheets notebook)))))
+    `((metadata . ,(ein:$notebook-metadata notebook))
+      (cells . ,(apply #'vector all-cells)))))
 
 (defun ein:notebook-save-notebook (notebook retry &optional callback cbarg)
-  (let ((data (ein:notebook-to-json notebook)))
-    (plist-put (cdr (assq 'metadata data))
+  (let ((content-data (ein:notebook-to-json notebook)))
+    (plist-put (cdr (assq 'metadata content-data))
                :name (ein:$notebook-notebook-name notebook))
-    (push `(nbformat . ,(ein:$notebook-nbformat notebook)) data)
+    (push `(nbformat . ,(ein:$notebook-nbformat notebook)) content-data)
     (ein:aif (ein:$notebook-nbformat-minor notebook)
         ;; Do not set nbformat when it is not given from server.
-        (push `(nbformat_minor . ,it) data))
+        (push `(nbformat_minor . ,it) content-data))
     (ein:events-trigger (ein:$notebook-events notebook)
                         'notebook_saving.Notebook)
-    (ein:query-singleton-ajax
-     (list 'notebook-save
-           (ein:$notebook-url-or-port notebook)
-           (ein:$notebook-notebook-id notebook))
-     (ein:notebook-url notebook)
-     :timeout ein:notebook-querty-timeout-save
-     :type "PUT"
-     :headers '(("Content-Type" . "application/json"))
-     :data (json-encode data)
-     :error (apply-partially #'ein:notebook-save-notebook-error notebook)
-     :success (apply-partially #'ein:notebook-save-notebook-workaround
-                               notebook retry callback cbarg)
-     :status-code
-     `((204 . ,(apply-partially
-                (lambda (notebook callback cbarg &rest rest)
-                  (apply #'ein:notebook-save-notebook-success
-                         notebook rest)
-                  (when callback
-                    (apply callback cbarg rest)))
-                notebook callback cbarg))))))
+    (let ((data `((content . ,content-data))))
+      (push `(path . ,(ein:$notebook-notebook-path notebook)) data)
+      (push `(name . ,(ein:$notebook-notebook-name notebook)) data)
+      (push `(type . "notebook") data)
+      (ein:query-singleton-ajax
+       (list 'notebook-save
+             (ein:$notebook-url-or-port notebook)
+             (ein:$notebook-notebook-path notebook)
+             (ein:$notebook-notebook-name notebook))
+       (ein:notebook-url notebook)
+       :timeout ein:notebook-querty-timeout-save
+       :type "PUT"
+       :headers '(("Content-Type" . "application/json"))
+       :data (json-encode data)
+       :error (apply-partially #'ein:notebook-save-notebook-error notebook)
+       :success (apply-partially #'ein:notebook-save-notebook-workaround
+                                 notebook retry callback cbarg)
+       :status-code
+       `((200 . ,(apply-partially
+                  (lambda (notebook callback cbarg &rest rest)
+                    (apply #'ein:notebook-save-notebook-success
+                           notebook rest)
+                    (when callback
+                      (apply callback cbarg rest)))
+                  notebook callback cbarg)))))))
 
 (defun ein:notebook-save-notebook-command ()
   "Save the notebook."
@@ -624,7 +699,8 @@ of NOTEBOOK."
   ;; accessed via PUT or DELETE.  As it seems Emacs failed to
   ;; choose PUT method every two times, let's check the response
   ;; here and fail when 204 is not returned.
-  (unless (eq response-status 204)
+  ;; UPDATE 12Sep2014 (JMM) - IPython server now returns 200 on successful save.
+  (unless (eq response-status 200)
     (with-current-buffer (ein:notebook-buffer notebook)
       (if (< retry ein:notebook-save-retry-max)
           (progn
@@ -633,7 +709,7 @@ of NOTEBOOK."
                                         callback cbarg))
         (ein:notebook-save-notebook-error notebook :status status)
         (ein:log 'info
-          "Status code (=%s) is not 204 and retry exceeds limit (=%s)."
+          "Status code (=%s) is not 200 and retry exceeds limit (=%s)."
           response-status ein:notebook-save-retry-max)))))
 
 (defun ein:notebook-save-notebook-success (notebook &rest ignore)
@@ -671,15 +747,52 @@ NAME is any non-empty string that does not contain '/' or '\\'."
                       (let ((name (ein:$notebook-notebook-name ein:%notebook%)))
                         (unless (string-match "Untitled[0-9]+" name)
                           name)))))
-  (ein:notebook-set-notebook-name ein:%notebook% name)
+  (unless (and (string-match ".ipynb" name) (= (match-end 0) (length name)))
+    (setq name (format "%s.ipynb" name)))
+  (let ((old-name (ein:$notebook-notebook-name ein:%notebook%)))
+    (ein:log 'info "Renaming notebook at URL %s" (ein:notebook-url ein:%notebook%))
+    (ein:log 'info "JSON data looks like %s"
+             (json-encode
+              `((:name . ,name)
+                (:path . ,(ein:$notebook-notebook-path ein:%notebook%)))))
+    ;(ein:notebook-set-notebook-name ein:%notebook% name)
+    (ein:query-singleton-ajax
+     (list 'notebook-rename
+           (ein:$notebook-url-or-port ein:%notebook%)
+           (ein:$notebook-notebook-path ein:%notebook%)
+           (ein:$notebook-notebook-name ein:%notebook%))
+     (ein:notebook-url ein:%notebook%)
+     :timeout ein:notebook-querty-timeout-save
+     :type "PATCH"
+     :headers '(("Content-Type" . "application/json"))
+     :data (json-encode
+            `((name . ,name)
+              (path . ,(ein:$notebook-notebook-path ein:%notebook%))))
+     :error (apply-partially #'ein:notebook-rename-error old-name name ein:%notebook%)
+     :success (apply-partially #'ein:notebook-rename-success
+                               ein:%notebook% name)
+     :status-code
+     `((200 . ,(apply-partially
+                #'ein:notebook-rename-success ein:%notebook% name))
+       (409 . ,(apply-partially
+                #'ein:notebook-rename-success ein:%notebook% name))))))
+
+(defun* ein:notebook-rename-error (old new notebook &key symbol-status response
+                                       error-thrown
+                                       &allow-other-keys)
+  (if (= (request-response-status-code response) 409)
+      (progn
+        (ein:log 'warn "IPython returned a 409 status code, but has still renamed the notebook. This may be an IPython bug.")
+        (ein:notebook-rename-success notebook new response))
+    (ein:log 'error
+      "Error (%s :: %s) while renaming notebook %s to %s."
+      symbol-status error-thrown old new)))
+
+(defun* ein:notebook-rename-success (notebook new &rest args &allow-other-keys)
+  (ein:notebook-set-notebook-name notebook new)
   (mapc #'ein:worksheet-set-buffer-name
-        (ein:$notebook-worksheets ein:%notebook%))
-  (ein:notebook-save-notebook
-   ein:%notebook% 0
-   (lambda (notebook &rest ignore)
-     (with-current-buffer (ein:notebook-buffer notebook)
-       (run-hooks 'ein:notebook-after-rename-hook)))
-   ein:%notebook%))
+        (ein:$notebook-worksheets notebook))
+  (ein:log 'info "Notebook renamed to %s." new))
 
 (defun ein:notebook-close (notebook)
   "Close NOTEBOOK and kill its buffer."

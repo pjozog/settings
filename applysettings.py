@@ -56,10 +56,7 @@ linkPairs = [
      os.path.join(homeDir, '.config', 'awesome')),
 
     (os.path.join(scriptDir, 'ipython-stuff', 'ipython'),
-     os.path.join(homeDir, '.config', 'ipython')),
-
-    (os.path.join(homeDir, '.config', 'matplotlib'),
-     os.path.join(homeDir, '.matplotlib')),
+     os.path.join(homeDir, '.ipython')),
 
     (os.path.join(scriptDir, 'ipython-stuff', 'matplotlib'),
      os.path.join(homeDir, '.config', 'matplotlib')),

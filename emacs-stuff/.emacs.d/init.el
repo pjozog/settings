@@ -19,7 +19,7 @@
         (package-refresh-contents))
 
       ;; Add in your own as you wish:
-      (defvar my-packages '(smex ido-ubiquitous idle-highlight-mode)
+      (defvar my-packages '(smex ido-ubiquitous idle-highlight-mode gist)
         "A list of packages to ensure are installed at launch.")
 
       (dolist (p my-packages)
@@ -195,8 +195,6 @@ header, based on presence of .c file"
 ;; append my stuff to load-path
 (add-to-list 'load-path
              (concat (file-name-as-directory my-emacs-dir) "lisp"))
-(add-to-list 'load-path
-             (concat (file-name-as-directory my-emacs-dir) "lisp/ein"))
 (add-to-list 'load-path
              (concat (file-name-as-directory my-emacs-dir) "plugins"))
 (add-to-list 'load-path
