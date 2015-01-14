@@ -564,6 +564,12 @@ Change Log
 v0.2.1
 ------
 
+* Cached auto-complete is removed.
+  :el:symbol:`ac-source-ein-cached` and :el:symbol:`ac-complete-ein-cached`
+  are obsolete.
+  :el:symbol:`ein:ac-max-cache` has no effect now.
+* :el:symbol:`ein:query-timeout` is `nil` if `curl` backend is used
+  by request.el_.
 * History search interface (:el:symbol:`helm-ein-kernel-history` and
   :el:symbol:`anything-ein-kernel-history`) discards duplications.
   This functionality requires at least version 4.0 of IPython kernel.

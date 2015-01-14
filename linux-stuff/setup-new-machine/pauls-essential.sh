@@ -115,7 +115,9 @@ addpkg \
     subversion \
     suckless-tools \
     terminator \
+    vinagre \
     vlc \
+    vnc4server \
     xautomation \
     xbindkeys \
     xfce4-power-manager \
