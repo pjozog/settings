@@ -78,14 +78,6 @@
 (setq ein:use-auto-complete-superpack t)
 ;; (setq ein:use-smartrep t)
 
-(require 'auto-complete-config nil t)
-(declare-function global-auto-complete-mode "auto-complete.el")
-(when (featurep 'auto-complete-config)
-  (ac-config-default)
-  (add-to-list 'ac-dictionary-directories
-               (zeroein:path "lib" "auto-complete" "dict"))
-  (global-auto-complete-mode t))
-
 ;; MuMaMo
 (custom-set-faces
    '(mumamo-background-chunk-major

@@ -87,8 +87,8 @@ addpkg \
     libgoogle-glog-dev \
     libgps-dev \
     libgsl0-dev \
-    libgtk2.0-dev \
     libgtk-3-dev \
+    libgtk2.0-dev \
     liblapack-dev \
     libncurses-dev \
     libqhull-dev \
@@ -119,9 +119,10 @@ addpkg \
     suckless-tools \
     terminator \
     texlive \
+    texlive-latex \
     texlive-generic-extra \
-    texlive-science \
     texlive-latex-extra \
+    texlive-science \
     vinagre \
     vlc \
     vnc4server \
@@ -194,6 +195,9 @@ sudo pip install -U numpy
 sudo pip install -U scipy
 sudo pip install -U matplotlib
 sudo pip install -U pandas
+sudo pip install -U scikit-learn
+sudo pip install -U scikits.sparse
+sudo pip install -U scikit-image
 sudo pip install -U jinja2
 sudo pip install -U tornado
 sudo pip install -U ipython[all]
