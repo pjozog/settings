@@ -119,7 +119,6 @@ addpkg \
     suckless-tools \
     terminator \
     texlive \
-    texlive-latex \
     texlive-generic-extra \
     texlive-latex-extra \
     texlive-science \
