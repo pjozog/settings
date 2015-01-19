@@ -75,7 +75,7 @@
 (require 'ein2)
 
 ;; auto-complete
-(setq ein:use-auto-complete-superpack t)
+;; (setq ein:use-auto-complete-superpack t)
 ;; (setq ein:use-smartrep t)
 
 ;; MuMaMo

@@ -1,0 +1,16 @@
+#!/bin/bash
+
+M2007=1
+
+# This script makes it easy to run old matlab versions in awesome
+
+MATLAB_BIN_PATH=${HOME}/miscprograms/matlab/bin
+
+if [ ${M2007} ]; then
+    JRE_PATH=/usr/lib/jvm/java-6-openjdk-amd64/jre
+fi
+WM_NAME=LG3D
+
+export MATLAB_JAVA=${JRE_PATH}
+wmname ${WMNAME}
+exec ${MATLAB_BIN_PATH}/matlab "$@"
