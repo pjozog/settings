@@ -61,6 +61,7 @@ addpkg \
     freeglut3-dev \
     gettext \
     gfortran \
+    gimp \
     git \
     gnuplot \
     graphviz \
@@ -103,6 +104,7 @@ addpkg \
     libxmu-dev \
     libzmq-dev \
     meld \
+    mercurial \
     mesa-common-dev \
     nautilus-dropbox \
     openbox \
