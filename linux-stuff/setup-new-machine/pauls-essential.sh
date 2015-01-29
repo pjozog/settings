@@ -127,6 +127,7 @@ addpkg \
     vinagre \
     vlc \
     vnc4server \
+    w3m \
     xautomation \
     xbindkeys \
     xfce4-power-manager \
