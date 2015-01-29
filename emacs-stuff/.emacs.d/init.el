@@ -12,14 +12,14 @@
     (progn
       (require 'package)
       (add-to-list 'package-archives
-                   '("marmalade" . "http://marmalade-repo.org/packages/") t)
+                   '("melpa" . "http://melpa.org/packages/") t)
       (package-initialize)
 
       (when (not package-archive-contents)
         (package-refresh-contents))
 
       ;; Add in your own as you wish:
-      (defvar my-packages '(smex ido-ubiquitous idle-highlight-mode gist)
+      (defvar my-packages '(smex ido-ubiquitous idle-highlight-mode gist w3m yasnippet ein org auctex)
         "A list of packages to ensure are installed at launch.")
 
       (dolist (p my-packages)
@@ -195,16 +195,6 @@ header, based on presence of .c file"
 ;; append my stuff to load-path
 (add-to-list 'load-path
              (concat (file-name-as-directory my-emacs-dir) "lisp"))
-(add-to-list 'load-path
-             (concat (file-name-as-directory my-emacs-dir) "plugins"))
-(add-to-list 'load-path
-             (concat (file-name-as-directory my-emacs-dir) "plugins/yasnippet-0.6.1c"))
-(add-to-list 'load-path
-             (concat (file-name-as-directory my-emacs-dir) "plugins/emacs-w3m"))
-(add-to-list 'load-path
-             (concat (file-name-as-directory my-emacs-dir) "plugins/org"))
-(add-to-list 'load-path
-             (concat (file-name-as-directory my-emacs-dir) "plugins/emacs-ipython-notebook/lisp"))
 
 (require 'matlab)
 (require 'cmake-mode)
@@ -220,7 +210,7 @@ header, based on presence of .c file"
 (require 'uniquify)
 (require 'rainbow-mode)
 (require 'reftex)
-(require 'w3m-load)
+(require 'w3m)
 (require 'mediawiki)
 (require 'highline)
 (require 'diff-mode-)
@@ -281,7 +271,7 @@ header, based on presence of .c file"
 ;; ipython notebook mode
 (defun ipn ()
   (interactive)
-  (load "zeroein.el"))
+  (ein:notebooklist-open))
 
 ;; stuff for anything library
 ;; (global-set-key "\M-." 'anything-etags+-select-one-key)
@@ -349,16 +339,13 @@ header, based on presence of .c file"
 (if (file-exists-p "~/TAGS")
     (visit-tags-table "~/TAGS"))
 
+(setq yas-snippet-dirs (concat (file-name-as-directory my-emacs-dir) "snippets"))
 (yas/initialize)
-(yas/load-directory (concat (file-name-as-directory my-emacs-dir) "plugins/yasnippet-0.6.1c/snippets"))
 
 (put 'downcase-region 'disabled nil)
 
-(load "auctex.el" nil t t)
 (setq TeX-auto-save t)
 (setq TeX-parse-self t)
-
-(load "preview-latex.el" nil t t)
 
 ;; Activate occur easily inside isearch
 (define-key isearch-mode-map (kbd "C-M-o")
