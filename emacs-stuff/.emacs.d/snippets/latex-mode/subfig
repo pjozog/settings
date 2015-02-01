@@ -1,5 +1,5 @@
 #contributor : Paul Ozog
-#name : insert figure
+#name : insert subfigure
 # --
 \begin{figure}[!tb]%
   \centering%
