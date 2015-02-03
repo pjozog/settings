@@ -7,6 +7,7 @@
 
 (if (and (or (string-match "paul" (system-name))
 	     (string-match "robots" (system-name))
+	     (string-match "birdo" (system-name))
 	     (string-match "yoshi" (system-name)))
 	 (string-equal system-type "gnu/linux"))
 	 (setq dired-listing-switches "-CF --group-directories-first -alh"))
