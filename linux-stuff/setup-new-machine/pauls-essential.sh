@@ -67,6 +67,7 @@ addpkg \
     graphviz \
     gtk-doc-tools \
     htop \
+    i3lock \
     inkscape \
     libaa1-dev \
     libatlas-base-dev \
