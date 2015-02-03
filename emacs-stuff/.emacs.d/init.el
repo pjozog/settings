@@ -19,7 +19,7 @@
         (package-refresh-contents))
 
       ;; Add in your own as you wish:
-      (defvar my-packages '(smex ido-ubiquitous idle-highlight-mode gist w3m yasnippet ein org auctex)
+      (defvar my-packages '(smex ido-ubiquitous idle-highlight-mode w3m yasnippet ein org auctex auto-complete)
         "A list of packages to ensure are installed at launch.")
 
       (dolist (p my-packages)
@@ -339,6 +339,7 @@ header, based on presence of .c file"
 (if (file-exists-p "~/TAGS")
     (visit-tags-table "~/TAGS"))
 
+;; HACK: disable the default snippets packaged with melpa
 (setq yas-snippet-dirs (concat (file-name-as-directory my-emacs-dir) "snippets"))
 (yas/initialize)
 
