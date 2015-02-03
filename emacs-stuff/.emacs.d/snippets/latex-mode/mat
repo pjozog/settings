@@ -1,5 +1,5 @@
 #contributor : Rodrigo Setti <rodrigosetti@gmail.com>
-#name : \begin{eqnarray} ... \end{eqnarray}
+#name : matrix
 # --
 \begin{bmatrix}
   $1  \\\\
