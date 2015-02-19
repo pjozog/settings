@@ -56,6 +56,7 @@ addpkg \
     dvipng \
     dzen2 \
     emacs24 \
+    exuberant-ctags \
     fortune-mod \
     fortunes \
     freeglut3-dev \
@@ -151,7 +152,7 @@ if [ $DIST -ge 1004 -a $DIST -lt 1204 ]; then
     addpkg libcv-dev libcvaux-dev libhighgui-dev
 elif [ $DIST -ge 1204 ]; then
     if ask "Do you want to install OpenCV from Ubuntu repositories (not recommended if using Nvidia GPU)?" Y; then
-        addpkg libcv-dev libhighgui-dev libopencv-contrib-dev libopencv-gpu-dev
+        addpkg libopencv-dev libcv-dev libhighgui-dev libopencv-contrib-dev libopencv-gpu-dev
     fi
 fi
 
