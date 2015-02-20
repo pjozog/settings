@@ -1,5 +1,5 @@
-#contributor : Rodrigo Setti <rodrigosetti@gmail.com>
-#name : \begin{environment} ... \end{environment}
+#contributor : Paul Ozog
+#name : latex header
 # --
 \documentclass[11pt]{article}
 %% \topmargin -1.5cm        % read Lamport p.163

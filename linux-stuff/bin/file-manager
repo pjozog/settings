@@ -14,6 +14,8 @@ def getNautilusVersion ():
     return nautVersion
 
 if getNautilusVersion () >= NEW_NAUTILUS_VERSION:
-    os.system (' '.join (['nautilus', '--new-window', '--no-desktop', os.getcwd ()]))
+    cmd = ' '.join (['nautilus', '--new-window', '--no-desktop', "'%s'" % os.getcwd ()])
+    os.system (cmd)
 else:
-    os.system (' '.join (['nautilus', '--no-desktop', os.getcwd ()]))
+    cmd = ' '.join (['nautilus', '--no-desktop', "'%s'" % os.getcwd ()])
+    os.system (cmd)

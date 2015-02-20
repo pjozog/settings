@@ -226,7 +226,7 @@ globalkeys = awful.util.table.join(
    awful.key({ modkey, "Shift"   }, "a", function () awful.util.spawn("matlab -desktop") end),
    awful.key({ }, "XF86Calculator", function () awful.util.spawn("gnome-calculator") end),
    awful.key({ modkey, "Shift"   }, "v", function () awful.util.spawn("nvidia-settings") end),
-   awful.key({ modkey, "Shift"   }, "b", function () awful.util.spawn("banshee") end),
+   awful.key({ modkey, "Shift"   }, "b", function () awful.util.spawn("blur-lock") end),
    awful.key({ modkey, "Control" }, "r", awesome.restart),
    awful.key({ modkey, "Shift"   }, "q", awesome.quit),
 
