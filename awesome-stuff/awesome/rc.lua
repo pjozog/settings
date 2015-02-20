@@ -249,6 +249,8 @@ globalkeys = awful.util.table.join(
 	     function () awful.util.spawn("vol-ctrl -d 2") end),
    awful.key({ }, "XF86AudioMute",   
 	     function () awful.util.spawn("vol-ctrl -t") end),
+   awful.key({ }, "F11",   
+	     function () awful.util.spawn("gnome-screenshot -i") end),
    awful.key({ }, "F12",   
 	     function () awful.util.spawn("pavucontrol") end),
 

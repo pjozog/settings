@@ -1,4 +1,4 @@
 #contributor : Paul Ozog
-#name : argmin
+#name : argmax
 # --
 \underset{$1}{\operatorname{argmax}} \:
