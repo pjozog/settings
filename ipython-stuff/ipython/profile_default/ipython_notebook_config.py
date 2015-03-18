@@ -2,7 +2,8 @@
 
 c = get_config()
 
-c.InlineBackend.rc = {'font.size': 20, 'figure.edgecolor': 'white', 'figure.facecolor': 'white'}
+# paul: this seems to now longer do anything for ipython notebook w/ %matplotlib inline
+# c.InlineBackend.rc = {'font.size': 20, 'figure.edgecolor': 'white', 'figure.facecolor': (1,1,1,1)}
 
 #------------------------------------------------------------------------------
 # NotebookApp configuration

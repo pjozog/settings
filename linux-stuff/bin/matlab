@@ -1,6 +1,6 @@
 #!/bin/bash
 
-M2007=1
+# M2007=1
 
 # This script makes it easy to run old matlab versions in awesome
 

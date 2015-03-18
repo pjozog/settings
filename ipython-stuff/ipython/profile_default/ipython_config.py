@@ -2,6 +2,8 @@
 
 c = get_config()
 
+c.InlineBackend.rc = {'font.size': 20, 'figure.edgecolor': 'white', 'figure.facecolor': (1,1,1,1)}
+
 #------------------------------------------------------------------------------
 # InteractiveShellApp configuration
 #------------------------------------------------------------------------------
