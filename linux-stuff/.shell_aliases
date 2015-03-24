@@ -139,7 +139,8 @@ alias ipython='ipython -i --pylab gtk --colors=Linux ~/.pythonrc'
 # common ctags for perls
 alias gentags='ctags-exuberant -Rea ~/perls/src && ctags-exuberant -Rea ~/perls/matlab && ctags-exuberant -Rea ~/perls/matlab && ctags-exuberant -Rea ~/perls/third-party/libbot2 && ctags-exuberant -Rea ~/perls/build/src/core/perls-lcmtypes && ctags-exuberant -Rea ~/perls/build/src/core/perls-lcmtypes++'
 
-alias ipn='cd ~/Dropbox/code/ipython-notebooks/ && \ipython notebook --pylab inline'
-alias ipn3='cd ~/Dropbox/code/ipython-notebooks/ && \ipython notebook --pylab=wx inline'
+alias ipn='cd ~/Dropbox/code/ipython-notebooks/ && \ipython notebook'
+# TODO: get 3d working in matplotlib/notebook
+# alias ipn3='cd ~/Dropbox/code/ipython-notebooks/ && \ipython notebook --pylab=wx inline'
 
 alias mk='make -j$(nproc)'
