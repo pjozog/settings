@@ -117,3 +117,10 @@ sudo smbpasswd -d username
 # Last but not least, update your empty repo with the state from the remote:
 
 # $ git pull origin master
+
+# rsync a directory with a ton of files in it:
+tar c /dir/you/want/to/send | gzip - | ssh host.you.want.to.send.to 'cd /direcotry/on/host/to/extract/to; tar xz'
+
+# list a directory a ton of files in it:
+\ls -f
+\ls -f | wc -l                  # count number of files

@@ -122,6 +122,7 @@ alias 560='cd ~/Documents/umich-grad/EECS/f12/560/'
 alias 592='cd ~/Documents/umich-grad/EECS/w13/592/'
 alias java='java -ea -server -Dawt.useSystemAAFontSettings=lcd'
 alias lpg='lcm-logplayer-gui -p'
+alias lpgh='lpg -f "HAUV_BS.*|PROSILICA_.*|HAUV_DIDSON.*|HEARTBEAT_.*" -v'
 
 #Jeff's magic bus tool
 alias mb='magic_bus.py'
