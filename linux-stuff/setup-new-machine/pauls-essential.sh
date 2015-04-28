@@ -109,6 +109,7 @@ addpkg \
     mercurial \
     mesa-common-dev \
     nautilus-dropbox \
+    nfs-common \
     openbox \
     openssh-server \
     pandoc \
@@ -119,6 +120,7 @@ addpkg \
     python-zmq \
     qt4-qtconfig \
     sshfs \
+    source-highlight \
     subversion \
     suckless-tools \
     terminator \
