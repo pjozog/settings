@@ -124,3 +124,6 @@ tar c /dir/you/want/to/send | gzip - | ssh host.you.want.to.send.to 'cd /direcot
 # list a directory a ton of files in it:
 \ls -f
 \ls -f | wc -l                  # count number of files
+
+# apply a command to files that are too big for wildcard ('*')
+find /some/dir/with/lots/of/tiff/files -path "*.tif" | xargs -I {} ln -sf {} .
