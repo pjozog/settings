@@ -19,7 +19,8 @@
         (package-refresh-contents))
 
       ;; Add in your own as you wish:
-      (defvar my-packages '(smex ido-ubiquitous idle-highlight-mode w3m yasnippet ein org auctex auto-complete)
+      (defvar my-packages '(smex ido-ubiquitous idle-highlight-mode
+                                 w3m yasnippet ein org auctex auto-complete)
         "A list of packages to ensure are installed at launch.")
 
       (dolist (p my-packages)
@@ -38,9 +39,11 @@
       (smex-initialize)
       (global-set-key (kbd "M-x") 'smex)
 
-      (add-hook 'prog-mode-hook (lambda () (font-lock-add-keywords
-                                            nil '(("\\<\\(FIX\\|TODO\\|FIXME\\|HACK\\|REFACTOR\\|DEBUG\\):"
-                                                   1 font-lock-warning-face t))))))
+      (add-hook
+       'prog-mode-hook (lambda () 
+                         (font-lock-add-keywords
+                          nil '(("\\<\\(FIX\\|TODO\\|FIXME\\|HACK\\|REFACTOR\\|DEBUG\\):"
+                                 1 font-lock-warning-face t))))))
   (error nil))
 
 ;; --------------------------------------------------
@@ -224,6 +227,7 @@ header, based on presence of .c file"
 (require 'myOrgSettings)        ;; mine
 (require 'smooth-scrolling)
 (require 'markdown-mode)
+(require 'fill-column-indicator)
 
 ;; idle-highlight-mode only works on emacs 24
 (condition-case nil
@@ -394,7 +398,8 @@ header, based on presence of .c file"
 
 ;; LaTeX: Enable flymake for texlive distribution of LaTeX
 (defun flymake-get-tex-args (file-name)
-  (list "pdflatex" (list "-shell-escape" "-draftmode" "-file-line-error" "-interaction=nonstopmode" file-name)))
+  (list "pdflatex" (list "-shell-escape" "-draftmode" "-file-line-error"
+                         "-interaction=nonstopmode" file-name)))
 
 ;; --------------------------------------------------
 ;; My hooks
@@ -420,7 +425,8 @@ header, based on presence of .c file"
   (while modeList
     (add-hook (car modeList) (lambda ()
                                (hs-minor-mode)
-                               (define-key hs-minor-mode-map [(control tab)] 'hs-toggle-hiding)
+                               (define-key hs-minor-mode-map [(control tab)] 
+                                 'hs-toggle-hiding)
                                ;; Only supported in emacs 24
                                (condition-case nil
                                    (progn
@@ -456,15 +462,18 @@ header, based on presence of .c file"
 
 ;; matlab rebinds M-e and M-a
 (add-hook 'matlab-mode-hook (lambda ()
-                              (define-key matlab-mode-map (kbd "M-e") (lambda ()
-                                                                        (interactive)
-                                                                        (next-line 6)))
-                              (define-key matlab-mode-map (kbd "M-a") (lambda ()
-                                                                        (interactive)
-                                                                        (previous-line 6)))))
+                              (define-key 
+                                matlab-mode-map (kbd "M-e") (lambda ()
+                                                              (interactive)
+                                                              (next-line 6)))
+                              (define-key
+                                matlab-mode-map (kbd "M-a") (lambda ()
+                                                              (interactive)
+                                                              (previous-line 6)))))
 
 (add-hook 'vc-dir-mode-hook (lambda ()
-                              (define-key vc-dir-mode-map (kbd "RET") 'vc-dir-find-file-other-window)))
+                              (define-key vc-dir-mode-map (kbd "RET")
+                                'vc-dir-find-file-other-window)))
 
 ;; check the buffer when flyspell loads
 (add-hook 'flyspell-mode-hook (lambda ()
@@ -498,10 +507,10 @@ header, based on presence of .c file"
  '(LaTeX-command "latex -shell-escape")
  '(TeX-view-program-list (quote (("Evince" "evince --page-index=%(outpage) %o"))))
  '(c-doc-comment-style (quote gtkdoc))
- '(ido-ignore-files (quote ("\\`CVS/" "\\`#" "\\`.#" "\\`\\.\\./" "\\`\\./" "_region_" "\\\\.prv/" "\\auto/" "__flymake")))
+ '(ido-ignore-files (quote ("\\`CVS/" "\\`#" "\\`.#" "\\`\\.\\./" "\\`\\./" "_region_"
+                      "\\\\.prv/" "\\auto/" "__flymake")))
  '(inhibit-default-init t)
  '(inhibit-startup-screen t)
- '(jabber-account-list (quote (("pjozog@gmail.com" (:network-server . "talk.google.com") (:connection-type . ssl)))))
  '(org-agenda-files (quote ("~/Dropbox/org/projects.org")))
  '(org-hide-leading-stars nil)
  '(search-whitespace-regexp "[ \t\r\n]+")
@@ -518,7 +527,9 @@ header, based on presence of .c file"
  '(diredp-dir-heading ((((background dark)) (:inherit font-lock-comment-face))))
  '(diredp-dir-priv ((((background dark)) (:foreground "#7474FFFFFFFF"))))
  '(font-latex-string-face ((((class color) (background dark)) (:foreground "#A2AB64"))))
- '(org-column ((t (:background "#000000" :strike-through nil :underline nil :slant normal :weight normal :height 98 :family "DejaVu Sans Mono")))))
+ '(org-column ((t (:background "#000000" :strike-through nil :underline nil 
+                               :slant normal :weight normal :height 98
+                               :family "DejaVu Sans Mono")))))
 
 ;; os-specific stuff:
 ;; GNU/Linux
