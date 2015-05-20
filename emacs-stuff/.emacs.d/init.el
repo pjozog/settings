@@ -225,7 +225,6 @@ header, based on presence of .c file"
 (require 'naquadah-theme)
 (require 'dired-mod)            ;; mine
 (require 'myOrgSettings)        ;; mine
-(require 'smooth-scrolling)
 (require 'markdown-mode)
 (require 'fill-column-indicator)
 
