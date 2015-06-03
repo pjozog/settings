@@ -265,6 +265,14 @@ header, based on presence of .c file"
 (setq ns-command-modifier 'meta)
 (setq bibtex-align-at-equal-sign t)
 
+;; rebalance windows when you split them (C-x 2, C-x 3)
+(defadvice split-window-below (after rebalance-windows activate)
+  (balance-windows))
+(ad-activate 'split-window-below)
+(defadvice split-window-right (after rebalance-windows activate)
+  (balance-windows))
+(ad-activate 'split-window-right)
+
 ;; To keep myself happy
 (set-default 'indent-tabs-mode nil)
 (setq-default tab-width 4)
@@ -549,8 +557,12 @@ header, based on presence of .c file"
 
 ;; Fix linum margin when running in terminal mode
 (setq linum-format "%d ")
-(dired (getenv "HOME"))
-(switch-to-buffer (user-login-name))
 (setq split-height-threshold 90)
-(split-window-sensibly (selected-window))
-(switch-to-buffer "*scratch*")
+
+;; start 3 buffers: scatch, dired, init.el
+(split-window-right)
+(split-window-right)
+(other-window 1)
+(dired (getenv "HOME"))
+(other-window 1)
+(switch-to-buffer "init.el")
