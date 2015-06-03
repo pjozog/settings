@@ -272,6 +272,9 @@ header, based on presence of .c file"
 (defadvice split-window-right (after rebalance-windows activate)
   (balance-windows))
 (ad-activate 'split-window-right)
+(defadvice delete-window (after rebalance-windows activate)
+  (balance-windows))
+(ad-activate 'delete-window)
 
 ;; To keep myself happy
 (set-default 'indent-tabs-mode nil)
