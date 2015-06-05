@@ -257,7 +257,7 @@ header, based on presence of .c file"
 ;; (global-linum-mode 1)
 (global-auto-revert-mode t)
 (column-number-mode 1)
-(setq default-fill-column 90)
+(setq default-fill-column 80)
 (setq scroll-preserve-screen-position 1)
 (setq woman-fill-column default-fill-column)
 (setq-default indicate-empty-lines t)
