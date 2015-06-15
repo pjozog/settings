@@ -563,9 +563,10 @@ header, based on presence of .c file"
 (setq split-height-threshold 90)
 
 ;; start 3 buffers: scatch, dired, init.el
+(switch-to-buffer "init.el")
 (split-window-right)
 (split-window-right)
 (other-window 1)
 (dired (getenv "HOME"))
 (other-window 1)
-(switch-to-buffer "init.el")
+(switch-to-buffer "*compilation*")
