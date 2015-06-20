@@ -213,7 +213,7 @@ header, based on presence of .c file"
 (require 'uniquify)
 (require 'rainbow-mode)
 (require 'reftex)
-(require 'w3m)
+;; (require 'w3m)
 (require 'mediawiki)
 (require 'highline)
 (require 'diff-mode-)
@@ -550,7 +550,13 @@ header, based on presence of .c file"
 
 ;; OS X
 (if (string-equal "darwin" system-type)
-    (setq ns-command-modifier 'meta))
+    (progn
+      (set-face-attribute 'default nil :height 80 :family "monospace")
+      (require 'ls-lisp)
+      (setq ls-lisp-use-insert-directory-program t)
+      (setq insert-directory-program "~/bin/ls")
+      (setq dired-listing-switches "-CF --group-directories-first -alh")
+      (setq ns-command-modifier 'meta)))
 
 (open-filelist '("~/.emacs.d/init.el" "~/.shell_aliases" "~/.profile"
                  "~/.config/openbox/autostart.sh"
