@@ -173,6 +173,18 @@ elif [ $DIST -ge 1204 ]; then
     addpkg openjdk-6-jdk
 fi
 
+# hal (makes hbo go/amazon prime video work in firefox)
+sudo add-apt-repository -y ppa:mjblenner/ppa-hal
+addpkg hal
+
+# pcl
+sudo add-apt-repository -y ppa:v-launchpad-jochen-sprickerhof-de/pcl
+addpkg libpcl-all
+
+# kodi (xbmc)
+sudo add-apt-repository -y ppa:team-xbmc/ppa
+addpkg kodi
+
 # go forth!
 echo "apt-get install $PACKAGES"
 sudo apt-get update

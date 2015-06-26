@@ -185,7 +185,7 @@ header, based on presence of .c file"
                (compile "compile ~/perls/build")))
 (defalias 'cc (lambda ()
                 (interactive)
-                (compile "compile ~/perl/perl-git/hauv-mosaic")))
+                (compile "compile ~/perl/perl-git/hauv-pjo")))
 (defalias 'ac (lambda ()
                 (interactive)
                 (if auto-complete-mode
