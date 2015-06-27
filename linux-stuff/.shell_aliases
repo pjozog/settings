@@ -138,7 +138,7 @@ export PATH=${HOME}/perls/build/bin:${PATH}
 alias ipython='ipython -i --pylab gtk --colors=Linux ~/.pythonrc'
 
 # common ctags for perls
-alias gentags='ctags-exuberant -Rea ~/perls/src && ctags-exuberant -Rea ~/perls/matlab && ctags-exuberant -Rea ~/perls/matlab && ctags-exuberant -Rea ~/perls/third-party/libbot2 && ctags-exuberant -Rea ~/perls/build/src/core/perls-lcmtypes && ctags-exuberant -Rea ~/perls/build/src/core/perls-lcmtypes++'
+alias gentags='ctags-exuberant -Rea ~/perls/src && ctags-exuberant -Rea ~/perls/matlab && ctags-exuberant -Rea ~/perls/third-party/libbot2 && ctags-exuberant -Rea ~/perls/build/src/core/perls-lcmtypes && ctags-exuberant -Rea ~/perls/build/src/core/perls-lcmtypes++'
 
 alias ipn='cd ~/Dropbox/code/ipython-notebooks/ && \ipython notebook'
 # TODO: get 3d working in matplotlib/notebook

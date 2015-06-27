@@ -30,7 +30,7 @@
       (ido-mode t)
       (ido-ubiquitous-mode)
       ;; Use regular find-tag (no ido)
-      (setq ido-ubiquitous-command-exceptions '(find-tag))
+      (setq ido-ubiquitous-command-overrides 'find-tag)
 
       (setq ido-use-virtual-buffers t
             recentf-max-saved-items 500)

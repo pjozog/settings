@@ -25,6 +25,8 @@ dhist
 ac-comphist.dat
 emacs-stuff/.emacs.d/elpa
 emacs-stuff/.emacs.d/request
+emacs-stuff/.emacs.d/smex-items
 ipython-stuff/ipython/profile_default/security
 ipython-stuff/matplotlib/fontList.cache
 ipython-stuff/matplotlib/tex.cache
+ipython-stuff/ipython/profile_default/static
