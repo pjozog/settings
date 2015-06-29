@@ -1323,8 +1323,8 @@ ZSHDIR=${ZDOTDIR:-${HOME}/.zsh}
 
 #v#
 HISTFILE=${ZDOTDIR:-${HOME}}/.zsh_history
-isgrmlcd && HISTSIZE=500  || HISTSIZE=5000
-isgrmlcd && SAVEHIST=1000 || SAVEHIST=10000 # useful for setopt append_history
+isgrmlcd && HISTSIZE=5000  || HISTSIZE=50000
+isgrmlcd && SAVEHIST=10000 || SAVEHIST=100000 # useful for setopt append_history
 
 # directory based profiles
 
