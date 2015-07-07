@@ -128,6 +128,7 @@ addpkg \
     texlive-generic-extra \
     texlive-latex-extra \
     texlive-science \
+    unrar \
     vinagre \
     vlc \
     vnc4server \
