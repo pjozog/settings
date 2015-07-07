@@ -1,4 +1,4 @@
 #contributor : Paul Ozog
-#name : \frac{}{}
+#name : \mathcal{}{}
 # --
 \mathcal{$1}

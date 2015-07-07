@@ -174,6 +174,12 @@ header, based on presence of .c file"
         (c-mode)
       (c++-mode))))
 
+(defun align-c-style-args-leftjust (begin end)
+  "Align c-style function args (left justified)"
+  (interactive "r")
+  (align-regexp begin end "\\(\\s-*\\)(")
+  (align-regexp begin end ",\\(\\s-*\\)" 1 1 t))
+
 ;; --------------------------------------------------
 ;; Aliases
 ;; --------------------------------------------------
