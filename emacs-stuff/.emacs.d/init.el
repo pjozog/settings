@@ -21,7 +21,10 @@
       ;; Add in your own as you wish:
       (defvar my-packages '(smex ido-ubiquitous idle-highlight-mode
                                  w3m yasnippet ein org auctex auto-complete
-                                 etags-select)
+                                 etags-select matlab-mode cmake-mode lua-mode
+                                 autopair unbound nyan-mode markdown-mode 
+                                 rainbow-mode color-theme flymake-cursor
+				 browse-kill-ring)
         "A list of packages to ensure are installed at launch.")
 
       (dolist (p my-packages)
@@ -222,9 +225,6 @@ header, based on presence of .c file"
 (require 'org-install)
 (require 'uniquify)
 (require 'rainbow-mode)
-(require 'reftex)
-;; (require 'w3m)
-(require 'mediawiki)
 (require 'highline)
 (require 'diff-mode-)
 (require 'smarttabs)
@@ -296,10 +296,6 @@ header, based on presence of .c file"
   (interactive)
   (ein:notebooklist-open))
 
-;; stuff for anything library
-;; (global-set-key "\M-." 'anything-etags+-select-one-key)
-;; (global-set-key "\M-*" 'anything-etags+-history-go-back)
-
 ;; Woman is pretty cool
 (setq woman-use-own-frame nil)
 
@@ -360,6 +356,10 @@ header, based on presence of .c file"
 
 (put 'upcase-region 'disabled nil)
 
+;; load my tags
+(if (file-exists-p "~/Dropbox/code/tag-table-list.el")
+    (load "~/Dropbox/code/tag-table-list.el"))
+
 ;; HACK: disable the default snippets packaged with melpa
 (setq yas-snippet-dirs (concat (file-name-as-directory my-emacs-dir) "snippets"))
 (yas/initialize)
@@ -380,7 +380,6 @@ header, based on presence of .c file"
 ;; --------------------------------------------------
 ;; Language-specific settings
 ;; --------------------------------------------------
-(add-to-list 'auto-mode-alist '("\\.txt$" . mediawiki-mode))
 (add-to-list 'auto-mode-alist '("CMakeLists\\.txt$" . cmake-mode))
 (add-to-list 'auto-mode-alist '("\\.lcm$" . java-mode))
 (add-to-list 'auto-mode-alist '("Doxyfile$" . conf-mode))
@@ -457,7 +456,6 @@ header, based on presence of .c file"
                              (outline-minor-mode)
                              (auto-fill-mode)
                              ;;(flymake-mode)
-                             (turn-on-reftex)
                              (define-key LaTeX-mode-map (kbd "C-7") 'insert-amps)
                              (orgtbl-mode)
                              (TeX-PDF-mode-on)
