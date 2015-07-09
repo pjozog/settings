@@ -85,6 +85,12 @@ linkPairs = [
     (os.path.join(scriptDir, 'git-stuff', '.gitconfig'),
      os.path.join(homeDir, '.gitconfig')),
 
+    (os.path.join(scriptDir, 'git-stuff', '.gitignore'),
+     os.path.join(homeDir, '.gitignore')),
+
+    (os.path.join(scriptDir, 'git-stuff', 'git-template'),
+     os.path.join(homeDir, '.git-template')),
+
     (os.path.join(scriptDir, 'linux-stuff', '.gtkrc-mine'),
      os.path.join(homeDir, '.gtkrc-mine')),
 

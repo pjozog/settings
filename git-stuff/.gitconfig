@@ -3,3 +3,12 @@
 	email = pjozog@gmail.com
 [color]
 	ui = auto
+
+[init]
+	templatedir = ~/.git-template
+
+[core]
+    excludesfile = ~/.gitignore
+
+[push]
+    default = matching

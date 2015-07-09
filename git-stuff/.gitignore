@@ -1,0 +1,9 @@
+ctags_file
+auto
+*~
+*.log
+*.aux
+*.bbl
+*.blg
+*.eps
+*.out
