@@ -20,7 +20,8 @@
 
       ;; Add in your own as you wish:
       (defvar my-packages '(smex ido-ubiquitous idle-highlight-mode
-                                 w3m yasnippet ein org auctex auto-complete)
+                                 w3m yasnippet ein org auctex auto-complete
+                                 etags-select)
         "A list of packages to ensure are installed at launch.")
 
       (dolist (p my-packages)
@@ -38,6 +39,9 @@
       ;; Autocomplete in M-x
       (smex-initialize)
       (global-set-key (kbd "M-x") 'smex)
+
+      ;; replace find-tags with etags-select
+      (global-set-key (kbd "M-.") 'etags-select-find-tag)
 
       (add-hook
        'prog-mode-hook (lambda () 
@@ -355,9 +359,6 @@ header, based on presence of .c file"
 (setq ediff-split-window-function 'split-window-horizontally)
 
 (put 'upcase-region 'disabled nil)
-
-(if (file-exists-p "~/TAGS")
-    (visit-tags-table "~/TAGS"))
 
 ;; HACK: disable the default snippets packaged with melpa
 (setq yas-snippet-dirs (concat (file-name-as-directory my-emacs-dir) "snippets"))
