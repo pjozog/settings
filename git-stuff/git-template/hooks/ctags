@@ -1,5 +1,5 @@
 #!/bin/sh
 set -e
 trap "rm -f TAGS.$$" EXIT
-ctags-exuberant -Rea -f TAGS.$$ --c++-kinds=+p --langmap=C++:+.cu --fields=+iaS --extra=+q --exclude=.git --exclude=build
+ctags-exuberant -Rea -f TAGS.$$ --c++-kinds=+p --langmap=C++:+.cu --fields=+iaS --extra=+q --exclude=.git --exclude=build --exclude=pod-build
 mv TAGS.$$ TAGS
