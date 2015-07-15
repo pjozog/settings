@@ -193,17 +193,9 @@ header, based on presence of .c file"
 (defalias 'yes-or-no-p 'y-or-n-p) ;; That 'yes' or 'no' shit is anoying:
 (defalias 'man 'woman) ;; Doesn't work at startup?
 (defalias 'cf 'customize-face)
-(defalias 'c (lambda ()
-               (interactive)
-               (compile "compile ~/perls/build")))
-(defalias 'cc (lambda ()
-                (interactive)
-                (compile "compile ~/perl/perl-git/hauv-pjo")))
-(defalias 'ac (lambda ()
-                (interactive)
-                (if auto-complete-mode
-                    (auto-complete-mode -1)
-                  (auto-complete-mode t))))
+
+(if (file-exists-p "~/Dropbox/code/compile-aliases.el")
+    (load "~/Dropbox/code/compile-aliases.el"))
 
 ;; --------------------------------------------------
 ;; Packages / Minor modes / Keybindings
@@ -566,8 +558,7 @@ header, based on presence of .c file"
 (open-filelist '("~/.emacs.d/init.el" "~/.shell_aliases" "~/.profile"
                  "~/.config/openbox/autostart.sh"
                  "~/.config/awesome/rc.lua"
-                 "~/Dropbox/personal/org/projects.org"
-                 "~/perl/perl-svn/references/bibtex/references.bib"))
+                 "~/Dropbox/personal/org/projects.org"))
 
 ;; Fix linum margin when running in terminal mode
 (setq linum-format "%d ")
