@@ -187,6 +187,39 @@ header, based on presence of .c file"
   (align-regexp begin end "\\(\\s-*\\)(")
   (align-regexp begin end ",\\(\\s-*\\)" 1 1 t))
 
+(defun update-git-repo-tags ()
+  "Checks up to 6 directories for a TAGS file.  If it exists, and
+there exists an executable git hook called '.git/hooks/ctags',
+then that hook will be executed (thus updating the TAGS file)."
+  (interactive)
+  (let ((current-directory  (file-name-directory buffer-file-name))
+        (dir-list '("./"
+                   "../"
+                   "../../"
+                   "../../../"
+                   "../../../../"
+                   "../../../../../"
+                   "../../../../../../"))
+        (tags-found nil))
+    (while (and (not tags-found) dir-list)
+      (let* ((current-dir (car dir-list))
+             (ctags-file (concat current-dir "TAGS"))
+             (ctags-script (concat current-dir ".git/hooks/ctags"))
+             (old-directory default-directory))
+        (if (file-exists-p ctags-file)
+            (progn
+              (message (concat "Found tags at " ctags-file))
+              (if (file-executable-p ctags-script)
+                  (progn
+                    (message (concat "Running ctags script " ctags-script))
+                    (cd current-dir)
+                    (call-process-shell-command "./.git/hooks/ctags &" nil 0)
+                    (cd old-directory))
+                (message (concat "ctags script not found, not updating "
+                                 ctags-file)))
+              (setq tags-found t)))
+        (setq dir-list (cdr dir-list))))))
+
 ;; --------------------------------------------------
 ;; Aliases
 ;; --------------------------------------------------
@@ -412,6 +445,8 @@ header, based on presence of .c file"
 ;; --------------------------------------------------
 ;; My hooks
 ;; --------------------------------------------------
+(add-hook 'after-save-hook 'update-git-repo-tags)
+
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
 (add-hook 'ibuffer-mode-hook (lambda ()
