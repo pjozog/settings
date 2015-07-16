@@ -209,7 +209,7 @@ find-dominating-file?"
           (cd curr-dir)
           (call-process-shell-command "./.git/hooks/ctags &" nil 0)
           (cd (expand-file-name old-dir)))
-      (when parent (update-git-repo-tags-rec parent old-dir)))))
+      (when parent (update-git-repo-tags parent old-dir)))))
 
 ;; --------------------------------------------------
 ;; Aliases
@@ -454,7 +454,7 @@ find-dominating-file?"
 ;; My hooks
 ;; --------------------------------------------------
 (add-hook 'after-save-hook (lambda ()
-                             (update-git-repo-tags-rec 
+                             (update-git-repo-tags 
                               default-directory
                               default-directory)))
 
