@@ -187,38 +187,29 @@ header, based on presence of .c file"
   (align-regexp begin end "\\(\\s-*\\)(")
   (align-regexp begin end ",\\(\\s-*\\)" 1 1 t))
 
-(defun update-git-repo-tags ()
-  "Checks up to 6 directories for a TAGS file.  If it exists, and
-there exists an executable git hook called '.git/hooks/ctags',
-then that hook will be executed (thus updating the TAGS file)."
+(defun parent-directory (dir)
+  (unless (equal "/" dir)
+    (file-name-directory (directory-file-name dir))))
+
+(defun update-git-repo-tags (curr-dir old-dir)
+  "Recursively looks in parent directories for a TAGS file.  If it exists,
+and there exists an executable git hook called
+'.git/hooks/ctags', then that hook will be executed (thus
+updating the TAGS file).  Perhaps could be done with
+find-dominating-file?"
   (interactive)
-  (let ((current-directory  (file-name-directory buffer-file-name))
-        (dir-list '("./"
-                   "../"
-                   "../../"
-                   "../../../"
-                   "../../../../"
-                   "../../../../../"
-                   "../../../../../../"))
-        (tags-found nil))
-    (while (and (not tags-found) dir-list)
-      (let* ((current-dir (car dir-list))
-             (ctags-file (concat current-dir "TAGS"))
-             (ctags-script (concat current-dir ".git/hooks/ctags"))
-             (old-directory default-directory))
-        (if (file-exists-p ctags-file)
-            (progn
-              (message (concat "Found tags at " ctags-file))
-              (if (file-executable-p ctags-script)
-                  (progn
-                    (message (concat "Running ctags script " ctags-script))
-                    (cd current-dir)
-                    (call-process-shell-command "./.git/hooks/ctags &" nil 0)
-                    (cd old-directory))
-                (message (concat "ctags script not found, not updating "
-                                 ctags-file)))
-              (setq tags-found t)))
-        (setq dir-list (cdr dir-list))))))
+  (let ((ctags-file (concat curr-dir "TAGS"))
+        (ctags-script (concat curr-dir ".git/hooks/ctags"))
+        (parent (parent-directory (expand-file-name curr-dir))))
+    (if (and (file-exists-p ctags-file)
+             (file-executable-p ctags-script))
+        (progn
+          (message (concat "Found " ctags-file))
+          (message (concat "Running ctags script " ctags-script))
+          (cd curr-dir)
+          (call-process-shell-command "./.git/hooks/ctags &" nil 0)
+          (cd (expand-file-name old-dir)))
+      (when parent (update-git-repo-tags-rec parent old-dir)))))
 
 ;; --------------------------------------------------
 ;; Aliases
@@ -299,6 +290,8 @@ then that hook will be executed (thus updating the TAGS file)."
 (setq gdb-many-windows t)
 (setq ns-command-modifier 'meta)
 (setq bibtex-align-at-equal-sign t)
+(setq ediff-window-setup-function 'ediff-setup-windows-plain)
+(setq ediff-split-window-function 'split-window-horizontally)
 
 ;; rebalance windows when you split them (C-x 2, C-x 3)
 (defadvice split-window-below (after rebalance-windows activate)
@@ -310,6 +303,21 @@ then that hook will be executed (thus updating the TAGS file)."
 (defadvice delete-window (after rebalance-windows activate)
   (balance-windows))
 (ad-activate 'delete-window)
+
+;; ediff layout
+(defvar ediff-last-windows nil
+  "Last ediff window configuration.")
+
+(defun ediff-restore-windows ()
+  "Restore window configuration to `ediff-last-windows'."
+  (set-window-configuration ediff-last-windows)
+  (remove-hook 'ediff-after-quit-hook-internal
+               'ediff-restore-windows))
+
+(defadvice ediff-buffers (around ediff-restore-windows activate)
+  (setq ediff-last-windows (current-window-configuration))
+  (add-hook 'ediff-after-quit-hook-internal 'ediff-restore-windows)
+  ad-do-it)
 
 ;; To keep myself happy
 (set-default 'indent-tabs-mode nil)
@@ -377,7 +385,7 @@ then that hook will be executed (thus updating the TAGS file)."
 (global-set-key (kbd "M-Q") (lambda ()
                               (interactive)
                               (fill-paragraph 1)))
-(setq ediff-split-window-function 'split-window-horizontally)
+(global-set-key (kbd "C-x v =") 'vc-ediff)
 
 (put 'upcase-region 'disabled nil)
 
@@ -445,7 +453,10 @@ then that hook will be executed (thus updating the TAGS file)."
 ;; --------------------------------------------------
 ;; My hooks
 ;; --------------------------------------------------
-(add-hook 'after-save-hook 'update-git-repo-tags)
+(add-hook 'after-save-hook (lambda ()
+                             (update-git-repo-tags-rec 
+                              default-directory
+                              default-directory)))
 
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
