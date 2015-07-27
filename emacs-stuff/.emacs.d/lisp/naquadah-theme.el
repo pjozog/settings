@@ -350,6 +350,16 @@
  '(diff-file-header (:foreground aluminium-1))
  '(diff-refine-change (:background aluminium-6))
 
+ ;; ediff
+ '(ediff-even-diff-A (:background "light grey" :foreground "black"))
+ '(ediff-even-diff-B (:background "light grey" :foreground "black"))
+ '(ediff-odd-diff-A (:background "light grey" :foreground "black"))
+ '(ediff-odd-diff-B (:background "light grey" :foreground "black"))
+ '(ediff-current-diff-A (:background "#553333" :foreground "white"))
+ '(ediff-current-diff-B (:background "#335533" :foreground "white"))
+ '(ediff-fine-diff-A (:background "#aa2222" :foreground "black"))
+ '(ediff-fine-diff-B (:background "#22aa22" :foreground "black"))
+
  ;; magit
  '(magit-diff-add (:inherit diff-added))
  '(magit-diff-del (:inherit diff-removed))
