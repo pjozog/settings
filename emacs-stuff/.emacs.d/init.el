@@ -426,6 +426,10 @@ find-dominating-file?"
 ;; set default C style to 4-space indentation with "cc-mode" style (from rme-linux)
 (setq c-default-style
       '((java-mode . "java") (awk-mode . "awk") (c-mode . "cc-mode") (other . "cc-mode")))
+
+;; Don't do the funky indenting for lines consisting only of curly braces
+(c-set-offset 'substatement-open 0)
+
 ;; Also make function calls highlighted for common programming modes
 (let (modeList)
   (setq modeList '(c-mode
