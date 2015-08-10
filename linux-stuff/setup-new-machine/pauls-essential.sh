@@ -191,6 +191,10 @@ echo "apt-get install $PACKAGES"
 sudo apt-get update
 sudo apt-get install $PACKAGES
 
+# HACK: some packages mess up firefox's spellcheck
+sudo apt-get autoremove myspell-en-za myspell-en-gb myspell-en-au
+sudo apt-get install myspell-en-us
+
 # configure java
 sudo update-alternatives --config java
 sudo update-alternatives --config jar

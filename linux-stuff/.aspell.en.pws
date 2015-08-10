@@ -1,4 +1,4 @@
-personal_ws-1.1 en 64 
+personal_ws-1.1 en 75 
 multibeam
 Haralick
 indices
@@ -6,6 +6,7 @@ pdf
 iSAM
 egomotion
 sparsified
+dehomogenization
 al
 biogrowth
 Zisserman
@@ -37,23 +38,32 @@ PJO
 hyperellipses
 HAUV's
 parameterized
-DOF
 odometry
+DOF
 Mahalanobis
+pingers
+raycasting
 backend
 EKF
 RBT
+photomosaic
+Photomosaic
+modalities
 curtiss
 LM
 MLE
 regularizer
 unary
 online
+raycast
 parameterization
 Advisor
 timeline
 Jacobian
 Zisserman's
+biofouling
+covariance
+mosaicing
 linearization
 Santes
 Taubman
@@ -61,5 +71,6 @@ Levenberg
 sparsify
 DVL
 PCA
+photomosaicing
 reprojection
 fiducial
