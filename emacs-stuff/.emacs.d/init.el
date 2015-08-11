@@ -7,6 +7,55 @@
 
 (setq my-emacs-dir (file-name-directory load-file-name))
 
+;; My key bindings
+(defvar paul-keys-minor-mode-map (make-keymap) "paul-keys-minor-mode keymap")
+
+(define-key paul-keys-minor-mode-map (kbd "C-x h") 'global-highline-mode)
+(define-key paul-keys-minor-mode-map (kbd "C-x l") 'linum-mode)
+(define-key paul-keys-minor-mode-map (kbd "M-RET") 'shell-resync-dirs)
+(define-key paul-keys-minor-mode-map (kbd "C-c C-f") 'find-file-this)
+(define-key paul-keys-minor-mode-map (kbd "C-o") 'other-window)
+(define-key paul-keys-minor-mode-map (kbd "C-M-|") 'fill-region)
+(define-key paul-keys-minor-mode-map (kbd "M-h") 'ff-find-other-file)
+(define-key paul-keys-minor-mode-map (kbd "C-c k") 'ido-kill-buffer)
+(define-key paul-keys-minor-mode-map
+  (kbd "C-S-k") (lambda () (interactive)
+                  (kill-all-dired-buffers (user-login-name))))
+(define-key paul-keys-minor-mode-map (kbd "C-S-a") 'align-regexp)
+(define-key paul-keys-minor-mode-map (kbd "C-x f") 'find-name-dired)
+(define-key paul-keys-minor-mode-map (kbd "C-x C-j") 'dired-jump)
+(define-key paul-keys-minor-mode-map (kbd "C-x m") 'comment-region)
+(define-key paul-keys-minor-mode-map
+  (kbd "C-x C-b") (lambda () 
+                    (interactive)
+                    (ibuffer)
+                    (isearch-forward)))
+(define-key paul-keys-minor-mode-map
+  (kbd "M-e") (lambda () 
+                (interactive)
+                (next-line 3)))
+(define-key paul-keys-minor-mode-map
+  (kbd "M-a") (lambda () 
+                (interactive)
+                (previous-line 3)))
+(define-key paul-keys-minor-mode-map (kbd "<f5>") 'shrink-window-horizontally)
+(define-key paul-keys-minor-mode-map (kbd "<f6>") 'enlarge-window-horizontally)
+(define-key paul-keys-minor-mode-map (kbd "<f7>") 'shrink-window)
+(define-key paul-keys-minor-mode-map (kbd "<f8>") 'enlarge-window)
+
+(define-key paul-keys-minor-mode-map (kbd "C-c e") 'eval-and-replace)
+(define-key paul-keys-minor-mode-map (kbd "C-c u") 'cua-mode)
+(define-key paul-keys-minor-mode-map
+  (kbd "M-Q") (lambda ()
+                (interactive)
+                (fill-paragraph 1)))
+(define-key paul-keys-minor-mode-map (kbd "C-x v =") 'vc-ediff)
+
+(define-minor-mode paul-keys-minor-mode
+  "A minor mode so that my key settings override annoying major modes."
+  t " paul-keys" 'paul-keys-minor-mode-map)
+(paul-keys-minor-mode 1)
+
 ;; This basically will only work with emacs24.
 (condition-case nil
     (progn
@@ -41,10 +90,10 @@
 
       ;; Autocomplete in M-x
       (smex-initialize)
-      (global-set-key (kbd "M-x") 'smex)
+      (define-key paul-keys-minor-mode-map (kbd "M-x") 'smex)
 
       ;; replace find-tags with etags-select
-      (global-set-key (kbd "M-.") 'etags-select-find-tag)
+      (define-key paul-keys-minor-mode-map (kbd "M-.") 'etags-select-find-tag)
 
       (add-hook
        'prog-mode-hook (lambda () 
@@ -348,44 +397,6 @@ find-dominating-file?"
 
 ;; Number of killed things to remember
 (setq kill-ring-max 6000)
-
-;; My key bindings
-(global-set-key (kbd "C-x h") 'global-highline-mode)
-(global-set-key (kbd "C-x l") 'linum-mode)
-(global-set-key [(meta return)] 'shell-resync-dirs)
-(global-set-key (kbd "C-c C-f") 'find-file-this)
-                                        ;(global-set-key [(meta .)] 'goto-tag)
-(global-set-key (kbd "C-o") 'other-window)
-(global-set-key (kbd "C-M-|") 'fill-region)
-(global-set-key (kbd "M-h") 'ff-find-other-file)
-(global-set-key (kbd "C-c k") 'ido-kill-buffer)
-(global-set-key (kbd "C-S-k") (lambda () (interactive)
-                                (kill-all-dired-buffers (user-login-name))))
-(global-set-key (kbd "C-S-a") 'align-regexp)
-(global-set-key (kbd "C-x f") 'find-name-dired)
-(global-set-key (kbd "C-x C-j") 'dired-jump)
-(global-set-key (kbd "C-x m") 'comment-region)
-(global-set-key (kbd "C-x C-b") (lambda () 
-                                  (interactive)
-                                  (ibuffer)
-                                  (isearch-forward)))
-(global-set-key (kbd "M-e") (lambda () 
-                              (interactive)
-                              (next-line 3)))
-(global-set-key (kbd "M-a") (lambda () 
-                              (interactive)
-                              (previous-line 3)))
-(global-set-key (kbd "<f5>") 'shrink-window-horizontally)
-(global-set-key (kbd "<f6>") 'enlarge-window-horizontally)
-(global-set-key (kbd "<f7>") 'shrink-window)
-(global-set-key (kbd "<f8>") 'enlarge-window)
-;; (global-set-key (kbd "C-z") 'undo)
-(global-set-key (kbd "C-c e") 'eval-and-replace)
-(global-set-key (kbd "C-c u") 'cua-mode)
-(global-set-key (kbd "M-Q") (lambda ()
-                              (interactive)
-                              (fill-paragraph 1)))
-(global-set-key (kbd "C-x v =") 'vc-ediff)
 
 (put 'upcase-region 'disabled nil)
 
