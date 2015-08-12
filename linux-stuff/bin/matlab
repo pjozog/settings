@@ -1,10 +1,13 @@
 #!/bin/bash
 
-# M2007=1
-
 # This script makes it easy to run old matlab versions in awesome
 
 MATLAB_BIN_PATH=${HOME}/miscprograms/matlab/bin
+
+echo $(readlink -f ${MATLAB_BIN_PATH}) | grep 2007 > /dev/null
+if [ $? -eq 0 ]; then
+    M2007=1
+fi
 
 if [ ${M2007} ]; then
     JRE_PATH=/usr/lib/jvm/java-6-openjdk-amd64/jre
