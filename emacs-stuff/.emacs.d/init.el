@@ -310,7 +310,8 @@ find-dominating-file?"
 (require 'diff-mode-)
 (require 'smarttabs)
 (require 'browse-kill-ring)
-(require 'nyan-mode)
+(if (display-graphic-p)
+  (require 'nyan-mode))
 (show-paren-mode 1) ;;This needs to be enabled before changing color theme
 (require 'subword)
 (require 'naquadah-theme)
@@ -330,7 +331,8 @@ find-dominating-file?"
 ;; Turn off the bad shit
 (menu-bar-mode -1)
 (tool-bar-mode -1)
-(scroll-bar-mode -1)
+(if (display-graphic-p)
+  (scroll-bar-mode -1))
 
 ;; Turn on the good shit
 (transient-mark-mode 1)
@@ -398,8 +400,10 @@ find-dominating-file?"
 (setq woman-use-own-frame nil)
 
 ;; Make the nyan mode line not so long
-(nyan-mode)
-(setq nyan-bar-length 12)
+(if (display-graphic-p)
+    (progn
+      (nyan-mode)
+      (setq nyan-bar-length 12)))
 ;; I know it's tempting, Paul - but DO NOT enable this!
 ;; (nyan-start-animation)
 
