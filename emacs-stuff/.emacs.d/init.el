@@ -331,8 +331,9 @@ find-dominating-file?"
 ;; Turn off the bad shit
 (menu-bar-mode -1)
 (tool-bar-mode -1)
-(if (display-graphic-p)
-  (scroll-bar-mode -1))
+(condition-case nil
+    (scroll-bar-mode -1)
+  (error nil))
 
 ;; Turn on the good shit
 (transient-mark-mode 1)
@@ -400,10 +401,11 @@ find-dominating-file?"
 (setq woman-use-own-frame nil)
 
 ;; Make the nyan mode line not so long
-(if (display-graphic-p)
+(condition-case nil
     (progn
       (nyan-mode)
-      (setq nyan-bar-length 12)))
+      (setq nyan-bar-length 12))
+  (error nil))
 ;; I know it's tempting, Paul - but DO NOT enable this!
 ;; (nyan-start-animation)
 
