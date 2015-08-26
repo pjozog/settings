@@ -70,30 +70,32 @@
 
 ;; This basically will only work with emacs24.
 (when (>= emacs-major-version 24)
-  ;; run el-get-install first
-  ;; Add in your own as you wish:
-  (defvar my-el-get-packages '(smex ido-ubiquitous idle-highlight-mode
-                                    yasnippet ein org-mode auto-complete
-                                    autopair unbound nyan-mode markdown-mode 
-                                    rainbow-mode color-theme flymake-cursor
-                                    cmake-mode browse-kill-ring)
-    "A list of el-get packages to ensure are installed at launch.")
 
-  (dolist (p my-el-get-packages)
-    (el-get-install p))
-
-  ;; now do melpa
+  ;; do melpa packages first
   (require 'package)
   (add-to-list 'package-archives
 	       '("melpa" . "https://melpa.org/packages/"))
   (package-initialize)
+  (package-refresh-contents)
 
-  (defvar my-melpa-packages '(lua-mode auctex w3m etags-select)
+  (defvar my-melpa-packages '(lua-mode auctex w3m etags-select org
+                                       smex ido-ubiquitous idle-highlight-mode
+                                       yasnippet auto-complete
+                                       autopair unbound nyan-mode markdown-mode 
+                                       rainbow-mode color-theme flymake-cursor
+                                       cmake-mode browse-kill-ring)
     "A list of melpa packages to ensure are installed at launch.")
 
   (dolist (p my-melpa-packages)
     (when (not (package-installed-p p))
       (package-install p)))
+
+  ;; then do el-get packages
+  (defvar my-el-get-packages '(ein)
+    "A list of el-get packages to ensure are installed at launch.")
+
+  (dolist (p my-el-get-packages)
+    (el-get-install p))
 
   (ido-mode t)
   (ido-ubiquitous-mode)
