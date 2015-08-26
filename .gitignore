@@ -23,6 +23,7 @@ auto
 tramp
 dhist
 ac-comphist.dat
+emacs-stuff/.emacs.d/el-get
 emacs-stuff/.emacs.d/elpa
 emacs-stuff/.emacs.d/request
 emacs-stuff/.emacs.d/smex-items

@@ -56,51 +56,66 @@
   t " paul-keys" 'paul-keys-minor-mode-map)
 (paul-keys-minor-mode 1)
 
+(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
+
+(unless (require 'el-get nil 'noerror)
+  (with-current-buffer
+      (url-retrieve-synchronously
+       "https://raw.githubusercontent.com/dimitri/el-get/master/el-get-install.el")
+    (goto-char (point-max))
+    (eval-print-last-sexp)))
+
+(add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/recipes")
+(el-get 'sync)
+
 ;; This basically will only work with emacs24.
-(condition-case nil
-    (progn
-      (require 'package)
-      (add-to-list 'package-archives
-                   '("melpa" . "http://melpa.org/packages/") t)
-      (package-initialize)
+(when (>= emacs-major-version 24)
+  ;; run el-get-install first
+  ;; Add in your own as you wish:
+  (defvar my-el-get-packages '(smex ido-ubiquitous idle-highlight-mode
+                                    yasnippet ein org-mode auctex auto-complete
+                                    cmake-mode lua-mode
+                                    autopair unbound nyan-mode markdown-mode 
+                                    rainbow-mode color-theme flymake-cursor
+                                    browse-kill-ring)
+    "A list of el-get packages to ensure are installed at launch.")
 
-      (when (not package-archive-contents)
-        (package-refresh-contents))
+  (dolist (p my-el-get-packages)
+    (el-get-install p))
 
-      ;; Add in your own as you wish:
-      (defvar my-packages '(smex ido-ubiquitous idle-highlight-mode
-                                 w3m yasnippet ein org auctex auto-complete
-                                 etags-select matlab-mode cmake-mode lua-mode
-                                 autopair unbound nyan-mode markdown-mode 
-                                 rainbow-mode color-theme flymake-cursor
-				 browse-kill-ring)
-        "A list of packages to ensure are installed at launch.")
+  ;; now do melpa
+  (require 'package)
+  (add-to-list 'package-archives
+	       '("melpa" . "https://melpa.org/packages/"))
+  (package-initialize)
 
-      (dolist (p my-packages)
-        (when (not (package-installed-p p))
-          (package-install p)))
+  (defvar my-melpa-packages '(w3m etags-select)
+    "A list of melpa packages to ensure are installed at launch.")
 
-      (ido-mode t)
-      (ido-ubiquitous-mode)
-      ;; Use regular find-tag (no ido)
-      (setq ido-ubiquitous-command-overrides 'find-tag)
+  (dolist (p my-melpa-packages)
+    (when (not (package-installed-p p))
+      (package-install p)))
 
-      (setq ido-use-virtual-buffers t
-            recentf-max-saved-items 500)
+  (ido-mode t)
+  (ido-ubiquitous-mode)
+  ;; Use regular find-tag (no ido)
+  (setq ido-ubiquitous-command-overrides 'find-tag)
 
-      ;; Autocomplete in M-x
-      (smex-initialize)
-      (define-key paul-keys-minor-mode-map (kbd "M-x") 'smex)
+  (setq ido-use-virtual-buffers t
+	recentf-max-saved-items 500)
 
-      ;; replace find-tags with etags-select
-      (define-key paul-keys-minor-mode-map (kbd "M-.") 'etags-select-find-tag)
+  ;; Autocomplete in M-x
+  (smex-initialize)
+  (define-key paul-keys-minor-mode-map (kbd "M-x") 'smex)
 
-      (add-hook
-       'prog-mode-hook (lambda () 
-                         (font-lock-add-keywords
-                          nil '(("\\<\\(FIX\\|TODO\\|FIXME\\|HACK\\|REFACTOR\\|DEBUG\\):"
-                                 1 font-lock-warning-face t))))))
-  (error nil))
+  ;; replace find-tags with etags-select
+  (define-key paul-keys-minor-mode-map (kbd "M-.") 'etags-select-find-tag)
+
+  (add-hook
+   'prog-mode-hook (lambda () 
+		     (font-lock-add-keywords
+		      nil '(("\\<\\(FIX\\|TODO\\|FIXME\\|HACK\\|REFACTOR\\|DEBUG\\):"
+			     1 font-lock-warning-face t))))))
 
 ;; --------------------------------------------------
 ;; Function definitions
