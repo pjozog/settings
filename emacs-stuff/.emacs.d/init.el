@@ -623,3 +623,5 @@ find-dominating-file?"
 ;; Fix linum margin when running in terminal mode
 (setq linum-format "%d ")
 (setq split-height-threshold 90)
+
+(get-buffer-create "*compilation*")

@@ -27,5 +27,5 @@ xset r rate 300 40
 # disable uber annoying overlay scroll bar
 export LIBOVERLAY_SCROLLBAR=0
 
-# start emacs server
-emacs --daemon
+# start emacs
+emacs --daemon &
