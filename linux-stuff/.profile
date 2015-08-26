@@ -13,6 +13,7 @@ if [ -d $HOME/bin ]; then
 fi
 
 export EDITOR='emacsclient -t'
+export ALTERNATE_EDITOR='nano'
 export PYTHONSTARTUP=${HOME}/.pythonrc
 export PYTHONPATH=${PYTHONPATH}:${HOME}/.python/dist-packages
 export MATLABPATH=~/documents/MATLAB

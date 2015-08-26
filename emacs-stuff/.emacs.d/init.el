@@ -561,7 +561,6 @@ find-dominating-file?"
 (add-hook 'octave-mode-hook (lambda ()
                               (setq comment-start "% ")))
 
-
 (server-start)
 ;; diable warning when killing buffers opened with emacsclient 
 ;; (must be set after calling (server-start))
@@ -624,12 +623,3 @@ find-dominating-file?"
 ;; Fix linum margin when running in terminal mode
 (setq linum-format "%d ")
 (setq split-height-threshold 90)
-
-;; start 3 buffers: scatch, dired, init.el
-(switch-to-buffer "init.el")
-(split-window-right)
-(split-window-right)
-(other-window 1)
-(dired (getenv "HOME"))
-(other-window 1)
-(switch-to-buffer "*compilation*")
