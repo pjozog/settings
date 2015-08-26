@@ -73,11 +73,10 @@
   ;; run el-get-install first
   ;; Add in your own as you wish:
   (defvar my-el-get-packages '(smex ido-ubiquitous idle-highlight-mode
-                                    yasnippet ein org-mode auctex auto-complete
-                                    cmake-mode lua-mode
+                                    yasnippet ein org-mode auto-complete
                                     autopair unbound nyan-mode markdown-mode 
                                     rainbow-mode color-theme flymake-cursor
-                                    browse-kill-ring)
+                                    cmake-mode browse-kill-ring)
     "A list of el-get packages to ensure are installed at launch.")
 
   (dolist (p my-el-get-packages)
@@ -89,7 +88,7 @@
 	       '("melpa" . "https://melpa.org/packages/"))
   (package-initialize)
 
-  (defvar my-melpa-packages '(w3m etags-select)
+  (defvar my-melpa-packages '(lua-mode auctex w3m etags-select)
     "A list of melpa packages to ensure are installed at launch.")
 
   (dolist (p my-melpa-packages)

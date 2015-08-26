@@ -124,6 +124,7 @@ addpkg \
     subversion \
     suckless-tools \
     terminator \
+    texinfo \
     texlive \
     texlive-generic-extra \
     texlive-latex-extra \
