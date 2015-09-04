@@ -187,13 +187,17 @@ addpkg libpcl-all
 sudo add-apt-repository -y ppa:team-xbmc/ppa
 addpkg kodi
 
+# zealdocs (offline documentation reader)
+sudo add-apt-repository ppa:zeal-developers/ppa
+addpkg zeal
+
 # go forth!
 echo "apt-get install $PACKAGES"
 sudo apt-get update
 sudo apt-get install $PACKAGES
 
 # HACK: some packages mess up firefox's spellcheck
-sudo apt-get autoremove myspell-en-za myspell-en-gb myspell-en-au
+sudo apt-get autoremove myspell-en-za myspell-en-gb myspell-en-au appmenu-qt5
 sudo apt-get install myspell-en-us
 
 # configure java

@@ -227,6 +227,7 @@ globalkeys = awful.util.table.join(
    awful.key({ }, "XF86Calculator", function () awful.util.spawn("gnome-calculator") end),
    awful.key({ modkey, "Shift"   }, "v", function () awful.util.spawn("nvidia-settings") end),
    awful.key({ modkey, "Shift"   }, "b", function () awful.util.spawn("blur-lock") end),
+   awful.key({ modkey,           }, "d", function () awful.util.spawn("zeal") end),
    awful.key({ modkey, "Control" }, "r", awesome.restart),
    awful.key({ modkey, "Shift"   }, "q", awesome.quit),
 
@@ -403,7 +404,7 @@ awful.rules.rules = {
      properties = { floating = true } },
    { rule = { name = "Ediff" },
      properties = { floating = true } },
-   { rule = { name = "keepassx" },
+   { rule = { name = "Zeal" },
      properties = { floating = true } },
    -- Set Firefox to always map on tags number 2 of screen 1.
    -- { rule = { class = "Firefox" },
