@@ -32,7 +32,7 @@ function ask {
 
 # needed in order to check distribution using 'bc' provided by by pkg and 
 # 'add-apt-repository' provided by python-software-properties pkg (available for Ubuntu 9.10 and above)
-sudo apt-get install bc python-software-properties
+sudo -E apt-get install bc python-software-properties
 
 DIST=$(lsb_release -rs)
 NAME=$(lsb_release -cs)
@@ -169,45 +169,45 @@ fi
 
 # sun
 if [ $DIST -ge 910 -a $DIST -lt 1204 ]; then
-    sudo add-apt-repository "deb http://archive.canonical.com/ $NAME partner"
+    sudo -E add-apt-repository "deb http://archive.canonical.com/ $NAME partner"
     addpkg sun-java6-jdk
 elif [ $DIST -ge 1204 ]; then
     addpkg openjdk-6-jdk
 fi
 
 # hal (makes hbo go/amazon prime video work in firefox)
-sudo add-apt-repository -y ppa:mjblenner/ppa-hal
+sudo -E add-apt-repository -y ppa:mjblenner/ppa-hal
 addpkg hal
 
 # pcl
-sudo add-apt-repository -y ppa:v-launchpad-jochen-sprickerhof-de/pcl
+sudo -E add-apt-repository -y ppa:v-launchpad-jochen-sprickerhof-de/pcl
 addpkg libpcl-all
 
 # kodi (xbmc)
-sudo add-apt-repository -y ppa:team-xbmc/ppa
+sudo -E add-apt-repository -y ppa:team-xbmc/ppa
 addpkg kodi
 
 # zealdocs (offline documentation reader)
-sudo add-apt-repository ppa:zeal-developers/ppa
+sudo -E add-apt-repository ppa:zeal-developers/ppa
 addpkg zeal
 
 # go forth!
 echo "apt-get install $PACKAGES"
-sudo apt-get update
-sudo apt-get install $PACKAGES
+sudo -E apt-get update
+sudo -E apt-get install $PACKAGES
 
 # HACK: some packages mess up firefox's spellcheck
-sudo apt-get autoremove myspell-en-za myspell-en-gb myspell-en-au appmenu-qt5
-sudo apt-get install myspell-en-us
+sudo -E apt-get autoremove myspell-en-za myspell-en-gb myspell-en-au appmenu-qt5
+sudo -E apt-get install myspell-en-us
 
 # configure java
-sudo update-alternatives --config java
-sudo update-alternatives --config jar
-sudo update-alternatives --config javac
+sudo -E update-alternatives --config java
+sudo -E update-alternatives --config jar
+sudo -E update-alternatives --config javac
 
 # install awesome-session
-sudo cp awesome-session /usr/bin
-sudo cp awesome.desktop /usr/share/xsessions
+sudo -E cp awesome-session /usr/bin
+sudo -E cp awesome.desktop /usr/share/xsessions
 
 # change to zsh
 echo 'Changing default shell to zsh, please enter your password'
@@ -218,14 +218,14 @@ echo 'Running xbindkeys to enable horizontal scrolling in firefox'
 xbindkeys
 
 # install python packages, some of which are broken on Ubuntu 14.04
-sudo pip install -U cython
-sudo pip install -U numpy
-sudo pip install -U scipy
-sudo pip install -U matplotlib
-sudo pip install -U pandas
-sudo pip install -U scikit-learn
-sudo pip install -U scikits.sparse
-sudo pip install -U scikit-image
-sudo pip install -U jinja2
-sudo pip install -U tornado
-sudo pip install -U ipython[all]
+sudo -E pip install -U cython
+sudo -E pip install -U numpy
+sudo -E pip install -U scipy
+sudo -E pip install -U matplotlib
+sudo -E pip install -U pandas
+sudo -E pip install -U scikit-learn
+sudo -E pip install -U scikits.sparse
+sudo -E pip install -U scikit-image
+sudo -E pip install -U jinja2
+sudo -E pip install -U tornado
+sudo -E pip install -U ipython[all]
