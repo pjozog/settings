@@ -188,7 +188,7 @@ sudo -E add-apt-repository -y ppa:team-xbmc/ppa
 addpkg kodi
 
 # zealdocs (offline documentation reader)
-sudo -E add-apt-repository ppa:zeal-developers/ppa
+sudo -E add-apt-repository -y ppa:zeal-developers/ppa
 addpkg zeal
 
 # go forth!
