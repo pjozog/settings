@@ -70,9 +70,6 @@ linkPairs = [
     (os.path.join(scriptDir, 'linux-stuff', '.fonts.conf'),
      os.path.join(homeDir, '.fonts.conf')),
 
-    (os.path.join(scriptDir, 'linux-stuff', '.dircolors'),
-     os.path.join(homeDir, '.dircolors')),
-
     (os.path.join(scriptDir, 'linux-stuff', '.pythonrc'),
      os.path.join(homeDir, '.pythonrc')),
 
