@@ -133,3 +133,9 @@ alias ipn='cd ~/Dropbox/code/ipython-notebooks/ && \ipython notebook'
 # alias ipn3='cd ~/Dropbox/code/ipython-notebooks/ && \ipython notebook --pylab=wx inline'
 
 alias mk='make -j$(nproc)'
+
+# source private alias
+[ -f ${HOME}/Dropbox/code/private/private-shell-aliases ] && source ${HOME}/Dropbox/code/private/private-shell-aliases
+
+# source private env
+[ -f ${HOME}/Dropbox/code/private/private-shell-env ] && source ${HOME}/Dropbox/code/private/private-shell-env

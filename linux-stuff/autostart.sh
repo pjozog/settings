@@ -3,6 +3,9 @@
 export GTK2_RC_FILES=/usr/share/themes/Radiance/gtk-2.0/gtkrc:${HOME}/.gtkrc-mine
 export OOO_FORCE_DESKTOP='gnome'
 
+# fix for awesome and open-jdk version 7
+export _JAVA_AWT_WM_NONREPARENTING=1
+
 # .Xmodmap should be sourced by lightdm on startup.  No need to put it here
 
 # the idiots at Canonical took out --expire-time support for their desktop notification
