@@ -62,6 +62,16 @@ for s = 1, screen.count() do
                           s, 
                           {layouts[1], layouts[2], layouts[1], layouts[2], layouts[2], layouts[2], layouts[1], layouts[1], layouts[1]})
    elseif s == 2 then
+      if screen.count () == 2 then
+         tags[s] = awful.tag({ "[1] web", "[2] shell", "[3] procman", "[4] evince", "[5] kodi", 6, 7, 8, 9 },
+                             s, 
+                             {layouts[1], layouts[2], layouts[2], layouts[1], layouts[1], layouts[1], layouts[1], layouts[1], layouts[1]})
+      else
+         tags[s] = awful.tag({ "[1] emacs", "[2] " .. tag2, "[3] " .. tag3, "[4] matlab", "[5] ipn", "[6] " .. tag6, 7, 8, "[9] spotify" },
+                             s, 
+                             {layouts[1], layouts[2], layouts[1], layouts[2], layouts[2], layouts[2], layouts[1], layouts[1], layouts[1]})
+      end
+   elseif s == 3 then
       tags[s] = awful.tag({ "[1] web", "[2] shell", "[3] procman", "[4] evince", "[5] kodi", 6, 7, 8, 9 },
                           s, 
                           {layouts[1], layouts[2], layouts[2], layouts[1], layouts[1], layouts[1], layouts[1], layouts[1], layouts[1]})
@@ -205,8 +215,8 @@ globalkeys = awful.util.table.join(
    -- Layout manipulation
    awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(-1)    end),
    awful.key({ modkey, "Shift"   }, "k", function () awful.client.swap.byidx( 1)    end),
-   awful.key({ modkey, "Control" }, "j", function () awful.screen.focus_relative( 1) end),
-   awful.key({ modkey, "Control" }, "k", function () awful.screen.focus_relative(-1) end),
+   awful.key({ modkey, "Control" }, "j", function () awful.screen.focus_relative(-1) end),
+   awful.key({ modkey, "Control" }, "k", function () awful.screen.focus_relative( 1) end),
    awful.key({ modkey,           }, "u", awful.client.urgent.jumpto),
    awful.key({ modkey,           }, "Tab",
 	     function ()

@@ -463,6 +463,9 @@ find-dominating-file?"
 ;; Don't do the funky indenting for lines consisting only of curly braces
 (c-set-offset 'substatement-open 0)
 
+;; Spaces (default is 4, but this is how you'd change it)
+(setq c-basic-offset 4)
+
 ;; Also make function calls highlighted for common programming modes
 (let (modeList)
   (setq modeList '(c-mode
