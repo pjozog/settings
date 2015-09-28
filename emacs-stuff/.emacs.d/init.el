@@ -283,8 +283,8 @@ find-dominating-file?"
 (defalias 'man 'woman) ;; Doesn't work at startup?
 (defalias 'cf 'customize-face)
 
-(if (file-exists-p "~/Dropbox/code/compile-aliases.el")
-    (load "~/Dropbox/code/compile-aliases.el"))
+(if (file-exists-p "~/Dropbox/code/private/compile-aliases.el")
+    (load "~/Dropbox/code/private/compile-aliases.el"))
 
 ;; --------------------------------------------------
 ;; Packages / Minor modes / Keybindings
@@ -423,8 +423,8 @@ find-dominating-file?"
 (put 'upcase-region 'disabled nil)
 
 ;; load my tags
-(if (file-exists-p "~/Dropbox/code/tag-table-list.el")
-    (load "~/Dropbox/code/tag-table-list.el"))
+(if (file-exists-p "~/Dropbox/code/private/tag-table-list.el")
+    (load "~/Dropbox/code/private/tag-table-list.el"))
 
 ;; HACK: disable the default snippets packaged with melpa
 (setq yas-snippet-dirs (concat (file-name-as-directory my-emacs-dir) "snippets"))
