@@ -334,6 +334,7 @@ find-dominating-file?"
 (condition-case nil
     (scroll-bar-mode -1)
   (error nil))
+(global-auto-complete-mode -1)
 
 ;; Turn on the good shit
 (transient-mark-mode 1)
