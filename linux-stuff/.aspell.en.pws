@@ -1,4 +1,4 @@
-personal_ws-1.1 en 75 
+personal_ws-1.1 en 76 
 multibeam
 Haralick
 indices
@@ -9,6 +9,7 @@ sparsified
 dehomogenization
 al
 biogrowth
+probabilistically
 Zisserman
 LIDAR
 linearizing
@@ -21,6 +22,7 @@ Haralick's
 Ozog
 hauv
 nonlinearity
+isosurface
 Grossman
 ICP
 Eustice
@@ -38,8 +40,8 @@ PJO
 hyperellipses
 HAUV's
 parameterized
-odometry
 DOF
+odometry
 Mahalanobis
 pingers
 raycasting
@@ -47,7 +49,6 @@ backend
 EKF
 RBT
 photomosaic
-Photomosaic
 modalities
 curtiss
 LM
