@@ -314,7 +314,8 @@ find-dominating-file?"
   (require 'nyan-mode))
 (show-paren-mode 1) ;;This needs to be enabled before changing color theme
 (require 'subword)
-(require 'naquadah-theme)
+(require 'paul-themes)
+(paul-themes-naquadah2)
 (require 'dired-mod)            ;; mine
 (require 'myOrgSettings)        ;; mine
 (require 'markdown-mode)
