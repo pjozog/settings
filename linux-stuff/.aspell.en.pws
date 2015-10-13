@@ -1,4 +1,4 @@
-personal_ws-1.1 en 76 
+personal_ws-1.1 en 77 
 multibeam
 Haralick
 indices
@@ -7,9 +7,9 @@ iSAM
 egomotion
 sparsified
 dehomogenization
+probabilistically
 al
 biogrowth
-probabilistically
 Zisserman
 LIDAR
 linearizing
@@ -40,8 +40,8 @@ PJO
 hyperellipses
 HAUV's
 parameterized
-DOF
 odometry
+DOF
 Mahalanobis
 pingers
 raycasting
@@ -64,6 +64,7 @@ Jacobian
 Zisserman's
 biofouling
 covariance
+parallelize
 mosaicing
 linearization
 Santes
