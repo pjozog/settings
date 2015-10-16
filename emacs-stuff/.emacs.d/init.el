@@ -101,9 +101,9 @@
   (ido-ubiquitous-mode)
   ;; Use regular find-tag (no ido)
   (setq ido-ubiquitous-command-overrides 'find-tag)
-
-  (setq ido-use-virtual-buffers t
-	recentf-max-saved-items 500)
+  (setq ido-use-virtual-buffers t recentf-max-saved-items 500)
+  (setq ido-default-buffer-method 'selected-window)
+  (setq ido-default-file-method 'selected-window)
 
   ;; Autocomplete in M-x
   (smex-initialize)
