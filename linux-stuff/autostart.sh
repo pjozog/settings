@@ -18,9 +18,6 @@ which nvidia-settings > /dev/null 2>&1
 which dropbox > /dev/null 2>&1
 [ $? -eq 0 ] && dropbox start -i &
 
-which xfce4-power-manager > /dev/null 2>&1
-[ $? -eq 0 ] && xfce4-power-manager &
-
 nm-applet --sm-disable &
 
 gnome-screensaver &
@@ -32,3 +29,7 @@ export LIBOVERLAY_SCROLLBAR=0
 
 # start emacs
 emacs --daemon &
+
+# for some reason this needs to be done last, otherwise it might not show up
+which xfce4-power-manager > /dev/null 2>&1
+[ $? -eq 0 ] && xfce4-power-manager &
