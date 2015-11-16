@@ -1,4 +1,4 @@
-personal_ws-1.1 en 77 
+personal_ws-1.1 en 78 
 multibeam
 Haralick
 indices
@@ -34,14 +34,15 @@ et
 stereophotogrammetry
 stereopsis
 keyframe
+affine
 homography
 ONR
 PJO
 hyperellipses
 HAUV's
 parameterized
-odometry
 DOF
+odometry
 Mahalanobis
 pingers
 raycasting
