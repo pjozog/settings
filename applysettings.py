@@ -91,6 +91,9 @@ linkPairs = [
     (os.path.join(scriptDir, 'linux-stuff', '.gtkrc-mine'),
      os.path.join(homeDir, '.gtkrc-mine')),
 
+    (os.path.join(scriptDir, 'linux-stuff', '.gtkrc-no-emacs'),
+     os.path.join(homeDir, '.gtkrc-no-emacs')),
+
     (os.path.join(scriptDir, 'openbox-stuff', 'Radiance_ob_test'),
      os.path.join(homeDir, '.themes', 'Radiance_ob_test')),
 

@@ -1,8 +1,12 @@
 [user]
 	name = Paul Ozog
 	email = pjozog@gmail.com
+
 [color]
 	ui = auto
+
+[diff]
+	tool = meld
 
 [init]
 	templatedir = ~/.git-template
