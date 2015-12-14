@@ -6,6 +6,9 @@ export OOO_FORCE_DESKTOP='gnome'
 # fix for awesome and open-jdk version 7
 export _JAVA_AWT_WM_NONREPARENTING=1
 
+# source private env for non-volatile programs e.g. emacs
+[ -f ${HOME}/Dropbox/code/private/private-shell-env ] && . ${HOME}/Dropbox/code/private/private-shell-env
+
 # .Xmodmap should be sourced by lightdm on startup.  No need to put it here
 
 # the idiots at Canonical took out --expire-time support for their desktop notification
