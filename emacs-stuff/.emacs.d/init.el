@@ -509,33 +509,28 @@ find-dominating-file?"
     (global-subword-mode 1)
   (error nil))
 
-;; apply CamelCase hooks
-(let (modeList)
-  (setq modeList '(python-mode-hook 
-                   java-mode-hook
-                   c-mode-hook
-                   c++-mode-hook
-                   matlab-mode-hook
-                   cmake-mode-hook
-                   emacs-lisp-mode-hook))
-  (while modeList
-    (add-hook (car modeList) (lambda ()
-                               (hs-minor-mode)
-                               (define-key hs-minor-mode-map [(control tab)] 
-                                 'hs-toggle-hiding)
-                               ;; Only supported in emacs 24
-                               (condition-case nil
-                                   (progn
-                                     (idle-highlight-mode t))
-                                 (error nil))))
-    (setq modeList (cdr modeList))))
+;; apply hooks for programming modes
+(add-hook
+ 'prog-mode-hook (lambda ()
+                   (flyspell-prog-mode)
+                   (hs-minor-mode)
+                   (define-key hs-minor-mode-map [(control tab)] 
+                     'hs-toggle-hiding)
+                   ;; Only supported in emacs 24
+                   (condition-case nil
+                       (progn
+                         (idle-highlight-mode t))
+                     (error nil))))
+
+;; apply hooks for text modes
+(add-hook
+ 'text-mode-hook (lambda ()
+                   (flyspell-mode)))
 
 ;; apply LaTeX hooks (spellcheck, etc.)
 (add-hook 'LaTeX-mode-hook (lambda ()
-                             (flyspell-mode)
                              (outline-minor-mode)
                              (auto-fill-mode)
-                             ;;(flymake-mode)
                              (define-key LaTeX-mode-map (kbd "C-7") 'insert-amps)
                              (orgtbl-mode)
                              (TeX-PDF-mode-on)
@@ -550,10 +545,6 @@ find-dominating-file?"
 (add-hook 'emacs-lisp-mode-hook (lambda ()
                                   (turn-on-eldoc-mode)
                                   (rainbow-mode)))
-
-;; spell check should be enabled in .txt files
-(add-hook 'mediawiki-mode-hook (lambda ()
-                            (flyspell-mode)))
 
 ;; matlab rebinds M-e and M-a
 (add-hook 'matlab-mode-hook (lambda ()
