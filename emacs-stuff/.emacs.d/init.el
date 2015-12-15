@@ -569,11 +569,41 @@ find-dominating-file?"
 (add-hook 'c-mode-hook (lambda ()
                          (c-set-offset 'inextern-lang 0)))
 
-;; Use /* comment */ for c++
+;; Don't add extra indentations when inside a namespace (c++)
 (add-hook 'c++-mode-hook (lambda ()
-                           (setq comment-start "/* "
-                                 comment-end " */")
                            (c-set-offset 'innamespace 0)))
+
+;; helper function for commenting code inside an #if0 ... #endif block
+(defun c-mode-font-lock-if0 (limit)
+  (save-restriction
+    (widen)
+    (save-excursion
+      (goto-char (point-min))
+      (let ((depth 0) str start start-depth)
+        (while (re-search-forward "^\\s-*#\\s-*\\(if\\|else\\|endif\\)" limit 'move)
+          (setq str (match-string 1))
+          (if (string= str "if")
+              (progn
+                (setq depth (1+ depth))
+                (when (and (null start) (looking-at "\\s-+0"))
+                  (setq start (match-end 0)
+                        start-depth depth)))
+            (when (and start (= depth start-depth))
+              (c-put-font-lock-face start (match-beginning 0) 'font-lock-comment-face)
+              (setq start nil))
+            (when (string= str "endif")
+              (setq depth (1- depth)))))
+        (when (and start (> depth 0))
+          (c-put-font-lock-face start (point) 'font-lock-comment-face)))))
+  nil)
+
+;; use '/* ... */' for comments in c-like modes.  Comment #if0 ... #endif blocks
+(add-hook 'c-mode-common-hook (lambda ()
+                                (font-lock-add-keywords
+                                 nil
+                                 '((c-mode-font-lock-if0 (0 font-lock-comment-face prepend))) 'add-to-end)
+                                (setq comment-start "/* "
+                                      comment-end " */")))
 
 ;; Use % for octave
 (add-hook 'octave-mode-hook (lambda ()
