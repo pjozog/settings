@@ -493,6 +493,12 @@ find-dominating-file?"
                          "-interaction=nonstopmode" file-name)))
 
 ;; --------------------------------------------------
+;; My modes
+;; --------------------------------------------------
+(if (file-exists-p "~/Dropbox/code/private/my-modes.el")
+    (load "~/Dropbox/code/private/my-modes.el"))
+
+;; --------------------------------------------------
 ;; My hooks
 ;; --------------------------------------------------
 (add-hook 'after-save-hook (lambda ()
