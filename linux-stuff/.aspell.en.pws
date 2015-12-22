@@ -1,7 +1,8 @@
-personal_ws-1.1 en 78 
+personal_ws-1.1 en 80 
 multibeam
 Haralick
 indices
+proprioceptive
 pdf
 iSAM
 egomotion
@@ -21,6 +22,7 @@ novelly
 Haralick's
 Ozog
 hauv
+exteroceptive
 nonlinearity
 isosurface
 Grossman
@@ -32,17 +34,17 @@ hyperparameters
 TODO
 et
 stereophotogrammetry
+affine
 stereopsis
 keyframe
-affine
 homography
 ONR
 PJO
 hyperellipses
 HAUV's
 parameterized
-DOF
 odometry
+DOF
 Mahalanobis
 pingers
 raycasting
