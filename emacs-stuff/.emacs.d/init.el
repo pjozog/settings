@@ -533,10 +533,9 @@ find-dominating-file?"
  'text-mode-hook (lambda ()
                    (flyspell-mode)))
 
-;; apply LaTeX hooks (spellcheck, etc.)
+;; apply LaTeX hooks (ensures output to pdf, for example)
 (add-hook 'LaTeX-mode-hook (lambda ()
                              (outline-minor-mode)
-                             (auto-fill-mode)
                              (define-key LaTeX-mode-map (kbd "C-7") 'insert-amps)
                              (orgtbl-mode)
                              (TeX-PDF-mode-on)
@@ -657,7 +656,7 @@ find-dominating-file?"
 (if (string-equal "gnu/linux" system-type)
     (if (string-equal "paul-laptop" system-name)
         (set-face-attribute 'default nil :height 75 :family "ubuntu mono")
-      (set-face-attribute 'default nil :height 100 :family "ubuntu mono")))
+      (set-face-attribute 'default nil :height 85 :family "ubuntu mono")))
 
 ;; OS X
 (if (string-equal "darwin" system-type)
