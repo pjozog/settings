@@ -654,9 +654,7 @@ find-dominating-file?"
 ;; os-specific stuff:
 ;; GNU/Linux
 (if (string-equal "gnu/linux" system-type)
-    (if (string-equal "paul-laptop" system-name)
-        (set-face-attribute 'default nil :height 75 :family "ubuntu mono")
-      (set-face-attribute 'default nil :height 85 :family "ubuntu mono")))
+    (set-face-attribute 'default nil :height 70 :family "input"))
 
 ;; OS X
 (if (string-equal "darwin" system-type)
