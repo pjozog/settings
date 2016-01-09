@@ -493,10 +493,10 @@ find-dominating-file?"
                          "-interaction=nonstopmode" file-name)))
 
 ;; --------------------------------------------------
-;; My modes
+;; My private emacs stuff (for work etc.)
 ;; --------------------------------------------------
-(if (file-exists-p "~/Dropbox/code/private/my-modes.el")
-    (load "~/Dropbox/code/private/my-modes.el"))
+(if (file-exists-p "~/Dropbox/code/private/my-private-emacs.el")
+    (load "~/Dropbox/code/private/my-private-emacs.el"))
 
 ;; --------------------------------------------------
 ;; My hooks
@@ -650,11 +650,6 @@ find-dominating-file?"
  '(org-column ((t (:background "#000000" :strike-through nil :underline nil 
                                :slant normal :weight normal :height 98
                                :family "DejaVu Sans Mono")))))
-
-;; os-specific stuff:
-;; GNU/Linux
-(if (string-equal "gnu/linux" system-type)
-    (set-face-attribute 'default nil :height 70 :family "input"))
 
 ;; OS X
 (if (string-equal "darwin" system-type)
