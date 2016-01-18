@@ -30,6 +30,8 @@ function ask {
 # setup dotfiles and such
 ../../applysettings.py
 
+sudo echo 'Dpkg::Progress-Fancy "1";' > /etc/apt/apt.conf.d/99progressbar
+
 # needed in order to check distribution using 'bc' provided by by pkg and 
 # 'add-apt-repository' provided by python-software-properties pkg (available for Ubuntu 9.10 and above)
 sudo -E apt-get install bc python-software-properties
