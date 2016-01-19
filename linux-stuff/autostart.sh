@@ -6,6 +6,9 @@ export OOO_FORCE_DESKTOP='gnome'
 # fix for awesome and open-jdk version 7
 export _JAVA_AWT_WM_NONREPARENTING=1
 
+# force anti-aliased fonts
+export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=lcd'
+
 # source private env for non-volatile programs e.g. emacs
 [ -f ${HOME}/Dropbox/code/private/private-shell-env ] && . ${HOME}/Dropbox/code/private/private-shell-env
 
