@@ -576,7 +576,10 @@ find-dominating-file?"
 
 ;; Don't add extra indentations when inside a namespace (c++)
 (add-hook 'c++-mode-hook (lambda ()
-                           (c-set-offset 'innamespace 0)))
+                           (c-set-offset 'innamespace 0)
+                           (font-lock-add-keywords
+                            nil '(("\\<\\(that\\)"
+                                   1 font-lock-keyword-face t)))))
 
 ;; helper function for commenting code inside an #if0 ... #endif block
 (defun c-mode-font-lock-if0 (limit)
