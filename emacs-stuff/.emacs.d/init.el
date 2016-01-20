@@ -578,7 +578,7 @@ find-dominating-file?"
 (add-hook 'c++-mode-hook (lambda ()
                            (c-set-offset 'innamespace 0)
                            (font-lock-add-keywords
-                            nil '(("\\<\\(that\\)"
+                            nil '(("\\<\\(that\\)->"
                                    1 font-lock-keyword-face t)))))
 
 ;; helper function for commenting code inside an #if0 ... #endif block
