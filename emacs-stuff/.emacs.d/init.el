@@ -24,7 +24,7 @@
 (define-key paul-keys-minor-mode-map (kbd "C-S-a") 'align-regexp)
 (define-key paul-keys-minor-mode-map (kbd "C-x f") 'find-name-dired)
 (define-key paul-keys-minor-mode-map (kbd "C-x C-j") 'dired-jump)
-(define-key paul-keys-minor-mode-map (kbd "C-x m") 'comment-region)
+(define-key paul-keys-minor-mode-map (kbd "M-;") 'comment-dwim) ; damn you, matlab-mode
 (define-key paul-keys-minor-mode-map
   (kbd "C-x C-b") (lambda () 
                     (interactive)

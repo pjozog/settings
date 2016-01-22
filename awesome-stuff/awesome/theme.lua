@@ -24,7 +24,7 @@ theme.wallpaper_cmd = { "awsetbg /usr/share/awesome/themes/zenburn/zenburn-backg
 -- }}}
 
 --- You can use your own command to set your wallpaper
-wallpaper = myHomeDir .. "/currentWallpaper"
+wallpaper = myHomeDir .. "/wallpaper"
 if fileExists(wallpaper) then
    theme.wallpaper_cmd = { "awsetbg " .. "-t " .. wallpaper }
 end
