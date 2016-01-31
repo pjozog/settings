@@ -654,7 +654,7 @@ find-dominating-file?"
                                :slant normal :weight normal :height 98
                                :family "DejaVu Sans Mono")))))
 
-;; OS X
+;; OS X fonts
 (if (string-equal "darwin" system-type)
     (progn
       (set-face-attribute 'default nil :height 80 :family "monospace")
@@ -663,6 +663,11 @@ find-dominating-file?"
       (setq insert-directory-program "~/bin/ls")
       (setq dired-listing-switches "-CF --group-directories-first -alh")
       (setq ns-command-modifier 'meta)))
+
+;; Linux fonts
+(if (string-equal "gnu/linux" system-type)
+    (set-face-attribute 'default nil :height 70 :family "input"))
+
 
 (open-filelist '("~/.emacs.d/init.el" "~/.shell_aliases" "~/.profile"
                  "~/.config/openbox/autostart.sh"
