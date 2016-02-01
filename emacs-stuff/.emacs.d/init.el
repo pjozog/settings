@@ -424,10 +424,6 @@ find-dominating-file?"
 
 (put 'upcase-region 'disabled nil)
 
-;; load my tags
-(if (file-exists-p "~/Dropbox/code/private/tag-table-list.el")
-    (load "~/Dropbox/code/private/tag-table-list.el"))
-
 ;; HACK: disable the default snippets packaged with melpa
 (setq yas-snippet-dirs (concat (file-name-as-directory my-emacs-dir) "snippets"))
 (yas/initialize)
@@ -491,12 +487,6 @@ find-dominating-file?"
 (defun flymake-get-tex-args (file-name)
   (list "pdflatex" (list "-shell-escape" "-draftmode" "-file-line-error"
                          "-interaction=nonstopmode" file-name)))
-
-;; --------------------------------------------------
-;; My private emacs stuff (for work etc.)
-;; --------------------------------------------------
-(if (file-exists-p "~/Dropbox/code/private/my-private-emacs.el")
-    (load "~/Dropbox/code/private/my-private-emacs.el"))
 
 ;; --------------------------------------------------
 ;; My hooks
@@ -667,6 +657,15 @@ find-dominating-file?"
 ;; Linux fonts
 (if (string-equal "gnu/linux" system-type)
     (set-face-attribute 'default nil :height 70 :family "input"))
+
+;; --------------------------------------------------
+;; My private emacs stuff (for work etc.)
+;; --------------------------------------------------
+(if (file-exists-p "~/Dropbox/code/private/my-private-emacs.el")
+    (load "~/Dropbox/code/private/my-private-emacs.el"))
+
+(if (file-exists-p "~/Dropbox/code/private/tag-table-list.el")
+    (load "~/Dropbox/code/private/tag-table-list.el"))
 
 
 (open-filelist '("~/.emacs.d/init.el" "~/.shell_aliases" "~/.profile"
