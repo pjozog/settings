@@ -414,6 +414,10 @@ awful.rules.rules = {
      properties = { floating = true } },
    { rule = { name = "Ediff" },
      properties = { floating = true } },
+   { rule = { name = "gitg" },
+     properties = { floating = true } },
+   { rule = { name = "gitk" },
+     properties = { floating = true } },
    { rule = { name = "Zeal" },
      properties = { floating = true } },
    -- Set Firefox to always map on tags number 2 of screen 1.
