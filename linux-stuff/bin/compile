@@ -7,6 +7,16 @@ function my-notify ()
     fi
 }
 
+function my-aplay ()
+{
+    aplay_missing=$(which aplay > /dev/null)$?
+    if [ $aplay_missing -eq 0 ]; then
+        # use nohup so emacs doesn't kill this when compilation finishes.  Also,
+        # this prints some info messages on stderr, so don't show those.
+        nohup aplay "$1" > /dev/null 2>&1 &
+    fi
+}
+
 if [ $# -ne 1 ]; then
     echo "Usage: $0 <build-directory>"
     exit 1
@@ -18,9 +28,11 @@ cd "${PROJ}"
 make -j$(nproc) > /dev/null
 
 if [ $? -eq 0 ]; then
+    my-aplay "${HOME}/bin/compile-success.wav"
     my-notify "${PROJ}" "compiled successfully" 1
     exit 0
 else
+    my-aplay "${HOME}/bin/compile-failed.wav"
     my-notify "${PROJ}" "compiled unsuccessfully" 2
     exit 1
 fi
