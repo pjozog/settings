@@ -17,22 +17,40 @@ function my-aplay ()
     fi
 }
 
+function random-file ()
+{
+    find "$1" -iname "$2" | sort -R | tail -1 | while read file; do
+        echo $file
+    done
+}
+
 if [ $# -ne 1 ]; then
     echo "Usage: $0 <build-directory>"
     exit 1
 fi
 
+# contains a list of wavs to play for success/failure
+DROPBOX_WAVS=${HOME}/Dropbox/code/private/wavs
 PROJ="${1}"
 cd "${PROJ}"
 
 make -j$(nproc) > /dev/null
 
 if [ $? -eq 0 ]; then
-    my-aplay "${HOME}/bin/compile-success.wav"
+
+    wav="${HOME}/bin/compile-success.wav"
+    if [ -d ${DROPBOX_WAVS} ]; then
+        wav=$(random-file ${DROPBOX_WAVS} "*success*.wav")
+    fi
+    my-aplay "${wav}"
     my-notify "${PROJ}" "compiled successfully" 1
     exit 0
 else
-    my-aplay "${HOME}/bin/compile-failed.wav"
+    wav="${HOME}/bin/compile-failed.wav"
+    if [ -d ${DROPBOX_WAVS} ]; then
+        wav=$(random-file ${DROPBOX_WAVS} "*failed*.wav")
+    fi
+    my-aplay "${wav}"
     my-notify "${PROJ}" "compiled unsuccessfully" 2
     exit 1
 fi
