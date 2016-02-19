@@ -40,7 +40,7 @@ if [ $? -eq 0 ]; then
 
     wav="${HOME}/bin/compile-success.wav"
     if [ -d ${DROPBOX_WAVS} ]; then
-        wav=$(random-file ${DROPBOX_WAVS} "*success*.wav")
+        wav=$(random-file ${DROPBOX_WAVS}/success "*.wav")
     fi
     my-aplay "${wav}"
     my-notify "${PROJ}" "compiled successfully" 1
@@ -48,7 +48,7 @@ if [ $? -eq 0 ]; then
 else
     wav="${HOME}/bin/compile-failed.wav"
     if [ -d ${DROPBOX_WAVS} ]; then
-        wav=$(random-file ${DROPBOX_WAVS} "*failed*.wav")
+        wav=$(random-file ${DROPBOX_WAVS}/failed "*.wav")
     fi
     my-aplay "${wav}"
     my-notify "${PROJ}" "compiled unsuccessfully" 2
