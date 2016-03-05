@@ -91,9 +91,9 @@ myawesomemenu = {
 }
 
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
-                                    { "Firefox", "firefox" },
-                                    { "Nautilus", "file-manager" },
-                                    { "Terminal", terminal },
+                                    { "chrome", "google-chrome" },
+                                    { "nautilus", "file-manager" },
+                                    { "myterm", terminal },
 				 }
 		       })
 
@@ -229,8 +229,8 @@ globalkeys = awful.util.table.join(
    -- Standard program
    -- My favorite programs
    awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),
-   awful.key({ modkey, "Shift"   }, "f", function () awful.util.spawn("firefox") end),
-   awful.key({ modkey, "Shift"   }, "g", function () awful.util.spawn("firefox") end),
+   awful.key({ modkey, "Shift"   }, "f", function () awful.util.spawn("google-chrome") end),
+   awful.key({ modkey, "Shift"   }, "g", function () awful.util.spawn("google-chrome") end),
    awful.key({ modkey, "Shift"   }, "e", function () awful.util.spawn("emacsclient -nc") end),
    awful.key({ modkey, "Shift"   }, "m", function () awful.util.spawn("file-manager") end),
    awful.key({ modkey, "Shift"   }, "a", function () awful.util.spawn("matlab -desktop") end),
@@ -419,6 +419,8 @@ awful.rules.rules = {
    { rule = { name = "gitk" },
      properties = { floating = true } },
    { rule = { name = "Zeal" },
+     properties = { floating = true } },
+   { rule = { name = "Edit with Emacs FRAME" },
      properties = { floating = true } },
    -- Set Firefox to always map on tags number 2 of screen 1.
    -- { rule = { class = "Firefox" },

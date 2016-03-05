@@ -320,6 +320,15 @@ find-dominating-file?"
 (require 'myOrgSettings)        ;; mine
 (require 'markdown-mode)
 (require 'fill-column-indicator)
+(require 'edit-server)
+
+;; edit text boxes in chrome
+(edit-server-start)
+;; gmail hacks
+(autoload 'edit-server-maybe-dehtmlize-buffer "edit-server-htmlize" "edit-server-htmlize" t)
+(autoload 'edit-server-maybe-htmlize-buffer   "edit-server-htmlize" "edit-server-htmlize" t)
+(add-hook 'edit-server-start-hook 'edit-server-maybe-dehtmlize-buffer)
+(add-hook 'edit-server-done-hook  'edit-server-maybe-htmlize-buffer)
 
 ;; idle-highlight-mode only works on emacs 24
 (condition-case nil
