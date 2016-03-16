@@ -667,6 +667,10 @@ find-dominating-file?"
 (if (string-equal "gnu/linux" system-type)
     (set-face-attribute 'default nil :height 70 :family "input"))
 
+;; Fix linum margin when running in terminal mode
+(setq linum-format "%d ")
+(setq split-height-threshold 90)
+
 ;; --------------------------------------------------
 ;; My private emacs stuff (for work etc.)
 ;; --------------------------------------------------
@@ -681,9 +685,5 @@ find-dominating-file?"
                  "~/.config/openbox/autostart.sh"
                  "~/.config/awesome/rc.lua"
                  "~/Dropbox/personal/org/projects.org"))
-
-;; Fix linum margin when running in terminal mode
-(setq linum-format "%d ")
-(setq split-height-threshold 90)
 
 (get-buffer-create "*compilation*")
