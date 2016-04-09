@@ -45,10 +45,7 @@
 
 (define-key paul-keys-minor-mode-map (kbd "C-c e") 'eval-and-replace)
 (define-key paul-keys-minor-mode-map (kbd "C-c u") 'cua-mode)
-(define-key paul-keys-minor-mode-map
-  (kbd "M-Q") (lambda ()
-                (interactive)
-                (fill-paragraph 1)))
+(define-key paul-keys-minor-mode-map (kbd "M-Q") 'unfill-paragraph)
 (define-key paul-keys-minor-mode-map (kbd "C-x v =") 'vc-ediff)
 
 (define-minor-mode paul-keys-minor-mode
@@ -275,6 +272,13 @@ find-dominating-file?"
           (call-process-shell-command "./.git/hooks/ctags &" nil 0)
           (cd (expand-file-name old-dir)))
       (when parent (update-git-repo-tags parent old-dir)))))
+
+;; opposite of fill-paragraph
+(defun unfill-paragraph (&optional region)
+  "Takes a multi-line paragraph and makes it into a single line of text."
+  (interactive (progn (barf-if-buffer-read-only) '(t)))
+  (let ((fill-column (point-max)))
+    (fill-paragraph nil region)))
 
 ;; --------------------------------------------------
 ;; Aliases
