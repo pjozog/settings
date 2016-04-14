@@ -22,7 +22,7 @@ linkPairs = [
     # format:
     # (path to version-controlled file,
     #  name of symbolic link)
-    # 
+    #
     # think of it as running 'ln -sf <first_thing> <second_thing>'
 
     (os.path.join(scriptDir, 'linux-stuff', '.bashrc'),
@@ -51,7 +51,7 @@ linkPairs = [
 
     (os.path.join(scriptDir, 'openbox-stuff', 'openbox'),
      os.path.join(homeDir, '.config', 'openbox')),
-    
+
     (os.path.join(scriptDir, 'awesome-stuff', 'awesome'),
      os.path.join(homeDir, '.config', 'awesome')),
 
@@ -172,9 +172,9 @@ def main():
         printInfo("Creating link: " + linkName)
         removeFile(linkName)
         createLink(sourceName, linkName)
-        
+
     return 0
-    
+
 if __name__ == '__main__':
 
     sys.exit(main())

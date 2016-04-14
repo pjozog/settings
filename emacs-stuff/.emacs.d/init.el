@@ -26,16 +26,16 @@
 (define-key paul-keys-minor-mode-map (kbd "C-x C-j") 'dired-jump)
 (define-key paul-keys-minor-mode-map (kbd "M-;") 'comment-dwim) ; damn you, matlab-mode
 (define-key paul-keys-minor-mode-map
-  (kbd "C-x C-b") (lambda () 
+  (kbd "C-x C-b") (lambda ()
                     (interactive)
                     (ibuffer)
                     (isearch-forward)))
 (define-key paul-keys-minor-mode-map
-  (kbd "M-e") (lambda () 
+  (kbd "M-e") (lambda ()
                 (interactive)
                 (next-line 3)))
 (define-key paul-keys-minor-mode-map
-  (kbd "M-a") (lambda () 
+  (kbd "M-a") (lambda ()
                 (interactive)
                 (previous-line 3)))
 (define-key paul-keys-minor-mode-map (kbd "<f5>") 'shrink-window-horizontally)
@@ -78,7 +78,7 @@
   (defvar my-melpa-packages '(lua-mode auctex w3m etags-select org
                                        smex ido-ubiquitous idle-highlight-mode
                                        yasnippet auto-complete
-                                       autopair unbound nyan-mode markdown-mode 
+                                       autopair unbound nyan-mode markdown-mode
                                        rainbow-mode color-theme flymake-cursor
                                        cmake-mode browse-kill-ring)
     "A list of melpa packages to ensure are installed at launch.")
@@ -110,7 +110,7 @@
   (define-key paul-keys-minor-mode-map (kbd "M-.") 'etags-select-find-tag)
 
   (add-hook
-   'prog-mode-hook (lambda () 
+   'prog-mode-hook (lambda ()
 		     (font-lock-add-keywords
 		      nil '(("\\<\\(FIX\\|TODO\\|FIXME\\|HACK\\|REFACTOR\\|DEBUG\\):"
 			     1 font-lock-warning-face t))))))
@@ -504,8 +504,10 @@ find-dominating-file?"
 ;; --------------------------------------------------
 ;; My hooks
 ;; --------------------------------------------------
+(add-hook 'before-save-hook (lambda ()
+                              (delete-trailing-whitespace)))
 (add-hook 'after-save-hook (lambda ()
-                             (update-git-repo-tags 
+                             (update-git-repo-tags
                               default-directory
                               default-directory)))
 
@@ -523,7 +525,7 @@ find-dominating-file?"
  'prog-mode-hook (lambda ()
                    (flyspell-prog-mode)
                    (hs-minor-mode)
-                   (define-key hs-minor-mode-map [(control tab)] 
+                   (define-key hs-minor-mode-map [(control tab)]
                      'hs-toggle-hiding)
                    ;; Only supported in emacs 24
                    (condition-case nil
@@ -556,7 +558,7 @@ find-dominating-file?"
 
 ;; matlab rebinds M-e and M-a
 (add-hook 'matlab-mode-hook (lambda ()
-                              (define-key 
+                              (define-key
                                 matlab-mode-map (kbd "M-e") (lambda ()
                                                               (interactive)
                                                               (next-line 6)))
@@ -621,7 +623,7 @@ find-dominating-file?"
                               (setq comment-start "% ")))
 
 (server-start)
-;; diable warning when killing buffers opened with emacsclient 
+;; diable warning when killing buffers opened with emacsclient
 ;; (must be set after calling (server-start))
 (remove-hook 'kill-buffer-query-functions 'server-kill-buffer-query-function)
 
@@ -653,7 +655,7 @@ find-dominating-file?"
  '(diredp-dir-heading ((((background dark)) (:inherit font-lock-comment-face))))
  '(diredp-dir-priv ((((background dark)) (:foreground "#7474FFFFFFFF"))))
  '(font-latex-string-face ((((class color) (background dark)) (:foreground "#A2AB64"))))
- '(org-column ((t (:background "#000000" :strike-through nil :underline nil 
+ '(org-column ((t (:background "#000000" :strike-through nil :underline nil
                                :slant normal :weight normal :height 98
                                :family "DejaVu Sans Mono")))))
 
