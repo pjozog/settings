@@ -19,6 +19,7 @@ requiredDirs        = [os.path.join(homeDir, '.config'),
                        os.path.join(homeDir, '.ssh')]
 
 linkPairs = [
+
     # format:
     # (path to version-controlled file,
     #  name of symbolic link)
@@ -124,11 +125,21 @@ linkPairs = [
     (os.path.join(dropboxDir, 'zsh', 'prompt'),
      os.path.join(homeDir, '.zshrc.prompt')),
 
-     (os.path.join(scriptDir, 'linux-stuff', '.xbindkeysrc.scm'),
-      os.path.join(homeDir, '.xbindkeysrc.scm')),
+    (os.path.join(scriptDir, 'linux-stuff', '.xbindkeysrc.scm'),
+     os.path.join(homeDir, '.xbindkeysrc.scm')),
 
-     (os.path.join(scriptDir, 'terminator-stuff', 'config'),
-      os.path.join(homeDir, '.config', 'terminator', 'config'))
+    (os.path.join(scriptDir, 'terminator-stuff', 'config'),
+     os.path.join(homeDir, '.config', 'terminator', 'config')),
+
+    (os.path.join(scriptDir, 'i3-stuff', 'i3'),
+     os.path.join(homeDir, '.i3')),
+
+    (os.path.join(scriptDir, 'i3-stuff', 'i3status'),
+     os.path.join(homeDir, '.config', 'i3status')),
+
+    (os.path.join(scriptDir, 'i3-stuff', 'dunst'),
+     os.path.join(homeDir, '.config', 'dunst'))
+
 ]
 
 #add all the stuff in the 'bin' directory to linkPairs

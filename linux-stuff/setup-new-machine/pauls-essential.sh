@@ -31,6 +31,9 @@ function ask {
 ../../applysettings.py
 
 sudo sh -c 'echo Dpkg::Progress-Fancy \"1\"\; > /etc/apt/apt.conf.d/99progressbar'
+sudo sh -c 'echo \"deb http://debian.sur5r.net/i3/ $(lsb_release -c -s) universe\" >> /etc/apt/sources.list'
+apt-get update
+apt-get --allow-unauthenticated install sur5r-keyring
 
 # needed in order to check distribution using 'bc' provided by by pkg and
 # 'add-apt-repository' provided by python-software-properties pkg (available for Ubuntu 9.10 and above)
@@ -70,7 +73,7 @@ addpkg \
     graphviz \
     gtk-doc-tools \
     htop \
-    i3lock \
+    i3 \
     inkscape \
     libaa1-dev \
     libatlas-base-dev \
@@ -103,6 +106,7 @@ addpkg \
     libsuitesparse-dev \
     libtiff4-dev \
     libwxgtk2.8-dev \
+    libxdg-basedir-dev \
     libxi-dev \
     libxml2-dev \
     libxmu-dev \
@@ -137,7 +141,6 @@ addpkg \
     vnc4server \
     w3m \
     xautomation \
-    xbindkeys \
     xfce4-power-manager \
     xfonts-100dpi \
     xfonts-75dpi \
@@ -211,13 +214,13 @@ sudo -E update-alternatives --config javac
 sudo -E cp awesome-session /usr/bin
 sudo -E cp awesome.desktop /usr/share/xsessions
 
+# install i3-session
+sudo -E cp i3-session /usr/bin
+sudo -E cp i3.desktop /usr/share/xsessions
+
 # change to zsh
 echo 'Changing default shell to zsh, please enter your password'
 chsh -s /usr/bin/zsh
-
-# run xbindkeys
-echo 'Running xbindkeys to enable horizontal scrolling in firefox'
-xbindkeys
 
 # install python packages, some of which are broken on Ubuntu 14.04
 sudo -E pip install -U cython
