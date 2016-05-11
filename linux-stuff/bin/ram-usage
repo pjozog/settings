@@ -1,9 +1,10 @@
 #!/bin/bash
 
 MEMORY_USED=$(free -m | grep buffers/cache | awk '{print $3}')
-MEMORY_TOTAL=$(free -m | grep buffers/cache | awk '{print $4}')
-MEMORY_AVBL=$(bc -l <<< "(${MEMORY_TOTAL}-${MEMORY_USED})/1024")
-MEMORY_AVBL_PCT=$(bc -l <<< "(${MEMORY_TOTAL}-${MEMORY_USED})/${MEMORY_TOTAL}")
+MEMORY_AVBL=$(free -m | grep buffers/cache | awk '{print $4}')
+MEMORY_TOTAL=$(expr ${MEMORY_USED} + ${MEMORY_AVBL})
+MEMORY_AVBL_PCT=$(bc -l <<< "(${MEMORY_AVBL})/(${MEMORY_TOTAL})")
+MEMORY_AVBL=$(bc -l <<< "${MEMORY_AVBL}/1024" )
 
 WARN=$(bc -l <<< "$MEMORY_AVBL_PCT < 0.2")
 printf "%.1fG RAM\n" ${MEMORY_AVBL}

@@ -111,6 +111,7 @@ set $workspace2 "2: "
 set $workspace3 "3: "
 set $workspace4 "4: "
 set $workspace5 "5: "
+set $workspace6 "6: "
 set $workspace9 "9: "
 
 # switch to workspace
@@ -119,10 +120,11 @@ bindsym $mod+2 workspace $workspace2
 bindsym $mod+3 workspace $workspace3
 bindsym $mod+4 workspace $workspace4
 bindsym $mod+5 workspace $workspace5
-bindsym $mod+6 workspace number 6
+bindsym $mod+6 workspace $workspace6
 bindsym $mod+7 workspace number 7
 bindsym $mod+8 workspace number 8
 bindsym $mod+9 workspace $workspace9
+bindsym $mod+0 workspace number 10
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace $workspace1
@@ -130,10 +132,11 @@ bindsym $mod+Shift+2 move container to workspace $workspace2
 bindsym $mod+Shift+3 move container to workspace $workspace3
 bindsym $mod+Shift+4 move container to workspace $workspace4
 bindsym $mod+Shift+5 move container to workspace $workspace5
-bindsym $mod+Shift+6 move container to workspace number 6
+bindsym $mod+Shift+6 move container to workspace $workspace6
 bindsym $mod+Shift+7 move container to workspace number 7
 bindsym $mod+Shift+8 move container to workspace number 8
 bindsym $mod+Shift+9 move container to workspace $workspace9
+bindsym $mod+Shift+0 move container to workspace $workspace10
 
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
@@ -214,6 +217,7 @@ for_window [class="Gcalctool"] floating enable
 for_window [class="Viewer"] floating enable
 for_window [class="Spotify"] floating enable
 for_window [class="Gimp"] floating enable
+for_window [class="VirtualBox"] floating enable
 for_window [class="Meld"] fullscreen enable
 
 bindsym $mod+m move workspace to output left
