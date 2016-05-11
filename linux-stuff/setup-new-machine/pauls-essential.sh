@@ -32,8 +32,8 @@ function ask {
 
 sudo sh -c 'echo Dpkg::Progress-Fancy \"1\"\; > /etc/apt/apt.conf.d/99progressbar'
 sudo sh -c 'echo \"deb http://debian.sur5r.net/i3/ $(lsb_release -c -s) universe\" >> /etc/apt/sources.list'
-apt-get update
-apt-get --allow-unauthenticated install sur5r-keyring
+sudo apt-get update
+sudo apt-get --allow-unauthenticated install sur5r-keyring
 
 # needed in order to check distribution using 'bc' provided by by pkg and
 # 'add-apt-repository' provided by python-software-properties pkg (available for Ubuntu 9.10 and above)
