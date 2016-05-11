@@ -1,0 +1,13 @@
+#!/bin/bash
+
+MEMORY_USED=$(free -m | grep buffers/cache | awk '{print $3}')
+MEMORY_TOTAL=$(free -m | grep buffers/cache | awk '{print $4}')
+MEMORY_AVBL=$(bc -l <<< "(${MEMORY_TOTAL}-${MEMORY_USED})/1024")
+MEMORY_AVBL_PCT=$(bc -l <<< "(${MEMORY_TOTAL}-${MEMORY_USED})/${MEMORY_TOTAL}")
+
+WARN=$(bc -l <<< "$MEMORY_AVBL_PCT < 0.2")
+printf "%.1fG RAM\n" ${MEMORY_AVBL}
+printf "%.1fG RAM\n" ${MEMORY_AVBL}
+if [ $WARN -eq 1 ]; then
+    printf '#FF0000\n'
+fi
