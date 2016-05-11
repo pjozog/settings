@@ -129,6 +129,7 @@ addpkg \
     source-highlight \
     subversion \
     suckless-tools \
+    sysstat \
     terminator \
     texinfo \
     texlive \

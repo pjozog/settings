@@ -134,8 +134,8 @@ linkPairs = [
     (os.path.join(scriptDir, 'i3-stuff', 'i3'),
      os.path.join(homeDir, '.i3')),
 
-    (os.path.join(scriptDir, 'i3-stuff', 'i3status'),
-     os.path.join(homeDir, '.config', 'i3status')),
+    (os.path.join(scriptDir, 'i3-stuff', 'i3blocks', 'i3blocks.conf'),
+     os.path.join(homeDir, '.i3blocks.conf')),
 
     (os.path.join(scriptDir, 'i3-stuff', 'dunst'),
      os.path.join(homeDir, '.config', 'dunst'))
