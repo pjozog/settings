@@ -15,4 +15,4 @@ A="${XDG_CONFIG_HOME:-"$HOME/.config"}/autostart.sh"
 test -r $A && . $A
 
 # Run Awesome, and have it run the autostart stuff
-exec /usr/bin/i3
+exec /usr/local/bin/i3
