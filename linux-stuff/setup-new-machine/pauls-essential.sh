@@ -31,7 +31,7 @@ function ask {
 ../../applysettings.py
 
 sudo sh -c 'echo Dpkg::Progress-Fancy \"1\"\; > /etc/apt/apt.conf.d/99progressbar'
-sudo sh -c 'echo \"deb http://debian.sur5r.net/i3/ $(lsb_release -c -s) universe\" >> /etc/apt/sources.list'
+sudo sh -c 'echo deb http://debian.sur5r.net/i3/ $(lsb_release -c -s) universe >> /etc/apt/sources.list'
 sudo apt-get update
 sudo apt-get --allow-unauthenticated install sur5r-keyring
 
