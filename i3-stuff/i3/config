@@ -201,7 +201,7 @@ bindsym $mod+Shift+f exec "google-chrome"
 bindsym $mod+Shift+g exec "google-chrome"
 bindsym $mod+Shift+m exec "file-manager"
 bindsym F12 exec "pavucontrol"
-bindsym F11 exec "gnome-calculator"
+bindsym F11 exec "gnome-screenshot -i"
 
 bindsym XF86AudioRaiseVolume exec "vol-ctrl -i 2"
 bindsym XF86AudioLowerVolume exec "vol-ctrl -d 2"
