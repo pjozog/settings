@@ -689,7 +689,7 @@ find-dominating-file?"
 
 (open-filelist '("~/.emacs.d/init.el" "~/.shell_aliases" "~/.profile"
                  "~/.config/openbox/autostart.sh"
-                 "~/.config/awesome/rc.lua"
+                 "~/.i3/config"
                  "~/Dropbox/personal/org/projects.org"))
 
 (get-buffer-create "*compilation*")

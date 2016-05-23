@@ -1,5 +1,12 @@
 #!/bin/bash
 
+##
+# places a notification in the system tray
+#
+# first argument: string to show
+# second argument: substring to show
+# third argument: 1 if successful, 2 if not successful
+#
 function my-notify ()
 {
     if [ $DISPLAY ]; then
@@ -7,6 +14,11 @@ function my-notify ()
     fi
 }
 
+##
+# plays an audio file via command-line
+#
+# first argument: file to play
+#
 function my-aplay ()
 {
     aplay_missing=$(which aplay > /dev/null)$?
@@ -17,9 +29,15 @@ function my-aplay ()
     fi
 }
 
+##
+# Selects a random file contained in a directory
+#
+# first argument: directory to search
+# second argument: pattern to search (for find)
+#
 function random-file ()
 {
-    find "$1" -iname "$2" | sort -R | tail -1 | while read file; do
+    find "$1" -iname "$2" | shuf | tail -1 | while read file; do
         echo $file
     done
 }
@@ -31,13 +49,17 @@ fi
 
 # contains a list of wavs to play for success/failure
 DROPBOX_WAVS=${HOME}/Dropbox/code/private/wavs
+
+# project directory (where you type 'make')
 PROJ="${1}"
 cd "${PROJ}"
 
+# make using the number of processors on the CPU, pipe to /dev/null to only show
+# warnings and errors
 make -j$(nproc) > /dev/null
 
 if [ $? -eq 0 ]; then
-
+    # if compilation succeeded...
     wav="${HOME}/bin/compile-success.wav"
     if [ -d ${DROPBOX_WAVS} ]; then
         wav=$(random-file ${DROPBOX_WAVS}/success "*.wav")
@@ -46,6 +68,7 @@ if [ $? -eq 0 ]; then
     my-notify "${PROJ}" "compiled successfully" 1
     exit 0
 else
+    # if compilation failed...
     wav="${HOME}/bin/compile-failed.wav"
     if [ -d ${DROPBOX_WAVS} ]; then
         wav=$(random-file ${DROPBOX_WAVS}/failed "*.wav")
