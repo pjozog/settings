@@ -131,7 +131,6 @@ bindsym $mod+0 workspace number 10
 bindsym $mod+Tab workspace --no-auto-back-and-forth next_on_output
 bindsym $mod+Shift+Tab workspace --no-auto-back-and-forth prev_on_output
 
-
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace $workspace1
 bindsym $mod+Shift+2 move container to workspace $workspace2
@@ -206,6 +205,7 @@ bindsym $mod+Shift+e exec "emacsclient -nc"
 bindsym $mod+Shift+f exec "google-chrome"
 bindsym $mod+Shift+g exec "google-chrome"
 bindsym $mod+Shift+m exec "file-manager"
+bindsym $mod+Shift+z exec "zeal"
 bindsym F12 exec "pavucontrol"
 bindsym F11 exec "gnome-screenshot -i"
 
@@ -224,6 +224,10 @@ for_window [class="Viewer"] floating enable
 for_window [class="Spotify"] floating enable
 for_window [class="Gimp"] floating enable
 for_window [class="VirtualBox"] floating enable
+for_window [class="Zeal"] floating enable
+for_window [class="Gitk"] floating enable
+for_window [class="CrashPlan"] floating enable
+
 for_window [class="Meld"] fullscreen enable
 
 bindsym $mod+m move workspace to output left
