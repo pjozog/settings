@@ -12,6 +12,8 @@ dropboxDir          = os.path.join(os.getenv('HOME'), 'Dropbox')
 requiredDirs        = [os.path.join(homeDir, '.config'),
                        os.path.join(homeDir, '.config', 'gtk-3.0'),
                        os.path.join(homeDir, '.config', 'terminator'),
+                       os.path.join(homeDir, '.kde', 'share', 'apps', 'konsole'),
+                       os.path.join(homeDir, '.kde', 'share', 'config'),
                        os.path.join(homeDir, 'bin'),
                        os.path.join(homeDir, '.themes'),
                        os.path.join(homeDir, 'Documents'),
@@ -130,6 +132,12 @@ linkPairs = [
 
     (os.path.join(scriptDir, 'terminator-stuff', 'config'),
      os.path.join(homeDir, '.config', 'terminator', 'config')),
+
+    (os.path.join(scriptDir, 'konsole-stuff', 'config', 'konsolerc'),
+     os.path.join(homeDir, '.kde', 'share', 'config', 'konsolerc')),
+
+    (os.path.join(scriptDir, 'konsole-stuff', 'apps', 'konsole'),
+     os.path.join(homeDir, '.kde', 'share', 'apps', 'konsole')),
 
     (os.path.join(scriptDir, 'i3-stuff', 'i3'),
      os.path.join(homeDir, '.i3')),

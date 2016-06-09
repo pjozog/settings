@@ -1,0 +1,20 @@
+[$Version]
+update_info=konsole.upd:2.9.0-global-options
+
+[Colors]
+CurrentPalette=Forty Colors
+
+[Desktop Entry]
+DefaultProfile=Shell.profile
+
+[Favorite Profiles]
+Favorites=Shell.profile
+
+[MainWindow]
+Height 1080=1044
+Height 2160=1053
+MenuBar=Disabled
+State=AAAA/wAAAAD9AAAAAAAABPwAAAIFAAAABAAAAAQAAAAIAAAACPwAAAAA
+ToolBarsMovable=Disabled
+Width 1920=1916
+Width 3840=1276

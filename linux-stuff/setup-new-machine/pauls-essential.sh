@@ -75,6 +75,7 @@ addpkg \
     htop \
     i3 \
     inkscape \
+    konsole \
     libaa1-dev \
     libatlas-base-dev \
     libavcodec-dev \

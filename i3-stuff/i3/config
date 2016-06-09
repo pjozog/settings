@@ -42,7 +42,7 @@ set $base0F "#fcc09e"
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec myterm
 
 # kill focused window
 bindsym $mod+Shift+c kill
@@ -227,6 +227,7 @@ for_window [class="VirtualBox"] floating enable
 for_window [class="Zeal"] floating enable
 for_window [class="Gitk"] floating enable
 for_window [class="CrashPlan"] floating enable
+for_window [class="Ipython"] floating enable
 
 for_window [class="Meld"] fullscreen enable
 
