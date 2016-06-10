@@ -2,7 +2,7 @@
 
 for terminal in "$TERMINAL" konsole terminator gnome-terminal xterm; do
     if command -v "$terminal" > /dev/null 2>&1; then
-        if [ $terminal == konsole ]; then
+        if [ $terminal != konsole ]; then
             exec "$terminal" "$@"
         else
             exec "$terminal" --hide-tabbar --hide-menubar "$@"
