@@ -5,6 +5,8 @@ Font=Ubuntu Mono,10,-1,5,50,0,0,0,0,0
 [General]
 Name=Shell
 Parent=FALLBACK/
+ShowTerminalSizeHint=false
+TerminalColumns=85
 
 [Interaction Options]
 WordCharacters=-A-Za-z0-9,./?%&#:_~
