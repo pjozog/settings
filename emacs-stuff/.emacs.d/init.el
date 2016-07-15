@@ -325,6 +325,8 @@ find-dominating-file?"
 (require 'markdown-mode)
 (require 'fill-column-indicator)
 (require 'edit-server)
+(require 'google-c-style)
+(add-hook 'c-mode-common-hook 'google-set-c-style)
 
 ;; edit text boxes in chrome
 (edit-server-start)
@@ -466,16 +468,6 @@ find-dominating-file?"
 (add-to-list 'auto-mode-alist '("\\.moos$" . conf-mode))
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c-c++-header))
 (setq matlabf-fill-code nil)
-
-;; set default C style to 4-space indentation with "cc-mode" style (from rme-linux)
-(setq c-default-style
-      '((java-mode . "java") (awk-mode . "awk") (c-mode . "cc-mode") (other . "cc-mode")))
-
-;; Don't do the funky indenting for lines consisting only of curly braces
-(c-set-offset 'substatement-open 0)
-
-;; Spaces (default is 4, but this is how you'd change it)
-(setq c-basic-offset 4)
 
 ;; Also make function calls highlighted for common programming modes
 (let (modeList)
