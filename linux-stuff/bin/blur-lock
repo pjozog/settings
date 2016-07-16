@@ -1,6 +1,19 @@
 #!/bin/bash
- 
+
+get_screen_res() {
+    convert /tmp/screen_locked.png  -print "%w" /dev/null
+}
+
+get_num_conn_monitors() {
+    xrandr -q | grep ' connected' | wc -l
+}
+
+get_blocky_res() {
+    # should use a power of 2...?
+    echo $((64 * $(get_num_conn_monitors)))
+}
+
 import -window root /tmp/screen_locked.png
-convert /tmp/screen_locked.png -scale 4% -scale 2500% /tmp/screen_locked2.png
+convert /tmp/screen_locked.png -scale $(get_blocky_res) -scale $(get_screen_res) /tmp/screen_locked2.png
 mv /tmp/screen_locked2.png /tmp/screen_locked.png
-i3lock -i /tmp/screen_locked.png 
+i3lock -i /tmp/screen_locked.png
