@@ -80,7 +80,7 @@
                                        yasnippet auto-complete
                                        autopair unbound nyan-mode markdown-mode
                                        rainbow-mode color-theme flymake-cursor
-                                       cmake-mode browse-kill-ring)
+                                       cmake-mode browse-kill-ring ein)
     "A list of melpa packages to ensure are installed at launch.")
 
   (dolist (p my-melpa-packages)
@@ -88,7 +88,8 @@
       (package-install p)))
 
   ;; then do el-get packages
-  (defvar my-el-get-packages '(ein)
+  (defvar my-el-get-packages '(;; ein
+                               )
     "A list of el-get packages to ensure are installed at launch.")
 
   (dolist (p my-el-get-packages)
