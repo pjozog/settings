@@ -227,7 +227,7 @@ for_window [class="Spotify"] floating enable
 for_window [class="Gimp"] floating enable
 for_window [class="VirtualBox"] floating enable
 for_window [class="Zeal"] floating enable
-for_window [class="Gitk"] floating enable
+# for_window [class="Gitk"] floating enable
 for_window [class="CrashPlan"] floating enable
 for_window [class="Ipython"] floating enable
 

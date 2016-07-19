@@ -120,9 +120,6 @@ linkPairs = [
     (os.path.join(scriptDir, 'matlab-stuff', 'startup.m'),
      os.path.join(homeDir, 'Documents', 'MATLAB', 'startup.m')),
 
-    (os.path.join(dropboxDir, 'ssh', 'config-work'),
-     os.path.join(homeDir, '.ssh', 'config-work')),
-
     (os.path.join(dropboxDir, 'ssh', 'config-home'),
      os.path.join(homeDir, '.ssh', 'config-home')),
 

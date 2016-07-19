@@ -42,8 +42,9 @@ function random-file ()
     done
 }
 
-if [ $# -ne 1 ]; then
-    echo "Usage: $0 <build-directory>"
+if [ $# -lt 1 -o $# -gt 2 ]; then
+    echo "Usage: $0 <build-directory> (build-command)"
+    echo "       (build-command defaults to 'make -j$(nproc)')"
     exit 1
 fi
 
@@ -54,9 +55,12 @@ DROPBOX_WAVS=${HOME}/Dropbox/code/private/wavs
 PROJ="${1}"
 cd "${PROJ}"
 
-# make using the number of processors on the CPU, pipe to /dev/null to only show
-# warnings and errors
-make -j$(nproc) > /dev/null
+# command defaults to make
+cmd=${2:-'make -j$(nproc)'}
+
+# run the command while piping stdout to /dev/null (we only care warnings and
+# errors)
+eval ${cmd} > /dev/null
 
 if [ $? -eq 0 ]; then
     # if compilation succeeded...
