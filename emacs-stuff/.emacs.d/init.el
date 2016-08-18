@@ -441,7 +441,7 @@ find-dominating-file?"
 (put 'upcase-region 'disabled nil)
 
 ;; HACK: disable the default snippets packaged with melpa
-(setq yas-snippet-dirs (concat (file-name-as-directory my-emacs-dir) "snippets"))
+(setq yas-snippet-dirs (cons (concat (file-name-as-directory my-emacs-dir) "snippets") ()))
 (yas/initialize)
 
 (put 'downcase-region 'disabled nil)
