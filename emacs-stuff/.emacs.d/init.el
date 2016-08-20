@@ -25,6 +25,7 @@
 (define-key paul-keys-minor-mode-map (kbd "C-x f") 'find-name-dired)
 (define-key paul-keys-minor-mode-map (kbd "C-x C-j") 'dired-jump)
 (define-key paul-keys-minor-mode-map (kbd "M-;") 'comment-dwim) ; damn you, matlab-mode
+(define-key paul-keys-minor-mode-map (kbd "M-*") 'pop-tag-mark) ; damn you, Emacs 25!
 (define-key paul-keys-minor-mode-map
   (kbd "C-x C-b") (lambda ()
                     (interactive)
