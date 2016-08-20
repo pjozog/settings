@@ -138,6 +138,9 @@ linkPairs = [
     (os.path.join(scriptDir, 'konsole-stuff', 'apps', 'konsole'),
      os.path.join(homeDir, '.kde', 'share', 'apps', 'konsole')),
 
+    (os.path.join(scriptDir, 'linux-stuff', '.xsession'),
+     os.path.join(homeDir, '.xsession')),
+
     (os.path.join(scriptDir, 'i3-stuff', 'i3'),
      os.path.join(homeDir, '.i3')),
 

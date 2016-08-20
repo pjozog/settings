@@ -212,13 +212,8 @@ sudo -E update-alternatives --config java
 sudo -E update-alternatives --config jar
 sudo -E update-alternatives --config javac
 
-# install awesome-session
-sudo -E cp awesome-session /usr/bin
-sudo -E cp awesome.desktop /usr/share/xsessions
-
-# install i3-session
-sudo -E cp i3-session /usr/bin
-sudo -E cp i3.desktop /usr/share/xsessions
+# use xsession as the entrypoint of the window manager
+sudo -E cp xsession.desktop /usr/share/xsessions
 
 # change to zsh
 echo 'Changing default shell to zsh, please enter your password'
