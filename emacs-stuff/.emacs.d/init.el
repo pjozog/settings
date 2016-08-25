@@ -114,7 +114,7 @@
   (add-hook
    'prog-mode-hook (lambda ()
 		     (font-lock-add-keywords
-		      nil '(("\\<\\(FIX\\|TODO\\|FIXME\\|HACK\\|REFACTOR\\|DEBUG\\):"
+		      nil '(("\\<\\(FIX\\|TODO\\|TODO\\(.+\\)\\|FIXME\\|HACK\\|REFACTOR\\|DEBUG\\):"
 			     1 font-lock-warning-face t))))))
 
 ;; --------------------------------------------------
