@@ -687,3 +687,10 @@ find-dominating-file?"
                  "~/Dropbox/personal/org/projects.org"))
 
 (get-buffer-create "*compilation*")
+
+;; Set scratch buffer to org-mode
+(setq initial-scratch-message "* Scratch buffer
+  - Place any notes you would like here.  Use org-mode syntax.
+
+")
+(org-mode)
