@@ -1,6 +1,6 @@
 [Appearance]
 ColorScheme=Inside
-Font=Ubuntu Mono,10,-1,5,50,0,0,0,0,0
+Font=Input,7,-1,5,50,0,0,0,0,0
 
 [General]
 Name=Shell
