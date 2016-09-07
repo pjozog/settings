@@ -199,8 +199,6 @@ bar {
 }
 
 # paul stuff
-exec "xset r rate 300 40"
-exec "emacs --daemon"
 exec "feh --bg-scale wallpaper"
 
 bindsym $mod+Shift+e exec "emacsclient -nc"
