@@ -115,7 +115,7 @@
    'prog-mode-hook (lambda ()
 		     (font-lock-add-keywords
 		      nil '(("\\<\\(FIX\\|TODO\\|TODO\\(.+\\)\\|FIXME\\|HACK\\|REFACTOR\\|DEBUG\\):"
-			     1 font-lock-warning-face t))))))
+			     1 font-lock-warning-face))))))
 
 ;; --------------------------------------------------
 ;; Function definitions
@@ -480,15 +480,15 @@ find-dominating-file?"
   (while modeList
     (font-lock-add-keywords (car modeList)
                             '(("\\s\"?\\(\\(\\sw\\|\\s_\\)+\\(<-\\)?\\)\\s\"?*\\s-*("
-                               (1 font-lock-function-name-face)))  t)
+                               (1 font-lock-function-name-face))))
     (setq modeList (cdr modeList))))
 ;; Special case: require space before opening parenthesis:
 (font-lock-add-keywords 'matlab-mode
   '(("\\s\"?\\(\\(\\sw\\|\\s_\\)+ \\(<-\\)?\\)\\s\"?*\\s-*("
-    (1 font-lock-function-name-face)))  t)
+    (1 font-lock-function-name-face))))
 (font-lock-add-keywords 'octave-mode
   '(("\\s\"?\\(\\(\\sw\\|\\s_\\)+ \\(<-\\)?\\)\\s\"?*\\s-*("
-    (1 font-lock-function-name-face)))  t)
+    (1 font-lock-function-name-face))))
 
 ;; LaTeX: Enable flymake for texlive distribution of LaTeX
 (defun flymake-get-tex-args (file-name)
@@ -578,7 +578,7 @@ find-dominating-file?"
                            (c-set-offset 'innamespace 0)
                            (font-lock-add-keywords
                             nil '(("\\<\\(that\\)->"
-                                   1 font-lock-keyword-face t)))))
+                                   1 font-lock-keyword-face)))))
 
 ;; helper function for commenting code inside an #if0 ... #endif block
 (defun c-mode-font-lock-if0 (limit)
