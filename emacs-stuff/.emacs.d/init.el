@@ -480,15 +480,15 @@ find-dominating-file?"
   (while modeList
     (font-lock-add-keywords (car modeList)
                             '(("\\s\"?\\(\\(\\sw\\|\\s_\\)+\\(<-\\)?\\)\\s\"?*\\s-*("
-                               (1 font-lock-function-name-face))))
+                               (1 font-lock-function-name-face))) t)
     (setq modeList (cdr modeList))))
 ;; Special case: require space before opening parenthesis:
 (font-lock-add-keywords 'matlab-mode
   '(("\\s\"?\\(\\(\\sw\\|\\s_\\)+ \\(<-\\)?\\)\\s\"?*\\s-*("
-    (1 font-lock-function-name-face))))
+    (1 font-lock-function-name-face))) t)
 (font-lock-add-keywords 'octave-mode
   '(("\\s\"?\\(\\(\\sw\\|\\s_\\)+ \\(<-\\)?\\)\\s\"?*\\s-*("
-    (1 font-lock-function-name-face))))
+    (1 font-lock-function-name-face))) t)
 
 ;; LaTeX: Enable flymake for texlive distribution of LaTeX
 (defun flymake-get-tex-args (file-name)
@@ -578,7 +578,12 @@ find-dominating-file?"
                            (c-set-offset 'innamespace 0)
                            (font-lock-add-keywords
                             nil '(("\\<\\(that\\)->"
-                                   1 font-lock-keyword-face)))))
+                                   1 font-lock-keyword-face)))
+                           ;; Google c++ style guide: private variables end with
+                           ;; trailing underscore
+                           (font-lock-add-keywords
+                            nil '(("\\sw+_"
+                                   . font-lock-warning-face)) t)))
 
 ;; helper function for commenting code inside an #if0 ... #endif block
 (defun c-mode-font-lock-if0 (limit)
