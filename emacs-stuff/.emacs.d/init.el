@@ -74,14 +74,16 @@
   (add-to-list 'package-archives
 	       '("melpa" . "https://melpa.org/packages/"))
   (package-initialize)
-  (package-refresh-contents)
+  ;; NOTE: uncomment on first run to download packages
+  ;; (package-refresh-contents)
 
   (defvar my-melpa-packages '(lua-mode auctex w3m etags-select org
                                        smex ido-ubiquitous idle-highlight-mode
                                        yasnippet auto-complete
                                        autopair unbound nyan-mode markdown-mode
                                        rainbow-mode color-theme flymake-cursor
-                                       cmake-mode browse-kill-ring ein)
+                                       cmake-mode browse-kill-ring ein
+                                       modern-cpp-font-lock)
     "A list of melpa packages to ensure are installed at launch.")
 
   (dolist (p my-melpa-packages)
@@ -114,8 +116,8 @@
   (add-hook
    'prog-mode-hook (lambda ()
 		     (font-lock-add-keywords
-		      nil '(("\\<\\(FIX\\|TODO\\|TODO\\(.+\\)\\|FIXME\\|HACK\\|REFACTOR\\|DEBUG\\):"
-			     1 font-lock-warning-face))))))
+		      nil '(("\\<\\(FIX\\|TODO\\|TODO\\(.+\\)\\|FIXME\\|NOTE\\|HACK\\|REFACTOR\\|DEBUG\\):"
+			     1 font-lock-warning-face t))))))
 
 ;; --------------------------------------------------
 ;; Function definitions
@@ -576,14 +578,10 @@ find-dominating-file?"
 ;; Don't add extra indentations when inside a namespace (c++)
 (add-hook 'c++-mode-hook (lambda ()
                            (c-set-offset 'innamespace 0)
+                           (modern-c++-font-lock-mode)
                            (font-lock-add-keywords
                             nil '(("\\<\\(that\\)->"
-                                   1 font-lock-keyword-face)))
-                           ;; Google c++ style guide: private variables end with
-                           ;; trailing underscore
-                           (font-lock-add-keywords
-                            nil '(("\\sw+_"
-                                   . font-lock-warning-face)) t)))
+                                   1 font-lock-keyword-face)))))
 
 ;; helper function for commenting code inside an #if0 ... #endif block
 (defun c-mode-font-lock-if0 (limit)
