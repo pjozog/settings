@@ -611,9 +611,7 @@ find-dominating-file?"
 (add-hook 'c-mode-common-hook (lambda ()
                                 (font-lock-add-keywords
                                  nil
-                                 '((c-mode-font-lock-if0 (0 font-lock-comment-face prepend))) 'add-to-end)
-                                (setq comment-start "/* "
-                                      comment-end " */")))
+                                 '((c-mode-font-lock-if0 (0 font-lock-comment-face prepend))) 'add-to-end)))
 
 ;; Use % for octave
 (add-hook 'octave-mode-hook (lambda ()
