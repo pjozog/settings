@@ -148,7 +148,10 @@ linkPairs = [
      os.path.join(homeDir, '.i3blocks.conf')),
 
     (os.path.join(scriptDir, 'i3-stuff', 'dunst'),
-     os.path.join(homeDir, '.config', 'dunst'))
+     os.path.join(homeDir, '.config', 'dunst')),
+
+    (os.path.join(scriptDir, 'oh-my-zsh'),
+     os.path.join(homeDir, '.oh-my-zsh'))
 
 ]
 
