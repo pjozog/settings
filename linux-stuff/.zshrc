@@ -103,4 +103,10 @@ zrclocal() {
     return 0
 }
 
+zrcprompt() {
+    xsource "${ZDOTDIR:-${HOME}}/.zshrc.prompt"
+    return 0
+}
+
 zrclocal
+zrcprompt
