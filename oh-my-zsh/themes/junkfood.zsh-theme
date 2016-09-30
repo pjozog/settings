@@ -29,5 +29,5 @@ ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg_bold[red]%}✗✗✗"
 local ret_status="%(?:%{$fg_bold[green]%}:%{$fg_bold[red]%?%})$reset_color"
 
 # Put it all together!
-PROMPT="$JUNKFOOD_TIME_$JUNKFOOD_CURRENT_USER_@$JUNKFOOD_MACHINE_$JUNKFOOD_LOCA_
- ${ret_status}$ "
+PROMPT="$JUNKFOOD_TIME_$JUNKFOOD_CURRENT_USER_@$JUNKFOOD_MACHINE_$JUNKFOOD_LOCA_ ${ret_status}
+ $ "
