@@ -70,6 +70,9 @@ setopt unset
 # new commands should tab-complete
 zstyle ":completion:*:commands" rehash 1
 
+# Too many dirs on the stack gets super annoying...
+DIRSTACKSIZE=6
+
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
 HISTSIZE=500000
