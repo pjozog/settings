@@ -34,10 +34,12 @@
 (define-key paul-keys-minor-mode-map
   (kbd "M-e") (lambda ()
                 (interactive)
+                (setq this-command 'next-line)
                 (next-line 3)))
 (define-key paul-keys-minor-mode-map
   (kbd "M-a") (lambda ()
                 (interactive)
+                (setq this-command 'previous-line)
                 (previous-line 3)))
 (define-key paul-keys-minor-mode-map (kbd "<f5>") 'shrink-window-horizontally)
 (define-key paul-keys-minor-mode-map (kbd "<f6>") 'enlarge-window-horizontally)
@@ -457,8 +459,6 @@ find-dominating-file?"
   (lambda () (interactive)
     (let ((case-fold-search isearch-case-fold-search))
       (occur (if isearch-regexp isearch-string (regexp-quote isearch-string))))))
-
-(global-highline-mode 1)
 
 ;; --------------------------------------------------
 ;; Language-specific settings
