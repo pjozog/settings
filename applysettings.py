@@ -151,7 +151,10 @@ linkPairs = [
      os.path.join(homeDir, '.config', 'dunst')),
 
     (os.path.join(scriptDir, 'oh-my-zsh'),
-     os.path.join(homeDir, '.oh-my-zsh'))
+     os.path.join(homeDir, '.oh-my-zsh')),
+
+    (os.path.join(scriptDir, 'apport-stuff'),
+     os.path.join(homeDir, '.config', 'apport'))
 
 ]
 

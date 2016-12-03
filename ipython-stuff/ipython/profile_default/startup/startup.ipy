@@ -1,3 +1,6 @@
+import numpy
+import sys
+
 %load_ext autoreload
 %autoreload 2
 %precision 4

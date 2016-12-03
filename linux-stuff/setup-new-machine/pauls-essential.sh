@@ -105,8 +105,8 @@ addpkg \
     libsdl1.2-dev \
     libspnav-dev \
     libsuitesparse-dev \
-    libtiff4-dev \
-    libwxgtk2.8-dev \
+    libtiff5-dev \
+    libwxgtk3.0-dev \
     libxdg-basedir-dev \
     libxi-dev \
     libxml2-dev \
