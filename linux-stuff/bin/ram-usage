@@ -1,7 +1,8 @@
 #!/bin/bash
 
-has_new_free=$(free --version | grep -q 3\.3\.10)$?
-if [ $has_new_free ]; then
+# check version of free
+free --version | grep -q 3\.3\.10
+if [ $? -eq 0 ]; then
     MEMORY_USED=$(free -m | grep '^Mem:' | awk '{print $3}')
     MEMORY_AVBL=$(free -m | grep '^Mem:' | awk '{print $7}')
     MEMORY_TOTAL=$(free -m | grep '^Mem:' | awk '{print $2}')
