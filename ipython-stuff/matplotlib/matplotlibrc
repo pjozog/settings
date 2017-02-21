@@ -1,4 +1,1 @@
-font.size: 30
-font.family: sans-serif
 backend: GtkAgg
-text.usetex: True
