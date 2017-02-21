@@ -92,6 +92,9 @@ bindkey '^w' kill-region
 #Make tab in the middle of a word to behave more like BASH
 bindkey '^i' expand-or-complete-prefix
 
+# Color certain file types
+eval "`dircolors -b`"
+
 alias history='history 1'
 
 setopt NO_HUP

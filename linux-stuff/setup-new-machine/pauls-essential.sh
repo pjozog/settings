@@ -178,17 +178,15 @@ fi
 if [ $DIST -ge 910 -a $DIST -lt 1204 ]; then
     sudo -E add-apt-repository "deb http://archive.canonical.com/ $NAME partner"
     addpkg sun-java6-jdk
-elif [ $DIST -ge 1204 ]; then
+elif [ $DIST -ge 1204 -a $DIST -lt 1604 ]; then
     addpkg openjdk-6-jdk
+else
+    addpkg openjdk-8-jdk
 fi
 
-# hal (makes hbo go/amazon prime video work in firefox)
-sudo -E add-apt-repository -y ppa:mjblenner/ppa-hal
-addpkg hal
-
 # pcl
-sudo -E add-apt-repository -y ppa:v-launchpad-jochen-sprickerhof-de/pcl
-addpkg libpcl-all
+# sudo -E add-apt-repository -y ppa:v-launchpad-jochen-sprickerhof-de/pcl
+# addpkg libpcl-all
 
 # kodi (xbmc)
 sudo -E add-apt-repository -y ppa:team-xbmc/ppa
