@@ -439,6 +439,9 @@ find-dominating-file?"
       (nyan-mode)
       (setq nyan-bar-length 12))
   (error nil))
+;; Make the nyan-mode bar display correctly in terminal mode
+(setq nyan-cat-face-number 0)
+
 ;; I know it's tempting, Paul - but DO NOT enable this!
 ;; (nyan-start-animation)
 
