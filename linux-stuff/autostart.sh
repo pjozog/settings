@@ -2,6 +2,7 @@
 
 export GTK2_RC_FILES=/usr/share/themes/Radiance/gtk-2.0/gtkrc:${HOME}/.gtkrc-mine
 export OOO_FORCE_DESKTOP='gnome'
+export QT_STYLE_OVERRIDE='gtk'
 
 # fix for awesome and open-jdk version 7
 export _JAVA_AWT_WM_NONREPARENTING=1
