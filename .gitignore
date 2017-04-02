@@ -26,6 +26,7 @@ emacs-stuff/.emacs.d/ido.last
 emacs-stuff/.emacs.d/request
 emacs-stuff/.emacs.d/smex-items
 emacs-stuff/.emacs.d/srecode-map.el
+emacs-stuff/.emacs.d/irony
 ipython-stuff/ipython/profile_default/security
 ipython-stuff/ipython/profile_default/static
 ipython-stuff/matplotlib/fontList.cache

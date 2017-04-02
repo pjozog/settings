@@ -85,7 +85,8 @@
                                        autopair unbound nyan-mode markdown-mode
                                        rainbow-mode color-theme flymake-cursor
                                        cmake-mode browse-kill-ring ein
-                                       modern-cpp-font-lock)
+                                       modern-cpp-font-lock irony company-irony
+                                       flycheck-irony)
     "A list of melpa packages to ensure are installed at launch.")
 
   (dolist (p my-melpa-packages)
@@ -708,3 +709,28 @@ find-dominating-file?"
 
 ")
 (org-mode)
+
+;; auto-complete setup for C and C++
+(add-hook 'c++-mode-hook (lambda ()
+                           (irony-mode)
+                           (company-mode)
+                           (flycheck-mode)))
+(add-hook 'c-mode-hook (lambda ()
+                         (irony-mode)
+                         (company-mode)
+                         (flycheck-mode)))
+
+;; replace the `completion-at-point' and `complete-symbol' bindings in
+;; irony-mode's buffers by irony-mode's function
+(defun my-irony-mode-hook ()
+  (define-key irony-mode-map [remap completion-at-point]
+    'irony-completion-at-point-async)
+  (define-key irony-mode-map [remap complete-symbol]
+    'irony-completion-at-point-async))
+(add-hook 'irony-mode-hook 'my-irony-mode-hook)
+(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+
+(eval-after-load 'company
+  '(add-to-list 'company-backends 'company-irony))
+(eval-after-load 'flycheck
+  '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))

@@ -54,6 +54,8 @@ addpkg \
     awesome \
     build-essential \
     ccache \
+    cmake \
+    cmake-curses-gui \
     cowsay \
     dbus \
     dbus-x11 \
@@ -84,6 +86,7 @@ addpkg \
     libboost-all-dev \
     libboost-program-options-dev \
     libboost-system-dev \
+    libclang-3.8-dev \
     libdbus-1-dev \
     libdc1394-22-dev \
     libdevil-dev \
