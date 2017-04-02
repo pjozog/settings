@@ -336,7 +336,7 @@ find-dominating-file?"
 (show-paren-mode 1) ;;This needs to be enabled before changing color theme
 (require 'subword)
 (require 'paul-themes)
-(paul-themes-naquadah2)
+(paul-themes-sublime)
 (require 'dired-mod)            ;; mine
 (require 'myOrgSettings)        ;; mine
 (require 'markdown-mode)
