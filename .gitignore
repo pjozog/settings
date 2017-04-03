@@ -36,3 +36,4 @@ org-clock-save.el
 tramp
 oh-my-zsh/cache/DEBS_avail
 emacs-stuff/.emacs.d/recentf
+emacs-stuff/.emacs.d/.cask

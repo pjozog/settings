@@ -74,7 +74,7 @@
   ;; do melpa packages first
   (require 'package)
   (add-to-list 'package-archives
-	       '("melpa" . "https://melpa.org/packages/"))
+               '("melpa" . "http://melpa.milkbox.net/packages/") t)
   (package-initialize)
   ;; NOTE: uncomment on first run to download packages
   ;; (package-refresh-contents)
@@ -85,8 +85,8 @@
                                        autopair unbound nyan-mode markdown-mode
                                        rainbow-mode color-theme flymake-cursor
                                        cmake-mode browse-kill-ring ein
-                                       modern-cpp-font-lock irony company-irony
-                                       flycheck-irony)
+                                       modern-cpp-font-lock
+                                       ycmd company-ycmd flycheck-ycmd)
     "A list of melpa packages to ensure are installed at launch.")
 
   (dolist (p my-melpa-packages)
@@ -711,26 +711,17 @@ find-dominating-file?"
 (org-mode)
 
 ;; auto-complete setup for C and C++
+(require 'ycmd)
+(add-hook 'after-init-hook #'global-ycmd-mode)
+(setq ycmd-server-command (list "python" (file-truename "~/documents/git/ycmd/ycmd")))
+(ycmd-setup)
+(require 'company-ycmd)
+(company-ycmd-setup)
+(require 'flycheck-ycmd)
+(flycheck-ycmd-setup)
+
 (add-hook 'c++-mode-hook (lambda ()
-                           (irony-mode)
+                           (ycmd-mode)
                            (company-mode)
                            (flycheck-mode)))
-(add-hook 'c-mode-hook (lambda ()
-                         (irony-mode)
-                         (company-mode)
-                         (flycheck-mode)))
-
-;; replace the `completion-at-point' and `complete-symbol' bindings in
-;; irony-mode's buffers by irony-mode's function
-(defun my-irony-mode-hook ()
-  (define-key irony-mode-map [remap completion-at-point]
-    'irony-completion-at-point-async)
-  (define-key irony-mode-map [remap complete-symbol]
-    'irony-completion-at-point-async))
-(add-hook 'irony-mode-hook 'my-irony-mode-hook)
-(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
-
-(eval-after-load 'company
-  '(add-to-list 'company-backends 'company-irony))
-(eval-after-load 'flycheck
-  '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
+(setq company-idle-delay 0.2)
