@@ -712,16 +712,12 @@ find-dominating-file?"
 
 ;; auto-complete setup for C and C++
 (require 'ycmd)
+(require 'company-ycmd)
+(require 'flycheck-ycmd)
 (add-hook 'after-init-hook #'global-ycmd-mode)
 (setq ycmd-server-command (list "python" (file-truename "~/documents/git/ycmd/ycmd")))
 (ycmd-setup)
-(require 'company-ycmd)
 (company-ycmd-setup)
-(require 'flycheck-ycmd)
 (flycheck-ycmd-setup)
-
-(add-hook 'c++-mode-hook (lambda ()
-                           (ycmd-mode)
-                           (company-mode)
-                           (flycheck-mode)))
+(add-hook 'c++-mode-hook (lambda () (ycmd-mode) (company-mode) (flycheck-mode)))
 (setq company-idle-delay 0.2)
