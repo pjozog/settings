@@ -66,6 +66,9 @@ linkPairs = [
     (os.path.join(scriptDir, 'ipython-stuff', 'matplotlib'),
      os.path.join(homeDir, '.config', 'matplotlib')),
 
+    (os.path.join(scriptDir, 'ipython-stuff', 'jupyter'),
+     os.path.join(homeDir, '.jupyter')),
+
     (os.path.join(scriptDir, 'linux-stuff', 'autostart.sh'),
      os.path.join(homeDir, '.config', 'autostart.sh')),
 
@@ -74,9 +77,6 @@ linkPairs = [
 
     (os.path.join(scriptDir, 'linux-stuff', '.fonts.conf'),
      os.path.join(homeDir, '.fonts.conf')),
-
-    (os.path.join(scriptDir, 'linux-stuff', '.pythonrc'),
-     os.path.join(homeDir, '.pythonrc')),
 
     (os.path.join(scriptDir, 'texpath'),
      os.path.join(homeDir, 'texpath')),

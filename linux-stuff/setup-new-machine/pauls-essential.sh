@@ -219,16 +219,3 @@ sudo -E cp xsession.desktop /usr/share/xsessions
 # change to zsh
 echo 'Changing default shell to zsh, please enter your password'
 chsh -s /usr/bin/zsh
-
-# install python packages, some of which are broken on Ubuntu 14.04
-sudo -E pip install -U cython
-sudo -E pip install -U numpy
-sudo -E pip install -U scipy
-sudo -E pip install -U matplotlib
-sudo -E pip install -U pandas
-sudo -E pip install -U scikit-learn
-sudo -E pip install -U scikits.sparse
-sudo -E pip install -U scikit-image
-sudo -E pip install -U jinja2
-sudo -E pip install -U tornado
-sudo -E pip install -U ipython[all]
