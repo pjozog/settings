@@ -58,16 +58,6 @@
 
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 
-(unless (require 'el-get nil 'noerror)
-  (with-current-buffer
-      (url-retrieve-synchronously
-       "https://raw.githubusercontent.com/dimitri/el-get/master/el-get-install.el")
-    (goto-char (point-max))
-    (eval-print-last-sexp)))
-
-(add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/recipes")
-(el-get 'sync)
-
 ;; This basically will only work with emacs24.
 (when (>= emacs-major-version 24)
 
@@ -84,7 +74,7 @@
                                        yasnippet auto-complete
                                        autopair unbound nyan-mode markdown-mode
                                        rainbow-mode color-theme flymake-cursor
-                                       cmake-mode browse-kill-ring ein
+                                       cmake-mode browse-kill-ring
                                        modern-cpp-font-lock
                                        ycmd company-ycmd flycheck-ycmd)
     "A list of melpa packages to ensure are installed at launch.")
@@ -92,14 +82,6 @@
   (dolist (p my-melpa-packages)
     (when (not (package-installed-p p))
       (package-install p)))
-
-  ;; then do el-get packages
-  (defvar my-el-get-packages '(;; ein
-                               )
-    "A list of el-get packages to ensure are installed at launch.")
-
-  (dolist (p my-el-get-packages)
-    (el-get-install p))
 
   (ido-mode t)
   (ido-ubiquitous-mode)
@@ -425,11 +407,6 @@ find-dominating-file?"
 (set-default 'indent-tabs-mode nil)
 (setq-default tab-width 4)
 (defalias 'un 'untabify-buffer)
-
-;; ipython notebook mode
-(defun ipn ()
-  (interactive)
-  (ein:notebooklist-open))
 
 ;; Woman is pretty cool
 (setq woman-use-own-frame nil)
