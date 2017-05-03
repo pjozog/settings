@@ -1,7 +1,12 @@
-import numpy
-import sys
+try:
+    import sys
+    import numpy as np
+    import matplotlib.pyplot as plt
+except ImportError:
+    pass
 
 %load_ext autoreload
 %autoreload 2
 %precision 4
-numpy.set_printoptions(threshold=sys.maxint)
+%colors Linux
+np.set_printoptions(precision=16, threshold=1000)

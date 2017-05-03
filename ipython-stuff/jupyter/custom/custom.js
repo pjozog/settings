@@ -14,7 +14,7 @@ IPython.keyboard_manager.command_shortcuts.add_shortcut('e', {
 );
 
 // Reload contents into current cell
-IPython.keyboard_manager.command_shortcuts.add_shortcut('u', {
+IPython.keyboard_manager.command_shortcuts.add_shortcut('g', {
     handler : function (event) {
         function handle_output(msg) {
             var ret = msg.content.text;
