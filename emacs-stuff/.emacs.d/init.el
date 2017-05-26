@@ -26,6 +26,10 @@
 (define-key paul-keys-minor-mode-map (kbd "C-x C-j") 'dired-jump)
 (define-key paul-keys-minor-mode-map (kbd "M-;") 'comment-dwim) ; damn you, matlab-mode
 (define-key paul-keys-minor-mode-map (kbd "M-*") 'pop-tag-mark) ; damn you, Emacs 25!
+(define-key paul-keys-minor-mode-map (kbd "C-x C-;") (lambda ()
+                                                       (interactive)
+                                                       (comment-or-uncomment-region (line-beginning-position)
+                                                                                    (line-end-position))))
 (define-key paul-keys-minor-mode-map
   (kbd "C-x C-b") (lambda ()
                     (interactive)
@@ -50,6 +54,7 @@
 (define-key paul-keys-minor-mode-map (kbd "C-c u") 'cua-mode)
 (define-key paul-keys-minor-mode-map (kbd "M-Q") 'unfill-paragraph)
 (define-key paul-keys-minor-mode-map (kbd "C-x v =") 'vc-ediff)
+(define-key paul-keys-minor-mode-map [C-M-tab] 'clang-format-region)
 
 (define-minor-mode paul-keys-minor-mode
   "A minor mode so that my key settings override annoying major modes."
@@ -326,6 +331,7 @@ find-dominating-file?"
 (require 'edit-server)
 (require 'google-c-style)
 (add-hook 'c-mode-common-hook 'google-set-c-style)
+(require 'clang-format)
 
 ;; edit text boxes in chrome
 (edit-server-start)
