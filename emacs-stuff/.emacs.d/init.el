@@ -30,11 +30,7 @@
                                                        (interactive)
                                                        (comment-or-uncomment-region (line-beginning-position)
                                                                                     (line-end-position))))
-(define-key paul-keys-minor-mode-map
-  (kbd "C-x C-b") (lambda ()
-                    (interactive)
-                    (ibuffer)
-                    (isearch-forward)))
+(define-key paul-keys-minor-mode-map (kbd "C-x C-b") 'ibuffer)
 (define-key paul-keys-minor-mode-map
   (kbd "M-e") (lambda ()
                 (interactive)
