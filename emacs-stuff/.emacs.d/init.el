@@ -52,6 +52,20 @@
 (define-key paul-keys-minor-mode-map (kbd "C-x v =") 'vc-ediff)
 (define-key paul-keys-minor-mode-map [C-M-tab] 'clang-format-region)
 
+;; Increase/decrease the font in all buffers (not just the current one like you
+;; get with C-x C-=, etc.).
+(define-key paul-keys-minor-mode-map (kbd "C-c C-=")
+  (lambda ()
+    (interactive)
+    (let ((old-face-attribute (face-attribute 'default :height)))
+      (set-face-attribute 'default nil :height (+ old-face-attribute 30)))))
+
+(define-key paul-keys-minor-mode-map (kbd "C-c C--")
+  (lambda ()
+    (interactive)
+    (let ((old-face-attribute (face-attribute 'default :height)))
+      (set-face-attribute 'default nil :height (- old-face-attribute 30)))))
+
 (define-minor-mode paul-keys-minor-mode
   "A minor mode so that my key settings override annoying major modes."
   t " paul-keys" 'paul-keys-minor-mode-map)
