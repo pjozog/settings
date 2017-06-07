@@ -714,3 +714,10 @@ find-dominating-file?"
 (flycheck-ycmd-setup)
 (add-hook 'c++-mode-hook (lambda () (ycmd-mode) (company-mode) (flycheck-mode)))
 (setq company-idle-delay 0.2)
+
+;; Bind Shift + TAB to force semantic completion
+(defun company-ycmd-semantic-complete ()
+  (interactive)
+  (let ((ycmd-force-semantic-completion t))
+    (company-complete)))
+(define-key paul-keys-minor-mode-map (kbd "<backtab>") 'company-ycmd-semantic-complete)
