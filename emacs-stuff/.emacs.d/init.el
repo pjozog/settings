@@ -51,6 +51,7 @@
 (define-key paul-keys-minor-mode-map (kbd "M-Q") 'unfill-paragraph)
 (define-key paul-keys-minor-mode-map (kbd "C-x v =") 'vc-ediff)
 (define-key paul-keys-minor-mode-map [C-M-tab] 'clang-format-region)
+(define-key paul-keys-minor-mode-map (kbd "C-c C-r") 'cua-rectangle-mark-mode)
 
 ;; Increase/decrease the font in all buffers (not just the current one like you
 ;; get with C-x C-=, etc.).
