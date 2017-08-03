@@ -101,8 +101,12 @@
 
   (ido-mode t)
   (ido-ubiquitous-mode)
+  ;; If having a problem with certain commands and ido, do the follow: First,
+  ;; enable debugger (setq debug-on-error 1), run the function, ensure ido has
+  ;; crashed, and add the function *immediately preceding* the call to ido to
+  ;; this blacklist.
+  (setq ido-cr+-function-blacklist (append ido-cr+-function-blacklist '(etags-select-complete-tag)))
   ;; Use regular find-tag (no ido)
-  (setq ido-ubiquitous-command-overrides 'find-tag)
   (setq ido-use-virtual-buffers t recentf-max-saved-items 500)
   (setq ido-default-buffer-method 'selected-window)
   (setq ido-default-file-method 'selected-window)
