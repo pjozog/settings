@@ -101,7 +101,7 @@
 
   (ido-mode t)
   (ido-ubiquitous-mode)
-  ;; If having a problem with certain commands and ido, do the follow: First,
+  ;; If having a problem with certain commands and ido, do the following: First,
   ;; enable debugger (setq debug-on-error 1), run the function, ensure ido has
   ;; crashed, and add the function *immediately preceding* the call to ido to
   ;; this blacklist.
