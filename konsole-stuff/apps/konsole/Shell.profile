@@ -9,7 +9,7 @@ ShowTerminalSizeHint=false
 TerminalColumns=85
 
 [Interaction Options]
-WordCharacters=-A-Za-z0-9,./?%&#:_~
+WordCharacters=-A-Za-z0-9,./?%&#:_~+
 
 [Scrolling]
 HistoryMode=2
