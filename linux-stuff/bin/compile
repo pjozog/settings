@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DIR=$(dirname $(readlink -f "$0"))
+
 ##
 # places a notification in the system tray
 #
@@ -10,7 +12,12 @@
 function my-notify ()
 {
     if [ $DISPLAY ]; then
-        notify.py "$1" "$2" "$3"
+        if [ $3 -eq 1 ]; then
+            notify-send "$2" "$1" -u normal -i "$DIR/dialog-ok-apply.png"
+        else
+            echo $DIR/application-exit.png
+            notify-send "$2" "$1" -u critical -i "$DIR/application-exit.png"
+        fi
     fi
 }
 
