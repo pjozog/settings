@@ -229,6 +229,7 @@ for_window [class="^VirtualBox$"] floating enable
 for_window [class="^Zeal$"] floating enable
 for_window [class="^CrashPlan$"] floating enable
 for_window [class="^Ipython$"] floating enable
+for_window [class="^Steam$"] floating enable
 
 for_window [class="^Meld$"] fullscreen enable
 
