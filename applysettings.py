@@ -123,6 +123,9 @@ linkPairs = [
     (os.path.join(dropboxDir, 'zsh', 'prompt'),
      os.path.join(homeDir, '.zshrc.prompt')),
 
+    (os.path.join(dropboxDir, 'code', 'private', 'gcalendar'),
+     os.path.join(homeDir, 'bin', 'gcalendar')),
+
     (os.path.join(scriptDir, 'linux-stuff', '.xbindkeysrc.scm'),
      os.path.join(homeDir, '.xbindkeysrc.scm')),
 
