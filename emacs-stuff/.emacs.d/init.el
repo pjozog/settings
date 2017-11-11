@@ -92,7 +92,7 @@
                                        rainbow-mode color-theme flymake-cursor
                                        cmake-mode browse-kill-ring
                                        modern-cpp-font-lock
-                                       ycmd company-ycmd flycheck-ycmd)
+                                       ycmd company-ycmd flycheck-ycmd py-yapf)
     "A list of melpa packages to ensure are installed at launch.")
 
   (dolist (p my-melpa-packages)
@@ -347,6 +347,7 @@ find-dominating-file?"
 (require 'google-c-style)
 (add-hook 'c-mode-common-hook 'google-set-c-style)
 (require 'clang-format)
+(require 'py-yapf)
 
 ;; edit text boxes in chrome
 (edit-server-start)
@@ -594,6 +595,8 @@ find-dominating-file?"
                            (font-lock-add-keywords
                             nil '(("\\<\\(that\\)->"
                                    1 font-lock-keyword-face)))))
+
+(add-hook 'python-mode-hook 'py-yapf-enable-on-save)
 
 ;; helper function for commenting code inside an #if0 ... #endif block
 (defun c-mode-font-lock-if0 (limit)
