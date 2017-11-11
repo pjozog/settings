@@ -245,3 +245,4 @@ client.urgent           $base02 $base08    $base00 $base0F
 floating_modifier $mod
 hide_edge_borders smart
 new_window pixel 2
+focus_follows_mouse false
