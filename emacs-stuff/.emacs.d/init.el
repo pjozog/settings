@@ -46,7 +46,6 @@
 (define-key paul-keys-minor-mode-map (kbd "<f7>") 'shrink-window)
 (define-key paul-keys-minor-mode-map (kbd "<f8>") 'enlarge-window)
 
-(define-key paul-keys-minor-mode-map (kbd "C-c e") 'eval-and-replace)
 (define-key paul-keys-minor-mode-map (kbd "C-c u") 'cua-mode)
 (define-key paul-keys-minor-mode-map (kbd "M-Q") 'unfill-paragraph)
 (define-key paul-keys-minor-mode-map (kbd "C-x v =") 'vc-ediff)
@@ -71,8 +70,6 @@
   "A minor mode so that my key settings override annoying major modes."
   t " paul-keys" 'paul-keys-minor-mode-map)
 (paul-keys-minor-mode 1)
-
-(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 
 ;; This basically will only work with emacs24.
 (when (>= emacs-major-version 24)
@@ -127,121 +124,12 @@
 ;; --------------------------------------------------
 ;; Function definitions
 ;; --------------------------------------------------
-(defun word-count nil "Count words in buffer" (interactive)
-  (shell-command-on-region (point-min) (point-max) "wc -w"))
-
-(defun char-count nil "Count chars in buffer" (interactive)
-  (shell-command-on-region (point-min) (point-max) "wc -m"))
-
-(defun paren-latex ()
-  (interactive)
-  (replace-regexp "(" "\\\\left(")
-  (exchange-point-and-mark)
-  (replace-regexp ")" "\\\\right)"))
-
-(defun goto-tag ()
-  (interactive)
-  (let ((start (point)))
-    (search-forward-regexp " \\|$\\|(\\|,\\|\\.")
-    (backward-char)
-    (let ((end (point)))
-      (kill-ring-save start end)
-      (find-tag (car kill-ring)))))
-
-(defun find-files-recursively (dir)
-  (let (returnList fileList)
-    (setq returnList ())
-    (setq fileList (file-expand-wildcards (concat dir "/*")))
-    (while fileList
-      (let (currentFile)
-        (setq currentFile (car fileList))
-        (if (not (car (file-attributes currentFile)))
-            (setq returnList (cons currentFile returnList))
-          (if (string-equal (car (file-attributes currentFile)) "t")
-              (setq returnList (append (find-files-recursively currentFile) returnList)))))
-      (pop fileList))
-    returnList))
-
 (defun open-filelist (fileList)
   (while fileList
     (let ((currentFile (car fileList)))
       (if (file-exists-p currentFile)
           (find-file-noselect (file-truename currentFile) t)))
     (setq fileList (cdr fileList))))
-
-(defun file-basename (file)
-  (let ((file-no-dash (replace-regexp-in-string "/$" "" file)))
-    (car (reverse (split-string file-no-dash "/")))))
-
-(defun filter-from-filelist (list expr)
-  (let ((returnList ()))
-    (while list
-      (let ((currentItem (car list)))
-        (if (not (string-match expr currentItem))
-            (setq returnList (cons currentItem returnList)))
-        (setq list (cdr list))))
-    returnList))
-
-(defun extract-from-filelist (list expr)
-  (let ((returnList ()))
-    (while list
-      (let ((currentFile (car list)))
-        (if (string-match expr currentFile)
-            (setq returnList (cons currentFile returnList))))
-      (setq list (cdr list)))
-    returnList))
-
-(defun find-file-this ()
-  (interactive)
-  (find-file buffer-file-name))
-
-(defun command-line-diff (switch)
-  (let ((file1 (pop command-line-args-left))
-        (file2 (pop command-line-args-left)))
-    (ediff file1 file2)))
-(add-to-list 'command-switch-alist '("-diff" . command-line-diff))
-
-(defun f ()
-  (interactive)
-  (set-face-attribute 'default nil :height 120))
-
-(defun insert-amps ()
-  (interactive)
-  (insert (format "& %s &" (read-from-minibuffer "Symbol? "))))
-
-(defun kill-all-dired-buffers (exclude)
-  "Kill all dired buffers."
-  (interactive)
-  (save-excursion
-    (let((count 0))
-      (dolist(buffer (buffer-list))
-        (set-buffer buffer)
-        (when (and (equal major-mode 'dired-mode)
-                   (not (string-equal (buffer-name) exclude)))
-          (setq count (1+ count))
-          (kill-buffer buffer)))
-      (message "Killed %i dired buffer(s)." count ))))
-
-(defun eval-and-replace (value)
-  "Evaluate the sexp at point and replace it with its value"
-  (interactive (list (eval-last-sexp nil)))
-  (kill-sexp -1)
-  (insert (format "%S" value)))
-
-(defun indent-buffer ()
-  (interactive)
-  (indent-region (point-min) (point-max)))
-
-(defun untabify-buffer ()
-  (interactive)
-  (untabify (point-min) (point-max)))
-
-(defun cleanup-buffer ()
-  "Perform a bunch of operations on the whitespace content of a buffer."
-  (interactive)
-  (indent-buffer)
-  (untabify-buffer)
-  (whitespace-cleanup))
 
 (defun c-c++-header ()
   "sets either c-mode or c++-mode, whichever is appropriate for
@@ -251,12 +139,6 @@ header, based on presence of .c file"
     (if (file-exists-p c-file)
         (c-mode)
       (c++-mode))))
-
-(defun align-c-style-args-leftjust (begin end)
-  "Align c-style function args (left justified)"
-  (interactive "r")
-  (align-regexp begin end "\\(\\s-*\\)(")
-  (align-regexp begin end ",\\(\\s-*\\)" 1 1 t))
 
 (defun parent-directory (dir)
   (unless (equal "/" dir)
@@ -289,23 +171,10 @@ find-dominating-file?"
   (let ((fill-column (point-max)))
     (fill-paragraph nil region)))
 
-(defun just-one-space-in-region (beg end)
-  "replace all whitespace in the region with single spaces"
-  (interactive "r")
-  (save-excursion
-    (save-restriction
-      (narrow-to-region beg end)
-      (goto-char (point-min))
-      (while (re-search-forward "\\s-+" nil t)
-        (replace-match " ")))))
-
 ;; --------------------------------------------------
 ;; Aliases
 ;; --------------------------------------------------
 (defalias 'yes-or-no-p 'y-or-n-p) ;; That 'yes' or 'no' shit is anoying:
-(defalias 'man 'woman) ;; Doesn't work at startup?
-(defalias 'cf 'customize-face)
-
 (if (file-exists-p "~/Dropbox/code/private/compile-aliases.el")
     (load "~/Dropbox/code/private/compile-aliases.el"))
 
@@ -343,27 +212,11 @@ find-dominating-file?"
 (require 'myOrgSettings)        ;; mine
 (require 'markdown-mode)
 (require 'fill-column-indicator)
-(require 'edit-server)
 (require 'google-c-style)
 (add-hook 'c-mode-common-hook 'google-set-c-style)
 (require 'clang-format)
 (require 'py-yapf)
-
-;; edit text boxes in chrome
-(edit-server-start)
-;; gmail hacks
-(autoload 'edit-server-maybe-dehtmlize-buffer "edit-server-htmlize" "edit-server-htmlize" t)
-(autoload 'edit-server-maybe-htmlize-buffer   "edit-server-htmlize" "edit-server-htmlize" t)
-(add-hook 'edit-server-start-hook 'edit-server-maybe-dehtmlize-buffer)
-(add-hook 'edit-server-done-hook  'edit-server-maybe-htmlize-buffer)
-
-;; idle-highlight-mode only works on emacs 24
-(condition-case nil
-    (progn
-      (require 'idle-highlight-mode))
-  (error nil))
-
-;; (require 'idle-highlight-mode)
+(require 'idle-highlight-mode)
 
 ;; Turn off the bad shit
 (menu-bar-mode -1)
@@ -424,11 +277,6 @@ find-dominating-file?"
   (setq ediff-last-windows (current-window-configuration))
   (add-hook 'ediff-after-quit-hook-internal 'ediff-restore-windows)
   ad-do-it)
-
-;; To keep myself happy
-(set-default 'indent-tabs-mode nil)
-(setq-default tab-width 4)
-(defalias 'un 'untabify-buffer)
 
 ;; Woman is pretty cool
 (setq woman-use-own-frame nil)
