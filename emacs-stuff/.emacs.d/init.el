@@ -596,7 +596,9 @@ find-dominating-file?"
                             nil '(("\\<\\(that\\)->"
                                    1 font-lock-keyword-face)))))
 
-(add-hook 'python-mode-hook 'py-yapf-enable-on-save)
+;; This can be a bit disruptive (e.g., when writing bazel BUILD files), but it's
+;; nice to have when actually writing python
+;; (add-hook 'python-mode-hook 'py-yapf-enable-on-save)
 
 ;; helper function for commenting code inside an #if0 ... #endif block
 (defun c-mode-font-lock-if0 (limit)
@@ -720,8 +722,12 @@ find-dominating-file?"
 (ycmd-setup)
 (company-ycmd-setup)
 (flycheck-ycmd-setup)
-(add-hook 'c++-mode-hook (lambda () (ycmd-mode) (company-mode) (flycheck-mode)))
+(defun enable-ycmd ()
+  (ycmd-mode) (company-mode) (flycheck-mode))
+(add-hook 'c++-mode-hook 'enable-ycmd)
+(add-hook 'c-mode-hook 'enable-ycmd)
 (setq company-idle-delay 0.2)
+(setq company-ycmd-request-sync-timeout 0)
 
 ;; Bind Shift + TAB to force semantic completion
 (defun company-ycmd-semantic-complete ()
