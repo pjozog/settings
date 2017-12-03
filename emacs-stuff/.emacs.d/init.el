@@ -51,6 +51,7 @@
 (define-key paul-keys-minor-mode-map (kbd "C-x v =") 'vc-ediff)
 (define-key paul-keys-minor-mode-map [C-M-tab] 'clang-format-region)
 (define-key paul-keys-minor-mode-map (kbd "C-c C-r") 'cua-rectangle-mark-mode)
+(define-key paul-keys-minor-mode-map (kbd "C-M-o") 'swiper)
 
 ;; Increase/decrease the font in all buffers (not just the current one like you
 ;; get with C-x C-=, etc.).
@@ -89,7 +90,7 @@
                                        rainbow-mode color-theme flymake-cursor
                                        cmake-mode browse-kill-ring
                                        modern-cpp-font-lock
-                                       ycmd company-ycmd flycheck-ycmd py-yapf)
+                                       ycmd company-ycmd flycheck-ycmd py-yapf swiper)
     "A list of melpa packages to ensure are installed at launch.")
 
   (dolist (p my-melpa-packages)
@@ -314,12 +315,6 @@ find-dominating-file?"
 
 (setq TeX-auto-save t)
 (setq TeX-parse-self t)
-
-;; Activate occur easily inside isearch
-(define-key isearch-mode-map (kbd "C-M-o")
-  (lambda () (interactive)
-    (let ((case-fold-search isearch-case-fold-search))
-      (occur (if isearch-regexp isearch-string (regexp-quote isearch-string))))))
 
 ;; --------------------------------------------------
 ;; Language-specific settings
