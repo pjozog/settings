@@ -241,6 +241,9 @@ find-dominating-file?"
 (setq mouse-yank-at-point 1)
 (autopair-global-mode 1)
 (setq autopair-autowrap t)
+;; searching for ' ' shows all whitespace
+(setq search-whitespace-regexp "[ \t\r\n]+")
+
 ;; (global-linum-mode 1)
 (global-auto-revert-mode t)
 (column-number-mode 1)
@@ -490,8 +493,6 @@ find-dominating-file?"
    (quote
     (powerline paradox yasnippet w3m unbound swiper smex rainbow-mode py-yapf modern-cpp-font-lock markdown-mode lua-mode ido-ubiquitous idle-highlight-mode flymake-cursor flycheck-ycmd etags-select company-ycmd color-theme cmake-mode browse-kill-ring autopair auto-complete auctex)))
  '(paradox-github-token t)
- '(search-whitespace-regexp "[ 	
-]+")
  '(uniquify-buffer-name-style (quote forward) nil (uniquify))
  '(vc-follow-symlinks t)
  '(vc-hg-log-switches (quote ("-v"))))
