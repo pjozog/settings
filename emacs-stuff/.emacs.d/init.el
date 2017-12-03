@@ -86,11 +86,12 @@
   (defvar my-melpa-packages '(lua-mode auctex w3m etags-select org
                                        smex ido-ubiquitous idle-highlight-mode
                                        yasnippet auto-complete
-                                       autopair unbound nyan-mode markdown-mode
+                                       autopair unbound markdown-mode
                                        rainbow-mode color-theme flymake-cursor
                                        cmake-mode browse-kill-ring
                                        modern-cpp-font-lock
-                                       ycmd company-ycmd flycheck-ycmd py-yapf swiper)
+                                       ycmd company-ycmd flycheck-ycmd py-yapf
+				       swiper powerline)
     "A list of melpa packages to ensure are installed at launch.")
 
   (dolist (p my-melpa-packages)
@@ -203,8 +204,6 @@ find-dominating-file?"
 (require 'diff-mode-)
 (require 'smarttabs)
 (require 'browse-kill-ring)
-(if (display-graphic-p)
-  (require 'nyan-mode))
 (show-paren-mode 1) ;;This needs to be enabled before changing color theme
 (require 'subword)
 (require 'paul-themes)
@@ -218,6 +217,8 @@ find-dominating-file?"
 (require 'clang-format)
 (require 'py-yapf)
 (require 'idle-highlight-mode)
+(require 'powerline)
+(powerline-default-theme)
 
 ;; Turn off the bad shit
 (menu-bar-mode -1)
@@ -281,18 +282,6 @@ find-dominating-file?"
 
 ;; Woman is pretty cool
 (setq woman-use-own-frame nil)
-
-;; Make the nyan mode line not so long
-(condition-case nil
-    (progn
-      (nyan-mode)
-      (setq nyan-bar-length 12))
-  (error nil))
-;; Make the nyan-mode bar display correctly in terminal mode
-(setq nyan-cat-face-number 0)
-
-;; I know it's tempting, Paul - but DO NOT enable this!
-;; (nyan-start-animation)
 
 ;; Show time in mode line
 (display-time)
@@ -490,13 +479,19 @@ find-dominating-file?"
  '(LaTeX-command "latex -shell-escape")
  '(TeX-view-program-list (quote (("Evince" "evince --page-index=%(outpage) %o"))))
  '(c-doc-comment-style (quote gtkdoc))
- '(ido-ignore-files (quote ("\\`CVS/" "\\`#" "\\`.#" "\\`\\.\\./" "\\`\\./" "_region_"
-                      "\\\\.prv/" "\\auto/" "__flymake")))
+ '(ido-ignore-files
+   (quote
+    ("\\`CVS/" "\\`#" "\\`.#" "\\`\\.\\./" "\\`\\./" "_region_" "\\\\.prv/" "\\auto/" "__flymake")))
  '(inhibit-default-init t)
  '(inhibit-startup-screen t)
  '(org-agenda-files (quote ("~/Dropbox/org/projects.org")))
  '(org-hide-leading-stars nil)
- '(search-whitespace-regexp "[ \t\r\n]+")
+ '(package-selected-packages
+   (quote
+    (powerline paradox yasnippet w3m unbound swiper smex rainbow-mode py-yapf modern-cpp-font-lock markdown-mode lua-mode ido-ubiquitous idle-highlight-mode flymake-cursor flycheck-ycmd etags-select company-ycmd color-theme cmake-mode browse-kill-ring autopair auto-complete auctex)))
+ '(paradox-github-token t)
+ '(search-whitespace-regexp "[ 	
+]+")
  '(uniquify-buffer-name-style (quote forward) nil (uniquify))
  '(vc-follow-symlinks t)
  '(vc-hg-log-switches (quote ("-v"))))
@@ -510,9 +505,7 @@ find-dominating-file?"
  '(diredp-dir-heading ((((background dark)) (:inherit font-lock-comment-face))))
  '(diredp-dir-priv ((((background dark)) (:foreground "#7474FFFFFFFF"))))
  '(font-latex-string-face ((((class color) (background dark)) (:foreground "#A2AB64"))))
- '(org-column ((t (:background "#000000" :strike-through nil :underline nil
-                               :slant normal :weight normal :height 98
-                               :family "DejaVu Sans Mono")))))
+ '(org-column ((t (:background "#000000" :strike-through nil :underline nil :slant normal :weight normal :height 98 :family "DejaVu Sans Mono")))))
 
 ;; OS X fonts
 (if (string-equal "darwin" system-type)
