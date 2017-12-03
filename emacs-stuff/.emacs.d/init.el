@@ -78,7 +78,7 @@
   ;; do melpa packages first
   (require 'package)
   (add-to-list 'package-archives
-               '("melpa" . "http://melpa.milkbox.net/packages/") t)
+               '("melpa" . "http://melpa.org/packages/") t)
   (package-initialize)
   ;; NOTE: uncomment on first run to download packages
   ;; (package-refresh-contents)
@@ -89,7 +89,6 @@
                                        autopair unbound markdown-mode
                                        rainbow-mode color-theme flymake-cursor
                                        cmake-mode browse-kill-ring
-                                       modern-cpp-font-lock
                                        ycmd company-ycmd flycheck-ycmd py-yapf
 				       swiper powerline)
     "A list of melpa packages to ensure are installed at launch.")
@@ -268,21 +267,6 @@ find-dominating-file?"
   (balance-windows))
 (ad-activate 'delete-window)
 
-;; ediff layout
-(defvar ediff-last-windows nil
-  "Last ediff window configuration.")
-
-(defun ediff-restore-windows ()
-  "Restore window configuration to `ediff-last-windows'."
-  (set-window-configuration ediff-last-windows)
-  (remove-hook 'ediff-after-quit-hook-internal
-               'ediff-restore-windows))
-
-(defadvice ediff-buffers (around ediff-restore-windows activate)
-  (setq ediff-last-windows (current-window-configuration))
-  (add-hook 'ediff-after-quit-hook-internal 'ediff-restore-windows)
-  ad-do-it)
-
 ;; Woman is pretty cool
 (setq woman-use-own-frame nil)
 
@@ -426,7 +410,6 @@ find-dominating-file?"
 ;; Don't add extra indentations when inside a namespace (c++)
 (add-hook 'c++-mode-hook (lambda ()
                            (c-set-offset 'innamespace 0)
-                           (modern-c++-font-lock-mode)
                            (font-lock-add-keywords
                             nil '(("\\<\\(that\\)->"
                                    1 font-lock-keyword-face)))))

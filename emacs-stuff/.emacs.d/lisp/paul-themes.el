@@ -1081,6 +1081,7 @@
      (popup-scroll-bar-foreground-face ((t (:background "black"))))
      (popup-summary-face ((t (:background "lightgray" :foreground "dimgray"))))
      (popup-tip-face ((t (:background "khaki1" :foreground "black"))))
+     (powerline-active2 ((t (:inherit mode-line :background "olive drab" :foreground "#111111" :weight bold))))
      (rainbow-delimiters-depth-1-face ((t (:foreground "#729fcf"))))
      (rainbow-delimiters-depth-10-face ((t (:foreground "#75507b"))))
      (rainbow-delimiters-depth-11-face ((t (:foreground "#c17d11"))))
