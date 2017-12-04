@@ -217,7 +217,7 @@ find-dominating-file?"
 (require 'py-yapf)
 (require 'idle-highlight-mode)
 (require 'powerline)
-(powerline-default-theme)
+(powerline-paul-theme)
 
 ;; Turn off the bad shit
 (menu-bar-mode -1)
