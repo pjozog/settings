@@ -256,6 +256,21 @@ find-dominating-file?"
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 (setq ediff-split-window-function 'split-window-horizontally)
 
+;; Restore ediff layout when quitting
+(defvar ediff-last-windows nil
+  "Last ediff window configuration.")
+
+(defun ediff-restore-windows ()
+  "Restore window configuration to `ediff-last-windows'."
+  (set-window-configuration ediff-last-windows)
+  (remove-hook 'ediff-after-quit-hook-internal
+               'ediff-restore-windows))
+
+(defadvice ediff-buffers (around ediff-restore-windows activate)
+  (setq ediff-last-windows (current-window-configuration))
+  (add-hook 'ediff-after-quit-hook-internal 'ediff-restore-windows)
+  ad-do-it)
+
 ;; rebalance windows when you split them (C-x 2, C-x 3)
 (defadvice split-window-below (after rebalance-windows activate)
   (balance-windows))
@@ -452,7 +467,6 @@ find-dominating-file?"
 (add-hook 'octave-mode-hook (lambda ()
                               (setq comment-start "% ")))
 
-(server-start)
 ;; diable warning when killing buffers opened with emacsclient
 ;; (must be set after calling (server-start))
 (remove-hook 'kill-buffer-query-functions 'server-kill-buffer-query-function)
