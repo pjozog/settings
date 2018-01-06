@@ -25,6 +25,10 @@ which nvidia-settings > /dev/null 2>&1
 which dropbox > /dev/null 2>&1
 [ $? -eq 0 ] && dropbox start -i &
 
+# Makes resizing work in vmware
+which vmtoolsd > /dev/null 2>&1
+[ $? -eq 0 ] && vmtoolsd -n vmusr &
+
 nm-applet --sm-disable &
 
 gnome-screensaver &
