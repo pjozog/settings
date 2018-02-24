@@ -83,10 +83,10 @@
   ;; NOTE: uncomment on first run to download packages
   ;; (package-refresh-contents)
 
-  (defvar my-melpa-packages '(lua-mode auctex w3m etags-select org
+  (defvar my-melpa-packages '(lua-mode auctex w3m org
                                        smex ido-ubiquitous idle-highlight-mode
                                        yasnippet auto-complete
-                                       autopair unbound markdown-mode
+                                       autopair markdown-mode
                                        rainbow-mode color-theme flymake-cursor
                                        cmake-mode browse-kill-ring
                                        ycmd company-ycmd flycheck-ycmd py-yapf
@@ -186,11 +186,14 @@ find-dominating-file?"
 (add-to-list 'load-path
              (concat (file-name-as-directory my-emacs-dir) "lisp"))
 
+;; No longer in Melpa. See https://github.com/melpa/melpa/pull/5008.
+(require 'etags-select)
+(require 'unbound)
+
 (require 'matlab)
 (require 'cmake-mode)
 (require 'lua-mode)
 (require 'autopair)
-(require 'unbound)
 (require 'yasnippet)
 (require 'color-theme)
 (require 'linum)
@@ -488,7 +491,7 @@ find-dominating-file?"
  '(org-hide-leading-stars nil)
  '(package-selected-packages
    (quote
-    (powerline paradox yasnippet w3m unbound swiper smex rainbow-mode py-yapf modern-cpp-font-lock markdown-mode lua-mode ido-ubiquitous idle-highlight-mode flymake-cursor flycheck-ycmd etags-select company-ycmd color-theme cmake-mode browse-kill-ring autopair auto-complete auctex)))
+    (powerline paradox yasnippet w3m swiper smex rainbow-mode py-yapf modern-cpp-font-lock markdown-mode lua-mode ido-ubiquitous idle-highlight-mode flymake-cursor flycheck-ycmd company-ycmd color-theme cmake-mode browse-kill-ring autopair auto-complete auctex)))
  '(paradox-github-token t)
  '(uniquify-buffer-name-style (quote forward) nil (uniquify))
  '(vc-follow-symlinks t)
