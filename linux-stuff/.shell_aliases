@@ -90,7 +90,7 @@ alias gd='XDG_CONFIG_HOME="NOT_USED" git difftool -d'
 
 alias rmq='rm -r $(svn status | grep ^? | awk "{print \$2}")'
 alias hrmq='rm -r $(hs | grep ^? | awk "{print \$2}")'
-alias get='sudo apt-get install'
+alias get='sudo apt install'
 alias search='apt-cache search'
 alias rs='rsync --stats --progress -avk'
 
