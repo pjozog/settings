@@ -1,0 +1,3 @@
+xterm*metaSendsEscape: true
+xterm*font:     *-fixed-*-*-*-12-*
+xterm*allowBoldFonts: false
