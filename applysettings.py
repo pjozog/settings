@@ -102,6 +102,9 @@ linkPairs = [
     (os.path.join(scriptDir, 'linux-stuff', '.Xmodmap'),
      os.path.join(homeDir, '.Xmodmap')),
 
+    (os.path.join(scriptDir, 'linux-stuff', '.Xresources'),
+     os.path.join(homeDir, '.Xresources')),
+
     (os.path.join(scriptDir, 'linux-stuff', '.aspell.en.pws'),
      os.path.join(homeDir, '.aspell.en.pws')),
 
