@@ -29,3 +29,7 @@ add mod1 = Alt_R
 
 ! Right alt is mod4
 add mod4 = Super_R
+
+! Volume controls
+keycode  78 = XF86AudioLowerVolume
+keycode 127 = XF86AudioRaiseVolume
