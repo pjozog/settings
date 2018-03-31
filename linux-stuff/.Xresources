@@ -1,3 +1,2 @@
 xterm*metaSendsEscape: true
-xterm*faceName: Input
-xterm*faceSize: 7
+UXTerm*faceName: DejaVu Sans Mono for Powerline:size=8:style=Regular:antialias=true
