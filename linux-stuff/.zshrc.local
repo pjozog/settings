@@ -93,7 +93,7 @@ bindkey '^w' kill-region
 bindkey '^i' expand-or-complete-prefix
 
 # Color certain file types
-eval "`dircolors -b`"
+[ -f $HOME/.dircolors ] && eval $(dircolors -b $HOME/.dircolors)
 
 alias history='history 1'
 
