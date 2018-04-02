@@ -45,6 +45,11 @@ floating_modifier $mod
 # start a terminal
 bindsym $mod+Return exec myterm
 
+# In the event that 'myterm' runs something like xterm (without easily
+# configurable font size), use this to launch konsole (which is easily
+# configurable via C-= and C--).
+bindsym $mod+Shift+Return exec "konsole --hide-tabbar --hide-menubar"
+
 # kill focused window
 bindsym $mod+Shift+c kill
 bindsym $mod+F1 kill
