@@ -20,7 +20,7 @@ keycode 9 = Super_L
 keycode 133 = grave asciitilde
 
 ! Fuckery to get i3 + xterm to work
-keycode 108 = Super_R
+keycode 108 = Super_R Super_R
 keycode 109 = Alt_R
 
 ! Left Alt and (whatever 109 is) is mod1
