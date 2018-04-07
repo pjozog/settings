@@ -1,3 +1,4 @@
 xterm*metaSendsEscape: true
 xterm*font:     *-terminesspowerline-*-*-*-12-*
 xterm*allowBoldFonts: false
+xterm*saveLines: 1000000
