@@ -84,7 +84,7 @@
   ;; (package-refresh-contents)
 
   (defvar my-melpa-packages '(lua-mode auctex w3m org
-                                       smex ido-ubiquitous idle-highlight-mode
+                                       smex ido-completing-read+ idle-highlight-mode
                                        yasnippet auto-complete
                                        autopair markdown-mode
                                        rainbow-mode color-theme flymake-cursor
