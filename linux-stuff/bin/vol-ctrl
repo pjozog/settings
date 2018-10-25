@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#Customize this stuff
+# Customize this stuff.
 IF="Master"
 SECS="1"
 
@@ -11,8 +11,14 @@ XPOS="550"
 YPOS="400"
 WIDTH="230"
 
-#Probably do not customize
+# In milliseconds.
+TIMEOUT=250
+
+# Probably do not customize.
 PIPE="/tmp/dvolpipe"
+
+# Randomly-generated.
+NOTIFY_ID=81724
 
 err() {
     echo "$1"
@@ -51,7 +57,7 @@ case "$1" in
 	;;
 esac
 
-#Actual volume changing (readability low)
+# Actual volume changing (readability low)
 AMIXOUT="$(amixer set "$IF" "$AMIXARG" | tail -n 1)"
 MUTE="$(cut -d '[' -f 4 <<<"$AMIXOUT")"
 if [ "$MUTE" = "off]" ]; then
@@ -60,13 +66,5 @@ else
     VOL="$(cut -d '[' -f 2 <<<"$AMIXOUT" | sed 's/%.*//g')"
 fi
 
-#Using named pipe to determine whether previous call still exists
-#Also prevents multiple volume bar instances
-if [ ! -e "$PIPE" ]; then
-    mkfifo "$PIPE"
-    (dzen2 -l 1 -x "$XPOS" -y "$YPOS" -w "$WIDTH" -fn "$FONT" -bg "$BG" -fg "$FG" -e 'onstart=uncollapse' < "$PIPE"
-	rm -f "$PIPE") &
-fi
-
-#Feed the pipe!
-(echo "Volume" ; echo "$VOL" | dzen2-dbar ; sleep "$SECS") > "$PIPE"
+notify-send.sh -p -u normal -t $TIMEOUT Volume "${VOL}%" -r $NOTIFY_ID -i \
+	       /usr/share/notify-osd/icons/Humanity/scalable/status/notification-audio-volume-high.svg
