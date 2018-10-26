@@ -206,6 +206,8 @@ bar {
 
 # paul stuff
 exec "feh --bg-scale wallpaper"
+exec "killall notify-osd"
+exec --no-startup-id "bin/dunst"
 
 bindsym $mod+Shift+e exec "emacsclient -nc"
 bindsym $mod+Shift+f exec "google-chrome"
