@@ -12,7 +12,7 @@ YPOS="400"
 WIDTH="230"
 
 # In milliseconds.
-TIMEOUT=250
+TIMEOUT=1000
 
 # Probably do not customize.
 PIPE="/tmp/dvolpipe"
