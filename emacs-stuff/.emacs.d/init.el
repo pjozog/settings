@@ -229,6 +229,7 @@ find-dominating-file?"
     (scroll-bar-mode -1)
   (error nil))
 (global-auto-complete-mode -1)
+(setq flyspell-issue-message-flag nil)
 
 ;; Turn on the good shit
 (transient-mark-mode 1)
