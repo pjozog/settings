@@ -149,21 +149,22 @@ header, based on presence of .c file"
   "Recursively looks in parent directories for a TAGS file.  If it exists,
 and there exists an executable git hook called
 '.git/hooks/ctags', then that hook will be executed (thus
-updating the TAGS file).  Perhaps could be done with
-find-dominating-file?"
+updating the TAGS file). "
   (interactive)
-  (let ((ctags-file (concat curr-dir "TAGS"))
-        (ctags-script (concat curr-dir ".git/hooks/ctags"))
-        (parent (parent-directory (expand-file-name curr-dir))))
-    (if (and (file-exists-p ctags-file)
-             (file-executable-p ctags-script))
-        (progn
-          (message (concat "Found " ctags-file))
-          (message (concat "Running ctags script " ctags-script))
-          (cd curr-dir)
-          (call-process-shell-command "./.git/hooks/ctags &" nil 0)
-          (cd (expand-file-name old-dir)))
-      (when parent (update-git-repo-tags parent old-dir)))))
+  (let* ((old-dir default-directory)
+	 (git-repo-TAGS (locate-dominating-file curr-dir "TAGS"))
+         (git-repo-ctags (locate-dominating-file curr-dir ".git/hooks/ctags"))
+	 (ctags-file (concat git-repo-TAGS "TAGS"))
+	 (ctags-script (concat git-repo-ctags ".git/hooks/ctags")))
+    (unless (or (not git-repo-TAGS) (not git-repo-ctags))
+      (if (and (file-exists-p ctags-file)
+	       (file-executable-p ctags-script))
+          (progn
+            (message (concat "Found " ctags-file))
+            (message (concat "Running ctags script " ctags-script))
+            (cd git-repo-TAGS)
+            (call-process-shell-command "./.git/hooks/ctags &" nil 0)
+            (cd old-dir))))))
 
 ;; opposite of fill-paragraph
 (defun unfill-paragraph (&optional region)
