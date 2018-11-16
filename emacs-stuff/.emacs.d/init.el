@@ -145,25 +145,20 @@ header, based on presence of .c file"
   (unless (equal "/" dir)
     (file-name-directory (directory-file-name dir))))
 
-(defun update-git-repo-tags (curr-dir old-dir)
-  "Recursively looks in parent directories for a TAGS file.  If it exists,
-and there exists an executable git hook called
-'.git/hooks/ctags', then that hook will be executed (thus
-updating the TAGS file). "
+(defun update-git-repo-tags ()
+  "Recursively looks in parent directories for an executable file
+called '.git/hooks/ctags'. If it's found, then that hook will be
+executed (thus updating the TAGS file). "
   (interactive)
   (let* ((old-dir default-directory)
-	 (git-repo-TAGS (locate-dominating-file curr-dir "TAGS"))
-         (git-repo-ctags (locate-dominating-file curr-dir ".git/hooks/ctags"))
-	 (ctags-file (concat git-repo-TAGS "TAGS"))
-	 (ctags-script (concat git-repo-ctags ".git/hooks/ctags")))
-    (unless (or (not git-repo-TAGS) (not git-repo-ctags))
-      (if (and (file-exists-p ctags-file)
-	       (file-executable-p ctags-script))
+         (maybe-git-repo (locate-dominating-file old-dir ".git/hooks/ctags"))
+	 (ctags-script (concat maybe-git-repo ".git/hooks/ctags")))
+    (unless (not maybe-git-repo)
+      (if (file-executable-p ctags-script)
           (progn
-            (message (concat "Found " ctags-file))
             (message (concat "Running ctags script " ctags-script))
-            (cd git-repo-TAGS)
-            (call-process-shell-command "./.git/hooks/ctags &" nil 0)
+            (cd maybe-git-repo)
+            (call-process-shell-command "./.git/hooks/ctags &")
             (cd old-dir))))))
 
 ;; opposite of fill-paragraph
@@ -352,12 +347,8 @@ updating the TAGS file). "
 ;; --------------------------------------------------
 ;; My hooks
 ;; --------------------------------------------------
-(add-hook 'before-save-hook (lambda ()
-                              (delete-trailing-whitespace)))
-(add-hook 'after-save-hook (lambda ()
-                             (update-git-repo-tags
-                              default-directory
-                              default-directory)))
+(add-hook 'before-save-hook (lambda () (delete-trailing-whitespace)))
+(add-hook 'after-save-hook (lambda () (update-git-repo-tags)))
 
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
