@@ -1,16 +1,9 @@
 #!/bin/bash
 
-# check version of free
-free --version | grep -q 3\.3\.10
-if [ $? -eq 0 ]; then
-    MEMORY_USED=$(free -m | grep '^Mem:' | awk '{print $3}')
-    MEMORY_AVBL=$(free -m | grep '^Mem:' | awk '{print $7}')
-    MEMORY_TOTAL=$(free -m | grep '^Mem:' | awk '{print $2}')
-else
-    MEMORY_USED=$(free -m | grep buffers/cache | awk '{print $3}')
-    MEMORY_AVBL=$(free -m | grep buffers/cache | awk '{print $4}')
-    MEMORY_TOTAL=$(expr ${MEMORY_USED} + ${MEMORY_AVBL})
-fi
+MEMORY_USED=$(free -m | grep '^Mem:' | awk '{print $3}')
+MEMORY_AVBL=$(free -m | grep '^Mem:' | awk '{print $7}')
+MEMORY_TOTAL=$(free -m | grep '^Mem:' | awk '{print $2}')
+
 MEMORY_AVBL_PCT=$(bc -l <<< "(${MEMORY_AVBL})/(${MEMORY_TOTAL})")
 MEMORY_AVBL=$(bc -l <<< "${MEMORY_AVBL}/1024" )
 
