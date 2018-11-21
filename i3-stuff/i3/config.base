@@ -43,19 +43,19 @@ set $base0F "#fcc09e"
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec myterm
+bindsym $mod+Return exec --no-startup-id myterm
 
 # In the event that 'myterm' runs something like xterm (without easily
 # configurable font size), use this to launch konsole (which is easily
 # configurable via C-= and C--).
-bindsym $mod+Shift+Return exec "konsole --hide-tabbar --hide-menubar"
+bindsym $mod+Shift+Return exec --no-startup-id "konsole --hide-tabbar --hide-menubar"
 
 # kill focused window
 bindsym $mod+Shift+c kill
 bindsym $mod+F1 kill
 
 # start dmenu (a program launcher)
-bindsym $mod+d exec dmenu_run
+bindsym $mod+d exec --no-startup-id dmenu_run
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
@@ -154,7 +154,7 @@ bindsym $mod+Shift+0 move container to workspace number 0
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+q exec "i3-msg exit"
+bindsym $mod+Shift+q exec --no-startup-id "i3-msg exit"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -205,27 +205,27 @@ bar {
 }
 
 # paul stuff
-exec "feh --bg-scale wallpaper"
-exec "killall notify-osd"
+exec --no-startup-id "feh --bg-scale wallpaper"
+exec --no-startup-id "killall notify-osd"
 exec --no-startup-id "bin/dunst"
 
-bindsym $mod+Shift+e exec "emacsclient -nc"
-bindsym $mod+Shift+f exec "google-chrome"
-bindsym $mod+Shift+g exec "google-chrome"
-bindsym $mod+Shift+m exec "file-manager"
-bindsym $mod+Shift+z exec "zeal"
-bindsym F12 exec "pavucontrol"
-bindsym F11 exec "gnome-screenshot -i"
+bindsym $mod+Shift+e exec --no-startup-id "emacsclient -nc"
+bindsym $mod+Shift+f exec --no-startup-id "google-chrome"
+bindsym $mod+Shift+g exec --no-startup-id "google-chrome"
+bindsym $mod+Shift+m exec --no-startup-id "file-manager"
+bindsym $mod+Shift+z exec --no-startup-id "zeal"
+bindsym F12 exec --no-startup-id "pavucontrol"
+bindsym F11 exec --no-startup-id "gnome-screenshot -i"
 
-bindsym XF86AudioRaiseVolume exec "vol-ctrl -i 2"
-bindsym XF86AudioLowerVolume exec "vol-ctrl -d 2"
+bindsym XF86AudioRaiseVolume exec --no-startup-id "vol-ctrl -i 2"
+bindsym XF86AudioLowerVolume exec --no-startup-id "vol-ctrl -d 2"
 
 bindsym $mod+c reload
 
 bindsym --whole-window button9 kill
 bindsym --whole-window Mod2+button9 kill
 
-bindsym $mod+n exec i3-input -F 'rename workspace to "%s"' -P 'New name for this workspace:'
+bindsym $mod+n exec --no-startup-id i3-input -F 'rename workspace to "%s"' -P 'New name for this workspace:'
 
 for_window [class="^Pavucontrol$"] floating enable
 for_window [class="^Gcalctool$"] floating enable
