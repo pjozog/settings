@@ -5,6 +5,8 @@ import sys
 import errno
 import shutil
 
+import lsb_release
+
 scriptDir           = sys.path[0]
 binDir              = os.path.join(scriptDir, 'linux-stuff', 'bin')
 homeDir             = os.getenv('HOME')
@@ -138,11 +140,11 @@ linkPairs = [
     (os.path.join(scriptDir, 'terminator-stuff', 'config'),
      os.path.join(homeDir, '.config', 'terminator', 'config')),
 
-    (os.path.join(scriptDir, 'konsole-stuff', 'config', 'konsolerc'),
-     os.path.join(homeDir, '.kde', 'share', 'config', 'konsolerc')),
+    (os.path.join(scriptDir, 'konsole-stuff', 'konsolerc'),
+     os.path.join(homeDir, '.config', 'konsolerc')),
 
-    (os.path.join(scriptDir, 'konsole-stuff', 'apps', 'konsole'),
-     os.path.join(homeDir, '.kde', 'share', 'apps', 'konsole')),
+    (os.path.join(scriptDir, 'konsole-stuff', 'konsole'),
+     os.path.join(homeDir, '.local', 'share', 'konsole')),
 
     (os.path.join(scriptDir, 'linux-stuff', '.xsession'),
      os.path.join(homeDir, '.xsession')),
@@ -205,6 +207,22 @@ def main():
         printInfo("Creating link: " + linkName)
         removeFile(linkName)
         createLink(sourceName, linkName)
+
+    # TODO: remove this once not using 16.04 anymore.
+    deprecatedXenialPairs = [
+        (os.path.join(scriptDir, 'konsole-stuff', 'config-16.04', 'konsolerc'),
+         os.path.join(homeDir, '.kde', 'share', 'config', 'konsolerc')),
+
+        (os.path.join(scriptDir, 'konsole-stuff', 'apps-16.04', 'konsole'),
+         os.path.join(homeDir, '.kde', 'share', 'apps', 'konsole')),
+    ]
+    if lsb_release.get_distro_information()['CODENAME'] == 'xenial':
+        for tuple in deprecatedXenialPairs:
+            sourceName = tuple[0]
+            linkName = tuple[1]
+            printInfo("Creating deprecated link: " + linkName)
+            removeFile(linkName)
+            createLink(sourceName, linkName)
 
     return 0
 
