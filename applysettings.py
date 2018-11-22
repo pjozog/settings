@@ -201,12 +201,13 @@ def main():
     for d in requiredDirs:
         makeDir(d)
 
-    for tuple in linkPairs:
-        sourceName = tuple[0]
-        linkName = tuple[1]
+    def handleLinkPair(sourceName, linkName):
         printInfo("Creating link: " + linkName)
         removeFile(linkName)
         createLink(sourceName, linkName)
+
+    for pair in linkPairs:
+        handleLinkPair(pair[0], pair[1])
 
     # TODO: remove this once not using 16.04 anymore.
     deprecatedXenialPairs = [
@@ -217,12 +218,8 @@ def main():
          os.path.join(homeDir, '.kde', 'share', 'apps', 'konsole')),
     ]
     if lsb_release.get_distro_information()['CODENAME'] == 'xenial':
-        for tuple in deprecatedXenialPairs:
-            sourceName = tuple[0]
-            linkName = tuple[1]
-            printInfo("Creating deprecated link: " + linkName)
-            removeFile(linkName)
-            createLink(sourceName, linkName)
+        for pair in deprecatedXenialPairs:
+            handleLinkPair(pair[0], pair[1])
 
     return 0
 
