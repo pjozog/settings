@@ -547,7 +547,6 @@ executed (thus updating the TAGS file). "
 (require 'ycmd)
 (require 'company-ycmd)
 (require 'flycheck-ycmd)
-(add-hook 'after-init-hook #'global-ycmd-mode)
 (setq ycmd-server-command (list "python" (file-truename "~/documents/git/ycmd/ycmd")))
 (ycmd-setup)
 (company-ycmd-setup)
@@ -556,7 +555,8 @@ executed (thus updating the TAGS file). "
   (ycmd-mode) (company-mode) (flycheck-mode))
 (add-hook 'c++-mode-hook 'enable-ycmd)
 (add-hook 'c-mode-hook 'enable-ycmd)
-(setq company-idle-delay 0.2)
+(add-hook 'python-mode-hook 'enable-ycmd)
+(setq company-idle-delay 0.05)
 (setq company-ycmd-request-sync-timeout 0)
 
 ;; Bind Shift + TAB to force semantic completion

@@ -93,10 +93,10 @@ Otherwise, an error occurs in these cases."
 
     (when (= (safe-length marked-files) 2)
       (ediff-files (nth 0 marked-files) (nth 1 marked-files)))
-    
+
     (when (= (safe-length marked-files) 3)
       (ediff3 (buffer-file-name (nth 0 marked-files))
-	      (buffer-file-name (nth 1 marked-files)) 
+	      (buffer-file-name (nth 1 marked-files))
 	      (buffer-file-name (nth 2 marked-files))))))
 
 (defun dired-vc-status-dir ()
@@ -112,7 +112,7 @@ Otherwise, an error occurs in these cases."
     (with-temp-buffer
       (apply 'call-process "/usr/bin/du" nil t nil "-sch" files)
       (message "Size of all marked files: %s"
-               (progn 
+               (progn
                  (re-search-backward "\\(^[0-9.,]+[A-Za-z]+\\).*total$")
 		 (match-string 1))))))
 
@@ -138,7 +138,7 @@ Otherwise, an error occurs in these cases."
   (interactive)
   (let* ((subdir-name (dired-current-directory))
 	 (parent-dir  (file-name-directory (directory-file-name subdir-name)))
-	 (search-term (concat " " (file-basename subdir-name))))
+	 (search-term (concat " " (file-name-nondirectory (directory-file-name subdir-name)))))
     (dired-kill-subdir)
     (dired-goto-subdir parent-dir)
     (search-forward search-term)))
