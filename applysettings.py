@@ -220,6 +220,8 @@ def main():
     if lsb_release.get_distro_information()['CODENAME'] == 'xenial':
         for pair in deprecatedXenialPairs:
             handleLinkPair(pair[0], pair[1])
+        removeFile(os.path.join(homeDir, '.local', 'share', 'konsole'))
+        removeFile(os.path.join(homeDir, '.config', 'konsolerc'))
 
     return 0
 
