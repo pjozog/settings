@@ -1,5 +1,5 @@
 ;; Set to the location of your Org files on your local system
-(setq org-directory "~/Dropbox/org")
+(setq org-directory "~/ownCloud/personal/org")
 (setq org-agenda-files (list org-directory))
 (setq org-clock-persist 'history)
 (org-clock-persistence-insinuate)
