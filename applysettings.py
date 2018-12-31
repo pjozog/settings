@@ -10,7 +10,7 @@ import lsb_release
 scriptDir           = sys.path[0]
 binDir              = os.path.join(scriptDir, 'linux-stuff', 'bin')
 homeDir             = os.getenv('HOME')
-dropboxDir          = os.path.join(os.getenv('HOME'), 'Dropbox')
+owncloudDir         = os.path.join(os.getenv('HOME'), 'ownCloud')
 requiredDirs        = [os.path.join(homeDir, '.config'),
                        os.path.join(homeDir, '.config', 'gtk-3.0'),
                        os.path.join(homeDir, '.config', 'terminator'),
@@ -125,13 +125,13 @@ linkPairs = [
     (os.path.join(scriptDir, 'matlab-stuff', 'startup.m'),
      os.path.join(homeDir, 'Documents', 'MATLAB', 'startup.m')),
 
-    (os.path.join(dropboxDir, 'ssh', 'config-home'),
+    (os.path.join(owncloudDir, 'ssh', 'config-home'),
      os.path.join(homeDir, '.ssh', 'config-home')),
 
-    (os.path.join(dropboxDir, 'zsh', 'prompt'),
+    (os.path.join(owncloudDir, 'zsh', 'prompt'),
      os.path.join(homeDir, '.zshrc.prompt')),
 
-    (os.path.join(dropboxDir, 'code', 'private', 'gcalendar'),
+    (os.path.join(owncloudDir, 'code', 'private', 'gcalendar'),
      os.path.join(homeDir, 'bin', 'gcalendar')),
 
     (os.path.join(scriptDir, 'linux-stuff', '.xbindkeysrc.scm'),

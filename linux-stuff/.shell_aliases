@@ -126,12 +126,12 @@ alias lpgh='lpg -f "HAUV_BS.*|PROSILICA_.*|HAUV_DIDSON.*|HEARTBEAT_.*" -v'
 alias mb='magic_bus.py'
 
 # ipython
-alias ipn='cd ~/Dropbox/code/ipython-notebooks/ && ipython notebook'
+alias ipn='cd ~/ownCloud/code/ipython-notebooks/ && ipython notebook'
 
 alias mk='make -j$(nproc)'
 
 # source private alias
-[ -f ${HOME}/Dropbox/code/private/private-shell-aliases ] && source ${HOME}/Dropbox/code/private/private-shell-aliases
+[ -f ${HOME}/ownCloud/code/private/private-shell-aliases ] && source ${HOME}/ownCloud/code/private/private-shell-aliases
 
 # source private env
-[ -f ${HOME}/Dropbox/code/private/private-shell-env ] && source ${HOME}/Dropbox/code/private/private-shell-env
+[ -f ${HOME}/ownCloud/code/private/private-shell-env ] && source ${HOME}/ownCloud/code/private/private-shell-env

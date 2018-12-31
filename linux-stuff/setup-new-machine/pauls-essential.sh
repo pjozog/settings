@@ -118,7 +118,7 @@ addpkg \
     meld \
     mercurial \
     mesa-common-dev \
-    nautilus-dropbox \
+    nautilus-owncloud \
     nfs-common \
     openbox \
     openssh-server \

@@ -11,7 +11,7 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=lcd'
 
 # source private env for non-volatile programs e.g. emacs
-[ -f ${HOME}/Dropbox/code/private/private-shell-env ] && . ${HOME}/Dropbox/code/private/private-shell-env
+[ -f ${HOME}/ownCloud/code/private/private-shell-env ] && . ${HOME}/ownCloud/code/private/private-shell-env
 
 # .Xmodmap should be sourced by lightdm on startup.  No need to put it here
 
@@ -22,8 +22,8 @@ killall notify-osd
 which nvidia-settings > /dev/null 2>&1
 [ $? -eq 0 ] && nvidia-settings --load-config-only &
 
-which dropbox > /dev/null 2>&1
-[ $? -eq 0 ] && dropbox start -i &
+which owncloud > /dev/null 2>&1
+[ $? -eq 0 ] && owncloud &
 
 # Makes resizing work in vmware
 which vmtoolsd > /dev/null 2>&1

@@ -56,7 +56,7 @@ if [ $# -lt 1 -o $# -gt 2 ]; then
 fi
 
 # contains a list of wavs to play for success/failure
-DROPBOX_WAVS=${HOME}/Dropbox/code/private/wavs
+OWNCLOUD_WAVS=${HOME}/ownCloud/code/private/wavs
 
 # project directory (where you type 'make')
 PROJ="${1}"
@@ -72,8 +72,8 @@ eval ${cmd} > /dev/null
 if [ $? -eq 0 ]; then
     # if compilation succeeded...
     wav="${HOME}/bin/compile-success.wav"
-    if [ -d ${DROPBOX_WAVS} ]; then
-        wav=$(random-file ${DROPBOX_WAVS}/success "*.wav")
+    if [ -d ${OWNCLOUD_WAVS} ]; then
+        wav=$(random-file ${OWNCLOUD_WAVS}/success "*.wav")
     fi
     my-aplay "${wav}"
     my-notify "${PROJ}" "compiled successfully" 1
@@ -81,8 +81,8 @@ if [ $? -eq 0 ]; then
 else
     # if compilation failed...
     wav="${HOME}/bin/compile-failed.wav"
-    if [ -d ${DROPBOX_WAVS} ]; then
-        wav=$(random-file ${DROPBOX_WAVS}/failed "*.wav")
+    if [ -d ${OWNCLOUD_WAVS} ]; then
+        wav=$(random-file ${OWNCLOUD_WAVS}/failed "*.wav")
     fi
     my-aplay "${wav}"
     my-notify "${PROJ}" "compiled unsuccessfully" 2

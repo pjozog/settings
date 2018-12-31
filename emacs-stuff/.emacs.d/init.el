@@ -172,8 +172,8 @@ executed (thus updating the TAGS file). "
 ;; Aliases
 ;; --------------------------------------------------
 (defalias 'yes-or-no-p 'y-or-n-p) ;; That 'yes' or 'no' shit is anoying:
-(if (file-exists-p "~/Dropbox/code/private/compile-aliases.el")
-    (load "~/Dropbox/code/private/compile-aliases.el"))
+(if (file-exists-p "~/ownCloud/code/private/compile-aliases.el")
+    (load "~/ownCloud/code/private/compile-aliases.el"))
 
 ;; --------------------------------------------------
 ;; Packages / Minor modes / Keybindings
@@ -480,7 +480,7 @@ executed (thus updating the TAGS file). "
     ("\\`CVS/" "\\`#" "\\`.#" "\\`\\.\\./" "\\`\\./" "_region_" "\\\\.prv/" "\\auto/" "__flymake")))
  '(inhibit-default-init t)
  '(inhibit-startup-screen t)
- '(org-agenda-files (quote ("~/Dropbox/org/projects.org")))
+ '(org-agenda-files (quote ("~/ownCloud/personal/org/projects.org")))
  '(org-hide-leading-stars nil)
  '(package-selected-packages
    (quote
@@ -522,17 +522,17 @@ executed (thus updating the TAGS file). "
 ;; --------------------------------------------------
 ;; My private emacs stuff (for work etc.)
 ;; --------------------------------------------------
-(if (file-exists-p "~/Dropbox/code/private/my-private-emacs.el")
-    (load "~/Dropbox/code/private/my-private-emacs.el"))
+(if (file-exists-p "~/ownCloud/code/private/my-private-emacs.el")
+    (load "~/ownCloud/code/private/my-private-emacs.el"))
 
-(if (file-exists-p "~/Dropbox/code/private/tag-table-list.el")
-    (load "~/Dropbox/code/private/tag-table-list.el"))
+(if (file-exists-p "~/ownCloud/code/private/tag-table-list.el")
+    (load "~/ownCloud/code/private/tag-table-list.el"))
 
 
 (open-filelist '("~/.emacs.d/init.el" "~/.shell_aliases" "~/.profile"
                  "~/.config/openbox/autostart.sh"
                  "~/.i3/config"
-                 "~/Dropbox/personal/org/projects.org"))
+                 "~/ownCloud/personal/org/projects.org"))
 
 (get-buffer-create "*compilation*")
 
