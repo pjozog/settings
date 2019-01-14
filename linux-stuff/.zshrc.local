@@ -6,6 +6,10 @@ if [ -f ${HOME}/.shell_aliases ]; then
     . ${HOME}/.shell_aliases
 fi
 
+# Being an "irascible conservative", I do not want the background for
+# pasted text highlighted.
+zle_highlight=(none)
+
 # append history list to the history file; this is the default but we make sure
 # because it's required for share_history.
 setopt append_history
