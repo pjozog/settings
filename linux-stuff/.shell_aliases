@@ -71,7 +71,7 @@ function sl() {
 }
 alias ss='svn status'
 alias hd='GTK2_RC_FILES="/usr/share/themes/Radiance/gtk-2.0/gtkrc" hg extdiff -p meld'
-alias meld='XDG_CONFIG_HOME="NOT_USED" meld'
+alias meld='XDG_CONFIG_HOME="/tmp/XDG_NOT_USED" meld'
 function hl() {
     hg log -v "$1" | less
 }
@@ -86,7 +86,7 @@ function hs() {
 
 #Git
 alias gs='git status -s'
-alias gd='XDG_CONFIG_HOME="NOT_USED" git difftool -d'
+alias gd='XDG_CONFIG_HOME="/tmp/XDG_NOT_USED" git difftool -d'
 
 alias rmq='rm -r $(svn status | grep ^? | awk "{print \$2}")'
 alias hrmq='rm -r $(hs | grep ^? | awk "{print \$2}")'
