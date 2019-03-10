@@ -14,7 +14,7 @@ import os
 def CppOptions():
   return {
     'flags': [
-        '-std=c++11',
+        '-std=c++17',
         '-x', 'c++',
         '-Wall',
 
@@ -22,10 +22,10 @@ def CppOptions():
         '-isystem', '/usr/include/eigen3',
 
         # "Real" system headers go here
-        '-isystem', '/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0',
-        '-isystem', '/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/x86_64-linux-gnu/c++/5.4.0',
-        '-isystem', '/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/backward',
-        '-isystem', '/usr/include/clang/6.0.1/include',
+        '-isystem', '/usr/bin/../lib/gcc/x86_64-linux-gnu/7.3.0/../../../../include/c++/7.3.0',
+        '-isystem', '/usr/bin/../lib/gcc/x86_64-linux-gnu/7.3.0/../../../../include/x86_64-linux-gnu/c++/7.3.0',
+        '-isystem', '/usr/bin/../lib/gcc/x86_64-linux-gnu/7.3.0/../../../../include/c++/7.3.0/backward',
+        '-isystem', '/usr/include/clang/7/include',
         '-isystem', '/usr/local/include',
         '-isystem', '/usr/include/x86_64-linux-gnu',
         '-isystem', '/usr/include',
