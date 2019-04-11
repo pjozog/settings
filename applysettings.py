@@ -161,9 +161,6 @@ linkPairs = [
     (os.path.join(scriptDir, 'oh-my-zsh'),
      os.path.join(homeDir, '.oh-my-zsh')),
 
-    (os.path.join(scriptDir, 'apport-stuff'),
-     os.path.join(homeDir, '.config', 'apport'))
-
 ]
 
 #add all the stuff in the 'bin' directory to linkPairs
