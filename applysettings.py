@@ -13,6 +13,7 @@ homeDir             = os.getenv('HOME')
 owncloudDir         = os.path.join(os.getenv('HOME'), 'ownCloud')
 requiredDirs        = [os.path.join(homeDir, '.config'),
                        os.path.join(homeDir, '.config', 'gtk-3.0'),
+                       os.path.join(homeDir, '.config', 'fontconfig'),
                        os.path.join(homeDir, '.config', 'terminator'),
                        os.path.join(homeDir, '.kde'),
                        os.path.join(homeDir, '.kde', 'share'),
@@ -77,9 +78,6 @@ linkPairs = [
     (os.path.join(scriptDir, 'linux-stuff', 'settings.ini'),
      os.path.join(homeDir, '.config', 'gtk-3.0', 'settings.ini')),
 
-    (os.path.join(scriptDir, 'linux-stuff', '.fonts.conf'),
-     os.path.join(homeDir, '.fonts.conf')),
-
     (os.path.join(scriptDir, 'linux-stuff', '.dircolors'),
      os.path.join(homeDir, '.dircolors')),
 
@@ -113,7 +111,10 @@ linkPairs = [
     (os.path.join(scriptDir, 'linux-stuff', '.aspell.en.pws'),
      os.path.join(homeDir, '.aspell.en.pws')),
 
-    (os.path.join(scriptDir, 'linux-stuff', '.fonts'),
+    (os.path.join(scriptDir, 'linux-stuff', 'fontconfig', 'fonts.conf'),
+     os.path.join(homeDir, '.config', 'fontconfig', 'fonts.conf')),
+
+    (os.path.join(scriptDir, 'linux-stuff', 'fontconfig', 'fonts'),
      os.path.join(homeDir, '.fonts')),
 
     (os.path.join(scriptDir, 'linux-stuff', '.xinitrc'),
