@@ -20,6 +20,7 @@ requiredDirs        = [os.path.join(homeDir, '.config'),
                        os.path.join(homeDir, '.kde', 'share', 'apps'),
                        os.path.join(homeDir, '.kde', 'share', 'config'),
                        os.path.join(homeDir, 'bin'),
+                       os.path.join(homeDir, '.icons'),
                        os.path.join(homeDir, '.themes'),
                        os.path.join(homeDir, 'Documents'),
                        os.path.join(homeDir, 'Documents', 'MATLAB'),
@@ -101,6 +102,9 @@ linkPairs = [
 
     (os.path.join(scriptDir, 'openbox-stuff', 'Radiance_ob_test'),
      os.path.join(homeDir, '.themes', 'Radiance_ob_test')),
+
+    (os.path.join(scriptDir, 'icons', 'communitheme'),
+     os.path.join(homeDir, '.icons', 'communitheme')),
 
     (os.path.join(scriptDir, 'linux-stuff', '.Xmodmap'),
      os.path.join(homeDir, '.Xmodmap')),
