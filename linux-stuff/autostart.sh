@@ -1,6 +1,6 @@
 #!/bin/sh
 
-export GTK2_RC_FILES=/usr/share/themes/Radiance/gtk-2.0/gtkrc:${HOME}/.gtkrc-mine
+export GTK2_RC_FILES=/usr/share/themes/Adwaita/gtk-2.0/gtkrc:${HOME}/.gtkrc-mine
 export OOO_FORCE_DESKTOP='gnome'
 export QT_STYLE_OVERRIDE='gtk'
 # On Ubuntu 18.04, apt install qt5-style-plugins to make this work.
