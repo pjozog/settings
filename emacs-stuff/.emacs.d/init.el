@@ -318,6 +318,7 @@ executed (thus updating the TAGS file). "
 (add-to-list 'auto-mode-alist '("\\.isam$" . python-mode))
 (add-to-list 'auto-mode-alist '("\\.moos$" . conf-mode))
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c-c++-header))
+(add-to-list 'auto-mode-alist '("BUILD$" . python-mode))
 (setq matlabf-fill-code nil)
 
 ;; Also make function calls highlighted for common programming modes
