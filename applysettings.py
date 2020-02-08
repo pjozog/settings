@@ -77,9 +77,6 @@ def _main():
         (os.path.join(SCRIPT_DIR, 'ipython-stuff', 'jupyter'),
          os.path.join(HOME_DIR, '.jupyter')),
 
-        (os.path.join(SCRIPT_DIR, 'linux-stuff', 'autostart.sh'),
-         os.path.join(HOME_DIR, '.config', 'autostart.sh')),
-
         (os.path.join(SCRIPT_DIR, 'linux-stuff', 'settings.ini'),
          os.path.join(HOME_DIR, '.config', 'gtk-3.0', 'settings.ini')),
 

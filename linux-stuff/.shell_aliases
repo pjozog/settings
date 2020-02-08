@@ -132,6 +132,3 @@ alias mk='make -j$(nproc)'
 
 # source private alias
 [ -f ${HOME}/ownCloud/code/private/private-shell-aliases ] && source ${HOME}/ownCloud/code/private/private-shell-aliases
-
-# source private env
-[ -f ${HOME}/ownCloud/code/private/private-shell-env ] && source ${HOME}/ownCloud/code/private/private-shell-env
