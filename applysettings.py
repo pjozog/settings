@@ -122,9 +122,6 @@ def _main():
         (os.path.join(SCRIPT_DIR, 'linux-stuff', 'fontconfig', 'fonts'),
          os.path.join(HOME_DIR, '.fonts')),
 
-        (os.path.join(SCRIPT_DIR, 'linux-stuff', '.xinitrc'),
-         os.path.join(HOME_DIR, '.xinitrc')),
-
         (os.path.join(SCRIPT_DIR, 'gdb-stuff', '.gdbinit'),
          os.path.join(HOME_DIR, '.gdbinit')),
 
