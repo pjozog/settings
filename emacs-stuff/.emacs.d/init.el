@@ -531,7 +531,6 @@ executed (thus updating the TAGS file). "
 
 
 (open-filelist '("~/.emacs.d/init.el" "~/.shell_aliases" "~/.profile"
-                 "~/.config/openbox/autostart.sh"
                  "~/.i3/config"
                  "~/ownCloud/personal/org/projects.org"))
 
