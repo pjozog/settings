@@ -1,5 +1,5 @@
-#!/usr/bin/env python
-"""Python 2.5 script. Creates a Notification pop-up bubble"""
+#!/usr/bin/env python3
+"""Creates a Notification pop-up bubble"""
 import dbus
 import sys, os
 
@@ -33,7 +33,7 @@ def notify (title, text, urgency=Urgency.IMPORTANT, time=3000):
 if __name__ == '__main__':
 
     if len (sys.argv) != 4:
-        print 'Usage: %s [title] [text] [urgency (0, 1, or 2)]' % os.path.basename (sys.argv[0])
+        print('Usage: %s [title] [text] [urgency (0, 1, or 2)]' % os.path.basename (sys.argv[0]))
         sys.exit (-1)
 
     title = sys.argv[1]

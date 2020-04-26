@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # svn merge-tool python wrapper for meld
 import sys
 import subprocess
@@ -28,7 +28,7 @@ def main():
 try:
     main()
 except Exception as e:
-    print "Oh noes, an error: %r" % e
+    print("Oh noes, an error: %r" % e)
     if log:
         f.write("Error: %r\n" % e)
     sys.exit(-1)
