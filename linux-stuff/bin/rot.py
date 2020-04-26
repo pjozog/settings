@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import sys
 
@@ -11,17 +11,12 @@ def flip(string, num):
 FUNC = rot
 
 if __name__ == '__main__':
-
     if len(sys.argv) == 1:
-
-        print " ".join([sys.argv[0], 'file', 'num'])
+        print(" ".join([sys.argv[0], 'file', 'num']))
         sys.exit(1)
 
     if len(sys.argv) == 2:
-
         for l in sys.stdin.readlines():
-            print FUNC(l.strip(), int(sys.argv[1]))
-
+            print(FUNC(l.strip(), int(sys.argv[1])))
     else:
-        print FUNC(sys.argv[1], int(sys.argv[2]))
-
+        print(FUNC(sys.argv[1], int(sys.argv[2])))

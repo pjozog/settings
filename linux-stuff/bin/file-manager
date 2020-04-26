@@ -1,30 +1,28 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 
 from distutils.version import LooseVersion, StrictVersion
 import sys, os, subprocess
 
-NEW_NAUTILUS_VERSION = LooseVersion ('3.10')
-NEWEST_NAUTILUS_VERSION = LooseVersion ('3.32')
+NEW_NAUTILUS_VERSION = LooseVersion('3.10')
+NEWEST_NAUTILUS_VERSION = LooseVersion('3.32')
 
-def getNautilusVersion ():
-    versionCheckProc = subprocess.Popen (['nautilus', '--version'], stdout=subprocess.PIPE)
-    versionCheckProc.wait ()
-    out, err = versionCheckProc.communicate ()
-    versionString = out.split ()[-1]
-    nautVersion = LooseVersion (versionString)
-    return nautVersion
+def get_nautilus_version():
+    output = subprocess.run(['nautilus', '--version'], stdout=subprocess.PIPE, check=False).stdout.decode('utf-8')
+    version_string = output.split()[-1]
+    version = LooseVersion(version_string)
+    return version
 
-if len (sys.argv) > 1:
+if len(sys.argv) > 1:
     directory = sys.argv[1]
 else:
-    directory = os.getcwd ()
+    directory = os.getcwd()
 
-if getNautilusVersion () >= NEWEST_NAUTILUS_VERSION:
-    cmd = ' '.join (['nautilus', '--new-window', "'%s'" % directory])
-    os.system (cmd)
-elif getNautilusVersion () >= NEW_NAUTILUS_VERSION:
-    cmd = ' '.join (['nautilus', '--new-window', '--no-desktop', "'%s'" % directory])
-    os.system (cmd)
+if get_nautilus_version() >= NEWEST_NAUTILUS_VERSION:
+    cmd = ' '.join(['nautilus', '--new-window', "'%s'" % directory])
+    os.system(cmd)
+elif get_nautilus_version() >= NEW_NAUTILUS_VERSION:
+    cmd = ' '.join(['nautilus', '--new-window', '--no-desktop', "'%s'" % directory])
+    os.system(cmd)
 else:
-    cmd = ' '.join (['nautilus', '--no-desktop', "'%s'" % directory])
-    os.system (cmd)
+    cmd = ' '.join(['nautilus', '--no-desktop', "'%s'" % directory])
+    os.system(cmd)

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import os
 import sys
@@ -12,4 +12,4 @@ filesFlat = []
 
 for f in filesFlat:
     if not f.find(keyword) == -1:
-        print f
+        print(f)

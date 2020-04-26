@@ -1,10 +1,10 @@
 #!/bin/sh
 
-export GTK2_RC_FILES=/usr/share/themes/Adwaita/gtk-2.0/gtkrc:${HOME}/.gtkrc-mine
+export GTK2_RC_FILES=${HOME}/.gtkrc-mine
 export OOO_FORCE_DESKTOP='gnome'
-export QT_STYLE_OVERRIDE='gtk2'
-# On Ubuntu 18.04, apt install qt5-style-plugins to make this work.
-export QT_QPA_PLATFORMTHEME='gtk2'
+# On Ubuntu 20.04, apt install qt5-style-kvantum qt5-style-kvantum-themes to
+# make this work (). Using gtk2 makes launching apps very slow.
+export QT_STYLE_OVERRIDE='kvantum'
 
 # force anti-aliased fonts
 export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=lcd'

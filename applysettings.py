@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 
 """Enable the configuration files in this repository by placing symbolic links
 in the correction places.
@@ -23,8 +23,6 @@ REQUIRED_DIRS = [os.path.join(HOME_DIR, '.config'),
                  os.path.join(HOME_DIR, '.kde', 'share', 'apps'),
                  os.path.join(HOME_DIR, '.kde', 'share', 'config'),
                  os.path.join(HOME_DIR, 'bin'),
-                 os.path.join(HOME_DIR, '.icons'),
-                 os.path.join(HOME_DIR, '.themes'),
                  os.path.join(HOME_DIR, 'Documents'),
                  os.path.join(HOME_DIR, 'Documents', 'MATLAB'),
                  os.path.join(HOME_DIR, '.ssh')]
@@ -101,11 +99,11 @@ def _main():
         (os.path.join(SCRIPT_DIR, 'linux-stuff', '.gtkrc-mine'),
          os.path.join(HOME_DIR, '.gtkrc-mine')),
 
-        (os.path.join(SCRIPT_DIR, 'openbox-stuff', 'Radiance_ob_test'),
-         os.path.join(HOME_DIR, '.themes', 'Radiance_ob_test')),
+        (os.path.join(SCRIPT_DIR, 'themes'),
+         os.path.join(HOME_DIR, '.themes')),
 
-        (os.path.join(SCRIPT_DIR, 'icons', 'communitheme'),
-         os.path.join(HOME_DIR, '.icons', 'communitheme')),
+        (os.path.join(SCRIPT_DIR, 'icons'),
+         os.path.join(HOME_DIR, '.icons')),
 
         (os.path.join(SCRIPT_DIR, 'linux-stuff', '.Xmodmap'),
          os.path.join(HOME_DIR, '.Xmodmap')),
@@ -180,7 +178,7 @@ def _main():
     def _remove_file(path):
         try:
             os.remove(path)
-        except OSError, err:
+        except OSError as err:
             if (err.errno == errno.EISDIR or err.errno == errno.ENOTEMPTY):
                 _print_info('\tRemoving dir ' + path)
                 shutil.rmtree(path)
@@ -191,12 +189,12 @@ def _main():
         # Does nothing if directory exists.
         try:
             os.mkdir(directory)
-        except OSError, err:
+        except OSError as err:
             if err.errno == errno.EEXIST:
                 pass
 
     def _print_info(string):
-        print 'INFO: ' + string
+        print('INFO: ' + string)
 
     for required_dir in REQUIRED_DIRS:
         _make_dir(required_dir)
