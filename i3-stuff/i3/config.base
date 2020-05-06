@@ -21,7 +21,7 @@ set $mod Mod4
 font pango:System San Francisco Display Regular, FontAwesome 8
 
 # colors
-set $selection "#990000"
+set $selection "#924d8b"
 set $base00 "#101218"
 set $base01 "#1f222d"
 set $base02 "#252936"
@@ -244,7 +244,7 @@ for_window [class="^Meld$"] fullscreen enable
 bindsym $mod+m move workspace to output left
 
 #                       border  background text    indicator
-client.focused          #ff0000 $selection $base07 $base0F
+client.focused          #924d8b $selection $base07 $base0F
 client.focused_inactive $base02 $base02    $base03 $base0F
 client.unfocused        $base02 $base02    $base03 $base0F
 client.urgent           $base02 $base08    $base00 $base0F
