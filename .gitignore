@@ -39,5 +39,6 @@ emacs-stuff/.emacs.d/recentf
 emacs-stuff/.emacs.d/.cask
 ipython-stuff/jupyter/migrated
 emacs-stuff/.emacs.d/.#recentf
+emacs-stuff/.emacs.d/.lsp-session-v1
 linux-stuff/.fonts/.uuid
 linux-stuff/fontconfig/fonts/terminus-powerline/.uuid

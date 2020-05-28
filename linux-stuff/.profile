@@ -29,4 +29,6 @@ if [ $? -eq 0 ]; then
 fi
 export LESS=' -R'
 
-export PROFILE_SOURCED="TRUE"
+if [ -f ${HOME}/ownCloud/code/private/private-shell-env ]; then
+    . ${HOME}/ownCloud/code/private/private-shell-env
+fi

@@ -89,8 +89,8 @@
                                        autopair markdown-mode
                                        rainbow-mode color-theme flymake-cursor
                                        cmake-mode browse-kill-ring
-                                       ycmd company-ycmd flycheck-ycmd py-yapf
-				       swiper powerline)
+                                       lsp-mode company-lsp flycheck py-yapf
+                                       swiper powerline)
     "A list of melpa packages to ensure are installed at launch.")
 
   (dolist (p my-melpa-packages)
@@ -485,7 +485,7 @@ executed (thus updating the TAGS file). "
  '(org-hide-leading-stars nil)
  '(package-selected-packages
    (quote
-    (powerline paradox yasnippet w3m swiper smex rainbow-mode py-yapf modern-cpp-font-lock markdown-mode lua-mode ido-ubiquitous idle-highlight-mode flymake-cursor flycheck-ycmd company-ycmd color-theme cmake-mode browse-kill-ring autopair auto-complete auctex)))
+    (company-lsp lsp-mode eglot powerline paradox yasnippet w3m swiper smex rainbow-mode py-yapf modern-cpp-font-lock markdown-mode lua-mode ido-ubiquitous idle-highlight-mode flymake-cursor color-theme cmake-mode browse-kill-ring autopair auto-complete auctex)))
  '(paradox-github-token t)
  '(uniquify-buffer-name-style (quote forward) nil (uniquify))
  '(vc-follow-symlinks t)
@@ -543,25 +543,7 @@ executed (thus updating the TAGS file). "
 ")
 (org-mode)
 
-;; auto-complete setup for C and C++
-(require 'ycmd)
-(require 'company-ycmd)
-(require 'flycheck-ycmd)
-(setq ycmd-server-command (list "python" (file-truename "~/documents/git/ycmd/ycmd")))
-(ycmd-setup)
-(company-ycmd-setup)
-(flycheck-ycmd-setup)
-(defun enable-ycmd ()
-  (ycmd-mode) (company-mode) (flycheck-mode))
-(add-hook 'c++-mode-hook 'enable-ycmd)
-(add-hook 'c-mode-hook 'enable-ycmd)
-(add-hook 'python-mode-hook 'enable-ycmd)
+;; auto-complete setup for C++.
+(require 'lsp-mode)
+(add-hook 'c++-mode-hook #'lsp)
 (setq company-idle-delay 0.05)
-(setq company-ycmd-request-sync-timeout 0)
-
-;; Bind Shift + TAB to force semantic completion
-(defun company-ycmd-semantic-complete ()
-  (interactive)
-  (let ((ycmd-force-semantic-completion t))
-    (company-complete)))
-(define-key paul-keys-minor-mode-map (kbd "<backtab>") 'company-ycmd-semantic-complete)
