@@ -19,3 +19,9 @@
 
 [alias]
     recent = for-each-ref --sort=-committerdate refs/remotes/ --format='%(HEAD) %(color:bold magenta)%(refname:short)%(color:reset) - %(color:bold red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:bold blue)%(committerdate:relative)%(color:reset))'
+
+[difftool "ediff"]
+cmd = emacs --eval \"(ediff-files \\\"$LOCAL\\\" \\\"$REMOTE\\\")\"
+
+[difftool "ediffclient"]
+cmd = emacsclient -t --eval \"(ediff-files \\\"$LOCAL\\\" \\\"$REMOTE\\\")\"
