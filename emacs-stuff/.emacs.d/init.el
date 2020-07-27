@@ -11,7 +11,7 @@
 (defvar paul-keys-minor-mode-map (make-keymap) "paul-keys-minor-mode keymap")
 
 (define-key paul-keys-minor-mode-map (kbd "C-x h") 'global-highline-mode)
-(define-key paul-keys-minor-mode-map (kbd "C-x l") 'linum-mode)
+(define-key paul-keys-minor-mode-map (kbd "C-x l") 'display-line-numbers-mode)
 (define-key paul-keys-minor-mode-map (kbd "M-RET") 'shell-resync-dirs)
 (define-key paul-keys-minor-mode-map (kbd "C-c C-f") 'find-file-this)
 (define-key paul-keys-minor-mode-map (kbd "C-o") 'other-window)
@@ -192,7 +192,6 @@ executed (thus updating the TAGS file). "
 (require 'autopair)
 (require 'yasnippet)
 (require 'color-theme)
-(require 'linum)
 (require 'flymake)
 (require 'flymake-cursor)
 (require 'org-install)
@@ -243,7 +242,7 @@ executed (thus updating the TAGS file). "
 ;; searching for ' ' shows all whitespace
 (setq search-whitespace-regexp "[ \t\r\n]+")
 
-;; (global-linum-mode 1)
+(global-display-line-numbers-mode 1)
 (global-auto-revert-mode t)
 (column-number-mode 1)
 (setq-default fill-column 80)
