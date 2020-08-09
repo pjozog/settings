@@ -515,8 +515,6 @@ executed (thus updating the TAGS file). "
 (if (string-equal "gnu/linux" system-type)
     (set-face-attribute 'default nil :height 70 :family "terminesspowerline"))
 
-;; Fix linum margin when running in terminal mode
-(setq linum-format "%d ")
 (setq split-height-threshold 90)
 
 ;; --------------------------------------------------
