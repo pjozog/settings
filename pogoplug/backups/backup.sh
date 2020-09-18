@@ -5,4 +5,4 @@ if [ $# -eq 0 ]; then
 fi
 
 OUTDIR=$1
-tar -cvpzf "${OUTDIR}"/POGO`date +%m%d%y`.tgz --exclude=/proc --exclude=/mnt --exclude=/sys --exclude=/dev --exclude=/lost+found  --exclude=/media /
+tar -cvpzf "${OUTDIR}"/$(hostname)-backup-`date +%m%d%y`.tgz --exclude=/proc --exclude=/mnt --exclude=/sys --exclude=/dev --exclude=/lost+found  --exclude=/media /
