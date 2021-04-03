@@ -89,7 +89,7 @@
                                        autopair markdown-mode
                                        rainbow-mode color-theme flymake-cursor
                                        cmake-mode browse-kill-ring
-                                       lsp-mode company-lsp flycheck py-yapf
+                                       lsp-mode lsp-ui company flycheck py-yapf
                                        swiper powerline)
     "A list of melpa packages to ensure are installed at launch.")
 
@@ -473,22 +473,20 @@ executed (thus updating the TAGS file). "
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(LaTeX-command "latex -shell-escape")
- '(TeX-view-program-list (quote (("Evince" "evince --page-index=%(outpage) %o"))))
- '(c-doc-comment-style (quote gtkdoc))
+ '(TeX-view-program-list '(("Evince" "evince --page-index=%(outpage) %o")))
+ '(c-doc-comment-style 'gtkdoc)
  '(ido-ignore-files
-   (quote
-    ("\\`CVS/" "\\`#" "\\`.#" "\\`\\.\\./" "\\`\\./" "_region_" "\\\\.prv/" "\\auto/" "__flymake")))
+   '("\\`CVS/" "\\`#" "\\`.#" "\\`\\.\\./" "\\`\\./" "_region_" "\\\\.prv/" "\\auto/" "__flymake"))
  '(inhibit-default-init t)
  '(inhibit-startup-screen t)
- '(org-agenda-files (quote ("~/ownCloud/personal/org/projects.org")))
+ '(org-agenda-files '("~/ownCloud/personal/org/projects.org"))
  '(org-hide-leading-stars nil)
  '(package-selected-packages
-   (quote
-    (company-lsp lsp-mode eglot powerline paradox yasnippet w3m swiper smex rainbow-mode py-yapf modern-cpp-font-lock markdown-mode lua-mode ido-ubiquitous idle-highlight-mode flymake-cursor color-theme cmake-mode browse-kill-ring autopair auto-complete auctex)))
+   '(company lsp-ui company-lsp lsp-mode eglot powerline paradox yasnippet w3m swiper smex rainbow-mode py-yapf modern-cpp-font-lock markdown-mode lua-mode ido-ubiquitous idle-highlight-mode flymake-cursor color-theme cmake-mode browse-kill-ring autopair auto-complete auctex))
  '(paradox-github-token t)
- '(uniquify-buffer-name-style (quote forward) nil (uniquify))
+ '(uniquify-buffer-name-style 'forward nil (uniquify))
  '(vc-follow-symlinks t)
- '(vc-hg-log-switches (quote ("-v"))))
+ '(vc-hg-log-switches '("-v")))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
