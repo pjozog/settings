@@ -85,8 +85,7 @@
 
   (defvar my-melpa-packages '(lua-mode auctex w3m org
                                        smex ido-completing-read+ idle-highlight-mode
-                                       yasnippet auto-complete
-                                       autopair markdown-mode
+                                       yasnippet auto-complete markdown-mode
                                        rainbow-mode color-theme flymake-cursor
                                        cmake-mode browse-kill-ring
                                        lsp-mode lsp-ui company flycheck py-yapf
@@ -189,7 +188,6 @@ executed (thus updating the TAGS file). "
 (require 'matlab)
 (require 'cmake-mode)
 (require 'lua-mode)
-(require 'autopair)
 (require 'yasnippet)
 (require 'color-theme)
 (require 'flymake)
@@ -237,8 +235,7 @@ executed (thus updating the TAGS file). "
       ido-handle-duplicate-virtual-buffers 2
       ido-max-prospects 10)
 (setq mouse-yank-at-point 1)
-(autopair-global-mode 1)
-(setq autopair-autowrap t)
+(electric-pair-mode)
 ;; searching for ' ' shows all whitespace
 (setq search-whitespace-regexp "[ \t\r\n]+")
 
@@ -482,7 +479,7 @@ executed (thus updating the TAGS file). "
  '(org-agenda-files '("~/ownCloud/personal/org/projects.org"))
  '(org-hide-leading-stars nil)
  '(package-selected-packages
-   '(company lsp-ui company-lsp lsp-mode eglot powerline paradox yasnippet w3m swiper smex rainbow-mode py-yapf modern-cpp-font-lock markdown-mode lua-mode ido-ubiquitous idle-highlight-mode flymake-cursor color-theme cmake-mode browse-kill-ring autopair auto-complete auctex))
+   '(company lsp-ui company-lsp lsp-mode eglot powerline paradox yasnippet w3m swiper smex rainbow-mode py-yapf modern-cpp-font-lock markdown-mode lua-mode ido-ubiquitous idle-highlight-mode flymake-cursor color-theme cmake-mode browse-kill-ring auto-complete auctex))
  '(paradox-github-token t)
  '(uniquify-buffer-name-style 'forward nil (uniquify))
  '(vc-follow-symlinks t)
