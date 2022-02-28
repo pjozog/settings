@@ -83,12 +83,12 @@
   ;; NOTE: uncomment on first run to download packages
   ;; (package-refresh-contents)
 
-  (defvar my-melpa-packages '(lua-mode auctex w3m org
+  (defvar my-melpa-packages '(lua-mode auctex w3m org clang-format
                                        smex ido-completing-read+ idle-highlight-mode
                                        yasnippet auto-complete markdown-mode
                                        rainbow-mode color-theme flymake-cursor
                                        cmake-mode browse-kill-ring
-                                       lsp-mode lsp-ui company flycheck py-yapf
+                                       lsp-mode company flycheck py-yapf
                                        swiper powerline)
     "A list of melpa packages to ensure are installed at launch.")
 
