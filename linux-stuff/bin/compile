@@ -22,21 +22,6 @@ function my-notify ()
 }
 
 ##
-# plays an audio file via command-line
-#
-# first argument: file to play
-#
-function my-aplay ()
-{
-    aplay_missing=$(which aplay > /dev/null)$?
-    if [ $aplay_missing -eq 0 ]; then
-        # use nohup so emacs doesn't kill this when compilation finishes.  Also,
-        # this prints some info messages on stderr, so don't show those.
-        nohup aplay "$1" > /dev/null 2>&1 &
-    fi
-}
-
-##
 # Selects a random file contained in a directory
 #
 # first argument: directory to search
@@ -75,7 +60,6 @@ if [ $? -eq 0 ]; then
     if [ -d ${OWNCLOUD_WAVS} ]; then
         wav=$(random-file ${OWNCLOUD_WAVS}/success "*.wav")
     fi
-    my-aplay "${wav}"
     my-notify "${PROJ}" "compiled successfully" 1
     exit 0
 else
@@ -84,7 +68,6 @@ else
     if [ -d ${OWNCLOUD_WAVS} ]; then
         wav=$(random-file ${OWNCLOUD_WAVS}/failed "*.wav")
     fi
-    my-aplay "${wav}"
     my-notify "${PROJ}" "compiled unsuccessfully" 2
     exit 1
 fi
