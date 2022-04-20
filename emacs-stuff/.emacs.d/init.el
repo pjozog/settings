@@ -144,22 +144,6 @@ header, based on presence of .c file"
   (unless (equal "/" dir)
     (file-name-directory (directory-file-name dir))))
 
-(defun update-git-repo-tags ()
-  "Recursively looks in parent directories for an executable file
-called '.git/hooks/ctags'. If it's found, then that hook will be
-executed (thus updating the TAGS file). "
-  (interactive)
-  (let* ((old-dir default-directory)
-         (maybe-git-repo (locate-dominating-file old-dir ".git/hooks/ctags"))
-	 (ctags-script (concat maybe-git-repo ".git/hooks/ctags")))
-    (unless (not maybe-git-repo)
-      (if (file-executable-p ctags-script)
-          (progn
-            (message (concat "Running ctags script " ctags-script))
-            (cd maybe-git-repo)
-            (call-process-shell-command "./.git/hooks/ctags &")
-            (cd old-dir))))))
-
 ;; opposite of fill-paragraph
 (defun unfill-paragraph (&optional region)
   "Takes a multi-line paragraph and makes it into a single line of text."
@@ -345,7 +329,6 @@ executed (thus updating the TAGS file). "
 ;; My hooks
 ;; --------------------------------------------------
 (add-hook 'before-save-hook (lambda () (delete-trailing-whitespace)))
-(add-hook 'after-save-hook (lambda () (update-git-repo-tags)))
 
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
