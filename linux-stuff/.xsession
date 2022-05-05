@@ -49,4 +49,8 @@ fi
 # emacs will know about it; for that, refer to ~/.config/fontconfig/fonts.conf.
 xset +fp ${HOME}/.fonts/terminus-powerline
 
+# Inform ssh-agent of all my keys.
+eval $(ssh-agent)
+ssh-add ${HOME}/.ssh/keys/id_rsa-*-dev
+
 exec i3
