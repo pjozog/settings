@@ -26,7 +26,8 @@ nm-applet --sm-disable &
 
 gnome-screensaver &
 
-xmodmap ${HOME}/.xsession
+xmodmap ${HOME}/.keyboard-modifier-layout
+xmodmap ${HOME}/.keyboard-key-layout
 xset r rate 300 40
 
 # Disable uber annoying overlay scroll bar.

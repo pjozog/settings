@@ -105,8 +105,11 @@ def _main():
         (os.path.join(SCRIPT_DIR, 'icons'),
          os.path.join(HOME_DIR, '.icons')),
 
-        (os.path.join(SCRIPT_DIR, 'linux-stuff', '.Xmodmap'),
-         os.path.join(HOME_DIR, '.Xmodmap')),
+        (os.path.join(SCRIPT_DIR, 'linux-stuff', 'keyboard-key-layout'),
+         os.path.join(HOME_DIR, '.keyboard-key-layout')),
+
+        (os.path.join(SCRIPT_DIR, 'linux-stuff', 'keyboard-modifier-layout'),
+         os.path.join(HOME_DIR, '.keyboard-modifier-layout')),
 
         (os.path.join(SCRIPT_DIR, 'linux-stuff', '.Xresources'),
          os.path.join(HOME_DIR, '.Xresources')),
