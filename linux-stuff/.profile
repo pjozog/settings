@@ -12,6 +12,9 @@ if [ -d $HOME/bin ]; then
     export PATH=$HOME/bin:$PATH
 fi
 
+# Mac OS X installs coreutils with 'g' prefix. This overrides that.
+export PATH=/usr/local/opt/coreutils/libexec/gnubin/:$PATH
+
 export EDITOR='emacsclient -t'
 export ALTERNATE_EDITOR='nano'
 
