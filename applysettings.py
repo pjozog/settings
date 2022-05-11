@@ -105,8 +105,10 @@ def _main():
         (os.path.join(SCRIPT_DIR, 'icons'),
          os.path.join(HOME_DIR, '.icons')),
 
+        # This *has* to be called ~/.xmodmap, otherwise xterm won't correctly
+        # handle Alt keys (e.g., Alt-b).
         (os.path.join(SCRIPT_DIR, 'linux-stuff', 'keyboard-key-layout'),
-         os.path.join(HOME_DIR, '.keyboard-key-layout')),
+         os.path.join(HOME_DIR, '.xmodmap')),
 
         (os.path.join(SCRIPT_DIR, 'linux-stuff', 'keyboard-modifier-layout'),
          os.path.join(HOME_DIR, '.keyboard-modifier-layout')),

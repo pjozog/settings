@@ -27,7 +27,8 @@ nm-applet --sm-disable &
 gnome-screensaver &
 
 xmodmap ${HOME}/.keyboard-modifier-layout
-xmodmap ${HOME}/.keyboard-key-layout
+# We assume xmodmap ${HOME}/.xmodmap gets run automatically. Indeed, if you run
+# that command here xterm won't correctly handle Alt keys (e.g., Alt-b).
 xset r rate 300 40
 
 # Disable uber annoying overlay scroll bar.
