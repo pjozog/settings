@@ -153,6 +153,9 @@ def _main():
         (os.path.join(SCRIPT_DIR, 'linux-stuff', '.xsession'),
          os.path.join(HOME_DIR, '.xsession')),
 
+        (os.path.join(SCRIPT_DIR, 'linux-stuff', '.xinitrc'),
+         os.path.join(HOME_DIR, '.xinitrc')),
+
         (os.path.join(SCRIPT_DIR, 'i3-stuff', 'i3'),
          os.path.join(HOME_DIR, '.i3')),
 
