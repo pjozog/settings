@@ -205,7 +205,7 @@ bar {
 }
 
 # paul stuff
-exec --no-startup-id "feh --bg-scale wallpaper"
+exec --no-startup-id "feh --bg-fill wallpaper"
 exec --no-startup-id "killall notify-osd"
 exec --no-startup-id "bin/dunst"
 exec --no-startup-id "blueman-applet"
