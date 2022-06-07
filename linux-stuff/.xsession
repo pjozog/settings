@@ -26,6 +26,9 @@ nm-applet --sm-disable &
 
 gnome-screensaver &
 
+# Note for this to work correctly on 22.04, make sure you right click the
+# keyboard applet in the system tray -> Preferences -> Advanced -> Ensure 'Use
+# system keyboard layout' is unchecked.
 xmodmap ${HOME}/.keyboard-modifier-layout
 # We assume xmodmap ${HOME}/.xmodmap gets run automatically. Indeed, if you run
 # that command here xterm won't correctly handle Alt keys (e.g., Alt-b).
