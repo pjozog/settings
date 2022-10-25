@@ -219,6 +219,10 @@ bindsym $mod+Shift+z exec --no-startup-id "zeal"
 bindsym F12 exec --no-startup-id "pavucontrol"
 bindsym F11 exec --no-startup-id "gnome-screenshot -i"
 
+# Keys to record gifs.
+bindsym $mod+Print exec --no-startup-id "record-gif"
+bindsym $mod+Shift+Print exec --no-startup-id "killall ffmpeg"
+
 bindsym XF86AudioRaiseVolume exec --no-startup-id "vol-ctrl -i 2"
 bindsym XF86AudioLowerVolume exec --no-startup-id "vol-ctrl -d 2"
 
