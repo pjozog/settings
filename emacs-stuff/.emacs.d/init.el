@@ -525,5 +525,4 @@ header, based on presence of .c file"
 (require 'lsp-mode)
 (add-hook 'c++-mode-hook #'lsp)
 (add-hook 'python-mode-hook #'lsp)
-(setq company-idle-delay 0.05)
 (setq lsp-enable-symbol-highlighting nil)
