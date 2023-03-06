@@ -235,6 +235,7 @@ header, based on presence of .c file"
 (setq bibtex-align-at-equal-sign t)
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 (setq ediff-split-window-function 'split-window-horizontally)
+(setq-default indent-tabs-mode nil)
 
 ;; Restore ediff layout when quitting
 (defvar ediff-last-windows nil
