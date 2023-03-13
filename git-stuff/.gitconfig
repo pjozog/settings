@@ -1,7 +1,3 @@
-[user]
-	name = Paul Ozog
-	email = pjozog@gmail.com
-
 [color]
 	ui = auto
 
@@ -25,3 +21,6 @@ cmd = emacs --eval \"(ediff-files \\\"$LOCAL\\\" \\\"$REMOTE\\\")\"
 
 [difftool "ediffclient"]
 cmd = emacsclient -t --eval \"(ediff-files \\\"$LOCAL\\\" \\\"$REMOTE\\\")\"
+[user]
+	email = paul.ozog@woven-planet.global
+	name = Paul Ozog
