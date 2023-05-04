@@ -89,7 +89,7 @@
                                        rainbow-mode color-theme flymake-cursor
                                        cmake-mode browse-kill-ring
                                        lsp-mode company flycheck py-yapf
-                                       swiper powerline)
+                                       swiper powerline atomic-chrome)
     "A list of melpa packages to ensure are installed at launch.")
 
   (dolist (p my-melpa-packages)
