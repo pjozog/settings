@@ -89,7 +89,7 @@
                                        rainbow-mode color-theme flymake-cursor
                                        cmake-mode browse-kill-ring
                                        lsp-mode company flycheck py-yapf
-                                       swiper powerline atomic-chrome)
+                                       swiper atomic-chrome)
     "A list of melpa packages to ensure are installed at launch.")
 
   (dolist (p my-melpa-packages)
@@ -176,7 +176,6 @@ header, based on presence of .c file"
 (require 'color-theme)
 (require 'flymake)
 (require 'flymake-cursor)
-(require 'org-install)
 (require 'uniquify)
 (require 'rainbow-mode)
 (require 'highline)
@@ -188,7 +187,6 @@ header, based on presence of .c file"
 (require 'paul-themes)
 (paul-themes-sublime)
 (require 'dired-mod)            ;; mine
-(require 'myOrgSettings)        ;; mine
 (require 'markdown-mode)
 (require 'fill-column-indicator)
 (require 'google-c-style)
@@ -196,8 +194,6 @@ header, based on presence of .c file"
 (require 'clang-format)
 (require 'py-yapf)
 (require 'idle-highlight-mode)
-(require 'powerline)
-(powerline-paul-theme)
 
 ;; Turn off the bad shit
 (menu-bar-mode -1)
@@ -209,6 +205,7 @@ header, based on presence of .c file"
 (setq flyspell-issue-message-flag nil)
 
 ;; Turn on the good shit
+(pixel-scroll-precision-mode)
 (transient-mark-mode 1)
 (ido-mode t)
 (setq ido-enable-prefix nil
@@ -227,7 +224,6 @@ header, based on presence of .c file"
 (global-auto-revert-mode t)
 (column-number-mode 1)
 (setq-default fill-column 80)
-(setq scroll-preserve-screen-position 1)
 (setq woman-fill-column fill-column)
 (setq-default indicate-empty-lines t)
 (setq gdb-many-windows t)
