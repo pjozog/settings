@@ -198,9 +198,6 @@ header, based on presence of .c file"
 ;; Turn off the bad shit
 (menu-bar-mode -1)
 (tool-bar-mode -1)
-(condition-case nil
-    (scroll-bar-mode -1)
-  (error nil))
 (global-auto-complete-mode -1)
 (setq flyspell-issue-message-flag nil)
 
