@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 
-"""Enable the configuration files in this repository by placing symbolic links
-in the correction places.
+"""Apply settings for the current user.
 
+Enable the configuration files in this repository by placing symbolic links
+in the correction places.
 """
 
 import os
@@ -12,8 +13,8 @@ import shutil
 
 SCRIPT_DIR = sys.path[0]
 BIN_DIR = os.path.join(SCRIPT_DIR, 'linux-stuff', 'bin')
-HOME_DIR = os.getenv('HOME')
-OWNCLOUD_DIR = os.path.join(os.getenv('HOME'), 'ownCloud')
+HOME_DIR = os.getenv('HOME', "home_dir")
+OWNCLOUD_DIR = os.path.join(HOME_DIR, 'ownCloud')
 REQUIRED_DIRS = [os.path.join(HOME_DIR, '.config'),
                  os.path.join(HOME_DIR, '.config', 'gtk-3.0'),
                  os.path.join(HOME_DIR, '.config', 'fontconfig'),
@@ -28,7 +29,42 @@ REQUIRED_DIRS = [os.path.join(HOME_DIR, '.config'),
                  os.path.join(HOME_DIR, '.ssh')]
 
 
-def _main():
+def _create_link(src: str, dest: str) -> None:
+    os.symlink(src, dest)
+
+
+def _remove_file(path: str) -> None:
+    try:
+        os.remove(path)
+    except OSError as err:
+        if (err.errno == errno.EISDIR or err.errno == errno.ENOTEMPTY):
+            _print_info('\tRemoving dir ' + path)
+            shutil.rmtree(path)
+        else:
+            pass
+
+
+def _make_dir(directory: str) -> None:
+    # Does nothing if directory exists.
+    try:
+        os.mkdir(directory)
+    except OSError as err:
+        if err.errno == errno.EEXIST:
+            pass
+
+
+def _print_info(string: str) -> None:
+    print('INFO: ' + string)
+
+
+def _handle_link_pair(source_name: str, link_name: str) -> None:
+    _print_info("Creating link: " + link_name)
+    _remove_file(link_name)
+    _create_link(source_name, link_name)
+
+
+def _main() -> int:
+    """Run main function."""
     link_pairs = [
         # Format:
         # (path to version-controlled file,
@@ -167,6 +203,9 @@ def _main():
         (os.path.join(SCRIPT_DIR, 'oh-my-zsh'),
          os.path.join(HOME_DIR, '.oh-my-zsh')),
 
+        (os.path.join(SCRIPT_DIR, 'ipython-stuff', 'mypy.ini'),
+         os.path.join(HOME_DIR, '.mypy.ini')),
+
         (os.path.join(SCRIPT_DIR, 'tmux-stuff', 'tmux.conf'),
          os.path.join(HOME_DIR, '.tmux.conf')),
     ]
@@ -177,37 +216,8 @@ def _main():
         link_name = os.path.join(HOME_DIR, 'bin', basename)
         link_pairs.append((source_name, link_name))
 
-    def _create_link(src, dest):
-        os.symlink(src, dest)
-
-    def _remove_file(path):
-        try:
-            os.remove(path)
-        except OSError as err:
-            if (err.errno == errno.EISDIR or err.errno == errno.ENOTEMPTY):
-                _print_info('\tRemoving dir ' + path)
-                shutil.rmtree(path)
-            else:
-                pass
-
-    def _make_dir(directory):
-        # Does nothing if directory exists.
-        try:
-            os.mkdir(directory)
-        except OSError as err:
-            if err.errno == errno.EEXIST:
-                pass
-
-    def _print_info(string):
-        print('INFO: ' + string)
-
     for required_dir in REQUIRED_DIRS:
         _make_dir(required_dir)
-
-    def _handle_link_pair(source_name, link_name):
-        _print_info("Creating link: " + link_name)
-        _remove_file(link_name)
-        _create_link(source_name, link_name)
 
     for pair in link_pairs:
         _handle_link_pair(pair[0], pair[1])

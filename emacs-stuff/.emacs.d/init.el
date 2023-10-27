@@ -112,8 +112,8 @@
   (smex-initialize)
   (define-key paul-keys-minor-mode-map (kbd "M-x") 'smex)
 
-  ;; replace find-tags with etags-select
-  (define-key paul-keys-minor-mode-map (kbd "M-.") 'etags-select-find-tag)
+  ;; replace find-tags with the lsp equivalent
+  (define-key paul-keys-minor-mode-map (kbd "M-.") 'lsp-find-definition)
 
   (add-hook
    'prog-mode-hook (lambda ()

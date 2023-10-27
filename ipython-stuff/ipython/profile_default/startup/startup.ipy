@@ -1,10 +1,3 @@
-try:
-    import sys
-    import numpy as np
-    import matplotlib.pyplot as plt
-except ImportError:
-    pass
-
 %load_ext autoreload
 %autoreload 2
 %precision 4
