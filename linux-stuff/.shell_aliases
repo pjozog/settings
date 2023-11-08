@@ -11,6 +11,10 @@ if [ $TERM = "xterm" ]; then
     export TERM=xterm-256color
 fi
 
+# This fixes trying to edit on this machine via emacs' TRAMP. If this line is
+# not present, emacs will hang.
+[ $TERM = "dumb" ] && unsetopt zle && PS1='$ '
+
 function pu {
 	arg="$1"
 	fullname=$(readlink -f "$arg")
