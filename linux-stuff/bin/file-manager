@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+# Note on 24.04, you might have to install python3-distutils-extra.
 from distutils.version import LooseVersion, StrictVersion
 import sys, os, subprocess
 
