@@ -17,7 +17,7 @@ get_blocky_res() {
     echo $((${SHARPNESS} * $(get_num_conn_monitors)))
 }
 
-import -window root /tmp/screen_locked.png
-convert /tmp/screen_locked.png -scale $(get_blocky_res) -scale $(get_screen_res) /tmp/screen_locked2.png
+import -window root /tmp/screen_locked.bmp
+convert /tmp/screen_locked.bmp -scale $(get_blocky_res) -scale $(get_screen_res) /tmp/screen_locked2.png
 mv /tmp/screen_locked2.png /tmp/screen_locked.png
 i3lock -i /tmp/screen_locked.png
