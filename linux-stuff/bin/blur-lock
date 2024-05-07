@@ -5,7 +5,7 @@
 SHARPNESS=128
 
 get_screen_res() {
-    convert /tmp/screen_locked.png  -print "%w" /dev/null
+    convert /tmp/screen_locked.bmp  -print "%w" /dev/null
 }
 
 get_num_conn_monitors() {
