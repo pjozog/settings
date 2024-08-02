@@ -456,6 +456,12 @@ header, based on presence of .c file"
    '("\\`CVS/" "\\`#" "\\`.#" "\\`\\.\\./" "\\`\\./" "_region_" "\\\\.prv/" "\\auto/" "__flymake"))
  '(inhibit-default-init t)
  '(inhibit-startup-screen t)
+ ;; These were set by M-x customize and searching for lsp-pylsp.
+ '(lsp-pylsp-plugins-isort-enabled t)
+ '(lsp-pylsp-plugins-mypy-enabled t)
+ '(lsp-pylsp-plugins-pydocstyle-enabled nil)
+ '(lsp-pylsp-plugins-flake8-enabled nil)
+ '(lsp-pylsp-plugins-ruff-enabled t)
  '(org-agenda-files '("~/ownCloud/personal/org/projects.org"))
  '(org-hide-leading-stars nil)
  '(package-selected-packages
