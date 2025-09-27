@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 # Prompts the user to select a region to record (single click picks a window,
 # click-and-drag selects a rectangle), and records a 10fps gif to
 # ~/git-recordings until the user presses Ctrl-C.
@@ -16,8 +18,8 @@ SCRIPT="$(basename "$0")"
 mkdir -p "$(dirname "$OUTPUT")"
 
 # Use slop to get the XY of the region or window to record.
-read -r X Y W H G ID < <(slop -f "%x %y %w %h %g %i")
-ffmpeg -f x11grab -r $FPS -s "$W"x"$H" -i ${DISPLAY}.0+$X,$Y "$TMPFILE"
+read -d 'THE_END' -r X Y W H G ID < <(slop -f "%x %y %w %h %g %iTHE_END")
+ffmpeg -f x11grab -r $FPS -s "$W"x"$H" -i ${DISPLAY}.0+$X,$Y "$TMPFILE" || true
 
 notify-send "$SCRIPT: generating color palette"
 ffmpeg -y -i "$TMPFILE"  -vf fps=10,palettegen /tmp/palette.png
