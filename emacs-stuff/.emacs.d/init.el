@@ -494,7 +494,7 @@ header, based on presence of .c file"
 
 ;; Linux fonts
 (if (string-equal "gnu/linux" system-type)
-    (set-face-attribute 'default nil :height 70 :family "terminesspowerline"))
+    (set-face-attribute 'default nil :height 90 :family "Terminus (TTF)"))
 
 (setq split-height-threshold 90)
 
@@ -521,8 +521,11 @@ header, based on presence of .c file"
 ")
 (org-mode)
 
-;; auto-complete setup for C++.
+;; auto-complete setup for lsp-mode.
 (require 'lsp-mode)
 (add-hook 'c++-mode-hook #'lsp)
 (add-hook 'python-mode-hook #'lsp)
 (setq lsp-enable-symbol-highlighting nil)
+;; The really annoying docs that appear when you open parens in python (e.g.,
+;; "np.array(").
+(setq lsp-signature-render-documentation nil)
