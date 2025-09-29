@@ -494,7 +494,11 @@ header, based on presence of .c file"
 
 ;; Linux fonts
 (if (string-equal "gnu/linux" system-type)
-    (set-face-attribute 'default nil :height 90 :family "Terminess Nerd Font" :weight 'normal))
+    (progn
+      (set-face-attribute 'default nil :height 90 :family "Terminess Nerd Font" :weight 'normal)
+      (set-face-attribute 'font-lock-comment-face nil :slant 'normal)
+      )
+    )
 
 (setq split-height-threshold 90)
 
