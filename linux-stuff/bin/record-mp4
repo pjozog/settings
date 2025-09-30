@@ -1,0 +1,20 @@
+#!/bin/bash
+
+set -e
+
+if hash nvidia-smi 2>/dev/null; then
+    FPS=60
+    ENCODER=nvenc  # Uses NVIDIA GPU.
+    BITRATE=10M
+else
+    FPS=10
+    ENCODER=libx264
+    BITRATE=2M
+fi
+
+
+read -d 'THE_END' -r X Y W H G ID < <(slop -f "%x %y %w %h %g %iTHE_END")
+
+ffmpeg -f x11grab -framerate $FPS \
+    -s "$W"x"$H" -i ${DISPLAY}.0+$X,$Y \
+    -vcodec $ENCODER -b:v $BITRATE $(date +%Y-%m-%d_%H-%M_%S).mp4
