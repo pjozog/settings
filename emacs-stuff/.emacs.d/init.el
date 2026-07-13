@@ -456,12 +456,6 @@ header, based on presence of .c file"
    '("\\`CVS/" "\\`#" "\\`.#" "\\`\\.\\./" "\\`\\./" "_region_" "\\\\.prv/" "\\auto/" "__flymake"))
  '(inhibit-default-init t)
  '(inhibit-startup-screen t)
- ;; These were set by M-x customize and searching for lsp-pylsp.
- '(lsp-pylsp-plugins-isort-enabled t)
- '(lsp-pylsp-plugins-mypy-enabled t)
- '(lsp-pylsp-plugins-pydocstyle-enabled nil)
- '(lsp-pylsp-plugins-flake8-enabled nil)
- '(lsp-pylsp-plugins-ruff-enabled t)
  '(org-agenda-files '("~/ownCloud/personal/org/projects.org"))
  '(org-hide-leading-stars nil)
  '(package-selected-packages
@@ -533,3 +527,10 @@ header, based on presence of .c file"
 ;; The really annoying docs that appear when you open parens in python (e.g.,
 ;; "np.array(").
 (setq lsp-signature-render-documentation nil)
+
+(use-package lsp-pyright
+  :ensure t
+  :custom (lsp-pyright-langserver-command "basedpyright") ;; or pyright, but "based" is so much better.
+  :hook (python-mode . (lambda ()
+                          (require 'lsp-pyright)
+                          (lsp))))  ; or lsp-deferred
