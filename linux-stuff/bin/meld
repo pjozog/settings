@@ -1,0 +1,10 @@
+#!/bin/sh
+# Wrapper that launches meld in its sandbox config dir, so meld ignores the
+# global Emacs gtk-key-theme (and the rest of ~/.config) while still getting a
+# complete icon theme. See linux-stuff/meld-sandbox/db.d/00-icons; the sandbox
+# dconf db is built by applysettings.py.
+#
+# This script shadows /usr/bin/meld on PATH (~/bin comes first), so it also
+# catches meld invoked by git/svn/hg difftools. It execs the absolute binary to
+# avoid recursing back into itself.
+exec env XDG_CONFIG_HOME="$HOME/.config/meld-sandbox" /usr/bin/meld "$@"

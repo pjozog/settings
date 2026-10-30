@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+MODE="${1:-}"
+
+if command -v nvidia-smi >/dev/null 2>&1 &&
+   ffmpeg -hide_banner -encoders 2>/dev/null | grep -q h264_nvenc; then
+    ENCODER=h264_nvenc
+    BITRATE=10M
+else
+    ENCODER=libx264
+    BITRATE=2M
+fi
+
+case "$MODE" in
+    window)
+        GEOMETRY=$(
+            swaymsg -t get_tree |
+            jq -r '
+                .. | objects |
+                select(.pid? and .visible? == true) |
+                .rect |
+                "\(.x),\(.y) \(.width)x\(.height)"
+            ' |
+            slurp -r
+        ) || exit 0
+        ;;
+    rect)
+        GEOMETRY=$(slurp) || exit 0
+        ;;
+    *)
+        echo "Usage: $0 {window|rect}" >&2
+        exit 1
+        ;;
+esac
+
+OUTPUT="$(date +%Y-%m-%d_%H-%M_%S).mp4"
+
+echo "Recording with $ENCODER at $BITRATE"
+echo "Region: $GEOMETRY"
+echo "Output: $OUTPUT"
+echo "Press Ctrl+C to stop."
+
+wf-recorder \
+    -g "$GEOMETRY" \
+    -c "$ENCODER" \
+    -p "b=$BITRATE" \
+    -f "$OUTPUT"

@@ -4,17 +4,7 @@
 # .zshrc/.bashrc files should contain interactive settings like aliases,
 # functions, etc.
 
-if [ $TERM = "Eterm" ]; then
-    export LANG=C
-fi
-
-if [ -d $HOME/bin ]; then
-    export PATH=$HOME/bin:$PATH
-fi
-
-if [ -d $HOME/.local/bin ]; then
-    export PATH=$HOME/.local/bin:$PATH
-fi
+export PATH=$HOME/.local/bin:$HOME/bin:$PATH
 
 export EDITOR='emacsclient -t'
 export ALTERNATE_EDITOR='nano'
@@ -23,16 +13,19 @@ export ALTERNATE_EDITOR='nano'
 [ -d ${HOME}/texpath ] && export BSTINPUTS=.:${HOME}/texpath:$BSTINPUTS
 [ -d ${HOME}/texpath ] && export BIBINPUTS=.:${HOME}/texpath:$BIBINPUTS
 
-which source-highlight > /dev/null 2>&1
-if [ $? -eq 0 ]; then
-    if [ -f /usr/share/source-highlight/src-hilite-lesspipe.sh ]; then
-        export LESSOPEN="| /usr/share/source-highlight/src-hilite-lesspipe.sh %s"
-    else
-        export LESSOPEN="| /usr/bin/src-hilite-lesspipe.sh %s"
+# Syntax highlighting in less
+if command -v source-highlight >/dev/null 2>&1; then
+    if [[ -f /usr/share/source-highlight/src-hilite-lesspipe.sh ]]; then
+        export LESSOPEN='| /usr/share/source-highlight/src-hilite-lesspipe.sh %s'
+    elif [[ -f /usr/bin/src-hilite-lesspipe.sh ]]; then
+        export LESSOPEN='| /usr/bin/src-hilite-lesspipe.sh %s'
     fi
 fi
-export LESS=' -R'
 
-if [ -f ${HOME}/ownCloud/code/private/private-shell-env ]; then
-    . ${HOME}/ownCloud/code/private/private-shell-env
+export LESS='-R'
+
+# Private environment configuration
+private_env="$HOME/ownCloud/code/private/private-shell-env"
+if [[ -f "$private_env" ]]; then
+    source "$private_env"
 fi

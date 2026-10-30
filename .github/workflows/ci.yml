@@ -1,0 +1,144 @@
+name: CI
+
+# Prove the dotfiles install cleanly on a fresh Ubuntu and that the configs
+# actually load. The install job runs on LTS Ubuntu runner images; the
+# configs job loads/parses each major application's config.
+
+on:
+  push:
+    branches: [main, sway]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  install:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-26.04]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install tools used by the configs
+        run: |
+          sudo apt-get update
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y \
+            zsh sway waybar dconf-cli
+
+      - name: Python syntax check
+        run: |
+          # ycm_extra_conf.py is a legacy Python 2 YouCompleteMe config; skip it.
+          python3 -m py_compile \
+            applysettings.py \
+            ci/verify_install.py \
+            ci/check_jsonc.py \
+            linux-stuff/bin/notify.py \
+            linux-stuff/bin/rot.py \
+            linux-stuff/bin/searchpath.py
+
+      - name: Shell syntax check
+        run: |
+          for f in linux-stuff/.bashrc linux-stuff/.bash_profile \
+                   linux-stuff/.profile linux-stuff/.shell_aliases; do
+            echo "bash -n $f"; bash -n "$f"
+          done
+          for f in linux-stuff/.zshrc linux-stuff/.zshrc.local linux-stuff/.zshrc.pre; do
+            [ -f "$f" ] && { echo "zsh -n $f"; zsh -n "$f"; }
+          done
+
+      - name: Validate waybar config (JSONC)
+        run: python3 ci/check_jsonc.py waybar/config
+
+      - name: Run installer into a sandbox HOME (twice, for idempotency)
+        env:
+          HOME: ${{ runner.temp }}/sandbox-home
+        run: |
+          mkdir -p "$HOME"
+          echo "--- first run ---"
+          python3 "$GITHUB_WORKSPACE/applysettings.py"
+          echo "--- second run (should be a no-op) ---"
+          python3 "$GITHUB_WORKSPACE/applysettings.py"
+
+      - name: Verify the symlinks the installer created
+        run: |
+          python3 ci/verify_install.py "$GITHUB_WORKSPACE" "${{ runner.temp }}/sandbox-home"
+
+      - name: Validate sway config
+        env:
+          # Reuse the HOME the installer populated, so ~/.config/xkb exists and
+          # xkbcommon can resolve the custom keyboard layout the config uses.
+          HOME: ${{ runner.temp }}/sandbox-home
+        run: |
+          # `--validate` on this sway version still initializes the wlroots
+          # backend, which would try to open a real DRM session/tty (fails in
+          # headless CI). Force the headless backend + software renderer so it
+          # only parses the config.
+          export XDG_RUNTIME_DIR="$(mktemp -d)"
+          chmod 700 "$XDG_RUNTIME_DIR"
+          # The config sets `output * bg ~/wallpaper fill`; sway checks the file
+          # is readable at parse time (it doesn't decode it). A real wallpaper
+          # is a private, machine-local file, so stand in an empty one here.
+          touch "$HOME/wallpaper"
+          WLR_BACKENDS=headless \
+          WLR_RENDERER=pixman \
+          WLR_LIBINPUT_NO_DEVICES=1 \
+            sway --validate -c sway/config
+
+  # Validate each major application's config. Emacs is loaded for real (it even
+  # installs its MELPA packages); the rest are parse/syntax checks that confirm
+  # the config is well-formed and loadable.
+  configs:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-26.04]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install config tools
+        run: |
+          sudo apt-get update
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y \
+            emacs-nox tmux gdb i3-wm lua5.4 libxml2-utils \
+            aspell aspell-en
+
+      # Speeds up reruns and softens MELPA flakiness: the installed packages
+      # only change when init.el's package list changes.
+      - name: Cache Emacs packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.emacs.d/elpa
+          key: elpa-${{ hashFiles('emacs-stuff/.emacs.d/init.el') }}
+          restore-keys: elpa-
+
+      - name: Emacs — fully load the real config (installs MELPA packages)
+        run: sh ci/load_emacs.sh emacs-stuff/.emacs.d/init.el
+
+      - name: Emacs — paren check on custom lisp not loaded by init.el
+        run: sh ci/check_elisp.sh emacs-stuff/.emacs.d/lisp/*.el
+
+      - name: tmux config parses
+        run: |
+          # Start a detached session on a private socket off the real config,
+          # which forces tmux to source and parse it, then tear it down.
+          tmux -f tmux-stuff/tmux.conf -L ci-smoke new-session -d 'sleep 1'
+          tmux -L ci-smoke kill-server
+
+      - name: gdb loads .gdbinit
+        run: gdb -batch -nh -x gdb-stuff/.gdbinit -ex quit
+
+      - name: i3 config check
+        # The live `config` is gitignored; config.base is the tracked source.
+        run: i3 -C -c i3-stuff/i3/config.base
+
+      - name: git config parses
+        run: git config -f git-stuff/.gitconfig --list >/dev/null
+
+      - name: awesome (Lua) syntax check
+        run: luac5.4 -p awesome-stuff/awesome/rc.lua awesome-stuff/awesome/theme.lua
+
+      - name: fontconfig is well-formed XML
+        run: xmllint --noout linux-stuff/fontconfig/fonts.conf

@@ -4,6 +4,9 @@
 [diff]
 	tool = meld
 
+[difftool]
+	prompt = false
+
 [init]
 	templatedir = ~/.git-template
 

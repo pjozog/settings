@@ -1,0 +1,5 @@
+[Desktop Entry]
+Name=Sway (NVIDIA, custom env)
+Comment=An i3-compatible Wayland compositor
+Exec=env WLR_NO_HARDWARE_CURSORS=1 /usr/local/bin/sway-session.sh --unsupported-gpu
+Type=Application

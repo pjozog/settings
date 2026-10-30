@@ -66,5 +66,4 @@ else
     VOL="$(cut -d '[' -f 2 <<<"$AMIXOUT" | sed 's/%.*//g')"
 fi
 
-notify-send.sh -p -u normal -t $TIMEOUT Volume "${VOL}%" -r $NOTIFY_ID -i \
-	       /usr/share/notify-osd/icons/Humanity/scalable/status/notification-audio-volume-high.svg
+notify-send.sh -p -u normal -t $TIMEOUT Volume "🔊 ${VOL}%" -r $NOTIFY_ID
