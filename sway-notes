@@ -1,0 +1,12 @@
+ 4914  get sway
+ 4937  get wev
+ 4938  swaymsg -t get_inputs | grep -A 15 -B 5 xkb
+ 4941  swaymsg -t get_version
+ 4942  swaymsg -t get_config | grep -A 5 -B 2 'xkb_options'
+ 4965  get wdisplays
+ 4994  get wofi
+
+
+ 4969  sudo apt install grim slurp
+ 4999  sudo apt install wf-recorder slurp jq
+ 5099  sudo apt install xdg-desktop-portal-gnome gnome-remote-desktop

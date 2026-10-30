@@ -194,6 +194,9 @@ def _main() -> int:
         (os.path.join(SCRIPT_DIR, 'i3-stuff', 'i3'),
          os.path.join(HOME_DIR, '.i3')),
 
+        (os.path.join(SCRIPT_DIR, 'sway'),
+         os.path.join(HOME_DIR, '.sway')),
+
         (os.path.join(SCRIPT_DIR, 'i3-stuff', 'i3blocks', 'i3blocks.conf'),
          os.path.join(HOME_DIR, '.i3blocks.conf')),
 

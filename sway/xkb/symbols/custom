@@ -1,0 +1,9 @@
+partial modifier_keys
+xkb_symbols "ralt_super" {
+    key <RALT> {
+        type[Group1] = "ONE_LEVEL",
+        symbols[Group1] = [ Super_R ]
+    };
+
+    modifier_map Mod4 { <RALT> };
+};

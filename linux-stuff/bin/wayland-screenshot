@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+mkdir -p "$HOME/Pictures"
+
+mode="${1:-}"
+
+case "$mode" in
+    window)
+        geometry=$(
+            swaymsg -t get_tree |
+            jq -r '
+                .. | objects |
+                select(.pid? and .visible? == true) |
+                .rect |
+                "\(.x),\(.y) \(.width)x\(.height)"
+            ' |
+            slurp -r
+        ) || exit 0
+        ;;
+    rect)
+        geometry=$(slurp) || exit 0
+        ;;
+    *)
+        echo "Usage: $0 {window|rect}" >&2
+        exit 1
+        ;;
+esac
+
+grim -g "$geometry" \
+     "$HOME/Pictures/screenshot-$(date +%F_%H-%M-%S).png"
