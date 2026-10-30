@@ -1,0 +1,34 @@
+#!/bin/bash
+set -euo pipefail
+
+# Larger -> sharper lock screen.
+SHARPNESS=128
+
+SCREENSHOT=/tmp/screen_locked.png
+BLOCKY=/tmp/screen_locked_blocky.png
+
+get_screen_res() {
+    identify -format '%wx%h' "$SCREENSHOT"
+}
+
+get_num_conn_monitors() {
+    swaymsg -t get_outputs -r | jq '[.[] | select(.active == true)] | length'
+}
+
+get_blocky_res() {
+    echo "$((SHARPNESS * $(get_num_conn_monitors)))"
+}
+
+# Capture the entire desktop.
+grim "$SCREENSHOT"
+
+# Pixelate and scale back up.
+convert "$SCREENSHOT" \
+    -scale "$(get_blocky_res)" \
+    -scale "$(get_screen_res)" \
+    "$BLOCKY"
+
+mv "$BLOCKY" "$SCREENSHOT"
+
+# Lock. The -f is important if this is to be called from swayidle.
+swaylock -f -i "$SCREENSHOT"

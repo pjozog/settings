@@ -1,0 +1,12 @@
+# meld "sandbox" dconf db. meld is launched with
+# XDG_CONFIG_HOME=~/.config/meld-sandbox so it ignores the global Emacs
+# gtk-key-theme (meld's own accelerators like Ctrl-D work again) along with the
+# rest of ~/.config. An empty sandbox leaves GTK on the stripped-down Adwaita
+# icon theme, so most of meld's toolbar icons go blank; this db restores a
+# real, complete icon theme (Yaru) and nothing else -- the key theme, widget
+# theme and font intentionally stay at GTK defaults.
+#
+# Compiled into ~/.config/meld-sandbox/dconf/user by applysettings.py. Launch
+# meld with: XDG_CONFIG_HOME="$HOME/.config/meld-sandbox" meld
+[org/gnome/desktop/interface]
+icon-theme='Yaru'

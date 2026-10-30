@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+# Set every Wayland output to scale 1.0 so I don't have to do it by hand
+# in wdisplays on every login / sway reload.
+#
+# The '*' wildcard applies to all currently-connected outputs.
+swaymsg output '*' scale 1
