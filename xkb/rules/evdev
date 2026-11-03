@@ -1,0 +1,4 @@
+! include %S/evdev
+
+! option = symbols
+  custom:swap_ralt_rwin = +custom(swap_ralt_rwin)

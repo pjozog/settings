@@ -197,6 +197,15 @@ def _main() -> int:
         (os.path.join(SCRIPT_DIR, 'sway'),
          os.path.join(HOME_DIR, '.sway')),
 
+        (os.path.join(SCRIPT_DIR, 'xkb'),
+         os.path.join(HOME_DIR, '.config', 'xkb')),
+
+        (os.path.join(SCRIPT_DIR, 'linux-stuff', 'environment.sh'),
+         os.path.join(HOME_DIR, '.config', 'environment.sh')),
+
+        (os.path.join(SCRIPT_DIR, 'xdg-desktop-portal'),
+         os.path.join(HOME_DIR, '.config', 'xdg-desktop-portal')),
+
         (os.path.join(SCRIPT_DIR, 'i3-stuff', 'i3blocks', 'i3blocks.conf'),
          os.path.join(HOME_DIR, '.i3blocks.conf')),
 
