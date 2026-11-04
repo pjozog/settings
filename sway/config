@@ -25,7 +25,7 @@ include /etc/sway/config-vars.d/*
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
+output * bg ~/wallpaper fill
 #
 # Example configuration:
 #
@@ -33,7 +33,11 @@ output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
 #
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 
+# Start-up commands.
 exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+exec emacs --daemon
+exec nm-applet
+
 
 ### Idle configuration
 #
@@ -117,8 +121,7 @@ bindsym --whole-window BTN_SIDE kill
     bindsym $mod+Shift+f exec google-chrome
     bindsym $mod+Shift+e exec emacsclient -nc
     bindsym $mod+Shift+m exec file-manager
-    bindsym F10 exec wayland-screenshot window
-    bindsym F11 exec wayland-screenshot rect
+    bindsym F11 exec wayland-screenshot
     bindsym F12 exec pavucontrol
 
 #
@@ -150,9 +153,9 @@ bindsym --whole-window BTN_SIDE kill
 #
 set $workspace1 "1: "
 set $workspace2 "2: "
-set $workspace3 "3: "
-set $workspace4 "4: "
-set $workspace5 "5: "
+set $workspace3 "3: "
+set $workspace4 "4: "
+set $workspace5 "5: "
 set $workspace6 "6: "
 set $workspace7 "7: "
 set $workspace8 "8: "
@@ -189,6 +192,8 @@ set $workspace9 "9: "
     bindsym XF86MonBrightnessUp exec brightnessctl set +5%
     bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
 
+    bindsym XF86AudioRaiseVolume exec vol-ctrl -i 2
+    bindsym XF86AudioLowerVolume exec vol-ctrl -d 2
 
 #
 # Layout stuff:

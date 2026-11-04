@@ -2,10 +2,48 @@
 
 set -euo pipefail
 
-mkdir -p "$HOME/Pictures"
+picture_dir="$HOME/Pictures"
+mkdir -p "$picture_dir"
 
-mode="${1:-}"
+delay="${SCREENSHOT_DELAY:-0}"
 
+if [[ $# -eq 0 ]]; then
+    # Select screenshot mode.
+    selection=$(
+        printf '%s\n' \
+            '🪟  Window' \
+            '✂️  Region' \
+            '🖥️  Entire desktop' |
+        wofi --dmenu --prompt "Select mode" --normal-window --width 300 --height 300
+    ) || exit 0
+
+    case "$selection" in
+        "🪟  Window")         mode=window ;;
+        "✂️  Region")         mode=rect ;;
+        "🖥️  Entire desktop") mode=desktop ;;
+        *) exit 0 ;;
+    esac
+
+    # Enter delay.
+    entered_delay=$(
+        wofi --dmenu \
+            --prompt "Enter delay secs (default: $delay)"  --normal-window  --width 300 --height 300 \
+            </dev/null
+    ) || exit 0
+
+    delay="${entered_delay:-$delay}"
+else
+    mode="$1"
+    delay="${2:-$delay}"
+fi
+
+# Validate delay.
+if [[ ! "$delay" =~ ^([0-9]+([.][0-9]*)?|[.][0-9]+)$ ]]; then
+    echo "Invalid delay: $delay" >&2
+    exit 1
+fi
+
+# Select geometry BEFORE sleeping.
 case "$mode" in
     window)
         geometry=$(
@@ -13,20 +51,43 @@ case "$mode" in
             jq -r '
                 .. | objects |
                 select(.pid? and .visible? == true) |
-                .rect |
-                "\(.x),\(.y) \(.width)x\(.height)"
+                .rect as $r |
+                (.deco_rect.height // 0) as $titlebar |
+                "\($r.x),\($r.y - $titlebar) \($r.width)x\($r.height + $titlebar)"
             ' |
             slurp -r
         ) || exit 0
         ;;
+
     rect)
         geometry=$(slurp) || exit 0
         ;;
+
+    desktop)
+        ;;
+
     *)
-        echo "Usage: $0 {window|rect}" >&2
+        echo "Usage: $0 [window|rect|desktop] [delay]" >&2
         exit 1
         ;;
 esac
 
-grim -g "$geometry" \
-     "$HOME/Pictures/screenshot-$(date +%F_%H-%M-%S).png"
+# NOW wait, with geometry already selected.
+sleep "$delay"
+
+filename="$picture_dir/screenshot-$(date +%F_%H-%M-%S).png"
+
+# Capture.
+case "$mode" in
+    window|rect)
+        grim -g "$geometry" "$filename"
+        ;;
+    desktop)
+        grim "$filename"
+        ;;
+esac
+
+# Copy to clipboard if available.
+if command -v wl-copy >/dev/null 2>&1; then
+    wl-copy < "$filename"
+fi

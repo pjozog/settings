@@ -14,3 +14,5 @@
 sudo apt install brightnessctl
 sudo apt install waybar
 sudo adduser $(whoami) video
+
+sudo apt install wl-clipboard
