@@ -10,3 +10,7 @@
  4969  sudo apt install grim slurp
  4999  sudo apt install wf-recorder slurp jq
  5099  sudo apt install xdg-desktop-portal-gnome gnome-remote-desktop
+
+sudo apt install brightnessctl
+sudo apt install waybar
+sudo adduser $(whoami) video
