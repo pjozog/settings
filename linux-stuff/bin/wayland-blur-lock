@@ -30,5 +30,5 @@ convert "$SCREENSHOT" \
 
 mv "$BLOCKY" "$SCREENSHOT"
 
-# Lock.
-swaylock -i "$SCREENSHOT"
+# Lock. The -f is important if this is to be called from swayidle.
+swaylock -f -i "$SCREENSHOT"

@@ -16,3 +16,4 @@ sudo apt install waybar
 sudo adduser $(whoami) video
 
 sudo apt install wl-clipboard
+sudo apt install swayidle
