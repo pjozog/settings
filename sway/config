@@ -271,6 +271,15 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 #
+# Window rules:
+#
+    # Google Meet's pop-out / picture-in-picture window from Chrome. Its title
+    # starts with "Meet" but, unlike a normal Chrome window, doesn't end with
+    # "Google Chrome", so the main browser window isn't affected.
+    for_window [app_id="^google-chrome$" title="^Meet(?!.*Google Chrome$)"] floating enable, sticky enable
+    for_window [app_id="^google-chrome$" title="^Picture[- ]in[- ][Pp]icture$"] floating enable, sticky enable
+
+#
 # Status Bar:
 #
 # Read `man 5 sway-bar` for more information about this section.

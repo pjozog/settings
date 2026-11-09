@@ -5,8 +5,6 @@ name: CI
 # configs job loads/parses each major application's config.
 
 on:
-  push:
-    branches: [main, sway]
   pull_request:
   workflow_dispatch:
 
